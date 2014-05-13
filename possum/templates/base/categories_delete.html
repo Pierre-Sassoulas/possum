@@ -1,26 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
+{% load i18n %}
+<h1>{% trans "Category" %}: {{current_cat.nom}}</h1>
 
-<h1>Catégorie: {{current_cat.nom}}</h1>
+<p>{% blocktrans %}
+When deleting the category, all statistics
+this category will be deleted. If you want to see statistics
+another category, you must select a category below.
+{% endblocktrans %}</p>
 
-<p>Lors de la suppression de la catégorie, toutes les statistiques sur
-cette catégorie seront effacées. Si vous voulez reporter les statistiques
-sur une autre catégorie, vous devez sélectionner une catégorie ci-dessous.</p>
+<p>{% blocktrans %}
+On the other hand, the products will also be deleted. Not
+remove, simply choose a category deferral below.
+{% endblocktrans %}</p>
 
-<p>D'autre part, les produits seront également supprimés. Pour ne pas
-les supprimer, il suffit de choisir une catégorie de report ci-dessous.</p>
+<p>{% blocktrans %}
+It is strongly advised not to remove products that have were used.
+{% endblocktrans %}</p>
 
-<p>Il est fortement conseillé de ne pas supprimer des produits qui ont
-été utilisés.</p>
-
-
-<p>Vous confirmez la suppression de cette categorie (et le report éventuel) ?</p>
-<form method='post' action='/carte/categories/{{current_cat.id}}/delete/'>{% csrf_token %}
+<p>{% blocktrans %}
+You confirm the suppression of this category (and the possible postponement)?
+{% endblocktrans %}</p>
+<form method='post' action="{% url "categories_delete" current_cat.id %}">
+{% csrf_token %}
 <table>
 <tr>
-    <td colspan="2" align="center">Catégorie pour le report :
+    <td colspan="2" align="center">{% trans "Category for the report" %}:
 <SELECT name="cat_report">
-    <OPTION VALUE="">pas de report</OPTION>
+    <OPTION VALUE="">{% trans "no report" %}</OPTION>
     {% for cat in categories %}
         <OPTION VALUE="{{ cat.id }}">{{ cat.nom }}</OPTION>
     {% endfor %}
@@ -28,8 +35,8 @@ les supprimer, il suffit de choisir une catégorie de report ci-dessous.</p>
     </td>
 </tr>
 <tr>
-    <td><input type='submit' name="valide" value='Supprimer'></td>
-    <td><input type='submit' name="valide" value='Annuler'></td>
+    <td><input type='submit' name="valide" value='{% trans "Remove" %}'></td>
+    <td><input type='submit' name="valide" value='{% trans "Cancel" %}'></td>
 </tr>
 </table>
 </form>

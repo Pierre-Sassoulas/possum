@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "printer_home" %}'">Retour imprimantes</li>
+    <li onclick="window.location='{% url "printer_home" %}'">
+        {% trans "Back printer" %}</li>
 </ul>
 
-<h1>Imprimante: {{printer.name}}</h1>
+<h1>{% trans "Printer" %}: {{printer.name}}</h1>
 <ul id="printer">
     <li onclick="window.location='{% url "printer_change_kitchen" printer.id %}'"
         {% if printer.kitchen %}class="enabled"
         {% else %}class="disabled"
-        {% endif %}>Cuisine</li>
+        {% endif %}>{% trans "Kitchen" %}</li>
     <li onclick="window.location='{% url "printer_change_billing" printer.id %}'"
         {% if printer.billing %}class="enabled"
         {% else %}class="disabled"
@@ -18,9 +19,9 @@
     <li onclick="window.location='{% url "printer_change_manager" printer.id %}'"
         {% if printer.manager %}class="enabled"
         {% else %}class="disabled"
-        {% endif %}>Manager</li>
+        {% endif %}>{% trans "Manager" %}</li>
     <li onclick="window.location='{% url "printer_select_width" printer.id %}'">
-        Largeur du ticket:</br>{{printer.width}}</li>
+        {% trans "Ticket width" %}:</br>{{printer.width}}</li>
     <li onclick="window.location='{% url "printer_test_print" printer.id %}'">
         Test d'impression</li>
 </ul>
@@ -33,15 +34,15 @@
     <td><input name="options" value="{{printer.options}}"></td>
 </tr-->
 <tr>
-    <td><b>entête du ticket (sans accent)</b></td>
+    <td><b>{% trans "Header" %}</b></td>
     <td><textarea name="header" rows="10" cols="{{printer.width}}">{{printer.header}}</textarea></td>
 </tr>
 <tr>
-    <td><b>fin du ticket (sans accent)</b></td>
+    <td><b>{% trans "Footer" %}</b></td>
     <td><textarea name="footer" rows="10" cols="{{printer.width}}">{{printer.footer}}</textarea></td>
 </tr>
 <tr>
-    <td colspan=2><input type='submit' value='Enregistrer'></td>
+    <td colspan=2><input type='submit' value='{% trans "Save" %}'></td>
 </tr>
 </table>
 </form>

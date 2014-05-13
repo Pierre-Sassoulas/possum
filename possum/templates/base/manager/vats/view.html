@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "vats" %}'">Retour TVA</li>
+    <li onclick="window.location='{% url "vats" %}'">{% trans "Back VAT" %}</li>
 </ul>
 
-<h1>TVA: {{vat.name}}</h1>
+<h1>{% trans "VAT" %}: {{vat.name}}</h1>
 
 <ul id="vats">
     <li onclick="window.location='{% url "vats_change" vat.id %}'">

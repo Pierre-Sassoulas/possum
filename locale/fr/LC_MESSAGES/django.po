@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-07 14:06+0200\n"
+"POT-Creation-Date: 2014-05-13 18:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,11 @@ msgstr "Anglais"
 msgid "Russian"
 msgstr "Russe"
 
+#: possum/templates/404.html:8 possum/templates/500.html:8
+msgid "This page is currently unavailable"
+msgstr "Cette page est actuellement indisponible"
+
+#: possum/templates/404.html:10 possum/templates/500.html:10
 #: possum/templates/base.html:36
 msgid "Home"
 msgstr "Accueil"
@@ -41,11 +46,13 @@ msgstr "Commandes"
 
 #: possum/templates/base.html:47 possum/templates/home.html:8
 #: possum/templates/home.html.py:9
+#: possum/templates/base/manager/printer_view.html:14
 msgid "Kitchen"
 msgstr "Cuisine"
 
 #: possum/templates/base.html:53 possum/templates/home.html:10
 #: possum/templates/home.html.py:11
+#: possum/templates/base/manager/printer_view.html:22
 msgid "Manager"
 msgstr "Gestion"
 
@@ -62,9 +69,270 @@ msgstr "Déconnexion"
 msgid "Shutdown server"
 msgstr "Éteindre le serveur"
 
-#: possum/templates/login.html:17
+#: possum/templates/login.html:15
 msgid "Login"
 msgstr "Connexion"
+
+#: possum/templates/shutdown.html:4
+msgid "Warning, you shut down the server !"
+msgstr "Attention, vous allez éteindre le serveur !"
+
+#: possum/templates/shutdown.html:8
+#, fuzzy
+msgid "Shutdown"
+msgstr "Éteindre le serveur"
+
+#: possum/templates/base/categories_delete.html:4
+msgid "Category"
+msgstr "Catégorie"
+
+#: possum/templates/base/categories_delete.html:6
+msgid ""
+"\n"
+"When deleting the category, all statistics\n"
+"this category will be deleted. If you want to see statistics\n"
+"another category, you must select a category below.\n"
+msgstr ""
+"\n"
+"Lors de la suppression de la catégorie, toutes les statistiques sur\n"
+"cette catégorie seront effacées. Si vous voulez reporter les statistiques\n"
+"sur une autre catégorie, vous devez sélectionner une catégorie ci-dessous.\n"
+
+#: possum/templates/base/categories_delete.html:12
+msgid ""
+"\n"
+"On the other hand, the products will also be deleted. Not\n"
+"remove, simply choose a category deferral below.\n"
+msgstr ""
+"\n"
+"D'autre part, les produits seront également supprimés. Pour ne pas\n"
+"les supprimer, il suffit de choisir une catégorie de report ci-dessous.\n"
+
+#: possum/templates/base/categories_delete.html:17
+msgid ""
+"\n"
+"It is strongly advised not to remove products that have were used.\n"
+msgstr ""
+"\n"
+"Il est fortement conseillé de ne pas supprimer des produits qui ont\n"
+"été utilisés.\n"
+
+#: possum/templates/base/categories_delete.html:21
+msgid ""
+"\n"
+"You confirm the suppression of this category (and the possible "
+"postponement)?\n"
+msgstr ""
+"\n"
+"Vous confirmez la suppression de cette categorie (et le report éventuel) ?\n"
+
+#: possum/templates/base/categories_delete.html:28
+msgid "Category for the report"
+msgstr "Catégorie pour le report"
+
+#: possum/templates/base/categories_delete.html:30
+msgid "no report"
+msgstr "pas de report"
+
+#: possum/templates/base/categories_delete.html:38
+msgid "Remove"
+msgstr "Supprimer"
+
+#: possum/templates/base/categories_delete.html:39
+msgid "Cancel"
+msgstr "Annuler"
+
+#: possum/templates/base/manager/home.html:6
+msgid "Archives"
+msgstr "Archives"
+
+#: possum/templates/base/manager/home.html:8
+msgid "Carte"
+msgstr "Carte"
+
+#: possum/templates/base/manager/home.html:10
+msgid "Credits"
+msgstr "Crédits"
+
+#: possum/templates/base/manager/home.html:12
+msgid "In use"
+msgstr "En cours d'utilisation"
+
+#: possum/templates/base/manager/home.html:14
+msgid "Printers"
+msgstr "Imprimantes"
+
+#: possum/templates/base/manager/home.html:16
+msgid "Notes"
+msgstr "Notes"
+
+#: possum/templates/base/manager/home.html:18
+#, fuzzy
+msgid "Tables"
+msgstr "Tables"
+
+#: possum/templates/base/manager/home.html:20
+#: possum/templates/base/manager/vats/home.html:4
+#: possum/templates/base/manager/vats/view.html:8
+msgid "VAT"
+msgstr "TVA"
+
+#: possum/templates/base/manager/home.html:22
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: possum/templates/base/manager/home.html:26
+msgid ""
+"\n"
+"The display of information requires updating statistics with\n"
+"recent bills. If there are a lot of new bills, this\n"
+"may take time (see more minutes).\n"
+msgstr ""
+"\n"
+"L'affichage des informations nécessite la mise à jour des statistiques avec\n"
+"les dernières factures. S'il y a beaucoup de nouvelles factures, cette\n"
+"opération peut prendre du temps (voir plusieurs minutes).\n"
+
+#: possum/templates/base/manager/home.html:33
+msgid ""
+"\n"
+"The update is in progress, you should not turn off the server.\n"
+msgstr ""
+"\n"
+"La mise à jour est en cours, vous ne devez pas éteindre le serveur.\n"
+
+#: possum/templates/base/manager/home.html:36
+msgid "Work in progress ..."
+msgstr "Travail en cours ..."
+
+#: possum/templates/base/manager/home.html:39
+#, python-format
+msgid ""
+"\n"
+"There are currently %(bills_to_update)s invoice"
+"%(bills_to_update|pluralize)s\n"
+"resulted in waiting.\n"
+msgstr ""
+"\n"
+"Il y a actuellement %(bills_to_update)s \n"
+"facture%(bills_to_update|pluralize)s\n"
+"soldée%(bills_to_update|pluralize)s en attente.\n"
+
+#: possum/templates/base/manager/home.html:45
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: possum/templates/base/manager/home.html:48
+msgid ""
+"\n"
+"There are no pending bill, the data are up to date.\n"
+msgstr ""
+"\n"
+"Il n'y a pas de facture en attente, les données sont à jours.\n"
+
+#: possum/templates/base/manager/home.html:51
+msgid "Data up to date"
+msgstr "Données à jour"
+
+#: possum/templates/base/manager/home.html:55
+msgid "Rapports"
+msgstr "Rapports"
+
+#: possum/templates/base/manager/home.html:58
+msgid "day"
+msgstr "jour"
+
+#: possum/templates/base/manager/home.html:60
+msgid "week"
+msgstr "semaine"
+
+#: possum/templates/base/manager/home.html:62
+msgid "month"
+msgstr "mois"
+
+#: possum/templates/base/manager/home.html:65
+msgid "Graphics"
+msgstr "Graphiques"
+
+#: possum/templates/base/manager/home.html:68
+msgid "year"
+msgstr "année"
+
+#: possum/templates/base/manager/printer_select_width.html:6
+#: possum/templates/base/manager/printer_view.html:6
+msgid "Back printer"
+msgstr "Retour imprimante"
+
+#: possum/templates/base/manager/printer_select_width.html:9
+msgid "Print width for"
+msgstr "Largeur d'impression pour"
+
+#: possum/templates/base/manager/printer_view.html:9
+#, fuzzy
+msgid "Printer"
+msgstr "Imprimante"
+
+#: possum/templates/base/manager/printer_view.html:24
+msgid "Ticket width"
+msgstr "Largeur du ticket"
+
+#: possum/templates/base/manager/printer_view.html:37
+msgid "Header"
+msgstr "Entête du ticket (sans accent)"
+
+#: possum/templates/base/manager/printer_view.html:41
+msgid "Footer"
+msgstr "Fin du ticket (sans accent)"
+
+#: possum/templates/base/manager/printer_view.html:45
+#: possum/templates/base/manager/vats/change.html:21
+#: possum/templates/base/manager/vats/new.html:21
+msgid "Save"
+msgstr "Enregistrer"
+
+#: possum/templates/base/manager/vats/change.html:5
+#: possum/templates/base/manager/vats/new.html:5
+#: possum/templates/base/manager/vats/view.html:5
+msgid "Back VAT"
+msgstr "Retour TVA"
+
+#: possum/templates/base/manager/vats/change.html:8
+msgid "VAT change"
+msgstr "Modifier la TVA"
+
+#: possum/templates/base/manager/vats/change.html:13
+msgid "name"
+msgstr "nom"
+
+#: possum/templates/base/manager/vats/change.html:17
+#: possum/templates/base/manager/vats/new.html:17
+msgid "Tax"
+msgstr "Taxe"
+
+#: possum/templates/base/manager/vats/change.html:17
+#: possum/templates/base/manager/vats/new.html:17
+msgid "example: 20.0"
+msgstr "exemple: 20.0"
+
+#: possum/templates/base/manager/vats/home.html:7
+msgid "Add"
+msgstr "Ajouter"
+
+#: possum/templates/base/manager/vats/new.html:8
+msgid "New VAT"
+msgstr "Nouvelle TVA"
+
+#: possum/templates/base/manager/vats/new.html:13
+msgid "Name"
+msgstr "Nom"
+
+#: possum/templates/base/manager/vats/new.html:26
+msgid "Existing VAT"
+msgstr "TVA existantes"
+
+#: possum/templates/base/manager/vats/new.html:34
+msgid "No VAT"
+msgstr "Aucune TVA"
 
 #: possum/templates/bill/home.html:4
 #, python-format
@@ -75,22 +343,22 @@ msgstr ""
 "Cette page est automatiquement rechargée toutes les \n"
 "    %(need_auto_refresh)s secondes"
 
-#: possum/templates/bill/home.html:10
+#: possum/templates/bill/home.html:8
 msgid "New order"
 msgstr "Nouvelle commande"
 
-#: possum/templates/bill/home.html:15
+#: possum/templates/bill/home.html:13
 msgid "Table"
 msgstr "Table"
 
-#: possum/templates/bill/home.html:16
+#: possum/templates/bill/home.html:14
 msgid "Guests"
 msgstr "Couverts"
 
-#: possum/templates/bill/home.html:17
+#: possum/templates/bill/home.html:15
 msgid "Amount"
 msgstr "Montant"
 
-#: possum/templates/bill/home.html:17
+#: possum/templates/bill/home.html:15
 msgid "$"
 msgstr "€"

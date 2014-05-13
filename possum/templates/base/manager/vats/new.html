@@ -1,29 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "vats" %}'">Retour TVA</li>
+    <li onclick="window.location='{% url "vats" %}'">{% trans "Back VAT" %}</li>
 </ul>
 
-<h1>Nouvelle TVA</h1>
+<h1>{% trans "New VAT" %}</h1>
 
 <form method='post' action='{% url "vat_new" %}'>{% csrf_token %}
 <table>
 <tr>
-    <td><b>Nom</b></td>
+    <td><b>{% trans "Name" %}</b></td>
     <td><input name='name'></td>
 </tr>
 <tr>
-    <td><b>Taxe (exemple: 19.6)</b></td>
+    <td><b>{% trans "Tax" %} ({% trans "example: 20.0" %})</b></td>
     <td><input name='tax'></td>
 </tr>
 <tr>
-    <td colspan=2><input type='submit' value='Créer'></td>
+    <td colspan=2><input type='submit' value='{% trans "Save" %}'></td>
 </tr>
 </table>
 </form>
 
-<h2>TVA existantes</h2>
+<h2>{% trans "Existing VAT" %}</h2>
 <ul id="vats">
     {% for vat in vats %}
     <li onclick="window.location='{% url "vats_view" vat.id %}'">
@@ -31,7 +31,7 @@
         {{vat.tax}}
         </li>
     {% empty %}
-    <li>Aucune TVA à afficher.</li>
+    <li>{% trans "No VAT" %}</li>
     {% endfor %}
 </ul>
 

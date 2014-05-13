@@ -1,49 +1,71 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="manager">
-    <li onclick='window.location="{% url "archives" %}"'>Archives</li>
-    <li onclick='window.location="{% url "categories" %}"'>Carte</li>
-    <li onclick='window.location="{% url "credits" %}"'>Crédits</li>
-    <li onclick='window.location="{% url "editions_home" %}"'>Éditions</li>
-    <li onclick='window.location="{% url "printer_home" %}"'>Imprimantes</li>
-    <li onclick='window.location="{% url "notes_home" %}"'>Notes</li>
-    <li onclick='window.location="{% url "tables" %}"'>Tables</li>
-    <li onclick='window.location="{% url "vats" %}"'>TVA</li>
-    <li onclick='window.location="{% url "users" %}"'>Utilisateurs</li>
+    <li onclick='window.location="{% url "archives" %}"'>
+        {% trans "Archives" %}</li>
+    <li onclick='window.location="{% url "categories" %}"'>
+        {% trans "Carte" %}</li>
+    <li onclick='window.location="{% url "credits" %}"'>
+        {% trans "Credits" %}</li>
+    <li onclick='window.location="{% url "editions_home" %}"'>
+        {% trans "In use" %}</li>
+    <li onclick='window.location="{% url "printer_home" %}"'>
+        {% trans "Printers" %}</li>
+    <li onclick='window.location="{% url "notes_home" %}"'>
+        {% trans "Notes" %}</li>
+    <li onclick='window.location="{% url "tables" %}"'>
+        {% trans "Tables" %}</li>
+    <li onclick='window.location="{% url "vats" %}"'>
+        {% trans "VAT" %}</li>
+    <li onclick='window.location="{% url "users" %}"'>
+        {% trans "Users" %}</li>
 </ul>
 
 <h2>Chiffres & Résultats</h2>
-<p>L'affichage des informations nécessite la mise à jour des statistiques avec
-les dernières factures. S'il y a beaucoup de nouvelles factures, cette
-opération peut prendre du temps (voir plusieurs minutes).</p>
+<p>{% blocktrans %}
+The display of information requires updating statistics with
+recent bills. If there are a lot of new bills, this
+may take time (see more minutes).
+{% endblocktrans %}</p>
 
 {% if working_on_update %}
-<p>La mise à jour est en cours, vous ne devez pas éteindre le serveur.</p>
-<ul id="manager"><li>Travail en cours...</li></ul>
+<p>{% blocktrans %}
+The update is in progress, you should not turn off the server.
+{% endblocktrans %}</p>
+<ul id="manager"><li>{% trans "Work in progress ..." %}</li></ul>
 {% else %}
 {% if bills_to_update %}
-<p>Il y a actuellement {{bills_to_update}} facture{{bills_to_update|pluralize}} 
-soldée(s) en attente.</p>
+<p>{% blocktrans %}
+There are currently {{bills_to_update}} invoice{{bills_to_update|pluralize}}
+resulted in waiting.
+{% endblocktrans %}</p>
 <ul id="manager">
-    <li onclick='window.location="{% url 'stats_update' %}"'>Mettre à jour</li>
+    <li onclick='window.location="{% url 'stats_update' %}"'>
+        {% trans "Update" %}</li>
 </ul>
 {% else %}
-<p>Il n'y a pas de facture en attente, les données sont à jours.</p>
-<ul id="manager"><li>Données à jour</li></ul>
+<p>{% blocktrans %}
+There are no pending bill, the data are up to date.
+{% endblocktrans %}</p>
+<ul id="manager"><li>{% trans "Data up to date" %}</li></ul>
 {% endif %}
 {% endif %}
 
-<h3>Rapports</h3>
+<h3>{% trans "Rapports" %}</h3>
 <ul id="manager">
-    <li onclick='window.location="{% url "stats_daily" %}"'>jour</li>
-    <li onclick='window.location="{% url "stats_weekly" %}"'>semaine</li>
-    <li onclick='window.location="{% url "stats_monthly" %}"'>mois</li>
+    <li onclick='window.location="{% url "stats_daily" %}"'>
+        {% trans "day" %}</li>
+    <li onclick='window.location="{% url "stats_weekly" %}"'>
+        {% trans "week" %}</li>
+    <li onclick='window.location="{% url "stats_monthly" %}"'>
+        {% trans "month" %}</li>
 </ul>
 
-<h3>Graphiques</h3>
+<h3>{% trans "Graphics" %}</h3>
 <ul id="manager">
-    <li onclick='window.location="{% url "stats_charts" %}"'>année</li>
+    <li onclick='window.location="{% url "stats_charts" %}"'>
+        {% trans "year" %}</li>
 </ul>
 {% endblock %}
 

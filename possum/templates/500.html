@@ -1,14 +1,13 @@
 {% extends "base.html" %}
-
-{% block menu %}<!-- Connectez-vous pour accéder à Possum. -->{% endblock %}
-
+{% block menu %}<!-- You have to login -->{% endblock %}
 {% block page %}
 {% load staticfiles %}
+{% load i18n %}
 <div id="login">
     <img src="{% static "images/bandeau-192.png" %}" alt="Possum"/></br>
-    <p>Cette page est actuellement indisponible.</p>
+    <p>{% trans "This page is currently unavailable" %}</p>
 <ul>
-    <li onclick='window.location="{% url "home" %}"'>Retour à l'accueil</li>
+    <li onclick='window.location="{% url "home" %}"'>{% trans "Home" %}</li>
 </ul>
 </div>
 {% endblock %}

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>TVA</h1>
+{% load i18n %}
+<h1>{% trans "VAT" %}</h1>
 
 <ul id="vats">
-    <li onclick="window.location='{% url "vat_new" %}'">
-        Ajouter
-    </li>
+    <li onclick="window.location='{% url "vat_new" %}'">{% trans "Add" %}</li>
     {% for vat in vats %}
     <li onclick="window.location='{% url "vats_view" vat.id %}'">
         {{vat.name}}</br>
