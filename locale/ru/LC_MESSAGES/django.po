@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 18:18+0200\n"
+"POT-Creation-Date: 2014-05-16 18:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,6 +129,38 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: possum/templates/base/manager/credits.html:8
+msgid "free Software under GPLv3 license created by S. Bonnegent."
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:9
+msgid "You are currently using version"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:12
+msgid "A big thank you to"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:14
+msgid "for the original idea and the need"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:15
+msgid "acronym for software"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:16
+msgid "for the logo, icons and patience"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:17
+msgid "icon to stop"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:18
+msgid "icon to logout"
+msgstr ""
+
 #: possum/templates/base/manager/home.html:6
 msgid "Archives"
 msgstr ""
@@ -245,22 +277,38 @@ msgstr ""
 msgid "Printer"
 msgstr ""
 
+#: possum/templates/base/manager/printer_view.html:18
+msgid "Billing"
+msgstr ""
+
 #: possum/templates/base/manager/printer_view.html:24
 msgid "Ticket width"
 msgstr ""
 
-#: possum/templates/base/manager/printer_view.html:37
+#: possum/templates/base/manager/printer_view.html:38
 msgid "Header"
 msgstr ""
 
-#: possum/templates/base/manager/printer_view.html:41
+#: possum/templates/base/manager/printer_view.html:42
 msgid "Footer"
 msgstr ""
 
-#: possum/templates/base/manager/printer_view.html:45
+#: possum/templates/base/manager/printer_view.html:46
 #: possum/templates/base/manager/vats/change.html:21
 #: possum/templates/base/manager/vats/new.html:21
 msgid "Save"
+msgstr ""
+
+#: possum/templates/base/manager/printer_view.html:51
+msgid "can print kitchen tickets"
+msgstr ""
+
+#: possum/templates/base/manager/printer_view.html:52
+msgid "can print invoices"
+msgstr ""
+
+#: possum/templates/base/manager/printer_view.html:53
+msgid "can print reports"
 msgstr ""
 
 #: possum/templates/base/manager/vats/change.html:5

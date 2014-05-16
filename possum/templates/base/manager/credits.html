@@ -1,21 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 {% load staticfiles %}
+{% load i18n %}
 <h1>Crédits</h1>
 
 <p><a href="http://www.possum-software.org">
-    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/></a>, logiciel libre 
-sous licence GPLv3 créé par S. Bonnegent. Vous utilisez actuellement 
-la version {% include "version.html" %}</p>
+    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/></a>:
+    {% trans "free Software under GPLv3 license created by S. Bonnegent." %}
+    {% trans "You are currently using version" %}
+    {% include "version.html" %}</p>
 
-<h2>Un grand merci à ...</h2>
+<h2>{% trans "A big thank you to" %} ...</h2>
 <ul id="credits">
-    <li>R. BONNEGENT pour l'idée originale et le besoin</li>
-    <li>Y. BENOIST pour l'acronyme du logiciel</li>
-    <li>H. ROMON pour le logo, les icônes et la patience :)</li>
-    <li>N. PETTIAUX pour les nouveaux Possumers !</li>
-    <li>YellowIcon pour l'icone d'arrêt</li>
-    <li>New Mooon pour l'icone de déconnexion</li>
+    <li>R. BONNEGENT {% trans "for the original idea and the need" %}</li>
+    <li>Y. BENOIST {% trans "acronym for software" %}</li>
+    <li>H. ROMON {% trans "for the logo, icons and patience" %} :)</li>
+    <li>YellowIcon {% trans "icon to stop" %}</li>
+    <li>New Mooon {% trans "icon to logout" %}</li>
 <ul>
 
 {% endblock %}
