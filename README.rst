@@ -32,6 +32,7 @@ Community
 * `Google+ <https://plus.google.com/113982636103042531268/posts>`_
 * `Twitter releases <https://twitter.com/possum_software>`_
 * `Twitter commits <https://twitter.com/possum_commits>`_
+* `RSS releases <http://freecode.com/projects/possum/releases.atom>`_
 
 Demo
 ----
@@ -45,8 +46,4 @@ Devs
 * `Issues <https://github.com/possum-software/possum/issues>`_
 * `Jenkins <https://www.possum-software.org/jenkins/view/Tous/>`_
 
-RSS
----
-
-* `Releases <http://freecode.com/projects/possum/releases.atom>`_
 
