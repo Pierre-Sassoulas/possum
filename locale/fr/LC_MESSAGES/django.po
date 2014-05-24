@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-16 18:10+0200\n"
+"POT-Creation-Date: 2014-05-24 21:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,14 +45,12 @@ msgid "Orders"
 msgstr "Commandes"
 
 #: possum/templates/base.html:47 possum/templates/home.html:8
-#: possum/templates/home.html.py:9
-#: possum/templates/base/manager/printer_view.html:14
+#: possum/templates/home.html.py:9 possum/templates/printers/view.html:14
 msgid "Kitchen"
 msgstr "Cuisine"
 
 #: possum/templates/base.html:53 possum/templates/home.html:10
-#: possum/templates/home.html.py:11
-#: possum/templates/base/manager/printer_view.html:22
+#: possum/templates/home.html.py:11 possum/templates/printers/view.html:22
 msgid "Manager"
 msgstr "Gestion"
 
@@ -142,35 +140,35 @@ msgstr "Supprimer"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: possum/templates/base/manager/credits.html:8
+#: possum/templates/base/manager/credits.html:9
 msgid "free Software under GPLv3 license created by S. Bonnegent."
 msgstr "logiciel libre sous licence GPLv3 créé par S. Bonnegent."
 
-#: possum/templates/base/manager/credits.html:9
+#: possum/templates/base/manager/credits.html:10
 msgid "You are currently using version"
 msgstr "Vous utilisez actuellement la version"
 
-#: possum/templates/base/manager/credits.html:12
+#: possum/templates/base/manager/credits.html:13
 msgid "A big thank you to"
 msgstr "Un grand merci à"
 
-#: possum/templates/base/manager/credits.html:14
+#: possum/templates/base/manager/credits.html:15
 msgid "for the original idea and the need"
 msgstr "pour l'idée originale et le besoin"
 
-#: possum/templates/base/manager/credits.html:15
+#: possum/templates/base/manager/credits.html:16
 msgid "acronym for software"
 msgstr "pour l'acronyme du logiciel"
 
-#: possum/templates/base/manager/credits.html:16
+#: possum/templates/base/manager/credits.html:17
 msgid "for the logo, icons and patience"
 msgstr "pour le logo, les icônes et la patience"
 
-#: possum/templates/base/manager/credits.html:17
+#: possum/templates/base/manager/credits.html:18
 msgid "icon to stop"
 msgstr "pour l'icone d'arrêt"
 
-#: possum/templates/base/manager/credits.html:18
+#: possum/templates/base/manager/credits.html:19
 msgid "icon to logout"
 msgstr "pour l'icone de déconnexion"
 
@@ -291,51 +289,14 @@ msgid "year"
 msgstr "année"
 
 #: possum/templates/base/manager/printer_select_width.html:6
-#: possum/templates/base/manager/printer_view.html:6
+#: possum/templates/printers/kitchen_header.html:6
+#: possum/templates/printers/view.html:6
 msgid "Back printer"
 msgstr "Retour imprimante"
 
 #: possum/templates/base/manager/printer_select_width.html:9
 msgid "Print width for"
 msgstr "Largeur d'impression pour"
-
-#: possum/templates/base/manager/printer_view.html:9
-msgid "Printer"
-msgstr "Imprimante"
-
-#: possum/templates/base/manager/printer_view.html:18
-msgid "Billing"
-msgstr "Facturation"
-
-#: possum/templates/base/manager/printer_view.html:24
-msgid "Ticket width"
-msgstr "Largeur du ticket"
-
-#: possum/templates/base/manager/printer_view.html:38
-msgid "Header"
-msgstr "Entête du ticket (sans accent)"
-
-#: possum/templates/base/manager/printer_view.html:42
-msgid "Footer"
-msgstr "Fin du ticket (sans accent)"
-
-#: possum/templates/base/manager/printer_view.html:46
-#: possum/templates/base/manager/vats/change.html:21
-#: possum/templates/base/manager/vats/new.html:21
-msgid "Save"
-msgstr "Enregistrer"
-
-#: possum/templates/base/manager/printer_view.html:51
-msgid "can print kitchen tickets"
-msgstr "peut imprimer les tickets cuisine"
-
-#: possum/templates/base/manager/printer_view.html:52
-msgid "can print invoices"
-msgstr "peut imprimer les factures"
-
-#: possum/templates/base/manager/printer_view.html:53
-msgid "can print reports"
-msgstr "peut imprimer les rapports"
 
 #: possum/templates/base/manager/vats/change.html:5
 #: possum/templates/base/manager/vats/new.html:5
@@ -360,6 +321,12 @@ msgstr "Taxe"
 #: possum/templates/base/manager/vats/new.html:17
 msgid "example: 20.0"
 msgstr "exemple: 20.0"
+
+#: possum/templates/base/manager/vats/change.html:21
+#: possum/templates/base/manager/vats/new.html:21
+#: possum/templates/printers/view.html:48
+msgid "Save"
+msgstr "Enregistrer"
 
 #: possum/templates/base/manager/vats/home.html:7
 msgid "Add"
@@ -409,3 +376,52 @@ msgstr "Montant"
 #: possum/templates/bill/home.html:15
 msgid "$"
 msgstr "€"
+
+#: possum/templates/printers/kitchen_header.html:9
+msgid "Number of header lines on ticket for kitchen"
+msgstr "Nombre de ligne pour l'entête du ticket cuisine"
+
+#: possum/templates/printers/view.html:9
+msgid "Printer"
+msgstr "Imprimante"
+
+#: possum/templates/printers/view.html:18
+msgid "Billing"
+msgstr "Facturation"
+
+#: possum/templates/printers/view.html:24
+msgid "Ticket width"
+msgstr "Largeur du ticket"
+
+#: possum/templates/printers/view.html:26
+#, fuzzy
+msgid "Kitchen header"
+msgstr "Entête cuisine"
+
+#: possum/templates/printers/view.html:28
+msgid "Test print"
+msgstr "Test d'impression"
+
+#: possum/templates/printers/view.html:31
+msgid "Options"
+msgstr "Options"
+
+#: possum/templates/printers/view.html:40
+msgid "Header"
+msgstr "Entête du ticket (sans accent)"
+
+#: possum/templates/printers/view.html:44
+msgid "Footer"
+msgstr "Fin du ticket (sans accent)"
+
+#: possum/templates/printers/view.html:53
+msgid "can print kitchen tickets"
+msgstr "peut imprimer les tickets cuisine"
+
+#: possum/templates/printers/view.html:54
+msgid "can print invoices"
+msgstr "peut imprimer les factures"
+
+#: possum/templates/printers/view.html:55
+msgid "can print reports"
+msgstr "peut imprimer les rapports"

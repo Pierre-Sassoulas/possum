@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<ul id="back">
+    <li onclick='window.location="{% url "printer_view" printer.id %}"'>
+        {% trans "Back printer" %}</li>
+</ul>
+
+<h1>{% trans "Number of header lines on ticket for kitchen" %}: {{printer.name}}</h1>
+<ul id="numbers">
+    {% for number in numbers %}
+    <li onclick='window.location="{% url "printer_kitchen_header" printer.id number %}"'
+        {% if printer.kitchen_lines == number %}class="enabled"{%endif%}>
+        {{number}}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+

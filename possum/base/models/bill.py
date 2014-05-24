@@ -212,7 +212,7 @@ class Facture(models.Model):
             # we print for each printers in kitchen
             name = "kitchen-%s-%s" % (self.id, follow.category_id)
             for printer in Printer.objects.filter(kitchen=True):
-                if not printer.print_list(todolist, name):
+                if not printer.print_list(todolist, name, kitchen=True):
                     output = False
         return output
 

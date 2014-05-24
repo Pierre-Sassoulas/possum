@@ -17,7 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 from django.contrib import messages
 import logging
 from django.shortcuts import render, redirect, get_object_or_404
@@ -30,16 +29,16 @@ logger = logging.getLogger(__name__)
 
 @permission_required('base.p1')
 def home(request):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['printers'] = Printer.objects.all()
-    return render(request, 'base/manager/printers.html', context)
+    return render(request, 'printers/home.html', context)
 
 
 @permission_required('base.p1')
 def printer_add(request):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['printers'] = Printer().get_available_printers()
-    return render(request, 'base/manager/printer_add.html', context)
+    return render(request, 'printers/add.html', context)
 
 
 @permission_required('base.p1')
@@ -52,7 +51,7 @@ def printer_added(request, name):
 
 @permission_required('base.p1')
 def printer_view(request, printer_id):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['printer'] = get_object_or_404(Printer, pk=printer_id)
     if request.method == 'POST':
         options = request.POST.get('options', '').strip()
@@ -64,18 +63,19 @@ def printer_view(request, printer_id):
         try:
             context['printer'].save()
         except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "Les informations n'ont pu être enregistrées.")
-    return render(request, 'base/manager/printer_view.html', context)
+            messages.add_message(request, messages.ERROR, "Les "
+                                 "informations n'ont pu être "
+                                 "enregistrées")
+    return render(request, 'printers/view.html', context)
 
 
 @permission_required('base.p1')
 def printer_select_width(request, printer_id):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['printer'] = get_object_or_404(Printer, pk=printer_id)
     context['max'] = range(14, 120)
-    return render(request, 'base/manager/printer_select_width.html', context)
+    return render(request, 'base/manager/printer_select_width.html',
+                  context)
 
 
 @permission_required('base.p1')
@@ -90,9 +90,11 @@ def printer_set_width(request, printer_id, number):
 def printer_test_print(request, printer_id):
     printer = get_object_or_404(Printer, pk=printer_id)
     if printer.print_test():
-        messages.add_message(request, messages.SUCCESS, "L'impression a été acceptée.")
+        messages.add_message(request, messages.SUCCESS, "L'impression a"
+                             " été acceptée")
     else:
-        messages.add_message(request, messages.ERROR, "L'impression de test a achouée.")
+        messages.add_message(request, messages.ERROR, "L'impression de "
+                             "test a achouée")
     return redirect('printer_view', printer_id)
 
 
@@ -121,3 +123,19 @@ def printer_change_manager(request, printer_id):
     printer.manager = new
     printer.save()
     return redirect('printer_view', printer_id)
+
+
+@permission_required('base.p1')
+def kitchen_header(request, printer_id, number=-1):
+    """Show and set numbers of lines on ticket header for kitchen
+    """
+    context = {'menu_manager': True, }
+    context['printer'] = get_object_or_404(Printer, pk=printer_id)
+    context['numbers'] = range(0, 15)
+    if number > -1:
+        try:
+            context['printer'].kitchen_lines = int(number)
+            context['printer'].save()
+        except:
+            logger.warning("number of lines incorrect")
+    return render(request, 'printers/kitchen_header.html', context)
