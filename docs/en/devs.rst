@@ -32,6 +32,41 @@ Compliance with agreements is verified by Jenkins,
 the results are available here:
 `Jenkins <https://www.possum-software.org/jenkins>`_.
 
+In short:
+
+* tabulation must be 4 spaces
+* maximum line length: 79 characters (and 72 for docstrings/comments)
+
+How to contribute
+=================
+
+Firstly, you must have an account on `Github <https://github.com>`_.
+
+You have to create a fork `here <https://github.com/possum-software/possum>`_
+(top right).
+
+Now, you will use your fork. This is an example with my username **sbonnegent**.
+Full documentation is on 
+`Github <https://help.github.com/articles/fork-a-repo>`_.
+
+In short::
+
+  $ git clone git@github.com:sbonnegent/possum.git possum-software
+  $ cd possum-software
+  $ git remote add upstream git@github.com:possum-software/possum.git
+  $ git fetch upstream
+  $ cp possum/settings_dev.py possum/settings.py
+  $ ./make update
+  $ echo "make changes"
+  $ git commit -a -m "cool stuff"
+  $ git push
+
+Changes are in your fork, now you can create a pull request directly on Github.
+
+After that, you must check state of your request on 
+`Jenkins <http://www.possum-software.org/jenkins/job/pull_requests/violations/>`_.
+if the number of violations is up, your request will not be accepted.
+
 Change in class
 ===============
 
