@@ -17,7 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 from datetime import datetime
 import os
 import unicodedata
@@ -36,10 +35,9 @@ except:
 
 
 def sans_accent(message):
-    """ Enlève les accents qui peuvent poser
-    problème à l'impression."""
-    return unicodedata.normalize("NFKD", unicode(message)).encode("ascii",
-                                                                  "ignore")
+    """Removes accents that may pose printing problem"""
+    normalize = unicodedata.normalize("NFKD", unicode(message))
+    return normalize.encode("ascii", "ignore")
 
 
 class Printer(models.Model):
@@ -47,8 +45,9 @@ class Printer(models.Model):
     options: options used with pycups.printFile()
     header: you can add a text before the text to print
         (example: Restaurant name)
-    width: largeur du ticket
+    width: width of the ticket
     footer: same as header but after :)
+    kitchen_lines: number of white lines to heading ticket of kitchen
     kitchen: used to print in kitchen
     billing: used to print bills
     manager: used to print rapport, ...
@@ -58,6 +57,7 @@ class Printer(models.Model):
     header = models.TextField(default="")
     footer = models.TextField(default="")
     width = models.PositiveIntegerField(default=27)
+    kitchen_lines = models.IntegerField(default=0)
     kitchen = models.BooleanField(default=False)
     billing = models.BooleanField(default=False)
     manager = models.BooleanField(default=False)
@@ -117,13 +117,14 @@ class Printer(models.Model):
         list_to_print = msg.split("\n")
         return self.print_list(list_to_print, "possum")
 
-    def print_list(self, list_to_print, name, with_header=False):
-        '''
-        Generate a print list from a list which contains informations
+    def print_list(self, list_to_print, name, with_header=False, kitchen=False):
+        """Generate a print list from a list which contains informations
         in string and serveral business objects.
-        '''
+        """
         path = "%s/%s-%s.txt" % (settings.PATH_TICKET, self.id, name)
         ticket_to_print = open(path, "w")
+        if kitchen and self.kitchen_lines:
+            ticket_to_print.write("\n"*self.kitchen_lines)
         if with_header:
             ticket_to_print.write(self.header)
         for line in list_to_print:

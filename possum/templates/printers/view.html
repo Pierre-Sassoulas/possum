@@ -22,11 +22,13 @@
         {% endif %}>{% trans "Manager" %}<sup>3</sup></li>
     <li onclick="window.location='{% url "printer_select_width" printer.id %}'">
         {% trans "Ticket width" %}:</br>{{printer.width}}</li>
+    <li onclick="window.location='{% url "printer_kitchen_header" printer.id %}'">
+        {% trans "Kitchen header" %}:</br>{{printer.kitchen_lines}}</li>
     <li onclick="window.location='{% url "printer_test_print" printer.id %}'">
-        Test d'impression</li>
+        {% trans "Test print" %}</li>
 </ul>
 
-<h2>Options</h2>
+<h2>{% trans "Options" %}</h2>
 <form method='post' action='{% url "printer_view" printer.id %}'>
 {% csrf_token %}
 <table>
