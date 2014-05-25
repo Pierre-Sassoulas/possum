@@ -3,7 +3,7 @@
 {% load i18n %}
 <h1>{% trans "Change color for" %}: {{category.nom}}</h2>
 
-<form method='post' action='/carte/categories/{{category.id}}/color/set/'>
+<form method='post' action='{% url "categories_set_color" category.id %}'>
     {% csrf_token %}
     <input name="color" value="{{ category.color }}">
     <input type='submit' value='{% trans "Change" %}'>

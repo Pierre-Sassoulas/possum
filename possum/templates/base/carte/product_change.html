@@ -3,7 +3,7 @@
 
 <h1>Changement de nom pour: {{product.nom}}</h1>
 
-<form method='post' action='/carte/products/{{product.id}}/change/'>{% csrf_token %}
+<form method='post' action='{% url "products_change" product.id %}'>{% csrf_token %}
 <table>
     <tr>
         <td><b>Nom:</b></td>
