@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-24 21:18+0200\n"
+"POT-Creation-Date: 2014-05-25 10:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,6 +127,26 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: possum/templates/base/carte/name.html:4
+#: possum/templates/base/manager/tables/table.html:9
+#: possum/templates/base/manager/tables/zone.html:9
+msgid "Change name for"
+msgstr ""
+
+#: possum/templates/base/carte/name.html:9
+#: possum/templates/base/manager/tables/table.html:16
+#: possum/templates/base/manager/tables/zone.html:15
+#: possum/templates/base/manager/vats/change.html:21
+#: possum/templates/base/manager/vats/new.html:21
+#: possum/templates/printers/view.html:48
+msgid "Save"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:5
+#: possum/templates/base/manager/home.html:10
+msgid "Credits"
+msgstr ""
+
 #: possum/templates/base/manager/credits.html:9
 msgid "free Software under GPLv3 license created by S. Bonnegent."
 msgstr ""
@@ -165,10 +185,6 @@ msgstr ""
 
 #: possum/templates/base/manager/home.html:8
 msgid "Carte"
-msgstr ""
-
-#: possum/templates/base/manager/home.html:10
-msgid "Credits"
 msgstr ""
 
 #: possum/templates/base/manager/home.html:12
@@ -272,6 +288,16 @@ msgstr ""
 msgid "Print width for"
 msgstr ""
 
+#: possum/templates/base/manager/tables/table.html:5
+#: possum/templates/base/manager/tables/zone.html:5
+msgid "Back"
+msgstr ""
+
+#: possum/templates/base/manager/tables/table.html:10
+#: possum/templates/base/manager/tables/zone.html:10
+msgid "New name"
+msgstr ""
+
 #: possum/templates/base/manager/vats/change.html:5
 #: possum/templates/base/manager/vats/new.html:5
 #: possum/templates/base/manager/vats/view.html:5
@@ -294,12 +320,6 @@ msgstr ""
 #: possum/templates/base/manager/vats/change.html:17
 #: possum/templates/base/manager/vats/new.html:17
 msgid "example: 20.0"
-msgstr ""
-
-#: possum/templates/base/manager/vats/change.html:21
-#: possum/templates/base/manager/vats/new.html:21
-#: possum/templates/printers/view.html:48
-msgid "Save"
 msgstr ""
 
 #: possum/templates/base/manager/vats/home.html:7

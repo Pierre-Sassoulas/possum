@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-24 21:18+0200\n"
+"POT-Creation-Date: 2014-05-25 10:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,6 +140,26 @@ msgstr "Supprimer"
 msgid "Cancel"
 msgstr "Annuler"
 
+#: possum/templates/base/carte/name.html:4
+#: possum/templates/base/manager/tables/table.html:9
+#: possum/templates/base/manager/tables/zone.html:9
+msgid "Change name for"
+msgstr "Changer le nom pour"
+
+#: possum/templates/base/carte/name.html:9
+#: possum/templates/base/manager/tables/table.html:16
+#: possum/templates/base/manager/tables/zone.html:15
+#: possum/templates/base/manager/vats/change.html:21
+#: possum/templates/base/manager/vats/new.html:21
+#: possum/templates/printers/view.html:48
+msgid "Save"
+msgstr "Enregistrer"
+
+#: possum/templates/base/manager/credits.html:5
+#: possum/templates/base/manager/home.html:10
+msgid "Credits"
+msgstr "Crédits"
+
 #: possum/templates/base/manager/credits.html:9
 msgid "free Software under GPLv3 license created by S. Bonnegent."
 msgstr "logiciel libre sous licence GPLv3 créé par S. Bonnegent."
@@ -179,10 +199,6 @@ msgstr "Archives"
 #: possum/templates/base/manager/home.html:8
 msgid "Carte"
 msgstr "Carte"
-
-#: possum/templates/base/manager/home.html:10
-msgid "Credits"
-msgstr "Crédits"
 
 #: possum/templates/base/manager/home.html:12
 msgid "In use"
@@ -298,6 +314,18 @@ msgstr "Retour imprimante"
 msgid "Print width for"
 msgstr "Largeur d'impression pour"
 
+#: possum/templates/base/manager/tables/table.html:5
+#: possum/templates/base/manager/tables/zone.html:5
+#, fuzzy
+msgid "Back"
+msgstr "Retour TVA"
+
+#: possum/templates/base/manager/tables/table.html:10
+#: possum/templates/base/manager/tables/zone.html:10
+#, fuzzy
+msgid "New name"
+msgstr "nom"
+
 #: possum/templates/base/manager/vats/change.html:5
 #: possum/templates/base/manager/vats/new.html:5
 #: possum/templates/base/manager/vats/view.html:5
@@ -321,12 +349,6 @@ msgstr "Taxe"
 #: possum/templates/base/manager/vats/new.html:17
 msgid "example: 20.0"
 msgstr "exemple: 20.0"
-
-#: possum/templates/base/manager/vats/change.html:21
-#: possum/templates/base/manager/vats/new.html:21
-#: possum/templates/printers/view.html:48
-msgid "Save"
-msgstr "Enregistrer"
 
 #: possum/templates/base/manager/vats/home.html:7
 msgid "Add"
