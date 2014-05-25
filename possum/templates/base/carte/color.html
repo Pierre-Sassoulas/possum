@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
+{% load i18n %}
+<h1>{% trans "Change color for" %}: {{category.nom}}</h2>
 
-<h1>Changement de couleur pour: {{category.nom}}</h2>
-
-<form method='post' action='/carte/categories/{{category.id}}/color/set/'>{% csrf_token %}
+<form method='post' action='/carte/categories/{{category.id}}/color/set/'>
+    {% csrf_token %}
     <input name="color" value="{{ category.color }}">
-    <input type='submit' value='Modifier'>
+    <input type='submit' value='{% trans "Change" %}'>
 </form>
 
-<h2>Couleurs actuelles</h2>
+<h2>{% trans "Colors used" %}</h2>
 
 <ul id="categories">
     {% for category in categories %}
         <li class="cat_{{category.id}}">{{category.nom}}</li>
     {% empty %}
-        <li>Aucune categorie disponible.</li>
+        <li>{% trans "No category" %}</li>
     {% endfor %}
 </ul>
 

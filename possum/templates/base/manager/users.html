@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Utilisateurs</h1>
+{% load i18n %}
+<h1>{% trans "Users" %}</h1>
 
 <table>
 <tr>
-	<td><b>Login (*)</b></td>
-	<td><b>Nom</b></td>
-	<td><b>Prénom</b></td>
-	<td><b>Mail</b></td>
+    <td><b>{% trans "Login" %} (*)</b></td>
+    <td><b>{% trans "Name" %}</b></td>
+    <td><b>{% trans "First name" %}</b></td>
+    <td><b>{% trans "Mail" %}</b></td>
     <td></td>
-	<td><b>Actif</b></td>
+    <td><b>{% trans "Active" %}</b></td>
     {% for p in perms_list %}
-	<td align="center"><b>{{p}}</b></td>
+    <td align="center"><b>{{p}}</b></td>
     {% endfor %}
-	<td><b>Mot_de_passe</b></td>
+    <td><b>{% trans "Password" %}</b></td>
 </tr>
 {% for u in users %}
 <!-- permissions get_all_permissions() -->
@@ -37,22 +37,23 @@
     </td>
     </form>
     <td align="center" onclick='window.location="{% url 'users_active' u.id %}"'
-        {% if u.is_active %}bgcolor="#00FF00"> 
+        {% if u.is_active %}bgcolor="#00FF00">
         <input type="checkbox" checked="True"/>
-        {% else %}bgcolor="#FF0000"> 
+        {% else %}bgcolor="#FF0000">
         <input type="checkbox"/>
         {% endif %}
-    </td>        
+    </td>
     {% for p in perms_list %}
     <td align="center" onclick='window.location="{% url 'users_change_perm' u.id p %}"'
-        {% if p in u.permissions %}bgcolor="#00FF00"> 
+        {% if p in u.permissions %}bgcolor="#00FF00">
         <input type="checkbox" checked="True"/>
-        {% else %}bgcolor="#FF0000"> 
+        {% else %}bgcolor="#FF0000">
         <input type="checkbox"/>
         {% endif %}
-    </td>    
+    </td>
     {% endfor %}
-    <td align="center"><a href="{% url 'users_passwd' u.id %}">Changer</a></td>
+    <td align="center"><a href="{% url 'users_passwd' u.id %}">
+        {% trans "Change" %}</a></td>
 </tr>
 {% endfor %}
 <tr><form method='post' action="{% url 'users_new' %}">{% csrf_token %}
@@ -60,16 +61,16 @@
     <td><input name='last_name'></td>
     <td><input name='first_name'></td>
     <td><input name='mail'></td>
-    <td><input type='submit' value='Créer'></td>
+    <td><input type='submit' value='{% trans "Create" %}'></td>
 </form>
 </tr>
 </table>
-<center><p>(*) : information obligatoire</p></center>
-<p>Description des permissions:
+<center><p>(*): {% trans "required information" %}</p></center>
+<p>{% trans "Description permissions" %}:
 <ul id="perms">
-    <li>[P1] peut accèder à la partie Manager</li>
-    <li>[P2] peut accèder à la partie Carte</li>
-    <li>[P3] peut accèder à la partie Commandes</li>
+    <li>[P1] {% trans "can access" %}: {% trans "Manager" %}</li>
+    <li>[P2] {% trans "can access" %}: {% trans "Carte" %}</li>
+    <li>[P3] {% trans "can access" %}: {% trans "Orders" %}</li>
     <!--li>[P4] peut modifier les factures dans la partie Registre (toutes les factures passées)</li>
     <li>[P5] peut utiliser la caisse (enregistrement des commandes et facturation)</li>
     <li>[P6] peut modifier la carte</li>
@@ -80,4 +81,3 @@
 </p>
 
 {% endblock %}
-
