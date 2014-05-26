@@ -11,6 +11,14 @@ Release date: unknown
 * optimization on bills workflow
 * manage options
 
+v0.5.1
+------
+
+Release date: unknown
+
+* full translation for EN and FR
+* header for ticket in kitchen
+
 v0.5.0
 ------
 

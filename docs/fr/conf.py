@@ -25,7 +25,7 @@ master_doc = 'index'
 project = u'Possum'
 copyright = u'2008-%d, Bonnegent Sébastien' % datetime.now().year
 
-version = '0.5.0'
+version = '0.5.1'
 #release = "%s.1" % version
 #release = "%s-rc1" % version
 release = version
