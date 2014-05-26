@@ -30,7 +30,7 @@ The coding convention used for the project following the
 
 Compliance with agreements is verified by Jenkins,
 the results are available here:
-`Jenkins <https://www.possum-software.org/jenkins>`_.
+`Jenkins <http://jenkins.possum-software.org/>`_.
 
 In short:
 
@@ -64,7 +64,7 @@ In short::
 Changes are in your fork, now you can create a pull request directly on Github.
 
 After that, you must check state of your request on 
-`Jenkins <http://www.possum-software.org/jenkins/job/pull_requests/violations/>`_.
+`Jenkins <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
 if the number of violations is up, your request will not be accepted.
 
 You can fetch any new changes from the original repository and merge it

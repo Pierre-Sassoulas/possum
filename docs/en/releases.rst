@@ -6,7 +6,7 @@ v0.6.0
 
 Release date: unknown
 
-* `internationalization <https://docs.djangoproject.com/en/1.6/topics/i18n/translation/>`
+* `internationalization <https://docs.djangoproject.com/en/1.6/topics/i18n/translation/>`_
 * MPD Client
 * optimization on bills workflow
 * manage options
@@ -16,7 +16,7 @@ v0.5.0
 
 Release date: 31/03/2014
 
-* automatic tests with `Jenkins <https://www.possum-software.org/jenkins/>`
+* automatic tests with `Jenkins <http://jenkins.possum-software.org/>`_
 * thick client abandoned in favor of a web interface
 * making remote controls
 * managing multiple printers
@@ -34,7 +34,7 @@ Release date: 2012
 
 * using Django + South for the backend
 * sales statistics
-* opening the project on `GitHub <http://github.com>` and `Freecode <http://freecode.com>`
+* opening the project on `GitHub <http://github.com>`_ and `Freecode <http://freecode.com>`_
 * early documentation with Sphinx
 
 v0.3.0
@@ -54,7 +54,7 @@ Release date: 2009
 
 * use Qt4 instead of Qt3
 * management of an internal cache
-* adding a jukebox (`MPD <http://www.musicpd.org/>` client)
+* adding a jukebox (`MPD <http://www.musicpd.org/>`_ client)
 
 v0.1.0
 ------
