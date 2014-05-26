@@ -5,6 +5,10 @@ POSSUM
     :target: https://www.ohloh.net/p/possum-software
     :alt: Users
 
+.. image:: http://jenkins.possum-software.org/job/possum-dev/badge/icon
+    :target: http://jenkins.possum-software.org/job/possum-dev/
+    :alt: Build Status
+
 
 POSSUM is a software for point of sales (POS) specially designed for restaurant / bar / brasserie.
 
@@ -44,6 +48,5 @@ Devs
 ----
 
 * `Issues <https://github.com/possum-software/possum/issues>`_
-* `Jenkins <https://www.possum-software.org/jenkins/view/Tous/>`_
-
+* `Jenkins <http://jenkins.possum-software.org/>`_
 
