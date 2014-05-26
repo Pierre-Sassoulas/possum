@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Sélectionner un produit à activer pour: {{product.nom}}</h1>
+{% load i18n %}
+<h1>{% trans "Select a product to enable for" %}: {{product.nom}}</h1>
 
 <ul id="products">
     {% for sub in products %}
     <li onclick="window.location='{% url "products_add_produits_ok" product.id sub.id %}'"
         class="cat_{{sub.categorie_id}}">{{sub.nom}}</li>
     {% empty %}
-        <li>Aucun produit disponible.</li>
+        <li>{% trans "No product" %}</li>
     {% endfor %}
 </ul>
 

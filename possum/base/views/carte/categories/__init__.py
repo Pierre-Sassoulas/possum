@@ -29,6 +29,7 @@ from possum.base.models import Printer
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -239,7 +240,7 @@ def categories_surtaxable(request, cat_id):
 def categories_vat_takeaway(request, cat_id):
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=cat_id)
-    context['type_vat'] = 'TVA à emporter'
+    context['type_vat'] = _("VAT take away")
     request.session['vat'] = 'vat_takeaway'
     context['vats'] = VAT.objects.order_by('name')
     return render(request, 'base/carte/categories/select_vat.html', context)
@@ -249,7 +250,7 @@ def categories_vat_takeaway(request, cat_id):
 def categories_vat_onsite(request, cat_id):
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=cat_id)
-    context['type_vat'] = 'TVA sur place'
+    context['type_vat'] = _("VAT on site")
     request.session['vat'] = 'vat_onsite'
     context['vats'] = VAT.objects.order_by('name')
     return render(request, 'base/carte/categories/select_vat.html', context)

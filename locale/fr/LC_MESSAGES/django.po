@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-25 18:45+0200\n"
+"POT-Creation-Date: 2014-05-26 18:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,16 @@ msgstr "Anglais"
 #: possum/common_settings.py:74
 msgid "Russian"
 msgstr "Russe"
+
+#: possum/base/views/carte/categories/__init__.py:243
+#, fuzzy
+msgid "VAT take away"
+msgstr "TVA à emporter"
+
+#: possum/base/views/carte/categories/__init__.py:253
+#, fuzzy
+msgid "VAT on site"
+msgstr "TVA sur place"
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
 msgid "This page is currently unavailable"
@@ -145,12 +155,56 @@ msgstr "Supprimer"
 msgid "Cancel"
 msgstr "Annuler"
 
+#: possum/templates/base/carte/categories.html:6
+msgid "Send by mail"
+msgstr "Envoyer par mail"
+
+#: possum/templates/base/carte/categories.html:8
+#, fuzzy
+msgid "Print"
+msgstr "Imprimer"
+
+#: possum/templates/base/carte/categories.html:11
+#, fuzzy
+msgid "Categories"
+msgstr "Catégories"
+
+#: possum/templates/base/carte/categories.html:14
+#: possum/templates/base/carte/categories/select_vat.html:8
+#: possum/templates/base/manager/vats/home.html:7
+msgid "Add"
+msgstr "Ajouter"
+
+#: possum/templates/base/carte/categories_add.html:4
+#, fuzzy
+msgid "New category"
+msgstr "Nouvelle catégorie"
+
+#: possum/templates/base/carte/categories_add.html:9
+msgid "Priority"
+msgstr "Priorité"
+
+#: possum/templates/base/carte/categories_add.html:13
+#: possum/templates/base/carte/product_change.html:9
+#: possum/templates/base/carte/product_new.html:9
+#: possum/templates/base/manager/users.html:9
+#: possum/templates/base/manager/vats/new.html:13
+msgid "Name"
+msgstr "Nom"
+
+#: possum/templates/base/carte/categories_add.html:17
+#: possum/templates/base/carte/product_new.html:17
+#: possum/templates/base/manager/users.html:64
+msgid "Create"
+msgstr "Créer"
+
 #: possum/templates/base/carte/color.html:4
 #, fuzzy
 msgid "Change color for"
 msgstr "Modifier la couleur pour"
 
 #: possum/templates/base/carte/color.html:9
+#: possum/templates/base/carte/product_change.html:16
 #: possum/templates/base/manager/users.html:56
 #: possum/templates/base/manager/archives/home.html:10
 #: possum/templates/base/manager/tables/home.html:19
@@ -162,11 +216,14 @@ msgid "Colors used"
 msgstr "Couleurs utilisées"
 
 #: possum/templates/base/carte/color.html:18
+#: possum/templates/base/carte/product_category.html:13
+#: possum/templates/base/carte/product_select_categories_ok.html:11
 #, fuzzy
 msgid "No category"
 msgstr "Aucune catégorie"
 
 #: possum/templates/base/carte/name.html:4
+#: possum/templates/base/carte/product_change.html:4
 #: possum/templates/base/manager/tables/table.html:9
 #: possum/templates/base/manager/tables/zone.html:9
 msgid "Change name for"
@@ -181,10 +238,41 @@ msgstr "Changer le nom pour"
 msgid "Save"
 msgstr "Enregistrer"
 
-#: possum/templates/base/carte/categories/select_vat.html:8
-#: possum/templates/base/manager/vats/home.html:7
-msgid "Add"
-msgstr "Ajouter"
+#: possum/templates/base/carte/product.html:6
+#: possum/templates/base/manager/archives/invoice.html:5
+#: possum/templates/base/manager/tables/table.html:5
+#: possum/templates/base/manager/tables/zone.html:5
+#: possum/templates/bill/options.html:7
+msgid "Back"
+msgstr "Retour"
+
+#: possum/templates/base/carte/product_category.html:4
+msgid "Select a category for"
+msgstr "Sélectionner une catégorie pour"
+
+#: possum/templates/base/carte/product_change.html:13
+#: possum/templates/base/carte/product_new.html:13
+msgid "Price including tax"
+msgstr "Prix TTC"
+
+#: possum/templates/base/carte/product_new.html:4
+#, fuzzy
+msgid "New product"
+msgstr "Nouveau produit"
+
+#: possum/templates/base/carte/product_select_categories_ok.html:4
+msgid "Select a category to enable for"
+msgstr "Sélectionner une catégorie à activer pour"
+
+#: possum/templates/base/carte/product_select_produits_ok.html:4
+#, fuzzy
+msgid "Select a product to enable for"
+msgstr "Sélectionner un produit à activer pour"
+
+#: possum/templates/base/carte/product_select_produits_ok.html:11
+#, fuzzy
+msgid "No product"
+msgstr "Aucun produit"
 
 #: possum/templates/base/manager/credits.html:5
 #: possum/templates/base/manager/home.html:10
@@ -348,11 +436,6 @@ msgstr "Retour imprimante"
 msgid "Print width for"
 msgstr "Largeur d'impression pour"
 
-#: possum/templates/base/manager/users.html:9
-#: possum/templates/base/manager/vats/new.html:13
-msgid "Name"
-msgstr "Nom"
-
 #: possum/templates/base/manager/users.html:10
 msgid "First name"
 msgstr "Prénom"
@@ -368,10 +451,6 @@ msgstr "Actif"
 #: possum/templates/base/manager/users.html:17
 msgid "Password"
 msgstr "Mot de passe"
-
-#: possum/templates/base/manager/users.html:64
-msgid "Create"
-msgstr "Créer"
 
 #: possum/templates/base/manager/users.html:68
 msgid "required information"
@@ -422,12 +501,6 @@ msgstr "€"
 #: possum/templates/base/manager/archives/home.html:24
 msgid "No bill"
 msgstr "Pas de facture"
-
-#: possum/templates/base/manager/archives/invoice.html:5
-#: possum/templates/base/manager/tables/table.html:5
-#: possum/templates/base/manager/tables/zone.html:5
-msgid "Back"
-msgstr "Retour"
 
 #: possum/templates/base/manager/archives/invoice.html:8
 #, fuzzy
@@ -524,6 +597,24 @@ msgstr ""
 #: possum/templates/bill/home.html:8
 msgid "New order"
 msgstr "Nouvelle commande"
+
+#: possum/templates/bill/options.html:3
+#, fuzzy
+msgid "Bill"
+msgstr "Facture"
+
+#: possum/templates/bill/options.html:12
+msgid "We can not put options on a menu"
+msgstr "On ne peux pas mettre d'options sur un menu"
+
+#: possum/templates/bill/options.html:14
+msgid "Green options are selected, you must press it to enable / disable"
+msgstr "Les options en vert sont sélectionnées, il faut appuyer dessus pour activer/désactiver"
+
+#: possum/templates/bill/options.html:24
+#, fuzzy
+msgid "No option"
+msgstr "Aucune option"
 
 #: possum/templates/printers/kitchen_header.html:9
 msgid "Number of header lines on ticket for kitchen"

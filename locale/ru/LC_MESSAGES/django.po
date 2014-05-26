@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-25 18:45+0200\n"
+"POT-Creation-Date: 2014-05-26 18:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,14 @@ msgstr ""
 
 #: possum/common_settings.py:74
 msgid "Russian"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:243
+msgid "VAT take away"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:253
+msgid "VAT on site"
 msgstr ""
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
@@ -132,11 +140,52 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: possum/templates/base/carte/categories.html:6
+msgid "Send by mail"
+msgstr ""
+
+#: possum/templates/base/carte/categories.html:8
+msgid "Print"
+msgstr ""
+
+#: possum/templates/base/carte/categories.html:11
+msgid "Categories"
+msgstr ""
+
+#: possum/templates/base/carte/categories.html:14
+#: possum/templates/base/carte/categories/select_vat.html:8
+#: possum/templates/base/manager/vats/home.html:7
+msgid "Add"
+msgstr ""
+
+#: possum/templates/base/carte/categories_add.html:4
+msgid "New category"
+msgstr ""
+
+#: possum/templates/base/carte/categories_add.html:9
+msgid "Priority"
+msgstr ""
+
+#: possum/templates/base/carte/categories_add.html:13
+#: possum/templates/base/carte/product_change.html:9
+#: possum/templates/base/carte/product_new.html:9
+#: possum/templates/base/manager/users.html:9
+#: possum/templates/base/manager/vats/new.html:13
+msgid "Name"
+msgstr ""
+
+#: possum/templates/base/carte/categories_add.html:17
+#: possum/templates/base/carte/product_new.html:17
+#: possum/templates/base/manager/users.html:64
+msgid "Create"
+msgstr ""
+
 #: possum/templates/base/carte/color.html:4
 msgid "Change color for"
 msgstr ""
 
 #: possum/templates/base/carte/color.html:9
+#: possum/templates/base/carte/product_change.html:16
 #: possum/templates/base/manager/users.html:56
 #: possum/templates/base/manager/archives/home.html:10
 #: possum/templates/base/manager/tables/home.html:19
@@ -148,10 +197,13 @@ msgid "Colors used"
 msgstr ""
 
 #: possum/templates/base/carte/color.html:18
+#: possum/templates/base/carte/product_category.html:13
+#: possum/templates/base/carte/product_select_categories_ok.html:11
 msgid "No category"
 msgstr ""
 
 #: possum/templates/base/carte/name.html:4
+#: possum/templates/base/carte/product_change.html:4
 #: possum/templates/base/manager/tables/table.html:9
 #: possum/templates/base/manager/tables/zone.html:9
 msgid "Change name for"
@@ -166,9 +218,37 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: possum/templates/base/carte/categories/select_vat.html:8
-#: possum/templates/base/manager/vats/home.html:7
-msgid "Add"
+#: possum/templates/base/carte/product.html:6
+#: possum/templates/base/manager/archives/invoice.html:5
+#: possum/templates/base/manager/tables/table.html:5
+#: possum/templates/base/manager/tables/zone.html:5
+#: possum/templates/bill/options.html:7
+msgid "Back"
+msgstr ""
+
+#: possum/templates/base/carte/product_category.html:4
+msgid "Select a category for"
+msgstr ""
+
+#: possum/templates/base/carte/product_change.html:13
+#: possum/templates/base/carte/product_new.html:13
+msgid "Price including tax"
+msgstr ""
+
+#: possum/templates/base/carte/product_new.html:4
+msgid "New product"
+msgstr ""
+
+#: possum/templates/base/carte/product_select_categories_ok.html:4
+msgid "Select a category to enable for"
+msgstr ""
+
+#: possum/templates/base/carte/product_select_produits_ok.html:4
+msgid "Select a product to enable for"
+msgstr ""
+
+#: possum/templates/base/carte/product_select_produits_ok.html:11
+msgid "No product"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:5
@@ -320,11 +400,6 @@ msgstr ""
 msgid "Print width for"
 msgstr ""
 
-#: possum/templates/base/manager/users.html:9
-#: possum/templates/base/manager/vats/new.html:13
-msgid "Name"
-msgstr ""
-
 #: possum/templates/base/manager/users.html:10
 msgid "First name"
 msgstr ""
@@ -339,10 +414,6 @@ msgstr ""
 
 #: possum/templates/base/manager/users.html:17
 msgid "Password"
-msgstr ""
-
-#: possum/templates/base/manager/users.html:64
-msgid "Create"
 msgstr ""
 
 #: possum/templates/base/manager/users.html:68
@@ -393,12 +464,6 @@ msgstr ""
 
 #: possum/templates/base/manager/archives/home.html:24
 msgid "No bill"
-msgstr ""
-
-#: possum/templates/base/manager/archives/invoice.html:5
-#: possum/templates/base/manager/tables/table.html:5
-#: possum/templates/base/manager/tables/zone.html:5
-msgid "Back"
 msgstr ""
 
 #: possum/templates/base/manager/archives/invoice.html:8
@@ -492,6 +557,22 @@ msgstr ""
 
 #: possum/templates/bill/home.html:8
 msgid "New order"
+msgstr ""
+
+#: possum/templates/bill/options.html:3
+msgid "Bill"
+msgstr ""
+
+#: possum/templates/bill/options.html:12
+msgid "We can not put options on a menu"
+msgstr ""
+
+#: possum/templates/bill/options.html:14
+msgid "Green options are selected, you must press it to enable / disable"
+msgstr ""
+
+#: possum/templates/bill/options.html:24
+msgid "No option"
 msgstr ""
 
 #: possum/templates/printers/kitchen_header.html:9

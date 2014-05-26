@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
     <li onclick='window.location="{% url 'categories_view' product.categorie.id %}"'>
-        Retour catégorie</li>
+        {% trans "Back" %}</li>
 </ul>
 
 <h1>Produit: {{product.nom}}</h2>
-<p>Attention, en fonction des imprimantes, il est recommandé de limiter l'utilisation des accents et des noms longs.</p>
+<p>Attention, en fonction des imprimantes, il est recommandé de limiter
+l'utilisation des accents et des noms longs.</p>
 <ul id="product_info">
     <li onclick='window.location="{% url 'products_view' product.id %}"'>
         Nom:</br>
         {{product.nom}}</li>
-        <li onclick='window.location="{% url 'products_category' product.id %}"' 
+        <li onclick='window.location="{% url 'products_category' product.id %}"'
             class="cat_{{product.categorie_id}}">
         Catégorie:</br>{{product.categorie}}</li>
         <li onclick='window.location="{% url 'products_enable' product.id %}"'
@@ -82,7 +83,7 @@ d'abord activer des catégories de produits ici avant de pouvoir activer des pro
     <li onclick='window.location="{% url 'products_select_categories_ok' product.id %}"'>
         Activer une catégorie</li>
     {% for category in product.categories_ok.iterator %}
-    <li onclick='window.location="{% url 'products_del_categories_ok' product.id category.id %}"' 
+    <li onclick='window.location="{% url 'products_del_categories_ok' product.id category.id %}"'
         class="cat_{{category.id}}">
         {{category.nom}}
         </li>
@@ -96,8 +97,8 @@ d'abord activer des catégories de produits ici avant de pouvoir activer des pro
         Activer un produit</li>
     {% for sub in product.produits_ok.iterator %}
         {% if sub.actif %}
-    <li 
-        onclick='window.location="{% url 'products_del_produits_ok' product.id sub.id %}"' 
+    <li
+        onclick='window.location="{% url 'products_del_produits_ok' product.id sub.id %}"'
         class="cat_{{sub.categorie_id}}">{{sub.nom}}
     </li>
         {% endif %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Sélectionner une catégorie pour: {{product.nom}}</h1>
+{% load i18n %}
+<h1>{% trans "Select a category for" %}: {{product.nom}}</h1>
 
 <ul id="categories">
     {% for category in categories %}
@@ -10,7 +10,7 @@
         {{category.nom}}
         </li>
     {% empty %}
-        <li>Aucune categorie disponible.</li>
+        <li>{% trans "No category" %}</li>
     {% endfor %}
 </ul>
 
