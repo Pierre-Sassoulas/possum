@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <h1>{{type_vat}} pour: {{category.nom}}</h1>
 
 <ul id="vats">
     <li onclick="window.location='{% url "vat_new" %}'">
-        Ajouter
+        {% trans "Add" %}
     </li>
     {% for vat in vats %}
     <li onclick="window.location='{% url "categories_set_vat" category.id vat.id %}'">
@@ -16,4 +16,3 @@
 </ul>
 
 {% endblock %}
-

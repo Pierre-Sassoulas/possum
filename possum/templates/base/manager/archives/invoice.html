@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "archives" %}'">Retour archives</li>
+    <li onclick="window.location='{% url "archives" %}'">{% trans "Back" %}</li>
 </ul>
 
-<h1>Commande [{{bill}}]</h1>
+<h1>{% trans "Order" %} [{{bill}}]</h1>
 <ul id="bill_info">
-    <li>Table:</br>{{bill.table.nom}}</li>
-    <li>Couverts:</br>{{bill.couverts}}</li>
+    <li>{% trans "Table" %}:</br>{{bill.table.nom}}</li>
+    <li>{% trans "Guests" %}:</br>{{bill.couverts}}</li>
     <li
         {% if bill.onsite %}
-            class="enabled">sur place
+            class="enabled">{% trans "on site" %}
         {% else %}
-            class="disabled">à emporter
+            class="disabled">{% trans "take away" %}
         {% endif %}
     </li>
-    <li>Total TTC:</br>{{bill.total_ttc}}€</li>
-    <li>Restant à payer:</br>{{bill.restant_a_payer}}€</li>
+    <li>{% trans "Total with all taxes" %}:</br>{{bill.total_ttc}}{% trans "$" %}</li>
+    <li>{% trans "Remaining to be paid" %}:</br>{{bill.restant_a_payer}}{% trans "$" %}</li>
 </ul>
 
-<h2>Produits</h2>
+<h2>{% trans "Products" %}</h2>
 <ul id="products_sold">
     {% for sold in products_sold %}
         {% if sold.count > 1 %}
@@ -43,30 +43,29 @@
     {% endfor %}
 </ul>
 
-<h2>Paiements</h2>
+<h2>{% trans "Payments" %}</h2>
 <ul id="paiements">
     {% for payment in bill.paiements.iterator %}
         <li>{{payment.type.nom}} {{payment.montant}}</li>
     {% endfor %}
 </ul>
 
-<h2>TVA</h2>
+<h2>{% trans "VAT" %}</h2>
 <ul id="vats">
     {% for vat in bill.vats.iterator %}
     <li>{{vat}}</li>
     {% empty %}
-    <li>Aucune TVA</li>
+    <li>{% trans "No VAT" %}</li>
     {% endfor %}
 </ul>
 
-<h2>Suivi en cuisine</h2>
+<h2>{% trans "Kitchen" %}</h2>
 <ul id="kitchen">
     {% for follow in bill.following.iterator %}
     <li class="cat_{{follow.category_id}}">{{follow}}</li>
     {% empty %}
-    <li>Aucun suivi.</li>
+    <li>{% trans "No follow" %}</li>
     {% endfor %}
 </ul>
 
 {% endblock %}
-

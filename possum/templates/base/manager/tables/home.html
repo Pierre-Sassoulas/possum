@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Gestion des tables</h1>
+{% load i18n %}
+<h1>{% trans "Tables" %}</h1>
 
 <ul id="zones">
-    <li onclick="window.location='{% url "tables_zone_new" %}'">Ajouter une zone</li>
+    <li onclick="window.location='{% url "tables_zone_new" %}'">
+        {% trans "Add a room" %}</li>
 </ul>
 
 {% for zone in zones %}
     <h2>{{zone.nom}}</h2>
     {% if zone.surtaxe %}
-    <p>Cette zone est soumise à une surtaxe.</p>
+    <p>{% trans "This area is subject to a surcharge" %}</p>
     {% endif %}
 
 <ul id="zones">
-    <li onclick="window.location='{% url "tables_zone" zone.id %}'">Modifier</li>
+    <li onclick="window.location='{% url "tables_zone" zone.id %}'">
+        {% trans "Change" %}</li>
     <li onclick="window.location='{% url "tables_zone_delete" zone.id %}'"
-        class="critical">Supprimer</li>
+        class="critical">{% trans "Remove" %}</li>
 </ul>
     <ul id="tables">
         <li onclick="window.location='{% url "tables_table_new" zone.id %}'">+</li>

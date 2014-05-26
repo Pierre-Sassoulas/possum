@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-25 10:47+0200\n"
+"POT-Creation-Date: 2014-05-25 18:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,17 +40,21 @@ msgid "Home"
 msgstr "Accueil"
 
 #: possum/templates/base.html:41 possum/templates/home.html:6
-#: possum/templates/home.html.py:7
+#: possum/templates/home.html.py:7 possum/templates/base/manager/users.html:73
 msgid "Orders"
 msgstr "Commandes"
 
 #: possum/templates/base.html:47 possum/templates/home.html:8
-#: possum/templates/home.html.py:9 possum/templates/printers/view.html:14
+#: possum/templates/home.html.py:9
+#: possum/templates/base/manager/archives/invoice.html:62
+#: possum/templates/printers/view.html:14
 msgid "Kitchen"
 msgstr "Cuisine"
 
 #: possum/templates/base.html:53 possum/templates/home.html:10
-#: possum/templates/home.html.py:11 possum/templates/printers/view.html:22
+#: possum/templates/home.html.py:11
+#: possum/templates/base/manager/users.html:71
+#: possum/templates/printers/view.html:22
 msgid "Manager"
 msgstr "Gestion"
 
@@ -67,7 +71,7 @@ msgstr "Déconnexion"
 msgid "Shutdown server"
 msgstr "Éteindre le serveur"
 
-#: possum/templates/login.html:15
+#: possum/templates/login.html:15 possum/templates/base/manager/users.html:8
 msgid "Login"
 msgstr "Connexion"
 
@@ -133,12 +137,34 @@ msgid "no report"
 msgstr "pas de report"
 
 #: possum/templates/base/categories_delete.html:38
+#: possum/templates/base/manager/tables/home.html:21
 msgid "Remove"
 msgstr "Supprimer"
 
 #: possum/templates/base/categories_delete.html:39
 msgid "Cancel"
 msgstr "Annuler"
+
+#: possum/templates/base/carte/color.html:4
+#, fuzzy
+msgid "Change color for"
+msgstr "Modifier la couleur pour"
+
+#: possum/templates/base/carte/color.html:9
+#: possum/templates/base/manager/users.html:56
+#: possum/templates/base/manager/archives/home.html:10
+#: possum/templates/base/manager/tables/home.html:19
+msgid "Change"
+msgstr "Modifier"
+
+#: possum/templates/base/carte/color.html:12
+msgid "Colors used"
+msgstr "Couleurs utilisées"
+
+#: possum/templates/base/carte/color.html:18
+#, fuzzy
+msgid "No category"
+msgstr "Aucune catégorie"
 
 #: possum/templates/base/carte/name.html:4
 #: possum/templates/base/manager/tables/table.html:9
@@ -154,6 +180,11 @@ msgstr "Changer le nom pour"
 #: possum/templates/printers/view.html:48
 msgid "Save"
 msgstr "Enregistrer"
+
+#: possum/templates/base/carte/categories/select_vat.html:8
+#: possum/templates/base/manager/vats/home.html:7
+msgid "Add"
+msgstr "Ajouter"
 
 #: possum/templates/base/manager/credits.html:5
 #: possum/templates/base/manager/home.html:10
@@ -197,6 +228,7 @@ msgid "Archives"
 msgstr "Archives"
 
 #: possum/templates/base/manager/home.html:8
+#: possum/templates/base/manager/users.html:72
 msgid "Carte"
 msgstr "Carte"
 
@@ -213,17 +245,20 @@ msgid "Notes"
 msgstr "Notes"
 
 #: possum/templates/base/manager/home.html:18
+#: possum/templates/base/manager/tables/home.html:4
 #, fuzzy
 msgid "Tables"
 msgstr "Tables"
 
 #: possum/templates/base/manager/home.html:20
+#: possum/templates/base/manager/archives/invoice.html:53
 #: possum/templates/base/manager/vats/home.html:4
 #: possum/templates/base/manager/vats/view.html:8
 msgid "VAT"
 msgstr "TVA"
 
 #: possum/templates/base/manager/home.html:22
+#: possum/templates/base/manager/users.html:4
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -255,8 +290,7 @@ msgstr "Travail en cours ..."
 #, python-format
 msgid ""
 "\n"
-"There are currently %(bills_to_update)s invoice"
-"%(bills_to_update|pluralize)s\n"
+"There are currently %(bills_to_update)s bill%(bills_to_update|pluralize)s\n"
 "resulted in waiting.\n"
 msgstr ""
 "\n"
@@ -314,17 +348,137 @@ msgstr "Retour imprimante"
 msgid "Print width for"
 msgstr "Largeur d'impression pour"
 
+#: possum/templates/base/manager/users.html:9
+#: possum/templates/base/manager/vats/new.html:13
+msgid "Name"
+msgstr "Nom"
+
+#: possum/templates/base/manager/users.html:10
+msgid "First name"
+msgstr "Prénom"
+
+#: possum/templates/base/manager/users.html:11
+msgid "Mail"
+msgstr ""
+
+#: possum/templates/base/manager/users.html:13
+msgid "Active"
+msgstr "Actif"
+
+#: possum/templates/base/manager/users.html:17
+msgid "Password"
+msgstr "Mot de passe"
+
+#: possum/templates/base/manager/users.html:64
+msgid "Create"
+msgstr "Créer"
+
+#: possum/templates/base/manager/users.html:68
+msgid "required information"
+msgstr "information obligatoire"
+
+#: possum/templates/base/manager/users.html:69
+msgid "Description permissions"
+msgstr "Description des permissions"
+
+#: possum/templates/base/manager/users.html:71
+#: possum/templates/base/manager/users.html:72
+#: possum/templates/base/manager/users.html:73
+msgid "can access"
+msgstr "peut accèder à la partie"
+
+#: possum/templates/base/manager/archives/home.html:4
+msgid "Archive of"
+msgstr "Archive du"
+
+#: possum/templates/base/manager/archives/home.html:14
+msgid "Bills"
+msgstr "Factures"
+
+#: possum/templates/base/manager/archives/home.html:19
+#: possum/templates/base/manager/archives/invoice.html:11
+#: possum/templates/bill/home.html:14
+msgid "Guests"
+msgstr "Couverts"
+
+#: possum/templates/base/manager/archives/home.html:20
+#: possum/templates/base/manager/archives/invoice.html:10
+#: possum/templates/bill/home.html:13
+msgid "Table"
+msgstr "Table"
+
+#: possum/templates/base/manager/archives/home.html:21
+#: possum/templates/bill/home.html:15
+msgid "Amount"
+msgstr "Montant"
+
+#: possum/templates/base/manager/archives/home.html:21
+#: possum/templates/base/manager/archives/invoice.html:19
+#: possum/templates/base/manager/archives/invoice.html:20
+#: possum/templates/bill/home.html:15
+msgid "$"
+msgstr "€"
+
+#: possum/templates/base/manager/archives/home.html:24
+msgid "No bill"
+msgstr "Pas de facture"
+
+#: possum/templates/base/manager/archives/invoice.html:5
 #: possum/templates/base/manager/tables/table.html:5
 #: possum/templates/base/manager/tables/zone.html:5
-#, fuzzy
 msgid "Back"
-msgstr "Retour TVA"
+msgstr "Retour"
+
+#: possum/templates/base/manager/archives/invoice.html:8
+#, fuzzy
+msgid "Order"
+msgstr "Commande"
+
+#: possum/templates/base/manager/archives/invoice.html:14
+msgid "on site"
+msgstr "sur place"
+
+#: possum/templates/base/manager/archives/invoice.html:16
+msgid "take away"
+msgstr "à emporter"
+
+#: possum/templates/base/manager/archives/invoice.html:19
+msgid "Total with all taxes"
+msgstr "Total TTC"
+
+#: possum/templates/base/manager/archives/invoice.html:20
+msgid "Remaining to be paid"
+msgstr "Restant à payer"
+
+#: possum/templates/base/manager/archives/invoice.html:23
+msgid "Products"
+msgstr "Produits"
+
+#: possum/templates/base/manager/archives/invoice.html:46
+msgid "Payments"
+msgstr "Paiements"
+
+#: possum/templates/base/manager/archives/invoice.html:58
+#: possum/templates/base/manager/vats/new.html:34
+msgid "No VAT"
+msgstr "Aucune TVA"
+
+#: possum/templates/base/manager/archives/invoice.html:67
+msgid "No follow"
+msgstr "Pas de suivi"
+
+#: possum/templates/base/manager/tables/home.html:8
+msgid "Add a room"
+msgstr "Ajouter une salle"
+
+#: possum/templates/base/manager/tables/home.html:14
+msgid "This area is subject to a surcharge"
+msgstr "Cette salle est soumise à une surtaxe"
 
 #: possum/templates/base/manager/tables/table.html:10
 #: possum/templates/base/manager/tables/zone.html:10
-#, fuzzy
 msgid "New name"
-msgstr "nom"
+msgstr "Nouveau nom"
 
 #: possum/templates/base/manager/vats/change.html:5
 #: possum/templates/base/manager/vats/new.html:5
@@ -350,25 +504,13 @@ msgstr "Taxe"
 msgid "example: 20.0"
 msgstr "exemple: 20.0"
 
-#: possum/templates/base/manager/vats/home.html:7
-msgid "Add"
-msgstr "Ajouter"
-
 #: possum/templates/base/manager/vats/new.html:8
 msgid "New VAT"
 msgstr "Nouvelle TVA"
 
-#: possum/templates/base/manager/vats/new.html:13
-msgid "Name"
-msgstr "Nom"
-
 #: possum/templates/base/manager/vats/new.html:26
 msgid "Existing VAT"
 msgstr "TVA existantes"
-
-#: possum/templates/base/manager/vats/new.html:34
-msgid "No VAT"
-msgstr "Aucune TVA"
 
 #: possum/templates/bill/home.html:4
 #, python-format
@@ -382,22 +524,6 @@ msgstr ""
 #: possum/templates/bill/home.html:8
 msgid "New order"
 msgstr "Nouvelle commande"
-
-#: possum/templates/bill/home.html:13
-msgid "Table"
-msgstr "Table"
-
-#: possum/templates/bill/home.html:14
-msgid "Guests"
-msgstr "Couverts"
-
-#: possum/templates/bill/home.html:15
-msgid "Amount"
-msgstr "Montant"
-
-#: possum/templates/bill/home.html:15
-msgid "$"
-msgstr "€"
 
 #: possum/templates/printers/kitchen_header.html:9
 msgid "Number of header lines on ticket for kitchen"
@@ -441,7 +567,7 @@ msgid "can print kitchen tickets"
 msgstr "peut imprimer les tickets cuisine"
 
 #: possum/templates/printers/view.html:54
-msgid "can print invoices"
+msgid "can print bills"
 msgstr "peut imprimer les factures"
 
 #: possum/templates/printers/view.html:55

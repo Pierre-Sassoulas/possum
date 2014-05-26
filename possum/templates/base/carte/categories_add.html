@@ -3,7 +3,7 @@
 
 <h1>Nouvelle catégorie</h1>
 
-<form method='post' action='/carte/categories/new/'>{% csrf_token %}
+<form method='post' action='{% url "categories_new" %}'>{% csrf_token %}
 <table>
 <tr>
     <td><b>Priorite</b></td>
