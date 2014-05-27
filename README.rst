@@ -16,6 +16,11 @@ POSSUM
     :target: https://readthedocs.org/builds/possum/
     :scale: 100%
 
+.. image:: https://coveralls.io/repos/sbonnegent/possum/badge.png
+    :target: https://coveralls.io/r/sbonnegent/possum
+    :alt: Coverage
+    :scale: 100%
+
 
 POSSUM is a software for point of sales (POS) specially designed for restaurant / bar / brasserie.
 
