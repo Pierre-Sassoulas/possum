@@ -32,3 +32,5 @@ JENKINS_TASKS = (
 
 COVERAGE_EXCLUDES_FOLDERS = ['possum/base/migrations/*',
                              'possum/stats/migrations/*', 'env/*']
+
+#COVERAGE_REPORT_HTML_OUTPUT_DIR = 'reports/coverage.html/'
