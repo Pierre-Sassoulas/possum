@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-26 18:13+0200\n"
+"POT-Creation-Date: 2014-05-27 18:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,8 @@ msgstr "Déconnexion"
 msgid "Shutdown server"
 msgstr "Éteindre le serveur"
 
-#: possum/templates/login.html:15 possum/templates/base/manager/users.html:8
+#: possum/templates/login.html:15 possum/templates/base/profile.html:21
+#: possum/templates/base/manager/users.html:8
 msgid "Login"
 msgstr "Connexion"
 
@@ -155,6 +156,62 @@ msgstr "Supprimer"
 msgid "Cancel"
 msgstr "Annuler"
 
+#: possum/templates/base/profile.html:4
+msgid "Profile"
+msgstr ""
+
+#: possum/templates/base/profile.html:6
+msgid ""
+"\n"
+"Your login information is personal, you do not need to\n"
+"communicate"
+msgstr ""
+"\n"
+"Vos identifiants de connexion sont personnels, vous ne devez pas les\n"
+"communiquer"
+
+#: possum/templates/base/profile.html:15
+#: possum/templates/base/carte/categories_add.html:13
+#: possum/templates/base/carte/product_change.html:9
+#: possum/templates/base/carte/product_new.html:9
+#: possum/templates/base/manager/users.html:9
+#: possum/templates/base/manager/vats/new.html:13
+msgid "Name"
+msgstr "Nom"
+
+#: possum/templates/base/profile.html:18
+#: possum/templates/base/manager/users.html:10
+msgid "First name"
+msgstr "Prénom"
+
+#: possum/templates/base/profile.html:24
+#: possum/templates/base/manager/users.html:11
+msgid "Mail"
+msgstr ""
+
+#: possum/templates/base/profile.html:29
+#, fuzzy
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+#: possum/templates/base/profile.html:33
+msgid "Current password"
+msgstr "Mot de passe actuel"
+
+#: possum/templates/base/profile.html:37 possum/templates/base/profile.html:41
+#, fuzzy
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: possum/templates/base/profile.html:45
+#: possum/templates/base/carte/color.html:9
+#: possum/templates/base/carte/product_change.html:16
+#: possum/templates/base/manager/users.html:56
+#: possum/templates/base/manager/archives/home.html:10
+#: possum/templates/base/manager/tables/home.html:19
+msgid "Change"
+msgstr "Modifier"
+
 #: possum/templates/base/carte/categories.html:6
 msgid "Send by mail"
 msgstr "Envoyer par mail"
@@ -184,14 +241,6 @@ msgstr "Nouvelle catégorie"
 msgid "Priority"
 msgstr "Priorité"
 
-#: possum/templates/base/carte/categories_add.html:13
-#: possum/templates/base/carte/product_change.html:9
-#: possum/templates/base/carte/product_new.html:9
-#: possum/templates/base/manager/users.html:9
-#: possum/templates/base/manager/vats/new.html:13
-msgid "Name"
-msgstr "Nom"
-
 #: possum/templates/base/carte/categories_add.html:17
 #: possum/templates/base/carte/product_new.html:17
 #: possum/templates/base/manager/users.html:64
@@ -202,14 +251,6 @@ msgstr "Créer"
 #, fuzzy
 msgid "Change color for"
 msgstr "Modifier la couleur pour"
-
-#: possum/templates/base/carte/color.html:9
-#: possum/templates/base/carte/product_change.html:16
-#: possum/templates/base/manager/users.html:56
-#: possum/templates/base/manager/archives/home.html:10
-#: possum/templates/base/manager/tables/home.html:19
-msgid "Change"
-msgstr "Modifier"
 
 #: possum/templates/base/carte/color.html:12
 msgid "Colors used"
@@ -436,14 +477,6 @@ msgstr "Retour imprimante"
 msgid "Print width for"
 msgstr "Largeur d'impression pour"
 
-#: possum/templates/base/manager/users.html:10
-msgid "First name"
-msgstr "Prénom"
-
-#: possum/templates/base/manager/users.html:11
-msgid "Mail"
-msgstr ""
-
 #: possum/templates/base/manager/users.html:13
 msgid "Active"
 msgstr "Actif"
@@ -607,9 +640,11 @@ msgstr "Facture"
 msgid "We can not put options on a menu"
 msgstr "On ne peux pas mettre d'options sur un menu"
 
-#: possum/templates/bill/options.html:14
+#: possum/templates/bill/options.html:15
 msgid "Green options are selected, you must press it to enable / disable"
-msgstr "Les options en vert sont sélectionnées, il faut appuyer dessus pour activer/désactiver"
+msgstr ""
+"Les options en vert sont sélectionnées, il faut appuyer dessus pour activer/"
+"désactiver"
 
 #: possum/templates/bill/options.html:24
 #, fuzzy
