@@ -30,3 +30,4 @@ simplejson==3.3.3
 six==1.5.2
 sqlparse==0.1.11
 wsgiref==0.1.2
+python-coveralls==2.4.2
