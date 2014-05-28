@@ -2,56 +2,59 @@
 {% block content %}
 {% load i18n %}
 <ul id="back">
-    <li onclick='window.location="{% url 'categories_view' product.categorie.id %}"'>
-        {% trans "Back" %}</li>
+<li onclick='window.location="{% url 'categories_view' product.categorie.id %}"'
+        >{% trans "Back" %}</li>
 </ul>
 
-<h1>Produit: {{product.nom}}</h2>
-<p>Attention, en fonction des imprimantes, il est recommandé de limiter
-l'utilisation des accents et des noms longs.</p>
+<h1>{% trans "Product" %}: {{product.nom}}</h2>
+<p>{% blocktrans %}Based printers, it is recommended to limit
+the use of accents and long names{% endblocktrans %}</p>
 <ul id="product_info">
     <li onclick='window.location="{% url 'products_view' product.id %}"'>
-        Nom:</br>
+        {% trans "Name" %}:</br>
         {{product.nom}}</li>
         <li onclick='window.location="{% url 'products_category' product.id %}"'
             class="cat_{{product.categorie_id}}">
-        Catégorie:</br>{{product.categorie}}</li>
+        {% trans "Category" %}:</br>{{product.categorie}}</li>
         <li onclick='window.location="{% url 'products_enable' product.id %}"'
         {% if product.actif %}
-            class="enabled"> Est actif
+            class="enabled"> {% trans "Is active" %}
         {% else %}
-            class="disabled"> N'est pas actif
+            class="disabled"> {% trans "Is not active" %}
         {% endif %}
     </li>
     <li onclick='window.location="{% url 'products_cooking' product.id %}"'
         {% if product.choix_cuisson %}
-            class="enabled">Peux choisir la cuisson
+            class="enabled">{% trans "Can choose cooking" %}
         {% else %}
-            class="disabled">Ne peux pas choisir la cuisson
+            class="disabled">{% trans "Can not choose cooking" %}
         {% endif %}
     </li>
     <li onclick='window.location="{% url 'products_change' product.id %}"'>
-        Prix TTC:</br>
+        {% trans "Price including tax" %}:</br>
         {{product.prix}}€</li>
     <li>
-        TTC avec surtaxe:</br>
+        {% trans "Price with surcharge" %}:</br>
         {{product.price_surcharged}}€</li>
     <li>
-        TVA avec surtaxe:</br>
+        {% trans "VAT with surcharge" %}:</br>
         {{product.vat_surcharged}}€</li>
     <li>
-        TVA sur place:</br>
+        {% trans "VAT on site" %}:</br>
         {{product.vat_onsite}}€</li>
     <li>
-        TVA à emporter:</br>
-        {{product.vat_takeaway}}€</li>
+        {% trans "VAT take away" %}:</br>
+        {{product.vat_takeaway}}{% trans "$" %}</li>
 </ul>
 
-<h2>Options</h2>
-<p>Les options en verts sont les options utilisables pour ce produit. Les options sont
-classées par ordre alphabétique, il est donc recommandé de préfixer, les
-accompagnements par <em>A_</em> et les sauces par <em>S_</em>.</p>
-<p>Exemple: A_Frites, A_Gratin, S_Poivre, S_Moutarde</p>
+<h2>{% trans "Options" %}</h2>
+<p>{% blocktrans %}Green options are the options used for this product.
+The options are alphabetical order, so it is recommended to prefix the
+accompaniments by <em>A_</em> and sauces <em>S_</em>.
+{% endblocktrans %}</p>
+<p>
+{% blocktrans %}Example: A_Chips, A_Gratin, S_Poivre, S_Ketchup{% endblocktrans %}
+</p>
 <ul id="options">
     {% for option in options %}
         <li
@@ -60,28 +63,30 @@ accompagnements par <em>A_</em> et les sauces par <em>S_</em>.</p>
             class="enabled"{% endif %}>{{option.name}}
         </li>
     {% empty %}
-        <li>Aucune option</li>
+        <li>{% trans "No option" %}</li>
     {% endfor %}
 </ul>
 
-<h3>Créer une nouvelle option</h3>
+<h3>{% trans "Create an option" %}</h3>
 <form action="{% url 'products_view' product.id %}" method="post">
     {{ option.non_field_errors }}
     {% csrf_token %}
     <table>
         {{option.as_table}}
         <tr><td colspan="2">
-                <input type="submit" value="Enregistrer" />
+                <input type="submit" value="{% trans "Create" %}" />
         </td></tr>
     </table>
 </form>
 
-<h2>Catégories actives</h2>
-<p>Si ce produit est un menu qui peut contenir d'autres produits (entrées, plats, ...), vous devez
-d'abord activer des catégories de produits ici avant de pouvoir activer des produits ci-dessous.</p>
+<h2>{% trans "Active categories" %}</h2>
+<p>{% blocktrans %}
+If this product is a menu that can contain other products
+(appetizers, entrees, ...), you must first enable product categories here
+before activating products below.{% endblocktrans %}</p>
 <ul id="categories">
     <li onclick='window.location="{% url 'products_select_categories_ok' product.id %}"'>
-        Activer une catégorie</li>
+        {% trans "Activate a category" %}</li>
     {% for category in product.categories_ok.iterator %}
     <li onclick='window.location="{% url 'products_del_categories_ok' product.id category.id %}"'
         class="cat_{{category.id}}">
@@ -90,11 +95,12 @@ d'abord activer des catégories de produits ici avant de pouvoir activer des pro
     {% endfor %}
 </ul>
 
-<h2>Produits actifs</h2>
-<p>En cliquant sur un produit, vous l'enlèverais de cette liste.</p>
+<h2>{% trans "Active products" %}</h2>
+<p>{% blocktrans %}Clicking on a product, you take it off the list.{% endblocktrans %}
+</p>
 <ul id="products">
     <li onclick='window.location="{% url 'products_select_produits_ok' product.id %}"'>
-        Activer un produit</li>
+        {% trans "Activate a product" %}</li>
     {% for sub in product.produits_ok.iterator %}
         {% if sub.actif %}
     <li
@@ -106,4 +112,3 @@ d'abord activer des catégories de produits ici avant de pouvoir activer des pro
 </ul>
 
 {% endblock %}
-

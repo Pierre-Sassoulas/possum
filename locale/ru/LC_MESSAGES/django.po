@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 18:18+0200\n"
+"POT-Creation-Date: 2014-05-28 18:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,10 +32,12 @@ msgid "Russian"
 msgstr ""
 
 #: possum/base/views/carte/categories/__init__.py:243
+#: possum/templates/base/carte/product.html:48
 msgid "VAT take away"
 msgstr ""
 
 #: possum/base/views/carte/categories/__init__.py:253
+#: possum/templates/base/carte/product.html:45
 msgid "VAT on site"
 msgstr ""
 
@@ -79,7 +81,7 @@ msgstr ""
 msgid "Shutdown server"
 msgstr ""
 
-#: possum/templates/login.html:15 possum/templates/base/profile.html:21
+#: possum/templates/login.html:15 possum/templates/base/profile.html:19
 #: possum/templates/base/manager/users.html:8
 msgid "Login"
 msgstr ""
@@ -93,6 +95,7 @@ msgid "Shutdown"
 msgstr ""
 
 #: possum/templates/base/categories_delete.html:4
+#: possum/templates/base/carte/product.html:20
 msgid "Category"
 msgstr ""
 
@@ -152,8 +155,9 @@ msgid ""
 "communicate"
 msgstr ""
 
-#: possum/templates/base/profile.html:15
+#: possum/templates/base/profile.html:13
 #: possum/templates/base/carte/categories_add.html:13
+#: possum/templates/base/carte/product.html:16
 #: possum/templates/base/carte/product_change.html:9
 #: possum/templates/base/carte/product_new.html:9
 #: possum/templates/base/manager/users.html:9
@@ -161,29 +165,29 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: possum/templates/base/profile.html:18
+#: possum/templates/base/profile.html:16
 #: possum/templates/base/manager/users.html:10
 msgid "First name"
 msgstr ""
 
-#: possum/templates/base/profile.html:24
+#: possum/templates/base/profile.html:22
 #: possum/templates/base/manager/users.html:11
 msgid "Mail"
 msgstr ""
 
-#: possum/templates/base/profile.html:29
+#: possum/templates/base/profile.html:27
 msgid "Change password"
 msgstr ""
 
-#: possum/templates/base/profile.html:33
+#: possum/templates/base/profile.html:31
 msgid "Current password"
 msgstr ""
 
-#: possum/templates/base/profile.html:37 possum/templates/base/profile.html:41
+#: possum/templates/base/profile.html:35 possum/templates/base/profile.html:39
 msgid "New password"
 msgstr ""
 
-#: possum/templates/base/profile.html:45
+#: possum/templates/base/profile.html:43
 #: possum/templates/base/carte/color.html:9
 #: possum/templates/base/carte/product_change.html:16
 #: possum/templates/base/manager/users.html:56
@@ -219,6 +223,7 @@ msgid "Priority"
 msgstr ""
 
 #: possum/templates/base/carte/categories_add.html:17
+#: possum/templates/base/carte/product.html:84
 #: possum/templates/base/carte/product_new.html:17
 #: possum/templates/base/manager/users.html:64
 msgid "Create"
@@ -262,13 +267,101 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: possum/templates/base/carte/product_category.html:4
-msgid "Select a category for"
+#: possum/templates/base/carte/product.html:9
+msgid "Product"
 msgstr ""
 
+#: possum/templates/base/carte/product.html:10
+msgid ""
+"Based printers, it is recommended to limit\n"
+"the use of accents and long names"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:23
+msgid "Is active"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:25
+msgid "Is not active"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:30
+msgid "Can choose cooking"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:32
+msgid "Can not choose cooking"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:36
 #: possum/templates/base/carte/product_change.html:13
 #: possum/templates/base/carte/product_new.html:13
 msgid "Price including tax"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:39
+msgid "Price with surcharge"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:42
+msgid "VAT with surcharge"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:52
+#: possum/templates/printers/view.html:31
+msgid "Options"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:53
+msgid ""
+"Green options are the options used for this product.\n"
+"The options are alphabetical order, so it is recommended to prefix the\n"
+"accompaniments by <em>A_</em> and sauces <em>S_</em>.\n"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:63
+msgid "Example: A_Chips, A_Gratin, S_Poivre, S_Ketchup"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:73
+#: possum/templates/bill/options.html:24
+msgid "No option"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:77
+msgid "Create an option"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:89
+msgid "Active categories"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:90
+msgid ""
+"\n"
+"If this product is a menu that can contain other products\n"
+"(appetizers, entrees, ...), you must first enable product categories here\n"
+"before activating products below."
+msgstr ""
+
+#: possum/templates/base/carte/product.html:98
+msgid "Activate a category"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:107
+msgid "Active products"
+msgstr ""
+
+#: possum/templates/base/carte/product.html:108
+msgid "Clicking on a product, you take it off the list."
+msgstr ""
+
+#: possum/templates/base/carte/product.html:112
+msgid "Activate a product"
+msgstr ""
+
+#: possum/templates/base/carte/product_category.html:4
+msgid "Select a category for"
 msgstr ""
 
 #: possum/templates/base/carte/product_new.html:4
@@ -599,10 +692,6 @@ msgstr ""
 msgid "Green options are selected, you must press it to enable / disable"
 msgstr ""
 
-#: possum/templates/bill/options.html:24
-msgid "No option"
-msgstr ""
-
 #: possum/templates/printers/kitchen_header.html:9
 msgid "Number of header lines on ticket for kitchen"
 msgstr ""
@@ -625,10 +714,6 @@ msgstr ""
 
 #: possum/templates/printers/view.html:28
 msgid "Test print"
-msgstr ""
-
-#: possum/templates/printers/view.html:31
-msgid "Options"
 msgstr ""
 
 #: possum/templates/printers/view.html:40
