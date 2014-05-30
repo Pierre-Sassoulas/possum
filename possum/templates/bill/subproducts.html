@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Sélection d'un produit</h1>
+{% load i18n %}
+<h1>{% trans "Select a product" %}</h1>
 
 <ul id="products">
     {% for product in products %}
     <li onclick="window.location='{% url "subproduct_add" bill_id sold_id product.id %}'"
-        class="cat_{{product.categorie_id}}">
-    {{product.nom}}
-        </li>
+        class="cat_{{product.categorie_id}}">{{product.nom}}
+    </li>
     {% empty %}
-        <li>Aucun produit disponible.</li>
+        <li>{% trans "No product" %}</li>
     {% endfor %}
 </ul>
 
