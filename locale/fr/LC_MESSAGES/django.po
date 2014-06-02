@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 10:47+0200\n"
+"POT-Creation-Date: 2014-06-02 23:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,6 +152,7 @@ msgstr "pas de report"
 
 #: possum/templates/base/categories_delete.html:38
 #: possum/templates/base/manager/tables/home.html:21
+#: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -191,7 +192,7 @@ msgstr "Prénom"
 #: possum/templates/base/profile.html:22
 #: possum/templates/base/manager/users.html:11
 msgid "Mail"
-msgstr ""
+msgstr "Mail"
 
 #: possum/templates/base/profile.html:27
 #, fuzzy
@@ -234,6 +235,7 @@ msgstr "Catégories"
 #: possum/templates/base/carte/categories.html:14
 #: possum/templates/base/carte/categories/select_vat.html:8
 #: possum/templates/base/manager/vats/home.html:7
+#: possum/templates/notes/home.html:10
 msgid "Add"
 msgstr "Ajouter"
 
@@ -250,6 +252,7 @@ msgstr "Priorité"
 #: possum/templates/base/carte/product.html:77
 #: possum/templates/base/carte/product_new.html:17
 #: possum/templates/base/manager/users.html:64
+#: possum/templates/notes/home.html:34
 msgid "Create"
 msgstr "Créer"
 
@@ -265,6 +268,7 @@ msgstr "Couleurs utilisées"
 #: possum/templates/base/carte/color.html:18
 #: possum/templates/base/carte/product_category.html:13
 #: possum/templates/base/carte/product_select_categories_ok.html:11
+#: possum/templates/bill/product_select_made_with.html:17
 #, fuzzy
 msgid "No category"
 msgstr "Aucune catégorie"
@@ -290,6 +294,7 @@ msgstr "Enregistrer"
 #: possum/templates/base/manager/tables/table.html:5
 #: possum/templates/base/manager/tables/zone.html:5
 #: possum/templates/bill/cooking.html:6 possum/templates/bill/options.html:7
+#: possum/templates/bill/product_select_made_with.html:6
 #: possum/templates/bill/products.html:6
 msgid "Back"
 msgstr "Retour"
@@ -778,6 +783,10 @@ msgstr ""
 "Les options en vert sont sélectionnées, il faut appuyer dessus pour activer/"
 "désactiver"
 
+#: possum/templates/bill/product_select_made_with.html:9
+msgid "This product is to be sent in kitchen with"
+msgstr "Ce produit est à envoyer en cuisine avec"
+
 #: possum/templates/bill/products.html:9
 #: possum/templates/bill/subproducts.html:4
 #, fuzzy
@@ -795,6 +804,29 @@ msgstr "Aucune table disponible"
 #: possum/templates/bill/select_a_table.html:20
 msgid "No room"
 msgstr "Aucune salle"
+
+#: possum/templates/notes/home.html:4
+#, fuzzy
+msgid "Notes list"
+msgstr "Liste des notes"
+
+#: possum/templates/notes/home.html:6
+msgid ""
+"It is possible to add a note on a product\n"
+"at the time of order"
+msgstr ""
+"Il est possible d'ajouter une note sur un produit\n"
+"au moment de la commande"
+
+#: possum/templates/notes/home.html:20
+#, fuzzy
+msgid "Selected note"
+msgstr "Note sélectionnée"
+
+#: possum/templates/notes/home.html:22
+#, fuzzy
+msgid "New note"
+msgstr "Nouvelle note"
 
 #: possum/templates/printers/kitchen_header.html:9
 msgid "Number of header lines on ticket for kitchen"

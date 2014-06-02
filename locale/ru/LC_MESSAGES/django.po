@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 10:47+0200\n"
+"POT-Creation-Date: 2014-06-02 23:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,6 +137,7 @@ msgstr ""
 
 #: possum/templates/base/categories_delete.html:38
 #: possum/templates/base/manager/tables/home.html:21
+#: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr ""
 
@@ -212,6 +213,7 @@ msgstr ""
 #: possum/templates/base/carte/categories.html:14
 #: possum/templates/base/carte/categories/select_vat.html:8
 #: possum/templates/base/manager/vats/home.html:7
+#: possum/templates/notes/home.html:10
 msgid "Add"
 msgstr ""
 
@@ -227,6 +229,7 @@ msgstr ""
 #: possum/templates/base/carte/product.html:77
 #: possum/templates/base/carte/product_new.html:17
 #: possum/templates/base/manager/users.html:64
+#: possum/templates/notes/home.html:34
 msgid "Create"
 msgstr ""
 
@@ -241,6 +244,7 @@ msgstr ""
 #: possum/templates/base/carte/color.html:18
 #: possum/templates/base/carte/product_category.html:13
 #: possum/templates/base/carte/product_select_categories_ok.html:11
+#: possum/templates/bill/product_select_made_with.html:17
 msgid "No category"
 msgstr ""
 
@@ -265,6 +269,7 @@ msgstr ""
 #: possum/templates/base/manager/tables/table.html:5
 #: possum/templates/base/manager/tables/zone.html:5
 #: possum/templates/bill/cooking.html:6 possum/templates/bill/options.html:7
+#: possum/templates/bill/product_select_made_with.html:6
 #: possum/templates/bill/products.html:6
 msgid "Back"
 msgstr ""
@@ -711,6 +716,10 @@ msgstr ""
 msgid "Green options are selected, you must press it to enable / disable"
 msgstr ""
 
+#: possum/templates/bill/product_select_made_with.html:9
+msgid "This product is to be sent in kitchen with"
+msgstr ""
+
 #: possum/templates/bill/products.html:9
 #: possum/templates/bill/subproducts.html:4
 msgid "Select a product"
@@ -726,6 +735,24 @@ msgstr ""
 
 #: possum/templates/bill/select_a_table.html:20
 msgid "No room"
+msgstr ""
+
+#: possum/templates/notes/home.html:4
+msgid "Notes list"
+msgstr ""
+
+#: possum/templates/notes/home.html:6
+msgid ""
+"It is possible to add a note on a product\n"
+"at the time of order"
+msgstr ""
+
+#: possum/templates/notes/home.html:20
+msgid "Selected note"
+msgstr ""
+
+#: possum/templates/notes/home.html:22
+msgid "New note"
 msgstr ""
 
 #: possum/templates/printers/kitchen_header.html:9
