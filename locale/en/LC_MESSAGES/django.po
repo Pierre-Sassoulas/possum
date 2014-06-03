@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-02 23:34+0200\n"
+"POT-Creation-Date: 2014-06-03 18:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,15 @@ msgid "Russian"
 msgstr ""
 
 #: possum/base/views/carte/categories/__init__.py:243
+#: possum/templates/base/carte/category.html:59
+#: possum/templates/base/carte/category.html:61
 #: possum/templates/base/carte/product.html:46
 msgid "VAT take away"
 msgstr ""
 
 #: possum/base/views/carte/categories/__init__.py:253
+#: possum/templates/base/carte/category.html:52
+#: possum/templates/base/carte/category.html:54
 #: possum/templates/base/carte/product.html:43
 msgid "VAT on site"
 msgstr ""
@@ -134,6 +138,7 @@ msgid "no report"
 msgstr ""
 
 #: possum/templates/base/categories_delete.html:38
+#: possum/templates/base/carte/category.html:72
 #: possum/templates/base/manager/tables/home.html:21
 #: possum/templates/notes/home.html:38
 msgid "Remove"
@@ -209,6 +214,7 @@ msgid "Categories"
 msgstr ""
 
 #: possum/templates/base/carte/categories.html:14
+#: possum/templates/base/carte/category.html:94
 #: possum/templates/base/carte/categories/select_vat.html:8
 #: possum/templates/base/manager/vats/home.html:7
 #: possum/templates/notes/home.html:10
@@ -220,6 +226,10 @@ msgid "New category"
 msgstr ""
 
 #: possum/templates/base/carte/categories_add.html:9
+#: possum/templates/base/carte/category.html:14
+#: possum/templates/base/carte/category.html:17
+#: possum/templates/base/carte/category.html:18
+#: possum/templates/base/carte/category.html:21
 msgid "Priority"
 msgstr ""
 
@@ -229,6 +239,100 @@ msgstr ""
 #: possum/templates/base/manager/users.html:64
 #: possum/templates/notes/home.html:34
 msgid "Create"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:6
+#: possum/templates/base/carte/product.html:6
+#: possum/templates/base/manager/archives/invoice.html:5
+#: possum/templates/base/manager/tables/table.html:5
+#: possum/templates/base/manager/tables/zone.html:5
+#: possum/templates/bill/cooking.html:6 possum/templates/bill/options.html:7
+#: possum/templates/bill/product_select_made_with.html:6
+#: possum/templates/bill/products.html:6
+msgid "Back"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:10
+msgid "Display priority"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:27
+msgid "Lowers priorities are displayed first"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:29
+msgid "Settings"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:33
+msgid "Color"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:35
+msgid "Change name"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:38
+msgid "Is surtaxable"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:40
+msgid "Is not surtaxable"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:45
+msgid "Can cancel the surcharge"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:47
+msgid "Can not cancel the surcharge"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:66
+msgid "Is prepared in the kitchen"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:68
+msgid "Is not prepared in the kitchen"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:76
+msgid ""
+"\n"
+"A surcharge may be defined at a set of tables (called <b>Area</b>).\n"
+"This surcharge will be added to the price of each product contained\n"
+"surtaxables categories in the table when an overtaxed area\n"
+"is selected.\n"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:82
+msgid ""
+"\n"
+"This surcharge is disabled if at least one product category\n"
+"can cancel the surcharge is added to the bill.\n"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:86
+msgid ""
+"\n"
+"You must define the 2 VAT, even if such\n"
+"you do not do takeaway.\n"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:91
+#: possum/templates/base/carte/product.html:98
+msgid "Active products"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:102
+msgid "Old products"
+msgstr ""
+
+#: possum/templates/base/carte/category.html:109
+#: possum/templates/base/carte/product_select_produits_ok.html:11
+#: possum/templates/bill/products.html:17
+#: possum/templates/bill/subproducts.html:12
+msgid "No product"
 msgstr ""
 
 #: possum/templates/base/carte/color.html:4
@@ -260,16 +364,6 @@ msgstr ""
 #: possum/templates/base/manager/vats/new.html:21
 #: possum/templates/printers/view.html:48
 msgid "Save"
-msgstr ""
-
-#: possum/templates/base/carte/product.html:6
-#: possum/templates/base/manager/archives/invoice.html:5
-#: possum/templates/base/manager/tables/table.html:5
-#: possum/templates/base/manager/tables/zone.html:5
-#: possum/templates/bill/cooking.html:6 possum/templates/bill/options.html:7
-#: possum/templates/bill/product_select_made_with.html:6
-#: possum/templates/bill/products.html:6
-msgid "Back"
 msgstr ""
 
 #: possum/templates/base/carte/product.html:9
@@ -361,10 +455,6 @@ msgstr ""
 msgid "Activate a category"
 msgstr ""
 
-#: possum/templates/base/carte/product.html:98
-msgid "Active products"
-msgstr ""
-
 #: possum/templates/base/carte/product.html:99
 msgid "Clicking on a product, you take it off the list."
 msgstr ""
@@ -387,12 +477,6 @@ msgstr ""
 
 #: possum/templates/base/carte/product_select_produits_ok.html:4
 msgid "Select a product to enable for"
-msgstr ""
-
-#: possum/templates/base/carte/product_select_produits_ok.html:11
-#: possum/templates/bill/products.html:17
-#: possum/templates/bill/subproducts.html:12
-msgid "No product"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:5

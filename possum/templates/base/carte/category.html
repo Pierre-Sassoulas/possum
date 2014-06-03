@@ -1,88 +1,97 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "home_categories" %}'">Retour carte</li>
+    <li onclick="window.location='{% url "home_categories" %}'"
+        >{% trans "Back" %}</li>
 </ul>
 
-<h1>Catégorie: {{category.nom}}</h1>
-<h2>Priorité d'affichage</h2>
+<h1>{{category.nom}}</h1>
+<h2>{% trans "Display priority" %}</h2>
 <ul id="category_info">
     <li onclick="window.location='{% url "categories_less_priority_10" category.id %}'">
         <<</br>
-        Priorité - 10</li>
+        {% trans "Priority" %} - 10</li>
     <li onclick="window.location='{% url "categories_less_priority" category.id %}'">
         <</br>
-        Priorité - 1</li>
-    <li>Priorité:</br>{{category.priorite}}</li>
+        {% trans "Priority" %} - 1</li>
+    <li>{% trans "Priority" %}:</br>{{category.priorite}}</li>
     <li onclick="window.location='{% url "categories_more_priority" category.id %}'">
         ></br>
-        Priorité + 1</li>
+        {% trans "Priority" %} + 1</li>
     <li onclick="window.location='{% url "categories_more_priority_10" category.id %}'">
         >></br>
         Priorité + 10</li>
 </ul>
 <h2><!-- explications --></h2>
-<p>Les priorités bases sont affichées en premier.</p>
+<p>{% blocktrans %}Lowers priorities are displayed first{% endblocktrans %}</p>
 
-<h2>Paramètres</h2>
+<h2>{% trans "Settings" %}</h2>
 <ul id="category_info">
     <li onclick="window.location='{% url "categories_color" category.id %}'"
         class="cat_{{category.id}}">
-        Couleur:</br>{{category.color}}</li>
+        {% trans "Color" %}:</br>{{category.color}}</li>
     <li onclick="window.location='{% url "categories_name" category.id %}'">
-        Changement de nom</li>
+        {% trans "Change name" %}</li>
     <li onclick="window.location='{% url "categories_surtaxable" category.id %}'"
         {% if category.surtaxable %}
-            class="enabled"> Est surtaxable
+            class="enabled"> {% trans "Is surtaxable" %}
         {% else %}
-            class="disabled"> N'est pas surtaxable
+            class="disabled"> {% trans "Is not surtaxable" %}
         {% endif %}
     </li>
     <li onclick="window.location='{% url "categories_disable_surtaxe" category.id %}'"
         {% if category.disable_surtaxe %}
-            class="enabled"> Peux annuler la surtaxe
+            class="enabled"> {% trans "Can cancel the surcharge" %}
         {% else %}
-            class="disabled"> Ne peux annuler la surtaxe
+            class="disabled"> {% trans "Can not cancel the surcharge" %}
         {% endif %}
     </li>
     <li onclick="window.location='{% url "categories_vat_onsite" category.id %}'"
         {% if category.vat_onsite %}
-            >TVA sur place:</br>{{category.vat_onsite.name}}
+            >{% trans "VAT on site" %}:</br>{{category.vat_onsite.name}}
         {% else %}
-            class="disabled">TVA sur place:</br>non défini
+            class="disabled">{% trans "VAT on site" %}:</br>?
         {% endif %}
     </li>
     <li onclick="window.location='{% url "categories_vat_takeaway" category.id %}'"
         {% if category.vat_takeaway %}
-            >TVA à emporter:</br>{{category.vat_takeaway.name}}
+            >{% trans "VAT take away" %}:</br>{{category.vat_takeaway.name}}
         {% else %}
-            class="disabled">TVA à emporter:</br>non défini
+            class="disabled">{% trans "VAT take away" %}:</br>?
         {% endif %}
     </li>
     <li onclick="window.location='{% url "categories_set_kitchen" category.id %}'"
         {% if category.made_in_kitchen %}
-            class="enabled">Est préparé dans la cuisine
+            class="enabled">{% trans "Is prepared in the kitchen" %}
         {% else %}
-            class="disabled">N'est pas préparé dans la cuisine
+            class="disabled">{% trans "Is not prepared in the kitchen" %}
         {% endif %}
     </li>
     <li onclick="window.location='{% url "categories_delete" category.id %}'"
-        class="critical">Supprimer</li>
+        class="critical">{% trans "Remove" %}</li>
 </ul>
-<h2><!-- explications --></h2>
-<p>Une surtaxe peut être définie au niveau d'un ensemble de tables (appelé
-<b>Zone</b>). Cette surtaxe va s'ajouter au prix de chaque produit se trouvant
-dans les catégories <b>surtaxable</b> lorsque la table d'une zone surtaxée
-est sélectionnée.</p>
-<p>Cette surtaxe est désactivé si au moins un produit d'une catégorie
-<b>qui peut annuler la surtaxe</b> est ajouté à la facture.</p>
-<p>Vous devez <b>obligatoirement</b> définir les 2 TVAs, même si par exemple
-vous ne faites pas de vente à emporter.</p>
 
-<h2>Produits actifs</h2>
+<h2><!-- explications --></h2>
+<p>{% blocktrans %}
+A surcharge may be defined at a set of tables (called <b>Area</b>).
+This surcharge will be added to the price of each product contained
+surtaxables categories in the table when an overtaxed area
+is selected.
+{% endblocktrans %}</p>
+<p>{% blocktrans %}
+This surcharge is disabled if at least one product category
+can cancel the surcharge is added to the bill.
+{% endblocktrans %}</p>
+<p>{% blocktrans %}
+You must define the 2 VAT, even if such
+you do not do takeaway.
+{% endblocktrans %}</p>
+
+<h2>{% trans "Active products" %}</h2>
 <ul id="products">
-    <li onclick="window.location='{% url "products_new" category.id %}'">Ajouter</li>
+    <li onclick="window.location='{% url "products_new" category.id %}'"
+        >{% trans "Add" %}</li>
     {% for product in products_enable %}
         <li onclick="window.location='{% url "products_view" product.id %}'"
             class="cat_{{category.id}}">{{product.nom}}
@@ -90,16 +99,15 @@ vous ne faites pas de vente à emporter.</p>
     {% endfor %}
 </ul>
 
-<h2>Anciens produits</h2>
+<h2>{% trans "Old products" %}</h2>
 <ul id="products">
     {% for product in products_disable %}
         <li onclick="window.location='{% url "products_view" product.id %}'"
             class="cat_{{category.id}}">{{product.nom}}
         </li>
     {% empty %}
-        <li>Aucun produit disponible.</li>
+        <li>{% trans "No product" %}</li>
     {% endfor %}
 </ul>
 
 {% endblock %}
-
