@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "bill_view" bill.id %}'">Retour facture</li>
+    <li onclick="window.location='{% url "bill_view" bill.id %}'"
+        >{% trans "Back" %}</li>
 </ul>
 
-<h2><!-- nombre --></h2>
+<h2><!-- number --></h2>
 <ul id="numbers">
     {% for number in range %}
     <li onclick="window.location='{% url "bill_set_number" bill.id number %}'"
@@ -15,7 +16,7 @@
     {% endfor %}
 </ul>
 
-<h1><!--Ajout de produits--></h1>
+<h1><!--categories--></h1>
 <ul id="categories">
     {% for category in categories %}
     <li class="cat_{{category.id}}" id="{{category.id}}"
@@ -23,11 +24,11 @@
         {{category.nom}}
     </li>
     {% empty %}
-    <li>Aucune categorie disponible.</li>
+    <li>{% trans "No category" %}</li>
     {% endfor %}
 </ul>
 
-<h2><!--Sélection du produit--></h2>
+<h2><!--add a product--></h2>
 <ul id="products">
     {% for category in categories %}
     <div id="cat_{{category.id}}"
@@ -42,8 +43,8 @@
     {% endfor %}
 </ul>
 
-<h1>Produits présents sur la commande</h1>
-<p>Vous pouvez supprimer un produit en le sélectionnant.</p>
+<h1>{% trans "Products on order" %}</h1>
+<p>{% trans "You can delete an item by selecting it" %}</p>
 <ul id="products_sold">
     {% for sold in products_sold %}
         {% if sold.count > 1 %}
@@ -66,7 +67,7 @@
     </li>
         {% endif %}
     {% empty %}
-    <li>Aucun produit</li>
+    <li>{% trans "No product" %}</li>
     {% endfor %}
 </ul>
 

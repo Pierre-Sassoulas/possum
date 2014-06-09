@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-03 18:18+0200\n"
+"POT-Creation-Date: 2014-06-09 19:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,7 +232,7 @@ msgid "Print"
 msgstr "Imprimer"
 
 #: possum/templates/base/carte/categories.html:11
-#: possum/templates/stats/charts.html:16
+#: possum/templates/stats/charts.html:16 possum/templates/stats/home.html:141
 #, fuzzy
 msgid "Categories"
 msgstr "Catégories"
@@ -271,6 +271,7 @@ msgstr "Créer"
 #: possum/templates/base/manager/archives/invoice.html:5
 #: possum/templates/base/manager/tables/table.html:5
 #: possum/templates/base/manager/tables/zone.html:5
+#: possum/templates/bill/categories.html:6
 #: possum/templates/bill/cooking.html:6 possum/templates/bill/options.html:7
 #: possum/templates/bill/product_select_made_with.html:6
 #: possum/templates/bill/products.html:6
@@ -374,6 +375,7 @@ msgstr "Anciens produits"
 
 #: possum/templates/base/carte/category.html:109
 #: possum/templates/base/carte/product_select_produits_ok.html:11
+#: possum/templates/bill/categories.html:70
 #: possum/templates/bill/products.html:17
 #: possum/templates/bill/subproducts.html:12
 #, fuzzy
@@ -392,6 +394,7 @@ msgstr "Couleurs utilisées"
 #: possum/templates/base/carte/color.html:18
 #: possum/templates/base/carte/product_category.html:13
 #: possum/templates/base/carte/product_select_categories_ok.html:11
+#: possum/templates/bill/categories.html:27
 #: possum/templates/bill/product_select_made_with.html:17
 #, fuzzy
 msgid "No category"
@@ -462,7 +465,8 @@ msgstr "TVA avec surtaxe"
 #: possum/templates/base/manager/archives/home.html:21
 #: possum/templates/base/manager/archives/invoice.html:19
 #: possum/templates/base/manager/archives/invoice.html:20
-#: possum/templates/bill/home.html:15
+#: possum/templates/bill/home.html:15 possum/templates/stats/home.html:128
+#: possum/templates/stats/home.html:137
 msgid "$"
 msgstr "€"
 
@@ -613,7 +617,7 @@ msgstr "Tables"
 #: possum/templates/base/manager/archives/invoice.html:53
 #: possum/templates/base/manager/vats/home.html:4
 #: possum/templates/base/manager/vats/view.html:8
-#: possum/templates/stats/charts.html:12
+#: possum/templates/stats/charts.html:12 possum/templates/stats/home.html:124
 msgid "VAT"
 msgstr "TVA"
 
@@ -773,6 +777,8 @@ msgid "take away"
 msgstr "à emporter"
 
 #: possum/templates/base/manager/archives/invoice.html:19
+#: possum/templates/stats/home.html:56 possum/templates/stats/home.html:70
+#: possum/templates/stats/home.html:91
 msgid "Total with all taxes"
 msgstr "Total TTC"
 
@@ -781,11 +787,12 @@ msgid "Remaining to be paid"
 msgstr "Restant à payer"
 
 #: possum/templates/base/manager/archives/invoice.html:23
+#: possum/templates/stats/home.html:150
 msgid "Products"
 msgstr "Produits"
 
 #: possum/templates/base/manager/archives/invoice.html:46
-#: possum/templates/stats/charts.html:14
+#: possum/templates/stats/charts.html:14 possum/templates/stats/home.html:134
 msgid "Payments"
 msgstr "Paiements"
 
@@ -842,6 +849,15 @@ msgstr "Nouvelle TVA"
 #: possum/templates/base/manager/vats/new.html:26
 msgid "Existing VAT"
 msgstr "TVA existantes"
+
+#: possum/templates/bill/categories.html:46
+#, fuzzy
+msgid "Products on order"
+msgstr "Produits sur la commande"
+
+#: possum/templates/bill/categories.html:47
+msgid "You can delete an item by selecting it"
+msgstr "Vous pouvez supprimer un produit en le sélectionnant"
 
 #: possum/templates/bill/cooking.html:9
 #, fuzzy
@@ -979,11 +995,13 @@ msgstr "peut imprimer les rapports"
 msgid "Sales"
 msgstr "Ventes"
 
-#: possum/templates/stats/charts.html:8
+#: possum/templates/stats/charts.html:8 possum/templates/stats/home.html:91
+#: possum/templates/stats/home.html:98 possum/templates/stats/home.html:105
 msgid "Bar"
 msgstr "Bar"
 
-#: possum/templates/stats/charts.html:10
+#: possum/templates/stats/charts.html:10 possum/templates/stats/home.html:70
+#: possum/templates/stats/home.html:77 possum/templates/stats/home.html:84
 msgid "Restaurant"
 msgstr "Restaurant"
 
@@ -991,6 +1009,101 @@ msgstr "Restaurant"
 msgid "Display the year"
 msgstr "Afficher l'année"
 
-#: possum/templates/stats/charts.html:32
+#: possum/templates/stats/charts.html:32 possum/templates/stats/home.html:130
+#: possum/templates/stats/home.html:146 possum/templates/stats/home.html:155
 msgid "No data"
 msgstr "Aucune donnée"
+
+#: possum/templates/stats/home.html:5
+msgid "Report of the day"
+msgstr "Rapport du jour"
+
+#: possum/templates/stats/home.html:10
+#, fuzzy
+msgid "Display day"
+msgstr "Afficher le jour"
+
+#: possum/templates/stats/home.html:19
+msgid "Report of the week"
+msgstr "Rapport de la semaine"
+
+#: possum/templates/stats/home.html:24
+#, fuzzy
+msgid "Display week"
+msgstr "Afficher la semaine"
+
+#: possum/templates/stats/home.html:32
+msgid "Report of the month"
+msgstr "Rapport du mois"
+
+#: possum/templates/stats/home.html:37
+#, fuzzy
+msgid "Display month"
+msgstr "Afficher le mois"
+
+#: possum/templates/stats/home.html:50
+msgid "Value"
+msgstr "Valeur"
+
+#: possum/templates/stats/home.html:51
+#, fuzzy
+msgid "Last year"
+msgstr "Année précédente"
+
+#: possum/templates/stats/home.html:52
+msgid "Average"
+msgstr "Moyenne"
+
+#: possum/templates/stats/home.html:53
+msgid "Maximum"
+msgstr "Maximum"
+
+#: possum/templates/stats/home.html:63 possum/templates/stats/home.html:98
+msgid "Number of invoices"
+msgstr "Nombre de factures"
+
+#: possum/templates/stats/home.html:77
+msgid "Number of guests"
+msgstr "Nombre de couverts"
+
+#: possum/templates/stats/home.html:84
+msgid "Average amount per guest"
+msgstr "Moyenne par couvert"
+
+#: possum/templates/stats/home.html:105
+msgid "Average amount per invoice"
+msgstr "Moyenne par facture"
+
+#: possum/templates/stats/home.html:112
+msgid "The value appears in green when above average"
+msgstr "La valeur apparait en vert lorsqu'elle dépasse la moyenne"
+
+#: possum/templates/stats/home.html:114
+msgid "Outputs"
+msgstr "Sorties"
+
+#: possum/templates/stats/home.html:116
+msgid "Full report by email"
+msgstr "Rapport complet par mail"
+
+#: possum/templates/stats/home.html:117
+#, fuzzy
+msgid "Full printed report"
+msgstr "Rapport complet imprimé"
+
+#: possum/templates/stats/home.html:118
+msgid "VAT report by email"
+msgstr "Rapport TVA par mail"
+
+#: possum/templates/stats/home.html:119
+#, fuzzy
+msgid "Vat printed report"
+msgstr "Rapport TVA imprimé"
+
+#: possum/templates/stats/home.html:120
+msgid "Send"
+msgstr "Envoyer"
+
+#: possum/templates/stats/home.html:125
+msgid "VAT amounts are expressed inclusive of all taxes"
+msgstr "Les montants de TVA sont indiquées en TTC"
