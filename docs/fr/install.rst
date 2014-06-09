@@ -44,6 +44,9 @@ Pour un système Debian/Ubuntu:
 
 .. include:: ../common/install_deb.rst
 
+Pour Fedora:
+
+.. include:: ../common/install_fedora.rst
 
 Ensuite pour l'installation ou les mises à jours, nous allons encore utiliser la
 commande **./make**:
