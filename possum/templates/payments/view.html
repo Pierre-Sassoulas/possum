@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick='window.location="{% url 'bill_view' bill_id %}"'>Retour facture</li>
+    <li onclick='window.location="{% url 'bill_view' bill_id %}"'
+        >{% trans "Back" %}</li>
 </ul>
 
-<h1>Paiement {{payment.type}}</h1>
+<h1>{% trans "Payment" %} {{payment.type}}</h1>
 <ul id="payment_tickets">
 {% if payment.type.fixed_value %}
-<li>Valeur d'un ticket: {{payment.valeur_unitaire}}€</li>
-<li>Nb tickets: {{payment.nb_tickets}}</li>
+<li>{% trans "Ticket value" %}: {{payment.valeur_unitaire}}{% trans "$" %}</li>
+<li>{% trans "Number of tickets" %}: {{payment.nb_tickets}}</li>
 {% endif %}
-<li>Total: {{payment.montant}}€</li>
+<li>{% trans "Total" %}: {{payment.montant}}{% trans "$" %}</li>
 </ul>
 
 {% endblock %}

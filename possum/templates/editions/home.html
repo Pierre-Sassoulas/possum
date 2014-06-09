@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
+{% load i18n %}
+<h1>{% trans "Bills being edited" %}</h1>
 
-<h1>Liste des factures en cours d'édition</h1>
-<p>Les factures ci-dessous sont les factures en cours d'éditions (ajout de produits
-ou ajout de paiements) et qui ne sont pas soldées. Si une facture est en cours
-d'édition, quelqu'un d'autre ne pourra pas ajouter un produit ou ajouter un paiement
-sur cette facture.
-</p>
+<p>{% blocktrans %}
+Invoices below are bills being editions (adding products
+or payments) that are not resulted. If an invoice is being
+editing, someone else can not add a product or add a payment
+on this bill.
+{% endblocktrans %}</p>
 
-<p>Vous pouvez enlever le status d'édition d'une facture en cliquant sur la case
-correspondante ci-dessous. Dans ce cas, l'utilisateur en cours d'édition ne pourra
-pas enregistrer ces modifications.
-</p>
+<p>{% blocktrans %}
+You can remove the editing status of an invoice by clicking on the box
+corresponding below. In this case, the current user can not save these
+changes.
+{% endblocktrans %}</p>
 
-<p>Dernière remarque importante, vous ne devriez <u>jamais</u> avoir besoin d'utiliser
-cette possibilité.</p>
-
+<p>{% blocktrans %}
+Last important note, you should <u>never</u> need use this possibility.
+{% endblocktrans %}</p>
 
 <ul id="editions">
     {% for bill in bills %}
     <li onclick='window.location="{% url 'editions_view' bill.id %}"'>
-        {{bill}} par {{bill.in_use_by}}
+        {{bill}} {% trans "by" %} {{bill.in_use_by}}
     </li>
     {% empty %}
-    <li>Aucune édition</li>
+    <li>{% trans "No edition" %}</li>
     {% endfor %}
 </ul>
 

@@ -1,26 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick='window.location="{% url 'bill_view' bill_id %}"'>Retour facture</li>
+    <li onclick='window.location="{% url 'bill_view' bill_id %}"'
+        >{% trans "Back" %}</li>
 </ul>
 
-<h1>Nouveau paiement</h1>
-<h2>1. Type</h2>
+<h1>{% trans "New payment" %}</h1>
+<h2>1. {% trans "Payment type" %}</h2>
 <ul id="type_payment">
     {% for type in type_payments %}
         <li {% if type == type_selected %}class="enabled"{% endif %}
         onclick='window.location="{% url 'type_payment' bill_id type.id %}"' >
         {{type.nom}}</li>
     {% empty %}
-        <li>Aucun type de paiement disponible.</li>
+        <li>{% trans "No data" %}</li>
     {% endfor %}
 </ul>
 
-<h2>2. Montant</h2>
+<h2>2. {% trans "Amount" %}</h2>
 {% if type_selected %}
     {% if type_selected.fixed_value %}
-    <h3>2.1 Nombre de tickets</h3>
+    <h3>2.1 {% trans "Number of tickets" %}</h3>
     <ul id="numbers">
         {% for i in range %}
         <li onclick='window.location="{% url 'payment_count' bill_id i %}"'
@@ -29,36 +30,37 @@
         {% endfor %}
         <li onclick='window.location="{% url 'amount_count' %}"'>+</li>
     </ul>
-    <h3>2.2 Total</h3>
+    <h3>2.2 {% trans "Total" %}</h3>
     <ul id="payment_tickets">
         <li onclick='window.location="{% url 'amount_payment' %}"'>
-            Valeur d'un ticket: {{left}}.{{right}}€</li>
-        <li onclick='window.location="{% url 'amount_count' %}"'>Nb tickets: {{tickets_count}}</li>
-        <li onclick='window.location="{% url 'save_payment' bill_id %}"'>Enregistrer le paiement</li>
+            {% trans "Ticket value" %}: {{left}}.{{right}}{% trans "$" %}</li>
+        <li onclick='window.location="{% url 'amount_count' %}"'
+            >{% trans "Number of tickets" %}: {{tickets_count}}</li>
+        <li onclick='window.location="{% url 'save_payment' bill_id %}"'
+            >{% trans "Save" %}</li>
     {% else %}
     <ul id="payment_tickets">
-        <li onclick='window.location="{% url 'amount_payment' %}"'>
-    Montant: {{left}},{{right}}€</li>
-        <li onclick='window.location="{% url 'save_payment' bill_id %}"'>Enregistrer le paiement</li>
+        <li onclick='window.location="{% url 'amount_payment' %}"'
+            >{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
+        <li onclick='window.location="{% url 'save_payment' bill_id %}"'
+            >{% trans "Save" %}</li>
     {% endif %}
 {% else %}
 <ul id="payment_tickets">
-    <li>Montant: {{left}},{{right}}€</li>
-    <li>Enregistrer le paiement</li>
+    <li>{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
+    <li>{% trans "Save" %}</li>
 {% endif %}
 </ul>
 
-<h2>Paiements enregistrés</h2>
-<p>Vous pouvez supprimer un paiement en le sélectionnant.</p>
+<h2>{% trans "Saved payments" %}</h2>
+<p>{% trans "You can delete a payment by selecting" %}</p>
 <ul id="paiements">
     {% for payment in payments %}
         <li onclick="window.location='{% url "bill_payment_delete" bill_id payment.id %}'">
-        {{payment.type.nom}}: {{payment.montant}}€</li>
+        {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li>
     {% empty %}
-        <li>Aucun paiement</li>
+        <li>{% trans "No payment" %}</li>
     {% endfor %}
 </ul>
 
-
 {% endblock %}
-

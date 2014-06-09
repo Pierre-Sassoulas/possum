@@ -32,16 +32,16 @@ the use of accents and long names{% endblocktrans %}</p>
     </li>
     <li onclick='window.location="{% url 'products_change' product.id %}"'>
         {% trans "Price including tax" %}:</br>
-        {{product.prix}}€</li>
+        {{product.prix}}{% trans "$" %}</li>
     <li>
         {% trans "Price with surcharge" %}:</br>
-        {{product.price_surcharged}}€</li>
+        {{product.price_surcharged}}{% trans "$" %}</li>
     <li>
         {% trans "VAT with surcharge" %}:</br>
-        {{product.vat_surcharged}}€</li>
+        {{product.vat_surcharged}}{% trans "$" %}</li>
     <li>
         {% trans "VAT on site" %}:</br>
-        {{product.vat_onsite}}€</li>
+        {{product.vat_onsite}}{% trans "$" %}</li>
     <li>
         {% trans "VAT take away" %}:</br>
         {{product.vat_takeaway}}{% trans "$" %}</li>

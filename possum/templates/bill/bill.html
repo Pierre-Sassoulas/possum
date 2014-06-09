@@ -1,41 +1,40 @@
 {% extends "base.html" %}
-{% block titre %}Facture {{facture.id}}{% endblock %}
 {% block content %}
-
-<h1>Commande [{{facture}}]</h1>
+{% load i18n %}
+<h1>{% trans "Order" %} [{{facture}}]</h1>
 <ul id="bill_info">
     {% if facture.category_to_follow %}
     <li onclick='window.location="{% url "bill_send_kitchen" facture.id %}"'
         class="cat_{{facture.category_to_follow_id}}"
-        >Cuisine:</br>Envoyé {{facture.category_to_follow.nom}} ?
+        >{% trans "Kitchen" %}:</br>{% trans "Send" %} {{facture.category_to_follow.nom}} ?
     {% else %}
-        <li>Cuisine:</br>Rien à envoyer
+        <li>{% trans "Kitchen" %}:</br>{% trans "Nothing" %}
     {% endif %}
     </li>
     <li onclick='window.location="{% url "table_select" facture.id %}"'
         {% if facture.surcharge %}class="surtaxe"{% endif %}>
-        Table:</br>{{facture.table.nom}}</li>
+        {% trans "Table" %}:</br>{{facture.table.nom}}</li>
     <li onclick='window.location="{% url "couverts_select" facture.id %}"'>
-        Couverts:</br>{{facture.couverts}}</li>
+        {% trans "Guests" %}:</br>{{facture.couverts}}</li>
     <li onclick='window.location="{% url "bill_onsite" facture.id %}"'
         {% if facture.onsite %}
-            class="enabled">sur place
+            class="enabled">{% trans "on site" %}
         {% else %}
-            class="disabled">à emporter
+            class="disabled">{% trans "take away" %}
         {% endif %}
     </li>
     <li onclick='window.location="{% url "bill_print" facture.id %}"'>
-        Imprimer le ticket</li>
-    <li>Total TTC:</br>{{facture.total_ttc}}€</li>
-    <li>Restant à payer:</br>{{facture.restant_a_payer}}€</li>
+        {% trans "Print bill" %}</li>
+    <li>{% trans "Total with all taxes" %}:</br>{{facture.total_ttc}}{% trans "$" %}</li>
+    <li>{% trans "Remaining to be paid" %}:</br>{{facture.restant_a_payer}}{% trans "$" %}</li>
     <li onclick='window.location="{% url "bill_delete" facture.id %}"'
-        class="critical">Supprimer</li>
+        class="critical">{% trans "Remove" %}</li>
 </ul>
 
-<h2><!--Produits--></h2>
+<h2><!--Products--></h2>
 <ul id="products_sold">
-    <li onclick="window.location='{% url "bill_categories" facture.id %}'">
-        Ajouter un produit</li>
+    <li onclick="window.location='{% url "bill_categories" facture.id %}'"
+        >{% trans "Add a product" %}</li>
     {% for sold in products_sold %}
         {% if sold.count > 1 %}
     <li class="cat_{{sold.produit.categorie_id}}"
@@ -59,17 +58,17 @@
     {% endfor %}
 </ul>
 
-<h2><!--Paiements--></h2>
+<h2><!--Payments--></h2>
 <ul id="paiements">
-    <li onclick="window.location='{% url "prepare_payment" facture.id %}'">
-        Ajouter un paiement</li>
+    <li onclick="window.location='{% url "prepare_payment" facture.id %}'"
+        >{% trans "Add a payment" %}</li>
     {% for payment in facture.paiements.iterator %}
     <li onclick="window.location='{% url "bill_payment_view" facture.id payment.id %}'">
-        {{payment.type.nom}}: {{payment.montant}}€</li>
+        {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li>
     {% endfor %}
 </ul>
 
-<h2>Suivi en cuisine</h2>
+<h2>{% trans "Kitchen" %}</h2>
 <ul id="kitchen">
     {% for follow in facture.following.iterator %}
     <li onclick="window.location='{% url "kitchen_for_bill" facture.id %}'"
@@ -77,7 +76,7 @@
          {{follow}}
     </li>
     {% empty %}
-    <li>Aucun suivi.</li>
+    <li>{% trans "No follow" %}</li>
     {% endfor %}
 </ul>
 

@@ -2,8 +2,8 @@
 {% block content %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
-
-<h1>Sélection d'un montant</h1>
+{% load i18n %}
+<h1>{% trans "Select an amount" %}</h1>
 <ul id="lcd">
     {% for i in left %}
     <li><img src="{{ STATIC_PREFIX }}images/numbers/orange/digit_{{ i }}.png"></li>
@@ -14,7 +14,8 @@
     {% endfor %}
 </ul>
 <ul id="lcd_save">
-    <li onclick='window.location="{% url 'prepare_payment' bill_id %}"'>Valider</li>
+    <li onclick='window.location="{% url 'prepare_payment' bill_id %}"'
+        >{% trans "Save" %}</li>
 </ul>
 </br></br>
 <ul id="calc">
