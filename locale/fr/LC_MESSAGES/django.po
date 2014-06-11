@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 23:43+0200\n"
+"POT-Creation-Date: 2014-06-11 23:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,81 @@ msgstr "Anglais"
 msgid "Russian"
 msgstr "Russe"
 
-#: possum/base/views/carte/categories/__init__.py:243
+#: possum/base/models/payment.py:68 possum/base/models/payment.py:71
+#: possum/templates/base/carte/product.html:35
+#: possum/templates/base/carte/product.html:38
+#: possum/templates/base/carte/product.html:41
+#: possum/templates/base/carte/product.html:44
+#: possum/templates/base/carte/product.html:47
+#: possum/templates/base/manager/archives/home.html:21
+#: possum/templates/base/manager/archives/invoice.html:19
+#: possum/templates/base/manager/archives/invoice.html:20
+#: possum/templates/bill/bill.html:28 possum/templates/bill/bill.html.py:29
+#: possum/templates/bill/bill.html:67 possum/templates/bill/home.html:15
+#: possum/templates/bill/sold.html:20 possum/templates/payments/home.html:36
+#: possum/templates/payments/home.html:44
+#: possum/templates/payments/home.html:50
+#: possum/templates/payments/home.html:60
+#: possum/templates/payments/view.html:12
+#: possum/templates/payments/view.html:15 possum/templates/stats/home.html:128
+#: possum/templates/stats/home.html:137
+msgid "$"
+msgstr "€"
+
+#: possum/base/views/carte/categories/__init__.py:41
+#: possum/templates/base/manager/home.html:8
+#: possum/templates/base/manager/users.html:72
+msgid "Carte"
+msgstr "Carte"
+
+#: possum/base/views/carte/categories/__init__.py:51
+msgid "Message could not be sent"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:54
+#, python-format
+msgid "Message was sent to %s"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:58
+msgid "You have no email address"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:71
+#, python-format
+msgid "Printing was sent to %s"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:75
+#, python-format
+msgid "Printing has failed on %s"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:79
+#, fuzzy
+msgid "No printers 'manager' available"
+msgstr "Aucune table disponible"
+
+#: possum/base/views/carte/categories/__init__.py:81
+#: possum/templates/base/carte/category.html:109
+#: possum/templates/base/carte/product_select_produits_ok.html:11
+#: possum/templates/bill/categories.html:70
+#: possum/templates/bill/products.html:17
+#: possum/templates/bill/subproducts.html:12
+#, fuzzy
+msgid "No product"
+msgstr "Aucun produit"
+
+#: possum/base/views/carte/categories/__init__.py:114
+#, fuzzy
+msgid "Category does not exist"
+msgstr "Catégorie pour le report"
+
+#: possum/base/views/carte/categories/__init__.py:144
+msgid "Category contains products, deletion canceled"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:244
 #: possum/templates/base/carte/category.html:59
 #: possum/templates/base/carte/category.html:61
 #: possum/templates/base/carte/product.html:46
@@ -38,7 +112,7 @@ msgstr "Russe"
 msgid "VAT take away"
 msgstr "TVA à emporter"
 
-#: possum/base/views/carte/categories/__init__.py:253
+#: possum/base/views/carte/categories/__init__.py:254
 #: possum/templates/base/carte/category.html:52
 #: possum/templates/base/carte/category.html:54
 #: possum/templates/base/carte/product.html:43
@@ -376,15 +450,6 @@ msgstr "Produits actifs"
 msgid "Old products"
 msgstr "Anciens produits"
 
-#: possum/templates/base/carte/category.html:109
-#: possum/templates/base/carte/product_select_produits_ok.html:11
-#: possum/templates/bill/categories.html:70
-#: possum/templates/bill/products.html:17
-#: possum/templates/bill/subproducts.html:12
-#, fuzzy
-msgid "No product"
-msgstr "Aucun produit"
-
 #: possum/templates/base/carte/color.html:4
 #, fuzzy
 msgid "Change color for"
@@ -459,26 +524,6 @@ msgstr "Ne peux pas choisir la cuisson"
 #: possum/templates/base/carte/product_new.html:13
 msgid "Price including tax"
 msgstr "Prix TTC"
-
-#: possum/templates/base/carte/product.html:35
-#: possum/templates/base/carte/product.html:38
-#: possum/templates/base/carte/product.html:41
-#: possum/templates/base/carte/product.html:44
-#: possum/templates/base/carte/product.html:47
-#: possum/templates/base/manager/archives/home.html:21
-#: possum/templates/base/manager/archives/invoice.html:19
-#: possum/templates/base/manager/archives/invoice.html:20
-#: possum/templates/bill/bill.html:28 possum/templates/bill/bill.html.py:29
-#: possum/templates/bill/bill.html:67 possum/templates/bill/home.html:15
-#: possum/templates/bill/sold.html:20 possum/templates/payments/home.html:36
-#: possum/templates/payments/home.html:44
-#: possum/templates/payments/home.html:50
-#: possum/templates/payments/home.html:60
-#: possum/templates/payments/view.html:12
-#: possum/templates/payments/view.html:15 possum/templates/stats/home.html:128
-#: possum/templates/stats/home.html:137
-msgid "$"
-msgstr "€"
 
 #: possum/templates/base/carte/product.html:37
 msgid "Price with surcharge"
@@ -610,11 +655,6 @@ msgstr "pour l'icone de déconnexion"
 #: possum/templates/base/manager/home.html:6
 msgid "Archives"
 msgstr "Archives"
-
-#: possum/templates/base/manager/home.html:8
-#: possum/templates/base/manager/users.html:72
-msgid "Carte"
-msgstr "Carte"
 
 #: possum/templates/base/manager/home.html:12
 msgid "In use"

@@ -20,6 +20,7 @@
 from django.db import models
 from generic import Nom
 from config import Config
+from django.utils.translation import ugettext as _
 
 
 class PaiementType(Nom):
@@ -64,10 +65,10 @@ class Paiement(models.Model):
         get_latest_by = 'date'
 
     def __unicode__(self):
-        tmp = u"%s %.2f€" % (self.type, self.montant)
+        tmp = u"%s %.2f%s" % (self.type, self.montant, _("$"))
         if self.type.fixed_value:
-            tmp += u" (%d tic. x %.2f€)" % (self.nb_tickets,
-                                            self.valeur_unitaire)
+            tmp += u" (%d tic. x %.2f%s)" % (self.nb_tickets,
+                                            self.valeur_unitaire, _("$"))
         return tmp
 
     def __cmp__(self, other):
