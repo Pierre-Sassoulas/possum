@@ -22,6 +22,7 @@ import logging
 from django.shortcuts import render, redirect, get_object_or_404
 from possum.base.models import Printer
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -63,9 +64,8 @@ def printer_view(request, printer_id):
         try:
             context['printer'].save()
         except:
-            messages.add_message(request, messages.ERROR, "Les "
-                                 "informations n'ont pu être "
-                                 "enregistrées")
+            messages.add_message(request, messages.ERROR,
+                                 _("Changes could not be saved"))
     return render(request, 'printers/view.html', context)
 
 
@@ -90,11 +90,11 @@ def printer_set_width(request, printer_id, number):
 def printer_test_print(request, printer_id):
     printer = get_object_or_404(Printer, pk=printer_id)
     if printer.print_test():
-        messages.add_message(request, messages.SUCCESS, "L'impression a"
-                             " été acceptée")
+        messages.add_message(request, messages.SUCCESS,
+                             _("Printing has been accepted"))
     else:
-        messages.add_message(request, messages.ERROR, "L'impression de "
-                             "test a achouée")
+        messages.add_message(request, messages.ERROR,
+                             _("Printing test has failed"))
     return redirect('printer_view', printer_id)
 
 
