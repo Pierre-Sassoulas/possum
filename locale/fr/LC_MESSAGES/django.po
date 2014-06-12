@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-11 23:04+0200\n"
+"POT-Creation-Date: 2014-06-12 22:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: possum/common_settings.py:72
+#: possum/common_settings.py:74
 msgid "French"
 msgstr "Français"
 
-#: possum/common_settings.py:73
+#: possum/common_settings.py:75
 msgid "English"
 msgstr "Anglais"
 
-#: possum/common_settings.py:74
+#: possum/common_settings.py:76
 msgid "Russian"
 msgstr "Russe"
 
@@ -119,6 +119,18 @@ msgstr "TVA à emporter"
 #, fuzzy
 msgid "VAT on site"
 msgstr "TVA sur place"
+
+#: possum/base/views/manager/printers/__init__.py:68
+msgid "Changes could not be saved"
+msgstr ""
+
+#: possum/base/views/manager/printers/__init__.py:94
+msgid "Printing has been accepted"
+msgstr ""
+
+#: possum/base/views/manager/printers/__init__.py:97
+msgid "Printing test has failed"
+msgstr ""
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
 msgid "This page is currently unavailable"
