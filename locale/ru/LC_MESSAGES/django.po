@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 22:49+0200\n"
+"POT-Creation-Date: 2014-06-15 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,6 +50,28 @@ msgstr ""
 #: possum/templates/payments/view.html:15 possum/templates/stats/home.html:128
 #: possum/templates/stats/home.html:137
 msgid "$"
+msgstr ""
+
+#: possum/base/views/carte/__init__.py:50
+#: possum/base/views/manager/vats/__init__.py:50
+msgid "You must enter a name"
+msgstr ""
+
+#: possum/base/views/carte/__init__.py:54
+msgid "You must enter a price"
+msgstr ""
+
+#: possum/base/views/carte/__init__.py:98
+#: possum/base/views/carte/__init__.py:99
+#: possum/base/views/carte/__init__.py:220
+#: possum/base/views/carte/categories/__init__.py:310
+#: possum/base/views/carte/categories/__init__.py:329
+#: possum/base/views/manager/printers/__init__.py:68
+#: possum/base/views/manager/tables/__init__.py:66
+#: possum/base/views/manager/tables/__init__.py:83
+#: possum/base/views/manager/vats/__init__.py:74
+#: possum/base/views/manager/vats/__init__.py:94
+msgid "Changes could not be saved"
 msgstr ""
 
 #: possum/base/views/carte/categories/__init__.py:41
@@ -102,6 +124,14 @@ msgstr ""
 msgid "Category contains products, deletion canceled"
 msgstr ""
 
+#: possum/base/views/carte/categories/__init__.py:185
+msgid "New category has not been created"
+msgstr ""
+
+#: possum/base/views/carte/categories/__init__.py:188
+msgid "You must choose a name for the new category"
+msgstr ""
+
 #: possum/base/views/carte/categories/__init__.py:244
 #: possum/templates/base/carte/category.html:59
 #: possum/templates/base/carte/category.html:61
@@ -116,8 +146,20 @@ msgstr ""
 msgid "VAT on site"
 msgstr ""
 
-#: possum/base/views/manager/printers/__init__.py:68
-msgid "Changes could not be saved"
+#: possum/base/views/carte/categories/__init__.py:278
+msgid "VAT type not defined"
+msgstr ""
+
+#: possum/base/views/kitchen/__init__.py:74
+msgid "This invoice has already been ended"
+msgstr ""
+
+#: possum/base/views/manager/archives/__init__.py:45
+msgid "The date is not valid"
+msgstr ""
+
+#: possum/base/views/manager/archives/__init__.py:61
+msgid "This bill has not yet ended"
 msgstr ""
 
 #: possum/base/views/manager/printers/__init__.py:94
@@ -126,6 +168,10 @@ msgstr ""
 
 #: possum/base/views/manager/printers/__init__.py:97
 msgid "Printing test has failed"
+msgstr ""
+
+#: possum/base/views/manager/vats/__init__.py:53
+msgid "You must enter a percentage tax"
 msgstr ""
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
