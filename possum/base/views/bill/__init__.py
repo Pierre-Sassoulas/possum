@@ -35,6 +35,7 @@ from possum.base.models import Note
 from possum.base.models import Config
 from possum.base.models import Option
 from possum.base.forms import NoteForm
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)

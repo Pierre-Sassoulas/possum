@@ -181,11 +181,11 @@ def categories_new(request):
         except:
             logger.warning("[%s] new categorie failed: [%s] [%s]" % (
                            request.user.username, cat.priorite, cat.nom))
-            messages.add_message(request, messages.ERROR, "La nouvelle "
-                                 "catégorie n'a pu être créée.")
+            messages.add_message(request, messages.ERROR,
+                                 _("New category has not been created"))
     else:
-        messages.add_message(request, messages.ERROR, "Vous devez choisir "
-                             "un nom pour la nouvelle catégorie.")
+        messages.add_message(request, messages.ERROR,
+                             _("You must choose a name for the new category"))
     return redirect('categories')
 
 
@@ -274,7 +274,8 @@ def categories_set_vat(request, cat_id, vat_id):
                                               actif=True).iterator():
             product.update_vats()
     else:
-        messages.add_message(request, messages.ERROR, "Type de TVA non defini")
+        messages.add_message(request, messages.ERROR,
+                             _("VAT type not defined"))
     return redirect('categories_view', cat_id)
 
 
@@ -305,8 +306,8 @@ def categories_set_color(request, cat_id):
         try:
             cat.save()
         except:
-            messages.add_message(request, messages.ERROR, "Les modifications "
-                                 "n'ont pu être enregistrées.")
+            messages.add_message(request, messages.ERROR,
+                                 _("Changes could not be saved"))
         else:
             update_colors()
     return redirect('categories_view', cat_id)
@@ -324,8 +325,8 @@ def categories_set_name(request, cat_id):
     try:
         cat.save()
     except:
-        messages.add_message(request, messages.ERROR, "Les modifications "
-                             "n'ont pu être enregistrées.")
+        messages.add_message(request, messages.ERROR,
+                             _("Changes could not be saved"))
         logger.warning("[%s] save failed for [%s]" % (
                        request.user.username, cat.nom))
     return redirect('categories_view', cat_id)

@@ -23,6 +23,7 @@ import logging
 from django.shortcuts import render, redirect, get_object_or_404
 from possum.base.models import Zone, Table
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -61,8 +62,8 @@ def tables_table(request, zone_id, table_id):
         try:
             context['table'].save()
         except:
-            messages.add_message(request, messages.ERROR, "Les modifications "
-                                 "n'ont pu être enregistrées.")
+            messages.add_message(request, messages.ERROR,
+                                 _("Changes could not be saved"))
         else:
             return redirect('tables')
     return render(request, 'base/manager/tables/table.html', context)
@@ -78,8 +79,8 @@ def tables_zone(request, zone_id):
         try:
             context['zone'].save()
         except:
-            messages.add_message(request, messages.ERROR, "Les modifications "
-                                 "n'ont pu être enregistrées.")
+            messages.add_message(request, messages.ERROR,
+                                 _("Changes could not be saved"))
         else:
             return redirect('tables')
     return render(request, 'base/manager/tables/zone.html', context)

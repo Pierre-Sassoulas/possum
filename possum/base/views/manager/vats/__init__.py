@@ -24,6 +24,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)

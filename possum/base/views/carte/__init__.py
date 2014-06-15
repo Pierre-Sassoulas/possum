@@ -28,6 +28,7 @@ from possum.base.models import Produit
 from possum.base.models import Option
 from possum.base.views import permission_required
 from possum.base.forms import OptionForm
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -45,14 +46,12 @@ def is_valid_product(request, name, prize):
     erreur = False
     if not name:
         erreur = True
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Vous devez saisir un nom.")
+        messages.add_message(request, messages.ERROR,
+                             _("You must enter a name"))
     if not prize:
         erreur = True
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Vous devez entrer un prix.")
+        messages.add_message(request, messages.ERROR,
+                             _("You must enter a price"))
     return not erreur
 
 
@@ -95,10 +94,9 @@ def products_new(request, cat_id):
                 product.set_category(context['category'])
                 product.save()
             except Exception as ex:
-                messages.add_message(request,
-                                     messages.ERROR,
-                                     "Les modifications n'ont pu être "
-                                     "enregistrées. ('{}')".format(ex))
+                messages.add_message(request, messages.ERROR,
+                                     _("Changes could not be saved"))
+                logger.warning(_("Changes could not be saved")+": "+ex)
             else:
                 return redirect('categories_view', context['category'].id)
     return render(request, 'base/carte/product_new.html', context)
@@ -135,7 +133,7 @@ def products_select_produits_ok(request, product_id):
     context['product'] = get_object_or_404(Produit, pk=product_id)
     context['products'] = []
     for category in context['product'].categories_ok.iterator():
-        for sub in Produit.objects.filter(categorie=category, actif=True).iterator():
+        for sub in Produit.objects.filter(categorie=category, actif=True):
             if sub not in context['product'].produits_ok.iterator():
                 context['products'].append(sub)
     return render(request, 'base/carte/product_select_produits_ok.html',
@@ -219,7 +217,7 @@ def products_change(request, product_id):
                 new_product.save()
             except:
                 messages.add_message(request, messages.ERROR,
-                                "Les modifications n'ont pu etre enregistrees.")
+                                     _("Changes could not be saved"))
             else:
                 return redirect('products_view', new_product.id)
         else:
