@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+{% load i18n %}
+<h1>{% trans "Notes list" %}</h1>
 
-<h1>Liste des notes</h1>
-<p>Ces notes peuvent ajouter un produit au moment de l'enregistrement
-d'une commande.</p>
+<p>{% blocktrans %}It is possible to add a note on a product
+at the time of order{% endblocktrans %}</p>
 
 <ul id="notes">
-    <li onclick='window.location="{% url 'notes_add' %}"'>Ajouter</li>
+    <li onclick='window.location="{% url 'notes_add' %}"'>{% trans "Add" %}</li>
     {% for note in notes %}
     <li onclick='window.location="{% url 'notes_view' note.id %}"'>
         {{note.message}}
@@ -16,9 +17,9 @@ d'une commande.</p>
 
 {% if note %}
 {% if note.instance.id %}
-<h2>Note sélectionnée</h2>
+<h2>{% trans "Selected note" %}</h2>
 {% else %}
-<h2>Nouvelle note</h2>
+<h2>{% trans "New note" %}</h2>
 {% endif %}
 {% if note.instance.id %}
 <form action="{% url 'notes_view' note.instance.id %}" method="post">
@@ -30,11 +31,11 @@ d'une commande.</p>
     <table>
         {{note.as_table}}
         <tr><td colspan="2">
-            <input type="submit" value="Enregistrer" />
+            <input type="submit" value="{% trans "Create" %}" />
 </form>
     {% if note.instance.id %}
         <form action="{% url 'notes_del' note.instance.id %}">
-            <input type="submit" value="Supprimer" />
+            <input type="submit" value="{% trans "Remove" %}" />
         </form>
     {% endif %}
         </td></tr>

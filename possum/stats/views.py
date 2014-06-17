@@ -29,6 +29,7 @@ from possum.base.models import Printer
 from possum.base.models import Categorie, VAT, PaiementType, Produit
 from chartit import PivotDataPool, PivotChart
 from django.db.models import Avg
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)

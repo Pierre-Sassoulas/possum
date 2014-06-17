@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick='window.location="{% url "sold_view" bill.id product.id %}"'>Retour produit</li>
+    <li onclick='window.location="{% url "sold_view" bill.id product.id %}"'
+        >{% trans "Back" %}</li>
 </ul>
 
-<h1>Ce produit est à envoyer en cuisine avec:</h1>
+<h1>{% trans "This product is to be sent in kitchen with" %}:</h1>
 <ul id="categories">
     {% for category in categories %}
     <li onclick='window.location="{% url "product_set_made_with" bill.id product.id category.id %}"'
@@ -13,7 +14,7 @@
         {{category.nom}}
         </li>
     {% empty %}
-        <li>Aucune categorie disponible.</li>
+        <li>{% trans "No category" %}</li>
     {% endfor %}
 </ul>
 

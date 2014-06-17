@@ -6,6 +6,7 @@ import sys
 from django.utils.translation import ugettext_lazy as _
 
 
+POSSUM_VERSION="0.5.1"
 ########## PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
 DJANGO_ROOT = os.path.dirname(os.path.dirname(__file__))
@@ -59,9 +60,11 @@ except IOError as exc:
                         % (SECRET_FILE, exc))
 
 ########## END KEY CONFIGURATION
-
+# This address is used to send automatically bugs and errors.
+# It gives no access to your data. If you don't want, you can
+# remove it or add your address.
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Bug Watch', 'bugwatch@possum-software.org'),
 )
 MANAGERS = ADMINS
 
@@ -194,12 +197,21 @@ LOGGING = {
     'filters': {
         'require_debug_false': {
              '()': 'django.utils.log.RequireDebugFalse'
-        }
+        },
+        'require_debug_true': {
+             '()': 'django.utils.log.RequireDebugTrue'
+        },
     },
     'handlers': {
         'null': {
             'level': 'DEBUG',
             'class': 'django.utils.log.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'filters': ['require_debug_true'],
         },
         'syslog': {
             'level': 'INFO',
@@ -230,12 +242,12 @@ LOGGING = {
             'level': 'INFO',
         },
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
             'propagate': False,
         },
         'possum': {
-            'handlers': ['mail_admins', 'syslog', 'mail_bugwatch'],
+            'handlers': ['mail_admins', 'syslog', 'mail_bugwatch', 'console'],
             'level': 'WARNING',
         }
     }

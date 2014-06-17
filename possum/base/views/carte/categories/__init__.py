@@ -29,6 +29,7 @@ from possum.base.models import Printer
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -37,7 +38,7 @@ logger = logging.getLogger(__name__)
 @permission_required('base.p2')
 def categories_send(request):
     result = Produit().get_list_with_all_products()
-    subject = "Carte complete"
+    subject = _("Carte")
     mail = ""
     for line in result:
         mail += "%s\n" % line
@@ -47,14 +48,14 @@ def categories_send(request):
                       [request.user.email], fail_silently=False)
         except:
             messages.add_message(request, messages.ERROR,
-                                 u"Le mail n'a pu être envoyé.")
+                                 _("Message could not be sent"))
         else:
             messages.add_message(request, messages.SUCCESS,
-                                 u"Le mail a été envoyé à %s."
+                                 _("Message was sent to %s")
                                  % request.user.email)
     else:
         messages.add_message(request, messages.ERROR,
-                             u"Vous n'avez pas d'adresse mail.")
+                             _("You have no email address"))
     return redirect('categories')
 
 
@@ -67,17 +68,17 @@ def categories_print(request):
             printer = printers[0]
             if printer.print_list(result, "carte_complete"):
                 messages.add_message(request, messages.SUCCESS,
-                                     u"L'impression a été envoyée sur %s." %
+                                     _("Printing was sent to %s") %
                                      printer.name)
             else:
-                messages.add_message(request, messages.ERROR, u"L'impression"
-                                     u" a échouée sur %s." % printer.name)
+                messages.add_message(request, messages.ERROR,
+                                     _("Printing has failed on %s")
+                                     % printer.name)
         else:
-            messages.add_message(request, messages.ERROR, u"Aucune imprimante "
-                                 u"type 'manager' disponible.")
+            messages.add_message(request, messages.ERROR,
+                                 _("No printers 'manager' available"))
     else:
-        messages.add_message(request, messages.ERROR,
-                             "Il n'y a rien dans la carte.")
+        messages.add_message(request, messages.ERROR, _("No product"))
     return redirect('categories')
 
 
@@ -92,7 +93,8 @@ def categories(request):
 def categories_delete(request, cat_id):
     context = {'menu_manager': True, }
     context['current_cat'] = get_object_or_404(Categorie, pk=cat_id)
-    context['categories'] = Categorie.objects.order_by('priorite', 'nom').exclude(id=cat_id)
+    context['categories'] = Categorie.objects.order_by('priorite',
+                                                      'nom').exclude(id=cat_id)
     cat_report_id = request.POST.get('cat_report', '').strip()
     action = request.POST.get('valide', '').strip()
     if action == "Supprimer":
@@ -106,10 +108,10 @@ def categories_delete(request, cat_id):
                     product.categorie = report
                     product.save()
             except Categorie.DoesNotExist:
-                logger.warning("[%s] categorie [%s] doesn't exist" % (
+                logger.warning("[%s] category [%s] doesn't exist" % (
                                request.user.username, cat_report_id))
-                messages.add_message(request, messages.ERROR, "La catégorie "
-                                     "n'existe pas.")
+                messages.add_message(request, messages.ERROR,
+                                     _("Category does not exist"))
                 return redirect('categories_delete', cat_id)
             report_info = "from [%s] to [%s]" % (context['current_cat'],
                                                  report)
@@ -133,14 +135,14 @@ def categories_delete(request, cat_id):
                 new.save()
         if products_list.count() == 0:
             context['current_cat'].delete()
-            logger.info("[%s] categorie [%s] deleted" % (
+            logger.info("[%s] category [%s] deleted" % (
                         request.user.username,
                         context['current_cat'].nom))
             return redirect('categories')
         else:
-            messages.add_message(request, messages.ERROR, "La catégorie "
-                                 "ne peux être supprimé, elle contient "
-                                 "des produits")
+            messages.add_message(request, messages.ERROR,
+                                 _("Category contains products, "
+                                   "deletion canceled"))
 
     elif action == "Annuler":
         return redirect('categories')
@@ -179,11 +181,11 @@ def categories_new(request):
         except:
             logger.warning("[%s] new categorie failed: [%s] [%s]" % (
                            request.user.username, cat.priorite, cat.nom))
-            messages.add_message(request, messages.ERROR, "La nouvelle "
-                                 "catégorie n'a pu être créée.")
+            messages.add_message(request, messages.ERROR,
+                                 _("New category has not been created"))
     else:
-        messages.add_message(request, messages.ERROR, "Vous devez choisir "
-                             "un nom pour la nouvelle catégorie.")
+        messages.add_message(request, messages.ERROR,
+                             _("You must choose a name for the new category"))
     return redirect('categories')
 
 
@@ -239,7 +241,7 @@ def categories_surtaxable(request, cat_id):
 def categories_vat_takeaway(request, cat_id):
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=cat_id)
-    context['type_vat'] = 'TVA à emporter'
+    context['type_vat'] = _("VAT take away")
     request.session['vat'] = 'vat_takeaway'
     context['vats'] = VAT.objects.order_by('name')
     return render(request, 'base/carte/categories/select_vat.html', context)
@@ -249,7 +251,7 @@ def categories_vat_takeaway(request, cat_id):
 def categories_vat_onsite(request, cat_id):
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=cat_id)
-    context['type_vat'] = 'TVA sur place'
+    context['type_vat'] = _("VAT on site")
     request.session['vat'] = 'vat_onsite'
     context['vats'] = VAT.objects.order_by('name')
     return render(request, 'base/carte/categories/select_vat.html', context)
@@ -272,7 +274,8 @@ def categories_set_vat(request, cat_id, vat_id):
                                               actif=True).iterator():
             product.update_vats()
     else:
-        messages.add_message(request, messages.ERROR, "Type de TVA non defini")
+        messages.add_message(request, messages.ERROR,
+                             _("VAT type not defined"))
     return redirect('categories_view', cat_id)
 
 
@@ -303,8 +306,8 @@ def categories_set_color(request, cat_id):
         try:
             cat.save()
         except:
-            messages.add_message(request, messages.ERROR, "Les modifications "
-                                 "n'ont pu être enregistrées.")
+            messages.add_message(request, messages.ERROR,
+                                 _("Changes could not be saved"))
         else:
             update_colors()
     return redirect('categories_view', cat_id)
@@ -322,8 +325,8 @@ def categories_set_name(request, cat_id):
     try:
         cat.save()
     except:
-        messages.add_message(request, messages.ERROR, "Les modifications "
-                             "n'ont pu être enregistrées.")
+        messages.add_message(request, messages.ERROR,
+                             _("Changes could not be saved"))
         logger.warning("[%s] save failed for [%s]" % (
                        request.user.username, cat.nom))
     return redirect('categories_view', cat_id)

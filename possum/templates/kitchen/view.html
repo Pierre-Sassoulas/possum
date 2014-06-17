@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %
 <ul id="back">
-    <li onclick='window.location="{% url 'kitchen' %}"'>Retour cuisine</li>
-    <li onclick='window.location="{% url 'bill_view' facture.id %}"'>Retour commande</li>
+    <li onclick='window.location="{% url 'kitchen' %}"'
+        >{% trans "Back kitchen" %}</li>
+    <li onclick='window.location="{% url 'bill_view' facture.id %}"'
+        >{% trans "Back bill" %}</li>
 </ul>
 
-<h1>Table {{facture.table}} / {{facture.couverts}} couv. ({{facture}})</h1>
+<h1>{% trans "Table" %} {{facture.table}} / {{facture.couverts}} {% trans "guests" %} ({{facture}})</h1>
 
 <table>
     <tr>
-        <td>Heure</td>
-        <td>Catégorie</td>
-        <td>Plats</td>
-        <td>Options</td>
-        <td>Notes</td>
+        <td>{% trans "Time" %}</td>
+        <td>{% trans "Category" %}</td>
+        <td>{% trans "Product" %}</td>
+        <td>{% trans "Options" %}</td>
+        <td>{% trans "Notes" %}</td>
     </tr>
 {% for follow in facture.following.iterator %}
     <tr>

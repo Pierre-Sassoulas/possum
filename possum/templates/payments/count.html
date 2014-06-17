@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Nombre de tickets</h1>
+{% load i18n %}
+<h1>{% trans "Number of tickets" %}</h1>
 <ul id="numbers">
     {% for i in range %}
     <li onclick='window.location="{% url 'payment_count' bill_id i %}"'

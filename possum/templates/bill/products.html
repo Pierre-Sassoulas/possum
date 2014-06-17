@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "bill_categories" bill_id %}'">Retour</li>
+    <li onclick="window.location='{% url "bill_categories" bill_id %}'"
+        >{% trans "Back" %}</li>
 </ul>
 
-<h1>Sélection d'un produit</h1>
+<h1>{% trans "Select a product" %}</h1>
 
 <ul id="products">
     {% for product in products %}
-        <li onclick="window.location='{% url "product_add" bill_id product.id %}'" 
+        <li onclick="window.location='{% url "product_add" bill_id product.id %}'"
             class="cat_{{product.categorie_id}}">{{product.nom}}
         </li>
     {% empty %}
-        <li>Aucun produit disponible.</li>
+        <li>{% trans "No product" %}</li>
     {% endfor %}
 </ul>
 

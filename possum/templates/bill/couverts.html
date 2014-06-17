@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Sélection du nombre de couverts</h1>
+{% load i18n %}
+<h1>{% trans "How many guests ?" %}</h1>
 
 <ul id="couverts">
     {% for number in nb_couverts %}
     <li onclick="window.location='{% url "couverts_set" bill_id number %}'">
         {{number}}
         </li>
-    {% empty %}
-        <li>Aucune liste disponible.</li>
     {% endfor %}
 </ul>
 

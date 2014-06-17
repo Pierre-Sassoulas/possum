@@ -24,6 +24,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -46,10 +47,10 @@ def vats_view(request, vat_id):
 def check_name_and_tax(request, name, tax):
     if not name:
         messages.add_message(request, messages.ERROR,
-                             "Vous devez entrer un nom.")
+                             _("You must enter a name"))
     if not tax:
         messages.add_message(request, messages.ERROR,
-                             "Vous devez saisir un pourcentage de taxe.")
+                             _("You must enter a percentage tax"))
 
 
 @permission_required('base.p1')
@@ -70,8 +71,7 @@ def vats_change(request, vat_id):
                 product.update_vats()
         except:
             messages.add_message(request, messages.ERROR,
-                                 "Les modifications n'ont pu être "
-                                 "enregistrées.")
+                                 _("Changes could not be saved"))
         else:
             return redirect('vats')
     return render(request, 'base/manager/vats/change.html', context)
@@ -91,8 +91,7 @@ def vat_new(request):
             vat.save()
         except:
             messages.add_message(request, messages.ERROR,
-                                 "Les modifications n'ont pu être "
-                                 "enregistrées.")
+                                 _("Changes could not be saved"))
         else:
             return redirect('vats')
     return render(request, 'base/manager/vats/new.html', context)

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load i18n %}
 <table>
     <tr>
-        <td>Heure</td>
-        <td>Table</td>
-        <td>Couverts</td>
-        <td>Catégorie</td>
-        <td>Plats</td>
-        <td>Options</td>
-        <td>Notes</td>
+        <td>{% trans "Time" %}</td>
+        <td>{% trans "Table" %}</td>
+        <td>{% trans "Guests" %}</td>
+        <td>{% trans "Category" %}</td>
+        <td>{% trans "Product" %}</td>
+        <td>{% trans "Options" %}</td>
+        <td>{% trans "Notes" %}</td>
     </tr>
     {% for facture in factures %}
         {% if facture.following %}
@@ -33,13 +33,13 @@
                 {% endfor %}</td>
             {% if forloop.first %}
             <td onclick='window.location="{% url 'follow_done' facture.follow.id %}"'
-                align='center'>Fait ?</td>
+                align='center'>{% trans "Done" %} ?</td>
             {% endif %}
             </tr>
             {% endfor %}
             <!-- There are a category to follow -->
             {% if facture.after %}
-            <tr><td colspan="3" align="center">A suivre ...</td>
+            <tr><td colspan="3" align="center">{% trans "To follow" %} ...</td>
                 <td class="cat_id{{facture.category_to_follow_id}}">
                     {{facture.category_to_follow}}</td>
                 {% for product in facture.after %}
@@ -60,6 +60,7 @@
         {% endif %}
     {% endfor %}
 </table>
-<p>Cette page est automatiquement rechargée toutes les {{need_auto_refresh}} secondes.</p>
+<p>{% blocktrans %}This page will automatically refresh every
+    {{need_auto_refresh}} seconds{% endblocktrans %}</p>
 {% endblock %}
 

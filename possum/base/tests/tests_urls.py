@@ -128,14 +128,6 @@ class Tests_urls(TestCase):
         self.assert_http_status(urls, 302)
         self.assert_http_status_after_login(urls, 302)
 
-    def test_jukebox(self):
-        ''' Test that the jukebox urls work. '''
-        urls = [
-            reverse('jukebox'),
-        ]
-        self.assert_http_status(urls, 302)
-        self.assert_http_status_after_login(urls, 200)
-
     def test_kitchen(self):
         ''' Test that the kitchen urls work. '''
         urls = [

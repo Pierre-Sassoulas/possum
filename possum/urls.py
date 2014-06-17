@@ -176,10 +176,6 @@ urlpatterns += patterns('possum.base.views.bill',
     url(r'^amount/count/$', 'amount_count', name='amount_count'),
 )
 
-urlpatterns += patterns('possum.base.views.jukebox',
-                        url(r'^jukebox/$', 'jukebox', name='jukebox'),
-                        )
-
 urlpatterns += patterns('possum.base.views.kitchen',
                         url(r'^kitchen/$', 'kitchen', name='kitchen'),
                         url(r'^kitchen/(?P<bill_id>\d+)/$', 'kitchen_for_bill',

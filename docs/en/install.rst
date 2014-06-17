@@ -41,6 +41,9 @@ For Debian/Ubuntu:
 
 .. include:: ../common/install_deb.rst
 
+For Fedora:
+
+.. include:: ../common/install_fedora.rst
 
 Then for installation or updates, we will use **./make**:
 

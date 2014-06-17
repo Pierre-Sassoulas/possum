@@ -4,7 +4,7 @@ Development
 
 
 The project is open to all contributions, the easiest way is to start by forking
-the project on `Github <https://github.com/possum-software/possum/>`_ and consult
+the `project <https://github.com/possum-software/possum/>`_ and consult
 tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
 
 Version number
@@ -30,7 +30,7 @@ The coding convention used for the project following the
 
 Compliance with agreements is verified by Jenkins,
 the results are available here:
-`Jenkins <https://www.possum-software.org/jenkins>`_.
+`Jenkins <http://jenkins.possum-software.org/>`_.
 
 In short:
 
@@ -46,8 +46,8 @@ You have to create a fork `here <https://github.com/possum-software/possum>`_
 (top right).
 
 Now, you will use your fork. This is an example with my username **sbonnegent**.
-Full documentation is on 
-`Github <https://help.github.com/articles/fork-a-repo>`_.
+Full documentation is on
+`Github (fork a repo) <https://help.github.com/articles/fork-a-repo>`_.
 
 In short::
 
@@ -63,9 +63,15 @@ In short::
 
 Changes are in your fork, now you can create a pull request directly on Github.
 
-After that, you must check state of your request on 
-`Jenkins <http://www.possum-software.org/jenkins/job/pull_requests/violations/>`_.
+After that, you must check state of your request on
+`Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
 if the number of violations is up, your request will not be accepted.
+
+You can fetch any new changes from the original repository and merge it
+to your fork with::
+
+  $ git fetch upstream
+  $ git merge upstream/master
 
 Change in class
 ===============

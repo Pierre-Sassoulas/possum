@@ -24,6 +24,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from possum.base.models import Facture
 from possum.base.models import Follow
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -69,8 +70,7 @@ def kitchen_for_bill(request, bill_id):
     context = {'menu_kitchen': True, }
     context['facture'] = get_object_or_404(Facture, pk=bill_id)
     if context['facture'].est_soldee():
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Cette facture a déjà été soldée.")
+        messages.add_message(request, messages.ERROR,
+                             _("This invoice has already been ended"))
         return redirect('kitchen')
     return render(request, 'kitchen/view.html', context)

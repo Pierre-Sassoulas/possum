@@ -25,6 +25,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from possum.base.models import Facture
 from possum.base.forms import DateForm
 from possum.base.views import permission_required
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -41,7 +42,7 @@ def archives(request):
             date = datetime.datetime(year, month, day)
         except:
             messages.add_message(request, messages.ERROR,
-                                 "La date saisie n'est pas valide.")
+                                 _("The date is not valid"))
             date = datetime.datetime.today()
     else:
         date = datetime.datetime.today()
@@ -57,7 +58,7 @@ def archives_bill(request, bill_id):
     bill = get_object_or_404(Facture, pk=bill_id)
     if not bill.est_soldee():
         messages.add_message(request, messages.ERROR,
-                             "Cette facture n'est pas encore soldée.")
+                             _("This bill has not yet ended"))
         return redirect('archives')
     context['bill'] = bill
     context['products_sold'] = bill.reduced_sold_list(bill.produits.all())

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Sélection de la table</h1>
+{% load i18n %}
+<h1>{% trans "What is the table ?" %}</h1>
 
 {% for zone in zones %}
     <h2>{{zone.nom}}</h2>
@@ -13,11 +13,11 @@
             {{table.nom}}
             </li>
         {% empty %}
-            <li>Aucune table disponible.</li>
+            <li>{% trans "No tables available" %}</li>
         {% endfor %}
     </ul>
 {% empty %}
-<p>Aucune zone disponible.</p>
+<p>{% trans "No room" %}</p>
 {% endfor %}
 
 {% endblock %}

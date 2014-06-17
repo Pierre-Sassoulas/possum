@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block titre %}Facture {{facture.id}}{% endblock %}
 {% block content %}
-
+{% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "bill_view" bill_id %}'">Retour facture</li>
+    <li onclick="window.location='{% url "bill_view" bill_id %}'"
+        >{% trans "Back" %}</li>
 </ul>
 
 <h1>{{sold.produit.nom}}</h1>
@@ -11,17 +11,17 @@
     {% if sold.produit.categorie.made_in_kitchen %}
     <li onclick="window.location='{% url "product_select_made_with" bill_id sold.id %}'"
         class="cat_{{sold.made_with_id}}">
-    À envoyer avec:</br>{{sold.made_with}}</li>
+    {% trans "Send with" %}:</br>{{sold.made_with}}</li>
     {% endif %}
     {% if sold.produit.choix_cuisson %}
     <li onclick="window.location='{% url "sold_cooking" bill_id sold.id %}'"
-        class="cooking_{{sold.cuisson_id}}">Cuisson:</br>{{sold.cuisson}}</li>
+        class="cooking_{{sold.cuisson_id}}">{% trans "Cooking" %}:</br>{{sold.cuisson}}</li>
     {% endif %}
-    <li>Prix TTC:</br>{{sold.prix}}€</li>
+    <li>{% trans "Total with all taxes" %}:</br>{{sold.prix}}{% trans "$" %}</li>
 </ul>
 
 {% if sold.produit.est_un_menu %}
-<h2>Contient</h2>
+<h2>{% trans "Contains" %}</h2>
 
 <ul id="products_sold">
     {% for product in sold.contient.all %}
@@ -33,8 +33,9 @@
 </ul>
 {% else %}
 <!-- Les notes et les options ne peuvent être liées à un menu -->
-<h2>Options</h2>
-<p>Les options en vert sont sélectionnées, il faut appuyer dessus pour activer/désactiver.</p>
+<h2>{% trans "Options" %}</h2>
+<p>{% blocktrans %}Green options are selected, you must
+press it to enable/disable{% endblocktrans %}</p>
 <ul id="options">
     {% for option in options %}
     <li onclick="window.location='{% url "bill_sold_options" bill_id sold.id option.id %}'"
@@ -42,12 +43,12 @@
         {{option.name}}
     </li>
     {% empty %}
-    <li>Aucune option</li>
+    <li>{% trans "No option" %}</li>
     {% endfor %}
 </ul>
 
-<h2>Notes</h2>
-<p>Les notes en vert sont sélectionnées pour le produit.</p>
+<h2>{% trans "Notes" %}</h2>
+<p>{% trans "Notes in green are selected for this product" %}</p>
 <ul id="notes">
     {% for note in notes %}
     <li onclick="window.location='{% url "sold_note" bill_id sold.id note.id %}'"
@@ -55,22 +56,21 @@
         {{note.message}}
     </li>
     {% empty %}
-    <li>Aucune note</li>
+    <li>{% trans "No note" %}</li>
     {% endfor %}
 </ul>
 
-<h2>Nouvelle note</h2>
+<h2>{% trans "New note" %}</h2>
 <form action="{% url "sold_view" bill_id sold.id %}" method="post">
     {{ note.non_field_errors }}
     {% csrf_token %}
     <table>
         {{note.as_table}}
         <tr><td colspan="2">
-                <input type="submit" value="Enregistrer" />
+                <input type="submit" value="{% trans "Create" %}" />
         </td></tr>
     </table>
 </form<
 {% endif %}
 
 {% endblock %}
-

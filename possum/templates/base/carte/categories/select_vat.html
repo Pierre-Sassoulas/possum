@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<h1>{{type_vat}} pour: {{category.nom}}</h1>
+<h1>{{type_vat}}: {{category.nom}}</h1>
 
 <ul id="vats">
     <li onclick="window.location='{% url "vat_new" %}'">

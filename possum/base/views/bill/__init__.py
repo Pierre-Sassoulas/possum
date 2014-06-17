@@ -35,6 +35,7 @@ from possum.base.models import Note
 from possum.base.models import Config
 from possum.base.models import Option
 from possum.base.forms import NoteForm
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -68,22 +69,19 @@ def bill_send_kitchen(request, bill_id):
     erreur = False
     if not bill.table:
         erreur = True
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Vous devez choisir une table.")
+        messages.add_message(request, messages.ERROR,
+                             _("You must choose a table"))
     if not bill.couverts:
         erreur = True
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Vous devez indiquer le nombre de couverts.")
+        messages.add_message(request, messages.ERROR,
+                             _("You must specify the number of guests"))
     if not erreur and not bill.print_ticket_kitchen():
         erreur = True
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Erreur dans l'envoi (imprimante ok?).")
+        messages.add_message(request, messages.ERROR,
+                             _("Error in printing (printer ok?)"))
     if not erreur:
-        messages.add_message(request, messages.SUCCESS, u"%s envoyée" %
-                             bill.table)
+        messages.add_message(request, messages.SUCCESS, "%s %s" % (bill.table,
+                                                                   _("sent")))
     return redirect('bill_view', bill.id)
 
 
@@ -92,21 +90,19 @@ def bill_print(request, bill_id):
     """Print the bill"""
     bill = get_object_or_404(Facture, pk=bill_id)
     if bill.is_empty():
-        messages.add_message(request, messages.ERROR, "La facture est vide.")
+        messages.add_message(request, messages.ERROR, _("No product"))
     else:
         printers = Printer.objects.filter(billing=True)
         if printers.count() == 0:
-            messages.add_message(request, messages.ERROR, "Aucune imprimante "
-                                 "n'est configurée pour la facturation.")
+            messages.add_message(request, messages.ERROR,
+                                 _("No printer configured"))
         else:
             if bill.print_ticket():
-                messages.add_message(request,
-                                     messages.SUCCESS,
-                                     "Le ticket est imprimé.")
+                messages.add_message(request, messages.SUCCESS,
+                                     _("The bill is printed"))
             else:
-                messages.add_message(request,
-                                     messages.ERROR,
-                                     "L'impression a échouée.")
+                messages.add_message(request, messages.ERROR,
+                                     _("Printing has failed"))
     return redirect('bill_view', bill.id)
 
 
@@ -220,14 +216,13 @@ def product_select(request, bill_id, category_id):
     context = {'menu_bills': True, }
     category = get_object_or_404(Categorie, pk=category_id)
     if not category.vat_onsite:
-        messages.add_message(request,
-                             messages.ERROR,
-                             "La TVA sur place n'est pas définie!")
+        messages.add_message(request, messages.ERROR,
+                             _("VAT on site is not defined"))
     if not category.vat_takeaway:
-        messages.add_message(request,
-                             messages.ERROR,
-                             "La TVA à emporter n'est pas définie!")
-    context['products'] = Produit.objects.filter(categorie=category, actif=True)
+        messages.add_message(request, messages.ERROR,
+                             _("VAT take away is not defined"))
+    context['products'] = Produit.objects.filter(categorie=category,
+                                                 actif=True)
     context['bill_id'] = bill_id
     return render(request, 'bill/products.html', context)
 
@@ -237,7 +232,8 @@ def subproduct_select(request, bill_id, sold_id, category_id):
     """Select a subproduct to a product."""
     context = {'menu_bills': True, }
     category = get_object_or_404(Categorie, pk=category_id)
-    context['products'] = Produit.objects.filter(categorie=category, actif=True)
+    context['products'] = Produit.objects.filter(categorie=category,
+                                                 actif=True)
     context['bill_id'] = bill_id
     context['sold_id'] = sold_id
     return render(request, 'bill/subproducts.html', context)
@@ -462,7 +458,7 @@ def bill_view(request, bill_id):
     context['products_sold'] = bill.reduced_sold_list(bill.produits.all())
     if context['facture'].est_soldee():
         messages.add_message(request, messages.ERROR,
-                             "Cette facture a déjà été soldée.")
+                             _("This invoice has already been ended"))
         return redirect('bill_home')
     return render(request, 'bill/bill.html', context)
 
@@ -471,8 +467,8 @@ def bill_view(request, bill_id):
 def bill_delete(request, bill_id):
     order = get_object_or_404(Facture, pk=bill_id)
     if order.paiements.count() > 0:
-        messages.add_message(request, messages.ERROR, "La facture contient "
-                             "des paiements")
+        messages.add_message(request, messages.ERROR,
+                             _("The bill contains payments"))
         return redirect('bill_view', bill_id)
     else:
         order.delete()
@@ -510,7 +506,7 @@ def amount_payment(request):
     """
     bill_id = request.session.get('bill_id', False)
     if not bill_id:
-        messages.add_message(request, messages.ERROR, "Facture invalide")
+        messages.add_message(request, messages.ERROR, _("Invalid bill"))
         return redirect('bill_home')
 
     context = { 'menu_bills': True, }
@@ -526,7 +522,7 @@ def amount_count(request):
     """
     bill_id = request.session.get('bill_id', False)
     if not bill_id:
-        messages.add_message(request, messages.ERROR, "Facture invalide")
+        messages.add_message(request, messages.ERROR, _("Invalid bill"))
         return redirect('bill_home')
 
     context = { 'menu_bills': True, }
@@ -578,7 +574,7 @@ def amount_payment_add(request, number):
     try:
         new = int(number)
     except:
-        messages.add_message(request, messages.ERROR, "Chiffre invalide")
+        messages.add_message(request, messages.ERROR, _("Invalid number"))
     else:
         result = value * 10 + new
         tmp = "%04d" % result
@@ -602,7 +598,7 @@ def payment_count(request, bill_id, number):
     try:
         request.session['tickets_count'] = int(number)
     except:
-        messages.add_message(request, messages.ERROR, "Nombre invalide")
+        messages.add_message(request, messages.ERROR, _("Invalid number"))
         return redirect('prepare_payment', bill_id)
     else:
         return redirect('prepare_payment', bill_id)
@@ -614,16 +610,16 @@ def save_payment(request, bill_id):
     """
     bill = get_object_or_404(Facture, pk=bill_id)
     if bill.in_use_by != request.user:
-        messages.add_message(request, messages.ERROR, "Facture en cours"
-                             " d'édition par %s" % request.user)
+        messages.add_message(request, messages.ERROR, "%s %s" % (
+                             _("Bill is being edited by"), request.user))
         return redirect('bill_view', bill.id)
     if request.session.get('type_selected', False):
         type_payment = request.session['type_selected']
     else:
-        messages.add_message(request, messages.ERROR, "Paiement invalide")
+        messages.add_message(request, messages.ERROR, _("Invalid payment"))
         return redirect('prepare_payment', bill_id)
     if type(type_payment) != type(PaiementType()):
-        messages.add_message(request, messages.ERROR, "Paiement invalide")
+        messages.add_message(request, messages.ERROR, _("Invalid payment"))
         return redirect('prepare_payment', bill_id)
     left = request.session.get('left', "0")
     right = request.session.get('right', "0")
@@ -633,33 +629,30 @@ def save_payment(request, bill_id):
         try:
             result = bill.add_payment(type_payment, count, montant)
         except:
-            messages.add_message(request, messages.ERROR, "Paiement invalide")
+            messages.add_message(request, messages.ERROR, _("Invalid payment"))
             return redirect('prepare_payment', bill_id)
     else:
         try:
             result = bill.add_payment(type_payment, montant)
         except:
-            messages.add_message(request, messages.ERROR, "Paiement invalide")
+            messages.add_message(request, messages.ERROR, _("Invalid payment"))
             return redirect('prepare_payment', bill_id)
     if not result:
-        messages.add_message(request,
-                             messages.ERROR,
-                             "Le paiement n'a pu être enregistré.")
+        messages.add_message(request, messages.ERROR,
+                             _("Payment could not be saved"))
         return redirect('prepare_payment', bill_id)
     cleanup_payment(request)
     if bill.est_soldee():
-        messages.add_message(request,
-                             messages.SUCCESS,
-                             "La facture a été soldée.")
+        messages.add_message(request, messages.SUCCESS,
+                             _("This invoice has been ended"))
 #        bill.used_by()
 #        if "bill_in_use" in request.session.keys():
 #            request.session.pop("bill_in_use")
         remove_edition(request)
         return redirect('bill_home')
     else:
-        messages.add_message(request,
-                             messages.SUCCESS,
-                             "Le paiement a été enregistré.")
+        messages.add_message(request, messages.SUCCESS,
+                             _("Payment saved"))
         return redirect('prepare_payment', bill_id)
 
 
@@ -685,9 +678,8 @@ def set_edition_status(request, bill):
         return False
     if bill.in_use_by:
         if bill.in_use_by != request.user:
-            messages.add_message(request, messages.ERROR,
-                                 "Facture en cours d'édition par %s"
-                                 % request.user)
+            messages.add_message(request, messages.ERROR, "%s %s" % (
+                                 _("Bill is being edited by"), request.user))
             return False
     else:
         if request.session.get('bill_in_use', None):
@@ -704,7 +696,7 @@ def prepare_payment(request, bill_id):
     """
     bill = get_object_or_404(Facture, pk=bill_id)
     if bill.est_soldee():
-        messages.add_message(request, messages.ERROR, "Il n'y a rien à payer.")
+        messages.add_message(request, messages.ERROR, _("Nothing to pay"))
         return redirect('bill_view', bill.id)
     # on nettoie la variable
     if 'is_left' in request.session.keys():
