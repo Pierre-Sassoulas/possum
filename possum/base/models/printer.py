@@ -43,8 +43,7 @@ def sans_accent(message):
 class Printer(models.Model):
     """Printer model
     options: options used with pycups.printFile()
-    header: you can add a text before the text to print
-        (example: Restaurant name)
+    header: you can add a text before the text to print (restaurant name)
     width: width of the ticket
     footer: same as header but after :)
     kitchen_lines: number of white lines to heading ticket of kitchen

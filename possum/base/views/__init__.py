@@ -27,6 +27,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.functional import wraps
 from possum.base.models import Config, Facture
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -80,9 +81,9 @@ def permission_required(perm, **kwargs):
             if request.user.has_perm(perm):
                 return view_func(request, *args, **kwargs)
             else:
-                messages.add_message(request, messages.ERROR, "Vous n'avez pas"
-                                     " les droits nécessaires (%s)." %
-                                     perm.split('.')[1])
+                messages.add_message(request, messages.ERROR, "%s (%s)" % (
+                                     _("You do not have permission"),
+                                     perm.split('.')[1]))
                 return redirect('home')
         return wraps(view_func)(_wrapped_view)
     return decorator
@@ -99,12 +100,11 @@ def shutdown(request):
 
     if os.path.isfile(settings.LOCK_STATS):
         messages.add_message(request, messages.ERROR,
-                             "Statistiques en cours de calcul,"
-                             "réessayer plus tard")
+                             _("Statistics being calculated, please wait"))
     else:
         if request.method == 'POST':
             os.system(cmd)
             messages.add_message(request, messages.SUCCESS,
-                                 "Serveur en cours d'arrêt")
+                                 _("Server shutting down"))
             return redirect('home')
     return render(request, 'shutdown.html', context)

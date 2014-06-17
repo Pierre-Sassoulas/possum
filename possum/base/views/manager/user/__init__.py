@@ -24,6 +24,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from possum.base.views import permission_required, remove_edition
+from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -42,17 +43,17 @@ def profile(request):
             if new1 and new1 == new2:
                 request.user.set_password(new1)
                 request.user.save()
-                messages.add_message(request, messages.SUCCESS, "Le mot de "
-                                     "passe a été changé")
+                messages.add_message(request, messages.SUCCESS,
+                                     _("Password changed"))
                 logger.info('[%s] password changed' % request.user.username)
             else:
-                messages.add_message(request, messages.ERROR, "Le nouveau mot "
-                                     "de passe n'est pas valide.")
-                logger.warning('[%s] new password is not correct' %
+                messages.add_message(request, messages.ERROR,
+                                     _("New password invalid"))
+                logger.warning('[%s] new password invalid' %
                                request.user.username)
         else:
-            messages.add_message(request, messages.ERROR, "Le mot de passe "
-                                 "fourni n'est pas bon.")
+            messages.add_message(request, messages.ERROR,
+                                 _("Invalid password"))
             logger.warning('[%s] chk password failed' % request.user.username)
     return render(request, 'base/profile.html', context)
 
@@ -86,8 +87,8 @@ def users_new(request):
             logger.warning("[%s] new user failed: [%s] [%s] [%s] [%s]" % (
                            request.user.username, login, first_name,
                            last_name, mail))
-            messages.add_message(request, messages.ERROR, "Le nouveau compte "
-                                 "n'a pu être créé.")
+            messages.add_message(request, messages.ERROR,
+                                 _("User creation failed"))
     return redirect('users')
 
 
@@ -120,8 +121,8 @@ def users_change(request, user_id):
     try:
         user.save()
     except:
-        messages.add_message(request, messages.ERROR, "Les modifications n'ont"
-                             " pu être enregistrées.")
+        messages.add_message(request, messages.ERROR,
+                             _("Changes could not be saved"))
         logger.warning("[%s] save failed for [%s]" % (request.user.username,
                                                       user.username))
     return redirect('users')
@@ -135,10 +136,11 @@ def users_active(request, user_id):
     if not new and \
             p1.user_set.count() == 1 and \
             p1 in user.user_permissions.all():
-        messages.add_message(request, messages.ERROR, "Il doit rester au "
-                             "moins un compte actif avec la permission P1.")
+        messages.add_message(request, messages.ERROR,
+                             _("We must have at least one active user with "
+                               "P1 permission"))
         logger.warning("[%s] we must have at least one active user "
-                       "with P1 permission.")
+                       "with P1 permission")
     else:
         user.is_active = new
         user.save()
@@ -156,8 +158,8 @@ def users_passwd(request, user_id):
     passwd = UserManager().make_random_password(length=10)
     user.set_password(passwd)
     user.save()
-    messages.add_message(request, messages.SUCCESS, "Le nouveau mot de passe "
-                         "est : %s" % passwd)
+    messages.add_message(request, messages.SUCCESS,
+                         "%s: %s" % (_("New password is"), passwd))
     logger.info("[%s] user [%s] new password" % (request.user.username,
                                                  user.username))
     return redirect('users')
@@ -178,8 +180,8 @@ def users_change_perm(request, user_id, codename):
                                             user.username,
                                             codename))
                 messages.add_message(request, messages.ERROR,
-                                     "Il doit rester au moins 1 compte avec "
-                                     "la permission P1.")
+                                     _("We must have at least one active user "
+                                       "with P1 permission"))
             else:
                 user.user_permissions.remove(perm)
                 logger.info("[%s] user [%s] remove perm: %s" % (

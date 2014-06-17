@@ -6,16 +6,15 @@ v0.6.0
 
 Release date: unknown
 
-* `internationalization <https://docs.djangoproject.com/en/1.6/topics/i18n/translation/>`_
 * MPD Client
 * optimization on bills workflow
-* manage options
 
 v0.5.1
 ------
 
-Release date: unknown
+Release date: 17/06/2014
 
+* `internationalization <https://docs.djangoproject.com/en/1.6/topics/i18n/translation/>`_
 * full translation for EN and FR
 * header for ticket in kitchen
 

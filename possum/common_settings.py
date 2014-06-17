@@ -6,6 +6,7 @@ import sys
 from django.utils.translation import ugettext_lazy as _
 
 
+POSSUM_VERSION="0.5.1"
 ########## PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
 DJANGO_ROOT = os.path.dirname(os.path.dirname(__file__))
