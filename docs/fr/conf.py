@@ -6,7 +6,7 @@ import sys
 # if needed, create possum/settings.py
 POSSUM = os.path.join("..", "..")
 CONF = os.path.join("..", "..", "possum", "settings.py")
-CONF_TEMPLATE = os.path.join("..", "possum", "settings_production.py")
+CONF_TEMPLATE = os.path.join("..", "..", "possum", "settings_production.py")
 if not os.path.isfile(CONF):
     import shutil
     shutil.copyfile(CONF_TEMPLATE, CONF)
