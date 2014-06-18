@@ -38,7 +38,7 @@ as a jukebox to play music in the restaurant.
 POSSUM is a french project, nevertheless we try to write up in English.
 
 All source code are under GPLv3 and documentation in FDL. POSSUM is 
-developed in Python / Django.
+developed with Python / Django.
 
 The key word: try to keep it simple for the final user.
 
