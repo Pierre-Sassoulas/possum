@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 22:31+0200\n"
+"POT-Creation-Date: 2014-06-20 21:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: possum/common_settings.py:75
+#: possum/common_settings.py:73
 msgid "French"
 msgstr "Français"
 
-#: possum/common_settings.py:76
+#: possum/common_settings.py:74
 msgid "English"
 msgstr "Anglais"
 
-#: possum/common_settings.py:77
+#: possum/common_settings.py:75
 msgid "Russian"
 msgstr "Russe"
 
@@ -875,7 +875,7 @@ msgstr "TVA"
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: possum/templates/base/manager/home.html:26
+#: possum/templates/base/manager/home.html:25
 msgid ""
 "\n"
 "The display of information requires updating statistics with\n"
@@ -887,7 +887,7 @@ msgstr ""
 "les dernières factures. S'il y a beaucoup de nouvelles factures, cette\n"
 "opération peut prendre du temps (voir plusieurs minutes).\n"
 
-#: possum/templates/base/manager/home.html:33
+#: possum/templates/base/manager/home.html:32
 msgid ""
 "\n"
 "The update is in progress, you should not turn off the server.\n"
@@ -895,11 +895,11 @@ msgstr ""
 "\n"
 "La mise à jour est en cours, vous ne devez pas éteindre le serveur.\n"
 
-#: possum/templates/base/manager/home.html:36
+#: possum/templates/base/manager/home.html:35
 msgid "Work in progress ..."
 msgstr "Travail en cours ..."
 
-#: possum/templates/base/manager/home.html:39
+#: possum/templates/base/manager/home.html:38
 #, python-format
 msgid ""
 "\n"
@@ -911,11 +911,11 @@ msgstr ""
 "facture%(bills_to_update|pluralize)s\n"
 "soldée%(bills_to_update|pluralize)s en attente.\n"
 
-#: possum/templates/base/manager/home.html:45
+#: possum/templates/base/manager/home.html:44
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: possum/templates/base/manager/home.html:48
+#: possum/templates/base/manager/home.html:47
 msgid ""
 "\n"
 "There are no pending bill, the data are up to date.\n"
@@ -923,31 +923,31 @@ msgstr ""
 "\n"
 "Il n'y a pas de facture en attente, les données sont à jours.\n"
 
-#: possum/templates/base/manager/home.html:51
+#: possum/templates/base/manager/home.html:50
 msgid "Data up to date"
 msgstr "Données à jour"
 
-#: possum/templates/base/manager/home.html:55
+#: possum/templates/base/manager/home.html:54
 msgid "Rapports"
 msgstr "Rapports"
 
-#: possum/templates/base/manager/home.html:58
+#: possum/templates/base/manager/home.html:57
 msgid "day"
 msgstr "jour"
 
-#: possum/templates/base/manager/home.html:60
+#: possum/templates/base/manager/home.html:59
 msgid "week"
 msgstr "semaine"
 
-#: possum/templates/base/manager/home.html:62
+#: possum/templates/base/manager/home.html:61
 msgid "month"
 msgstr "mois"
 
-#: possum/templates/base/manager/home.html:65
+#: possum/templates/base/manager/home.html:64
 msgid "Graphics"
 msgstr "Graphiques"
 
-#: possum/templates/base/manager/home.html:68
+#: possum/templates/base/manager/home.html:67
 msgid "year"
 msgstr "année"
 
