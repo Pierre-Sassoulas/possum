@@ -12,8 +12,7 @@ if not os.path.isfile(CONF):
     shutil.copyfile(CONF_TEMPLATE, CONF)
 
 sys.path.append(POSSUM)
-os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
-from django.conf import settings
+from version import POSSUM_VERSION
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest',
               'sphinx.ext.inheritance_diagram', 'sphinx.ext.todo',
@@ -26,9 +25,7 @@ master_doc = 'index'
 project = u'Possum'
 copyright = u'2008-%d, Bonnegent Sébastien' % datetime.now().year
 
-version = settings.POSSUM_VERSION
-#release = "%s.1" % version
-#release = "%s-rc1" % version
+version = POSSUM_VERSION
 release = version
 
 language = 'fr'

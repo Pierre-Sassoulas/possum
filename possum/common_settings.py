@@ -5,8 +5,6 @@ import sys
 #from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _
 
-
-POSSUM_VERSION="0.5.1"
 ########## PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
 DJANGO_ROOT = os.path.dirname(os.path.dirname(__file__))
@@ -67,7 +65,7 @@ ADMINS = (
     ('Bug Watch', 'bugwatch@possum-software.org'),
 )
 MANAGERS = ADMINS
-
+from version import POSSUM_VERSION
 SITE_ID = 1
 
 # Supported languages

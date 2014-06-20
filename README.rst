@@ -6,16 +6,6 @@ POSSUM
     :alt: Users
     :scale: 100%
 
-.. image:: https://readthedocs.org/projects/possum/badge/?version=latest
-    :alt: Doc Status
-    :target: https://readthedocs.org/builds/possum/
-    :scale: 100%
-
-.. image:: https://coveralls.io/repos/sbonnegent/possum/badge.png
-    :target: https://coveralls.io/r/sbonnegent/possum
-    :alt: Coverage
-    :scale: 100%
-
 .. image:: http://jenkins.possum-software.org/job/possum-dev/badge/icon
     :target: http://jenkins.possum-software.org/job/possum-dev/
     :alt: Build Status
