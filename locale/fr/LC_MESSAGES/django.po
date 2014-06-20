@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-17 16:30+0200\n"
+"POT-Creation-Date: 2014-06-18 22:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: possum/common_settings.py:74
+#: possum/common_settings.py:75
 msgid "French"
 msgstr "Français"
 
-#: possum/common_settings.py:75
+#: possum/common_settings.py:76
 msgid "English"
 msgstr "Anglais"
 
-#: possum/common_settings.py:76
+#: possum/common_settings.py:77
 msgid "Russian"
 msgstr "Russe"
 
@@ -1172,6 +1172,11 @@ msgstr "Nouvelle commande"
 #, fuzzy
 msgid "Bill"
 msgstr "Facture"
+
+#: possum/templates/bill/options.html:10
+#, fuzzy
+msgid "Options for"
+msgstr "Options pour"
 
 #: possum/templates/bill/options.html:12
 msgid "We can not put options on a menu"

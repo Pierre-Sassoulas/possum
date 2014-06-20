@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-17 16:30+0200\n"
+"POT-Creation-Date: 2014-06-18 22:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: possum/common_settings.py:74
+#: possum/common_settings.py:75
 msgid "French"
 msgstr ""
 
-#: possum/common_settings.py:75
+#: possum/common_settings.py:76
 msgid "English"
 msgstr ""
 
-#: possum/common_settings.py:76
+#: possum/common_settings.py:77
 msgid "Russian"
 msgstr ""
 
@@ -729,7 +729,7 @@ msgid "Credits"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:9
-msgid "free Software under GPLv3 license created by S. Bonnegent."
+msgid "Software under GPLv3 license created by S. Bonnegent."
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:10
@@ -1070,6 +1070,10 @@ msgstr ""
 
 #: possum/templates/bill/options.html:3
 msgid "Bill"
+msgstr ""
+
+#: possum/templates/bill/options.html:10
+msgid "Options for"
 msgstr ""
 
 #: possum/templates/bill/options.html:12
