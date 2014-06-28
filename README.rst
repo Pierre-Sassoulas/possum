@@ -33,10 +33,11 @@ developed with Python / Django.
 The key word: try to keep it simple for the final user.
 
 
-* Documentation:     http://possum.readthedocs.org
-* Freecode:          http://freecode.com/projects/possum
-* Ohloh:             https://www.ohloh.net/p/possum-software
-* Videos:            https://www.youtube.com/channel/UCsJxTNRkKsd_bCAfPNf1dZg/playlists
+* `English documentation <http://doc.possum-software.org/en/>`_
+* `French documentation <http://doc.possum-software.org/fr/>`_
+* `Freecode <http://freecode.com/projects/possum>`_
+* `Ohloh <https://www.ohloh.net/p/possum-software>`_
+* `Youtube <https://www.youtube.com/channel/UCsJxTNRkKsd_bCAfPNf1dZg/playlists>`_
 
 Community
 ---------
@@ -49,8 +50,10 @@ Community
 Demo
 ----
 
-You can test POSSUM on the demo site with login/password (demo/demo) 
-`here <https://demo.possum-software.org>`_.
+You can test POSSUM on the demo site with login/password (demo/demo):
+
+* `English demo <http://demo.en.possum-software.org>`_
+* `French demo <http://demo.fr.possum-software.org>`_
 
 Devs
 ----
