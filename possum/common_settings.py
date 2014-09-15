@@ -2,10 +2,10 @@ import os
 from os.path import abspath, dirname, join, normpath
 import random
 import sys
-#from django.utils.translation import ugettext as _
+# from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _
 
-########## PATH CONFIGURATION
+# PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
 DJANGO_ROOT = os.path.dirname(os.path.dirname(__file__))
 SITE_NAME = "possum"
@@ -15,9 +15,9 @@ SITE_ROOT = dirname(DJANGO_ROOT)
 # python import statements.
 sys.path.append(SITE_ROOT)
 sys.path.append(normpath(join(DJANGO_ROOT, SITE_NAME, 'base')))
-########## END PATH CONFIGURATION
+# END PATH CONFIGURATION
 
-########## Configuration de POSSUM
+# Configuration de POSSUM
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/bills/'
 # tmp est en memoire (tmpfs)
@@ -26,9 +26,9 @@ if not os.path.exists(PATH_TICKET):
     os.makedirs(PATH_TICKET)
 # list of authorized permissions codename
 PERMS = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9']
-########## END POSSUM CONFIGURATION
+# END POSSUM CONFIGURATION
 
-########## KEY CONFIGURATION
+# KEY CONFIGURATION
 # Absolute filesystem path to the secret file which holds this project's
 # SECRET_KEY. Will be auto-generated the first time this file is interpreted.
 SECRET_FILE = normpath(join(DJANGO_ROOT, SITE_NAME, 'secret_key'))
@@ -40,7 +40,7 @@ def create_secret_key():
      loading. If everything fails, then just raise an exception. '''
     with open(abspath(SECRET_FILE), 'w') as f:
         SECRET_KEY_TEXT = "".join([random.choice("abcdefghijklmnopqrstuvwxyz"
-                                                 "0123456789!@#$%^&*(-_=+)") \
+                                                 "0123456789!@#$%^&*(-_=+)")
                                    for i in range(50)])
         f.write(SECRET_KEY_TEXT)
     return SECRET_KEY_TEXT
@@ -57,7 +57,7 @@ except IOError as exc:
         raise Exception('Cannot open file `%s` for writing. (%s)'
                         % (SECRET_FILE, exc))
 
-########## END KEY CONFIGURATION
+# END KEY CONFIGURATION
 # This address is used to send automatically bugs and errors.
 # It gives no access to your data. If you don't want, you can
 # remove it or add your address.
@@ -101,7 +101,7 @@ MEDIA_URL = '/media/'
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 STATIC_ROOT = normpath(join(DJANGO_ROOT, SITE_NAME, 'static'))
-#STATIC_ROOT = ''
+# STATIC_ROOT = ''
 if not os.path.isdir(STATIC_ROOT):
     os.mkdir(STATIC_ROOT)
 
@@ -111,7 +111,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-#    normpath(join(DJANGO_ROOT, SITE_NAME, 'static')),
+    #    normpath(join(DJANGO_ROOT, SITE_NAME, 'static')),
 )
 
 # List of finder classes that know how to find static files in
@@ -194,10 +194,10 @@ LOGGING = {
     },
     'filters': {
         'require_debug_false': {
-             '()': 'django.utils.log.RequireDebugFalse'
+            '()': 'django.utils.log.RequireDebugFalse'
         },
         'require_debug_true': {
-             '()': 'django.utils.log.RequireDebugTrue'
+            '()': 'django.utils.log.RequireDebugTrue'
         },
     },
     'handlers': {
