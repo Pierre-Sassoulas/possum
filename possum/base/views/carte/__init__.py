@@ -96,7 +96,7 @@ def products_new(request, cat_id):
             except Exception as ex:
                 messages.add_message(request, messages.ERROR,
                                      _("Changes could not be saved"))
-                logger.warning(_("Changes could not be saved")+": "+ex)
+                logger.warning(_("Changes could not be saved") + ": " + ex)
             else:
                 return redirect('categories_view', context['category'].id)
     return render(request, 'base/carte/product_new.html', context)

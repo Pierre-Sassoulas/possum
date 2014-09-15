@@ -196,5 +196,5 @@ def users_change_perm(request, user_id, codename):
                         codename))
     else:
         logger.warning("[%s] wrong perm info: [%s]" % (request.user.username,
-                                                        codename))
+                                                       codename))
     return redirect('users')

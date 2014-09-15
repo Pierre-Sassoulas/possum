@@ -68,7 +68,7 @@ def remove_edition(request):
 @login_required
 def home(request):
     request = remove_edition(request)
-    context = { 'menu_home': True, }
+    context = {'menu_home': True, }
     return render(request, 'home.html', context)
 
 
@@ -91,7 +91,7 @@ def permission_required(perm, **kwargs):
 
 @permission_required('base.p3')
 def shutdown(request):
-    context = { 'menu_home': True, }
+    context = {'menu_home': True, }
     config = Config.objects.filter(key="default_shutdown")
     if config:
         cmd = config[0].value
