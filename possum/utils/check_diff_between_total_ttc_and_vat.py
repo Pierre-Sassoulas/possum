@@ -40,8 +40,9 @@ for stat in Stat.objects.filter(interval="d", key="total_ttc"):
     if diff != Decimal("0"):
         date = "%d-%02d-%02d" % (stat.year, stat.month, stat.day)
         print "[%s] diff of %.2f" % (date, diff)
-        for bill in Facture.objects.filter(date_creation__gte="%s 00:00" % date,
-                                           date_creation__lt="%s 23:59" % date):
+        for bill in Facture.objects.filter(
+            date_creation__gte="%s 00:00" % date,
+                date_creation__lt="%s 23:59" % date):
             vat = Decimal("0")
             tmp = ""
             for sold in bill.produits.iterator():
@@ -52,4 +53,3 @@ for stat in Stat.objects.filter(interval="d", key="total_ttc"):
                 print "[%s] not correct: %.2f" % (bill.id, diff)
                 print "total: %.2f" % bill.total_ttc
                 print tmp
-

@@ -62,4 +62,3 @@ else:
     sec = diff.seconds % 60
     time = "%dm %ds" % (mn, sec)
 print "[%d] updated %d bills in %s" % (year, bills.count(), time)
-

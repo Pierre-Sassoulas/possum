@@ -57,4 +57,3 @@ if nb:
         print("This is very bad, there are less money than it should.")
 else:
     print("Perfect, there are no errors!")
-

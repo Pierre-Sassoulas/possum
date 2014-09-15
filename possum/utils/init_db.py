@@ -48,9 +48,9 @@ Config.objects.all().delete()
 
 # ajout du manager
 user = User(username="demo",
-        first_name="first name",
-        last_name="last name",
-        email="demo@possum-software.org")
+            first_name="first name",
+            last_name="last name",
+            email="demo@possum-software.org")
 user.set_password("demo")
 user.save()
 # on ajoute les droits d'admin
@@ -60,9 +60,9 @@ user.save()
 
 # ajout d'un utilisateur pour la saisie des commandes
 user = User(username="pos",
-        first_name="",
-        last_name="",
-        email="")
+            first_name="",
+            last_name="",
+            email="")
 user.set_password("pos")
 user.save()
 # on ajoute les droits pour la partie commande
@@ -84,8 +84,8 @@ Config(key="payment_for_refunds", value=id_type_paiement).save()
 
 # Default PaymentType to select by default on the payment page
 # Comment out this 2 lines if you want it
-#id_type_paiement = PaiementType.objects.get(nom="Espece").id
-#Config(key="default_type_payment", value=id_type_paiement).save()
+# id_type_paiement = PaiementType.objects.get(nom="Espece").id
+# Config(key="default_type_payment", value=id_type_paiement).save()
 
 # Le montant de surtaxe, si utilisé
 Config(key="price_surcharge", value="0.20").save()

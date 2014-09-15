@@ -46,7 +46,10 @@ for username in ['demo', 'demo1', 'demo2']:
         user.save()
         # on ajoute les droits d'admin
         for i in xrange(1, 10):
-            user.user_permissions.add(Permission.objects.get(codename="p%d" % i))
+            user.user_permissions.add(
+                Permission.objects.get(
+                    codename="p%d" %
+                    i))
         user.save()
 
 
@@ -99,7 +102,7 @@ vat_takeaway = VAT(name=u"à emporter")
 vat_takeaway.set_tax("7")
 vat_takeaway.save()
 
-###
+#
 # Data example
 
 # on entre les nouveaux produits, les prix sont TTC
@@ -215,7 +218,7 @@ def create_bill(finish=True):
     produits_bar = [biere, pomme, abricot]
     produits_guests = [salade, buffet, entrecote, pave]
     payments = ['CB', 'Espece', 'Cheque']
-    if random.randint(1,2) == 1:
+    if random.randint(1, 2) == 1:
         # guests part
         produits = produits_guests
         bill.couverts = random.randint(1, 15)
@@ -229,13 +232,13 @@ def create_bill(finish=True):
         sold = ProduitVendu(produit=produit)
         sold.save()
         bill.add_product(sold)
-    #nouveau_menu = ProduitVendu(produit=entree_plat)
-    #nouveau_menu.save()
-    #for produit in [salade, pave]:
-        #sold = ProduitVendu(produit=produit)
-        #sold.save()
-        #nouveau_menu.contient.add(sold)
-    #nouveau_menu.save()
+    # nouveau_menu = ProduitVendu(produit=entree_plat)
+    # nouveau_menu.save()
+    # for produit in [salade, pave]:
+        # sold = ProduitVendu(produit=produit)
+        # sold.save()
+        # nouveau_menu.contient.add(sold)
+    # nouveau_menu.save()
     bill.update()
     if finish:
         nb_max = len(payments) - 1
