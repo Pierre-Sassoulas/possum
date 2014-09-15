@@ -278,10 +278,10 @@ def get_datapool_year(year, keys):
             'source': objects.filter(key=key),
             'categories': 'month'},
             'terms': {keys[key]: Avg('value')}
-            })
+        })
     return PivotDataPool(
-            series=series,
-            sortf_mapf_mts=(month_sort, month_name, True))
+        series=series,
+        sortf_mapf_mts=(month_sort, month_name, True))
 
 
 def get_chart(datasource, graph, keys, title, xaxis):
@@ -290,27 +290,27 @@ def get_chart(datasource, graph, keys, title, xaxis):
     """
     terms = [keys[x] for x in keys.keys()]
     return PivotChart(
-                datasource=datasource,
-                series_options=[{
-                    'options': {
-                        'type': graph,
-                        'stacking': False
+        datasource=datasource,
+        series_options=[{
+                        'options': {
+                            'type': graph,
+                            'stacking': False
                         },
-                    'terms': terms
-                    }],
-                chart_options={
-                    'title': {
-                        'text': title},
-                    'credits': {
-                        'enabled': False
-                        },
-                    'xAxis': {
-                        'title': {
-                            'text': xaxis}},
-                    'yAxis': {
-                        'title': {
-                            'text': ''}},
-                    })
+                        'terms': terms
+                        }],
+        chart_options={
+            'title': {
+                'text': title},
+            'credits': {
+                'enabled': False
+            },
+            'xAxis': {
+                'title': {
+                    'text': xaxis}},
+            'yAxis': {
+                'title': {
+                    'text': ''}},
+        })
 
 
 def get_chart_year_products(year, category):
@@ -427,9 +427,9 @@ def select_charts(request, context, choice, year):
             logger.warning("datasource error with %s" % chart['title'])
         else:
             context[key].append(get_chart(datasource, 'line',
-                                                   chart['keys'],
-                                                   chart['title'],
-                                                   "Mois"))
+                                          chart['keys'],
+                                          chart['title'],
+                                          "Mois"))
     return context
 
 
@@ -439,7 +439,7 @@ def charts(request, choice='ttc'):
     chart1: pour un seul graphique
     chart2: pour 2 graphiques
     """
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
     year = datetime.datetime.now().year
     if request.method == 'POST':

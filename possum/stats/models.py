@@ -277,6 +277,7 @@ def update_day(date):
 
 
 class Stat(models.Model):
+
     """Statistics, full list of keys:
     Common:
     nb_bills      : number of invoices
@@ -348,7 +349,7 @@ class Stat(models.Model):
             # we prepare list of days with bills to add
             bills = Facture.objects.filter(saved_in_stats=False)
             grouped = itertools.groupby(bills, lambda record:
-                                        record.date_creation\
+                                        record.date_creation
                                         .strftime("%Y-%m-%d"))
             for day, bills_this_day in grouped:
                 update_day(day)

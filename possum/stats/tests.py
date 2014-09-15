@@ -41,9 +41,10 @@ class StatTests(TestCase):
         for url in urls:
             resp = self.client.get(url)
             self.assertEqual(resp.status_code, status,
-             "For '{0}' {1}, the http response".format(url, msg)
-             + ' status is {0} '.format(resp.status_code)
-             + 'but it should be {0}'.format(status))
+                             "For '{0}' {1}, the http response".format(
+                                 url, msg)
+                             + ' status is {0} '.format(resp.status_code)
+                             + 'but it should be {0}'.format(status))
 
     def login(self):
         self.client.post('/users/login/',
@@ -108,10 +109,9 @@ class StatTests(TestCase):
         self.assertEqual(total_ttc, stat_total_ttc[0].value)
         self.assertEqual(guests_total_ttc, stat_guests_total_ttc[0].value)
         self.assertEqual(bar_total_ttc, stat_bar_total_ttc[0].value)
-        self.assertEqual(total_ttc, guests_total_ttc+bar_total_ttc)
+        self.assertEqual(total_ttc, guests_total_ttc + bar_total_ttc)
         # VAT
-        vat_ttc  = Decimal("0")
+        vat_ttc = Decimal("0")
         for vat in objects.filter(key__contains="_vat"):
             vat_ttc += vat.value
         self.assertEqual(vat_ttc, total_ttc)
-
