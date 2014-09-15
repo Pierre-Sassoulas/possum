@@ -94,7 +94,7 @@ def categories_delete(request, cat_id):
     context = {'menu_manager': True, }
     context['current_cat'] = get_object_or_404(Categorie, pk=cat_id)
     context['categories'] = Categorie.objects.order_by('priorite',
-                                                      'nom').exclude(id=cat_id)
+                                                       'nom').exclude(id=cat_id)
     cat_report_id = request.POST.get('cat_report', '').strip()
     action = request.POST.get('valide', '').strip()
     if action == "Supprimer":
