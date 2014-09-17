@@ -45,13 +45,13 @@ Firstly, you must have an account on `Github <https://github.com>`_.
 You have to create a fork `here <https://github.com/possum-software/possum>`_
 (top right).
 
-Now, you will use your fork. This is an example with my username **sbonnegent**.
-Full documentation is on
+Now, you will use your fork. This is an example with my username 
+**sbonnegent**. Full documentation is on
 `Github (fork a repo) <https://help.github.com/articles/fork-a-repo>`_.
 
 In short::
 
-  $ git clone git@github.com:sbonnegent/possum.git possum-software
+  $ git clone -b dev git@github.com:sbonnegent/possum.git possum-software
   $ cd possum-software
   $ git remote add upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
