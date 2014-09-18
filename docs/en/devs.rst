@@ -10,14 +10,13 @@ tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
 Version number
 ==============
 
-Here the development cycle adopted for the release version:
+Here the development cycle adopted for release version:
 
-.. image:: ../images/cycle_de_developpement.png
+.. image:: ../images/cycle_of_versions.png
    :alt: Development cycle
 
 An example for version 1.0:
 
-* 1.0.beta: development in progress
 * 1.0.rc?: additions of features are blocked, only bug fixes
 * 1.0: stable version
 * 1.0.1: only bug fixes on stable version
@@ -45,8 +44,8 @@ Firstly, you must have an account on `Github <https://github.com>`_.
 You have to create a fork `here <https://github.com/possum-software/possum>`_
 (top right).
 
-Now, you will use your fork. This is an example with my username **sbonnegent**.
-Full documentation is on
+Now, you will use your fork. This is an example with my username 
+**sbonnegent**. Full documentation is on
 `Github (fork a repo) <https://help.github.com/articles/fork-a-repo>`_.
 
 In short::
@@ -71,7 +70,11 @@ You can fetch any new changes from the original repository and merge it
 to your fork with::
 
   $ git fetch upstream
-  $ git merge upstream/master
+  $ git merge upstream/dev
+
+Or view differences with::
+
+  $ git diff upstream/dev
 
 Change in class
 ===============
