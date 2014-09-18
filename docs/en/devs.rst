@@ -10,14 +10,13 @@ tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
 Version number
 ==============
 
-Here the development cycle adopted for the release version:
+Here the development cycle adopted for release version:
 
-.. image:: ../images/cycle_de_developpement.png
+.. image:: ../images/cycle_of_versions.png
    :alt: Development cycle
 
 An example for version 1.0:
 
-* 1.0.beta: development in progress
 * 1.0.rc?: additions of features are blocked, only bug fixes
 * 1.0: stable version
 * 1.0.1: only bug fixes on stable version
@@ -71,7 +70,11 @@ You can fetch any new changes from the original repository and merge it
 to your fork with::
 
   $ git fetch upstream
-  $ git merge upstream/master
+  $ git merge upstream/dev
+
+Or view differences with::
+
+  $ git diff upstream/dev
 
 Change in class
 ===============
