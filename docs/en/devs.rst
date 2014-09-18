@@ -51,7 +51,7 @@ Now, you will use your fork. This is an example with my username
 
 In short::
 
-  $ git clone -b dev git@github.com:sbonnegent/possum.git possum-software
+  $ git clone git@github.com:sbonnegent/possum.git possum-software
   $ cd possum-software
   $ git remote add upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
