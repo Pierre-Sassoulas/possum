@@ -91,6 +91,23 @@ will do it for us:
 
 Remenber to add new migration file on git.
 
+How to update requirements version for virtualenv
+=================================================
+
+File **requirements.txt** defines all dependencies (and versions).
+We must update this files regularly.
+
+In short::
+
+  $ # we enter in virtualenv
+  $ source env/bin/activate
+  $ # we check for available updates
+  $ pip-review --auto
+  $ # we can test briefly with a shell
+  $ ./make sh
+  $ # and we create new requirements file
+  $ pip-dump
+
 Base
 ====
 
