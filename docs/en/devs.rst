@@ -52,7 +52,7 @@ In short::
 
   $ git clone git@github.com:sbonnegent/possum.git possum-software
   $ cd possum-software
-  $ git remote add upstream git@github.com:possum-software/possum.git
+  $ git remote add -t dev upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
   $ cp possum/settings_dev.py possum/settings.py
   $ ./make update
@@ -61,6 +61,7 @@ In short::
   $ git push
 
 Changes are in your fork, now you can create a pull request directly on Github.
+All pull requests must be sync with Possum development branch (dev). 
 
 After that, you must check state of your request on
 `Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
