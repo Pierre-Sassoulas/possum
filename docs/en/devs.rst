@@ -102,6 +102,8 @@ In short::
   $ # we enter in virtualenv
   $ source env/bin/activate
   $ # we check for available updates
+  $ pip-review
+  $ # we update
   $ pip-review --auto
   $ # we can test briefly with a shell
   $ ./make sh
