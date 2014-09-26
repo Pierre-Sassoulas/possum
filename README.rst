@@ -42,6 +42,7 @@ The key word: try to keep it simple for the final user.
 Community
 ---------
 
+* `Forum <https://groups.google.com/d/forum/possum-software>`_
 * `Google+ <https://plus.google.com/113982636103042531268/posts>`_
 * `Twitter releases <https://twitter.com/possum_software>`_
 * `Twitter commits <https://twitter.com/possum_commits>`_
