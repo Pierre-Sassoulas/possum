@@ -19,7 +19,9 @@
 #
 
 import logging
+
 from django.shortcuts import render, get_object_or_404, redirect
+
 from possum.base.models import Facture
 from possum.base.views import permission_required
 

@@ -17,14 +17,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 from datetime import datetime
 from decimal import Decimal
-from django.db import models
 import logging
+
+from django.db import models
+
 from category import Categorie
+from config import Config
 from generic import Nom
 from options import Option
-from config import Config
 
 
 logger = logging.getLogger(__name__)
@@ -95,7 +98,7 @@ class Produit(Nom):
         from possum.stats.models import Stat
         # if not a new product or any product sold
         if not self.id or \
-                Stat.objects.filter(key="%d_product_nb" % self.id).count()==0:
+                Stat.objects.filter(key="%d_product_nb" % self.id).count() == 0:
             # if not needed, we don't clone the knight
             logger.info("product doesn't need clone")
             return self

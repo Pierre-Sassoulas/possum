@@ -23,13 +23,15 @@
 from decimal import Decimal
 import os
 import sys
+
 from django.utils.translation import ugettext as _
+
+from possum.base.models import Facture
 
 
 sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
-from possum.base.models import Facture
 
 
 diff = Decimal("0")

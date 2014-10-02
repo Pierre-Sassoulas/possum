@@ -20,16 +20,18 @@
 #
 """Re-compute stats for a year
 """
+import datetime
 from decimal import Decimal
 import os
 import sys
-import datetime
+
+from possum.base.models import Facture
+from possum.stats.models import Stat
+
 
 sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
-from possum.base.models import Facture
-from possum.stats.models import Stat
 
 
 year = int(input("Quelle année mettre à jour (ex: 2013) ? "))

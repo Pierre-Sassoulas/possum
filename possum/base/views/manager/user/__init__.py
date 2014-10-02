@@ -17,14 +17,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.contrib import messages
-from django.contrib.auth.models import User, UserManager, Permission
+
 import logging
+
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, UserManager, Permission
 from django.shortcuts import render, get_object_or_404, redirect
-from possum.base.views import permission_required, remove_edition
 from django.utils.translation import ugettext as _
+
+from possum.base.views import permission_required, remove_edition
 
 
 logger = logging.getLogger(__name__)
@@ -49,7 +52,7 @@ def profile(request):
             else:
                 messages.add_message(request, messages.ERROR,
                                      _("New password invalid"))
-                logger.warning('[%s] new password invalid' %
+                logger.warning('[%s] new password invalid' % 
                                request.user.username)
         else:
             messages.add_message(request, messages.ERROR,

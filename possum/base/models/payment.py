@@ -18,9 +18,10 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 from django.db import models
-from generic import Nom
-from config import Config
 from django.utils.translation import ugettext as _
+
+from config import Config
+from generic import Nom
 
 
 class PaiementType(Nom):

@@ -23,9 +23,10 @@
 import os
 import sys
 
+from possum.stats.models import Stat
+
 
 sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
-from possum.stats.models import Stat
 Stat().update()

@@ -24,11 +24,13 @@ from decimal import Decimal
 import os
 import sys
 
+from possum.base.models import Facture
+from possum.stats.models import Stat
+
+
 sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
-from possum.base.models import Facture
-from possum.stats.models import Stat
 
 
 for stat in Stat.objects.filter(interval="d", key="total_ttc"):

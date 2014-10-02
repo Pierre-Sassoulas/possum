@@ -18,12 +18,15 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.db import models
 import logging
+
+from django.db import models
+
 from category import Categorie
-from product import Produit
-from options import Cuisson, Option
 from note import Note
+from options import Cuisson, Option
+from product import Produit
+
 
 logger = logging.getLogger(__name__)
 

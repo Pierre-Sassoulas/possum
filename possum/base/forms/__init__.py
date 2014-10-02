@@ -18,11 +18,13 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django import forms
-from django.forms.extras.widgets import SelectDateWidget
-from possum.base.models import Facture, Note, Option
 from datetime import datetime
 import logging
+
+from django import forms
+from django.forms.extras.widgets import SelectDateWidget
+
+from possum.base.models import Facture, Note, Option
 
 
 logger = logging.getLogger(__name__)

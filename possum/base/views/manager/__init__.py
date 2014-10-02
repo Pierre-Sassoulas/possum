@@ -18,12 +18,13 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
+
+from django.conf import settings
 from django.shortcuts import render
+
 from possum.base.models import Facture
 from possum.base.views import permission_required
-import os
-from django.conf import settings
-
 
 
 @permission_required('base.p1')

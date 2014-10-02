@@ -20,14 +20,16 @@
 
 import datetime
 from decimal import Decimal
-from django.db import models
+import itertools
 import logging
 import os
+
 from django.conf import settings
-import itertools
+from django.db import models
 from django.db.models import Max, Avg
-from possum.base.models import Facture
+
 from possum.base.models import Categorie
+from possum.base.models import Facture
 from possum.base.models import PaiementType
 from possum.base.models import Produit
 from possum.base.models import VAT

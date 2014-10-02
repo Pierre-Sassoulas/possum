@@ -19,13 +19,15 @@
 #
 
 import datetime
-from django.contrib import messages
 import logging
+
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
-from possum.base.models import Facture
-from possum.base.forms import DateForm
-from possum.base.views import permission_required
 from django.utils.translation import ugettext as _
+
+from possum.base.forms import DateForm
+from possum.base.models import Facture
+from possum.base.views import permission_required
 
 
 logger = logging.getLogger(__name__)

@@ -19,6 +19,7 @@
 
 
 from django.db import models
+
 from generic import Priorite, NomDouble
 
 

@@ -17,13 +17,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.test import TestCase
-from django.core.urlresolvers import reverse
-from possum.stats.models import Stat
-from possum.base.models import Facture
-from django.test.client import Client
+
 import datetime
 from decimal import Decimal
+
+from django.core.urlresolvers import reverse
+from django.test import TestCase
+from django.test.client import Client
+
+from possum.base.models import Facture
+from possum.stats.models import Stat
 
 
 class StatTests(TestCase):

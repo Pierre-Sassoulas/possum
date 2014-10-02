@@ -1,10 +1,34 @@
+# -*- coding: utf-8 -*-
+#
+#    Copyright 2009-2014 Sébastien Bonnegent
+#
+#    This file is part of POSSUM.
+#
+#    POSSUM is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    POSSUM is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
+#
+
 import os
 from os.path import abspath, dirname, join, normpath
 import random
 import sys
-# from django.utils.translation import ugettext as _
+
 from django.utils.translation import ugettext_lazy as _
 
+from version import POSSUM_VERSION
+
+
+# from django.utils.translation import ugettext as _
 # PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
 DJANGO_ROOT = os.path.dirname(os.path.dirname(__file__))
@@ -65,7 +89,6 @@ ADMINS = (
     ('Bug Watch', 'bugwatch@possum-software.org'),
 )
 MANAGERS = ADMINS
-from version import POSSUM_VERSION
 SITE_ID = 1
 
 # Supported languages
@@ -74,7 +97,7 @@ LANGUAGES = (
     ('en', _('English')),
     ('ru', _('Russian')),
 )
-LOCALE_PATHS = (normpath(join(DJANGO_ROOT, 'locale')), )
+LOCALE_PATHS = (normpath(join(DJANGO_ROOT, 'locale')),)
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

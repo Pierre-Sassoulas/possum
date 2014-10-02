@@ -19,6 +19,7 @@
 #
 
 from django.db import models
+
 from config import Config
 from generic import Nom, Priorite
 from vat import VAT
