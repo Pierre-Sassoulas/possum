@@ -1,8 +1,8 @@
 POSSUM
 ======
 
-.. image:: http://www.ohloh.net/p/711589/widgets/project_thin_badge.gif
-    :target: https://www.ohloh.net/p/possum-software
+.. image:: https://www.openhub.net/p/711589/widgets/project_thin_badge.gif
+    :target: https://www.openhub.net/p/possum-software
     :alt: Users
     :scale: 100%
 
@@ -36,12 +36,13 @@ The key word: try to keep it simple for the final user.
 * `English documentation <http://doc.possum-software.org/en/>`_
 * `French documentation <http://doc.possum-software.org/fr/>`_
 * `Freecode <http://freecode.com/projects/possum>`_
-* `Ohloh <https://www.ohloh.net/p/possum-software>`_
+* `Openhub <https://www.openhub.net/p/possum-software>`_
 * `Youtube <https://www.youtube.com/channel/UCsJxTNRkKsd_bCAfPNf1dZg/playlists>`_
 
 Community
 ---------
 
+* `Forum <https://groups.google.com/d/forum/possum-software>`_
 * `Google+ <https://plus.google.com/113982636103042531268/posts>`_
 * `Twitter releases <https://twitter.com/possum_software>`_
 * `Twitter commits <https://twitter.com/possum_commits>`_

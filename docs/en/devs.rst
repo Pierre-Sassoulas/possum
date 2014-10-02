@@ -10,14 +10,13 @@ tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
 Version number
 ==============
 
-Here the development cycle adopted for the release version:
+Here the development cycle adopted for release version:
 
-.. image:: ../images/cycle_de_developpement.png
+.. image:: ../images/cycle_of_versions.png
    :alt: Development cycle
 
 An example for version 1.0:
 
-* 1.0.beta: development in progress
 * 1.0.rc?: additions of features are blocked, only bug fixes
 * 1.0: stable version
 * 1.0.1: only bug fixes on stable version
@@ -45,15 +44,15 @@ Firstly, you must have an account on `Github <https://github.com>`_.
 You have to create a fork `here <https://github.com/possum-software/possum>`_
 (top right).
 
-Now, you will use your fork. This is an example with my username **sbonnegent**.
-Full documentation is on
+Now, you will use your fork. This is an example with my username 
+**sbonnegent**. Full documentation is on
 `Github (fork a repo) <https://help.github.com/articles/fork-a-repo>`_.
 
 In short::
 
   $ git clone git@github.com:sbonnegent/possum.git possum-software
   $ cd possum-software
-  $ git remote add upstream git@github.com:possum-software/possum.git
+  $ git remote add -t dev upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
   $ cp possum/settings_dev.py possum/settings.py
   $ ./make update
@@ -62,6 +61,7 @@ In short::
   $ git push
 
 Changes are in your fork, now you can create a pull request directly on Github.
+All pull requests must be sync with Possum development branch (dev). 
 
 After that, you must check state of your request on
 `Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
@@ -71,7 +71,11 @@ You can fetch any new changes from the original repository and merge it
 to your fork with::
 
   $ git fetch upstream
-  $ git merge upstream/master
+  $ git merge upstream/dev
+
+Or view differences with::
+
+  $ git diff upstream/dev
 
 Change in class
 ===============
@@ -86,6 +90,25 @@ will do it for us:
 
 
 Remenber to add new migration file on git.
+
+How to update requirements version for virtualenv
+=================================================
+
+File **requirements.txt** defines all dependencies (and versions).
+We must update this files regularly.
+
+In short::
+
+  $ # we enter in virtualenv
+  $ source env/bin/activate
+  $ # we check for available updates
+  $ pip-review
+  $ # we update
+  $ pip-review --auto
+  $ # we can test briefly with a shell
+  $ ./make sh
+  $ # and we create new requirements file
+  $ pip-dump
 
 Base
 ====
