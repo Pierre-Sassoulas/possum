@@ -198,6 +198,7 @@ INSTALLED_APPS = (
 )
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
+SERVER_EMAIL = "bugwatch@possum-software.org"
 
 LOGGING = {
     'version': 1,
