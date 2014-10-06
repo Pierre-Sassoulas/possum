@@ -26,13 +26,13 @@ from django.conf import settings
 from django.db import models
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 try:
     import cups
 except:
-    logger.critical("cups can't be loaded, printer doesn't work !")
+    LOGGER.critical("cups can't be loaded, printer doesn't work !")
 
 
 def sans_accent(message):
@@ -100,6 +100,8 @@ class Printer(models.Model):
     def print_file(self, filename):
         '''
         TODO Docstring
+        :param filename:
+        :return: Boolean
         '''
         try:
             conn = cups.Connection()
@@ -140,6 +142,9 @@ class Printer(models.Model):
         return result
 
     def print_test(self):
+        '''
+        Test the printer.
+        '''
         list_to_print = []
         list_to_print.append("> POSSUM Printing test !")
         list_to_print.append(datetime.now().strftime("> %H:%M %d/%m/%Y\n"))

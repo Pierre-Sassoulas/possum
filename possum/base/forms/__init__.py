@@ -27,14 +27,14 @@ from django.forms.extras.widgets import SelectDateWidget
 from possum.base.models import Facture, Note, Option
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 try:
     first_year = Facture.objects.all()[0].date_creation.year
     last_year = Facture.objects.latest().date_creation.year + 1
 except:
-    logger.debug("no Facture, we keep default data")
+    LOGGER.debug("no Facture, we keep default data")
     first_year = int(datetime.now().year)
     last_year = first_year + 1
 

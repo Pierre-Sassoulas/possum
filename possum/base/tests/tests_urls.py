@@ -28,7 +28,7 @@ from possum.base.models import Facture
 
 # from django.utils.unittest.case import TestCase
 # import mock
-class Tests_urls(TestCase):
+class TestsUrls(TestCase):
     fixtures = ['demo.json']
 
     def setUp(self):

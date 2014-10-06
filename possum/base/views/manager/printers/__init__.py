@@ -27,7 +27,7 @@ from possum.base.models import Printer
 from possum.base.views import permission_required
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @permission_required('base.p1')
@@ -139,5 +139,5 @@ def kitchen_header(request, printer_id, number=-1):
             context['printer'].kitchen_lines = int(number)
             context['printer'].save()
         except:
-            logger.warning("number of lines incorrect")
+            LOGGER.warning("number of lines incorrect")
     return render(request, 'printers/kitchen_header.html', context)

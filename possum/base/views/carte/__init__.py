@@ -33,7 +33,7 @@ from possum.base.models import Produit
 from possum.base.views import permission_required
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @permission_required('base.p2')
@@ -98,7 +98,7 @@ def products_new(request, cat_id):
             except Exception as ex:
                 messages.add_message(request, messages.ERROR,
                                      _("Changes could not be saved"))
-                logger.warning(_("Changes could not be saved") + ": " + ex)
+                LOGGER.warning(_("Changes could not be saved") + ": " + ex)
             else:
                 return redirect('categories_view', context['category'].id)
     return render(request, 'base/carte/product_new.html', context)
@@ -223,6 +223,6 @@ def products_change(request, product_id):
             else:
                 return redirect('products_view', new_product.id)
         else:
-            logger.debug("[P%s] invalid data" % product.id)
+            LOGGER.debug("[P%s] invalid data" % product.id)
     context['product'] = product
     return render(request, 'base/carte/product_change.html', context)

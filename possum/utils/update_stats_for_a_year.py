@@ -21,7 +21,6 @@
 """Re-compute stats for a year
 """
 import datetime
-from decimal import Decimal
 import os
 import sys
 
@@ -33,22 +32,21 @@ sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
 
-
 year = int(input("Quelle année mettre à jour (ex: 2013) ? "))
 
 
 before = datetime.datetime.now()
-print "[%s] delete stats before update" % datetime.datetime.now().strftime("%H:%M")
+print("[%s] delete stats before update" % datetime.datetime.now().strftime("%H:%M"))
 Stat.objects.filter(year=year).delete()
 
-print "[%s] change status for bills" % datetime.datetime.now().strftime("%H:%M")
+print("[%s] change status for bills" % datetime.datetime.now().strftime("%H:%M"))
 bills = Facture.objects.filter(date_creation__gte="%d-01-01 00:00:00" % year,
                                date_creation__lt="%d-12-31 23:59:59" % year)
 for bill in bills.iterator():
     bill.saved_in_stats = False
     bill.save()
 
-print "[%s] compute stats" % datetime.datetime.now().strftime("%H:%M")
+print("[%s] compute stats" % datetime.datetime.now().strftime("%H:%M"))
 Stat().update()
 
 after = datetime.datetime.now()
@@ -63,4 +61,4 @@ else:
     mn = diff.seconds / 60
     sec = diff.seconds % 60
     time = "%dm %ds" % (mn, sec)
-print "[%d] updated %d bills in %s" % (year, bills.count(), time)
+print("[%d] updated %d bills in %s" % (year, bills.count(), time))

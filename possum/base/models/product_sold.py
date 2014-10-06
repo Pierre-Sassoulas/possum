@@ -28,7 +28,7 @@ from options import Cuisson, Option
 from product import Produit
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class ProduitVendu(models.Model):
@@ -81,20 +81,22 @@ class ProduitVendu(models.Model):
                 tmp += " %s" % self.cuisson.nom_facture
         return tmp
 
-    def isFull(self):
+    def is_full(self):
         """
         True si tous les élèments sous présents (les sous produits pour
-        les formules) et False sinon. """
+        les formules) et False sinon.
+        :return: boolean
+        """
         nb_produits = self.contient.count()
         nb_categories = self.produit.categories_ok.count()
         if nb_produits == nb_categories:
-            logger.debug("product is full")
+            LOGGER.debug("product is full")
             return True
         elif nb_produits > nb_categories:
-            logger.warning("product id [%s] have more products that categories authorized" % self.id)
+            LOGGER.warning("product id [%s] have more products that categories authorized" % self.id)
             return True
         else:
-            logger.debug("product is not full")
+            LOGGER.debug("product is not full")
             return False
 
     def __cmp__(self, other):
@@ -104,12 +106,13 @@ class ProduitVendu(models.Model):
             return cmp(self.produit.categorie, other.produit.categorie)
 
     def est_un_menu(self):
-        if self.produit.categories_ok.count():
-            return True
-        else:
-            return False
+        '''
+        On a un menu si on a plus d'un produit.
+        :return: boolean
+        '''
+        return self.produit.categories_ok.count()
 
-    def getFreeCategorie(self):
+    def get_free_categorie(self):
         """Retourne la premiere categorie dans la liste categories_ok
         qui n'a pas de produit dans la partir 'contient'. Sinon retourne
         None """
@@ -118,7 +121,7 @@ class ProduitVendu(models.Model):
                 if self.contient.filter(produit__categorie=categorie).count() == 0:
                     return categorie
         else:
-            logger.warning("Product [%s] have no categories_ok, return None" % self.id)
+            LOGGER.warning("Product [%s] have no categories_ok, return None" % self.id)
         return None
 
     def get_identifier(self):
@@ -146,6 +149,6 @@ class ProduitVendu(models.Model):
         """Set prize for the product sold
         """
         if self.prix != prize:
-            logger.debug("[%s] prize: %s > %s" % (self.id, self.prix, prize))
+            LOGGER.debug("[%s] prize: %s > %s" % (self.id, self.prix, prize))
             self.prix = prize
             self.save()

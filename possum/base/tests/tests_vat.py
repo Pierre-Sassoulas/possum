@@ -21,7 +21,7 @@
 import unittest
 
 
-class Tests_VAT(unittest.TestCase):
+class TestsVAT(unittest.TestCase):
     """name is a symbolic name
     tax is for example '19.6' for 19.6%
     value: is used to minimize operations (example: 0.196

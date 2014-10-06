@@ -35,7 +35,7 @@ from possum.base.models import Produit
 from possum.base.models import VAT
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 COMMON = ["total_ttc", "nb_bills", "guests_total_ttc", "guests_nb",
           "guests_average", "bar_total_ttc", "bar_nb", "bar_average"]
 
@@ -74,8 +74,8 @@ def get_data_on(bill, data):
             data[key] += Decimal(value)
         else:
             data[key] = Decimal(value)
-        logger.debug("%s = %.2f" % (key, data[key]))
-    logger.debug("[B%s] extract stats" % bill.id)
+        LOGGER.debug("%s = %.2f" % (key, data[key]))
+    LOGGER.debug("[B%s] extract stats" % bill.id)
     add_value("nb_bills", 1)
     add_value("total_ttc", bill.total_ttc)
     for sold in bill.produits.iterator():
@@ -135,7 +135,7 @@ def compute_avg_max(stats, stat_avg, stat_max):
 def compute_all_time():
     """Update all time stats (average and max) for main keys
     """
-    logger.debug("update all time stats")
+    LOGGER.debug("update all time stats")
     for key in COMMON:
         # for days
         stats = Stat.objects.filter(interval="d", key=key)
@@ -170,7 +170,7 @@ def record_day(year, month, week, day, data):
     day: 31
     data: {'key1': value1, 'key2': value2, ...}
     """
-    logger.debug("[%d-%d-%d] update record" % (year, month, day))
+    LOGGER.debug("[%d-%d-%d] update record" % (year, month, day))
     for key in data.keys():
         stat, created = Stat.objects.get_or_create(year=year,
                                                    month=month,
@@ -204,14 +204,14 @@ def compute_avg(subkey, stats, avg):
         total = stats.filter(key="%s_total_ttc" % subkey)[0]
         nb = stats.filter(key="%s_nb" % subkey)[0]
     except IndexError:
-        logger.debug("no data for this date")
+        LOGGER.debug("no data for this date")
         # if no data here, no need to update month and week
         return False
     if nb.value:
         avg.value = total.value / nb.value
         avg.save()
     else:
-        logger.debug("we don't divide by zero")
+        LOGGER.debug("we don't divide by zero")
         return False
     return True
 
@@ -222,7 +222,7 @@ def update_avg(year, month, week, day):
     guests_average = guests_total_ttc.value / guests_nb.value
     bar_average = bar_total_ttc.value / bar_nb.value
     """
-    logger.debug("update guests_average and bar_average")
+    LOGGER.debug("update guests_average and bar_average")
     for key in ["guests", "bar"]:
         stats = Stat.objects.filter(year=year, month=month, day=day,
                                     interval="d")
@@ -250,7 +250,7 @@ def update_day(date):
     try:
         day_begin = datetime.datetime.strptime(date, "%Y-%m-%d")
     except ValueError:
-        logger.warning("[%s] day invalid !" % date)
+        LOGGER.warning("[%s] day invalid !" % date)
         return False
     day_end = day_begin + datetime.timedelta(days=1)
     bills = Facture.objects.filter(date_creation__gte=day_begin,
@@ -262,7 +262,7 @@ def update_day(date):
     week = day_begin.isocalendar()[1]
     data = {}
     count = 0
-    logger.debug("[%s] %d bills to update" % (date, bills.count()))
+    LOGGER.debug("[%s] %d bills to update" % (date, bills.count()))
     for bill in bills:
         if bill.est_soldee():
             count += 1
@@ -273,7 +273,7 @@ def update_day(date):
         record_day(year, month, week, day, data)
         update_avg(year, month, week, day)
     else:
-        logger.debug("nothing to do")
+        LOGGER.debug("nothing to do")
     logging.info("updated record with %d bills" % count)
     return True
 
@@ -342,10 +342,10 @@ class Stat(models.Model):
         """Update statistics with new bills
         """
         if os.path.isfile(settings.LOCK_STATS):
-            logger.info("lock [%s] already here" % settings.LOCK_STATS)
+            LOGGER.info("lock [%s] already here" % settings.LOCK_STATS)
             return False
         else:
-            logger.debug("create lock for stats")
+            LOGGER.debug("create lock for stats")
             fd = open(settings.LOCK_STATS, "w")
             fd.close()
             # we prepare list of days with bills to add
@@ -357,7 +357,7 @@ class Stat(models.Model):
                 update_day(day)
             if grouped:
                 compute_all_time()
-            logger.debug("release lock for stats")
+            LOGGER.debug("release lock for stats")
             os.remove(settings.LOCK_STATS)
             return True
 
@@ -368,7 +368,7 @@ class Stat(models.Model):
         try:
             self.value += Decimal(value)
         except:
-            logger.critical("can't convert [%s]" % value)
+            LOGGER.critical("can't convert [%s]" % value)
         self.save()
 
     def get_data_for_day(self, context):
@@ -376,7 +376,7 @@ class Stat(models.Model):
         context must contains 'date' : Datetime()
         """
         if 'date' not in context:
-            logger.warning("no date in context")
+            LOGGER.warning("no date in context")
             return context
         date = context['date']
         all_time = Stat.objects.filter(interval="a")
@@ -393,10 +393,10 @@ class Stat(models.Model):
         context must contains 'year' and 'week' : Integer
         """
         if 'year' not in context:
-            logger.warning("no year in context")
+            LOGGER.warning("no year in context")
             return context
         if 'week' not in context:
-            logger.warning("no week in context")
+            LOGGER.warning("no week in context")
             return context
         week = context['week']
         year = context['year']
@@ -412,10 +412,10 @@ class Stat(models.Model):
         context must contains 'year' and 'month' : Integer
         """
         if 'year' not in context:
-            logger.warning("no year in context")
+            LOGGER.warning("no year in context")
             return context
         if 'month' not in context:
-            logger.warning("no month in context")
+            LOGGER.warning("no month in context")
             return context
         month = context['month']
         year = context['year']
@@ -451,7 +451,7 @@ class Stat(models.Model):
                 key = 'avg_%s' % stat.key
                 if key in context.keys():
                     if float(stat.value) > float(context[key]):
-                        logger.debug("[%s] better" % stat.key)
+                        LOGGER.debug("[%s] better" % stat.key)
                         context["%s_better" % stat.key] = True
             else:
                 # for VAT, Produit, Categorie and Payment
@@ -462,7 +462,7 @@ class Stat(models.Model):
                     try:
                         elt = Produit.objects.get(pk=pk)
                     except Produit.DoesNotExist:
-                        logger.critical("Produit(pk=%s) not here" % pk)
+                        LOGGER.critical("Produit(pk=%s) not here" % pk)
                         continue
                     elt.nb = stat.value
                 elif "_category_nb" in stat.key:
@@ -470,7 +470,7 @@ class Stat(models.Model):
                     try:
                         elt = Categorie.objects.get(pk=pk)
                     except Categorie.DoesNotExist:
-                        logger.critical("Categorie(pk=%s) not here" % pk)
+                        LOGGER.critical("Categorie(pk=%s) not here" % pk)
                         continue
                     elt.nb = stat.value
                 elif "_vat" in stat.key:
@@ -478,7 +478,7 @@ class Stat(models.Model):
                     try:
                         elt = VAT.objects.get(pk=pk)
                     except VAT.DoesNotExist:
-                        logger.critical("VAT(pk=%s) not here" % pk)
+                        LOGGER.critical("VAT(pk=%s) not here" % pk)
                         continue
                     elt.nb = stat.value
                 elif "_payment_value" in stat.key:
@@ -486,7 +486,7 @@ class Stat(models.Model):
                     try:
                         elt = PaiementType.objects.get(pk=pk)
                     except PaiementType.DoesNotExist:
-                        logger.critical("PaiementType(pk=%s) not here" % pk)
+                        LOGGER.critical("PaiementType(pk=%s) not here" % pk)
                         continue
                     elt.nb = stat.value
                 if switch not in tmp.keys():
@@ -495,5 +495,5 @@ class Stat(models.Model):
         # sort elements in tmp
         for switch in tmp.keys():
             context[switch] = sorted(tmp[switch], cmp=nb_sorted)
-        logger.debug(context)
+        LOGGER.debug(context)
         return context
