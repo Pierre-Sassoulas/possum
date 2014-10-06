@@ -56,8 +56,7 @@ def send(request, subject, message):
     """
     if request.user.email:
         try:
-            # TODO mail uninitialized ?
-            send_mail(subject, mail, settings.DEFAULT_FROM_EMAIL,
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
                       [request.user.email], fail_silently=False)
         except:
             messages.add_message(request, messages.ERROR,
