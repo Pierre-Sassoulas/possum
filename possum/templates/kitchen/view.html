@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-{% load i18n %
+{% load i18n %}
 <ul id="back">
     <li onclick='window.location="{% url 'kitchen' %}"'
         >{% trans "Back kitchen" %}</li>
@@ -8,7 +8,8 @@
         >{% trans "Back bill" %}</li>
 </ul>
 
-<h1>{% trans "Table" %} {{facture.table}} / {{facture.couverts}} {% trans "guests" %} ({{facture}})</h1>
+<h1>{% trans "Table" %} {{facture.table}} / {{facture.couverts}}
+    {% trans "guests" %} ({{facture}})</h1>
 
 <table>
     <tr>
