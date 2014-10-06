@@ -32,7 +32,7 @@ from django.utils.translation import ugettext as _
 from possum.base.models import Config, Facture
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 def cleanup_payment(request):
@@ -54,7 +54,7 @@ def remove_edition(request):
         try:
             bill = Facture.objects.get(pk=bill_id)
         except Facture.DoesNotExist:
-            logger("[%s] bill is not here!" % bill_id)
+            LOGGER("[%s] bill is not here!" % bill_id)
         else:
             bill.used_by()
             if "products_modified" in request.session.keys():

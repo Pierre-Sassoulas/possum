@@ -18,11 +18,11 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from tests_bill import Tests_Bill
-from tests_categories import Tests_Categories
-from tests_product import Tests_Products
-from tests_urls import Tests_urls
-from tests_vat import Tests_VAT
+from tests_bill import TestsBill
+from tests_categories import TestsCategories
+from tests_product import TestsProducts
+from tests_urls import TestsUrls
+from tests_vat import TestsVAT
 
 
 # from test_dailystat import Test_DailyStat

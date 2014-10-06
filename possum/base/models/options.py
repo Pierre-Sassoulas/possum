@@ -25,7 +25,6 @@ from generic import Priorite, NomDouble
 
 class Cuisson(NomDouble, Priorite):
     """Cuisson d'un produit"""
-#    color = models.CharField(max_length=8, default="#ffdd82")
 
     class Meta:
         app_label = 'base'
@@ -38,8 +37,7 @@ class Cuisson(NomDouble, Priorite):
 
 
 class Option(models.Model):
-    """Toutes les options possibles pour un produit.
-    """
+    """Toutes les options possibles pour un produit. """
     name = models.CharField(max_length=16, default="")
 
     class Meta:

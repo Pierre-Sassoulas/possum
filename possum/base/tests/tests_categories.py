@@ -23,7 +23,7 @@ from django.utils.unittest.case import TestCase
 from possum.base.models import Categorie
 
 
-class Tests_Categories(TestCase):
+class TestsCategories(TestCase):
 
     def test_cmp(self):
         cat1 = Categorie(nom="nom1", priorite=1)

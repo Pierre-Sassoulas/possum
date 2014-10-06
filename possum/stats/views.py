@@ -35,7 +35,7 @@ from possum.base.views import permission_required
 from possum.stats.models import Stat
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @permission_required('base.p1')
@@ -100,7 +100,7 @@ def get_value(context, key):
 def prepare_full_output(context):
     """Prepare full output
     """
-    logger.debug(context)
+    LOGGER.debug(context)
     msg = """
 Nb factures: """
     msg += get_value(context, 'nb_bills')
@@ -262,7 +262,7 @@ def month_name(*t):
              7: 'Jui', 8: 'Aou', 9: 'Sep', 10: 'Oct', 11: 'Nov',
              12: 'Dec'}
     month_num = int(t[0][0])
-    logger.debug("names[%d] > [%s]" % (month_num, names[month_num]))
+    LOGGER.debug("names[%d] > [%s]" % (month_num, names[month_num]))
     return (names[month_num],)
 
 
@@ -273,7 +273,7 @@ def month_sort(*x):
 
 
 def get_datapool_year(year, keys):
-    logger.debug(keys)
+    LOGGER.debug(keys)
     series = []
     objects = Stat.objects.filter(interval="m", year=year)
     for key in keys.keys():
@@ -427,7 +427,7 @@ def select_charts(request, context, choice, year):
         try:
             datasource = get_datapool_year(year, chart['keys'])
         except:
-            logger.warning("datasource error with %s" % chart['title'])
+            LOGGER.warning("datasource error with %s" % chart['title'])
         else:
             context[key].append(get_chart(datasource, 'line',
                                           chart['keys'],
