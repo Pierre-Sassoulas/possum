@@ -678,17 +678,17 @@ def set_edition_status(request, bill):
     """
     if not bill:
         return False
-    if bill.in_use_by:
-        if bill.in_use_by != request.user:
-            messages.add_message(request, messages.ERROR, "%s %s" % (
-                                 _("Bill is being edited by"), request.user))
-            return False
-    else:
-        if request.session.get('bill_in_use', None):
-            if request.session['bill_in_use'] != bill.id:
-                request = remove_edition(request)
-        request.session['bill_in_use'] = bill.id
-        bill.used_by(request.user)
+    if bill.in_use_by and bill.in_use_by != request.user:
+        messages.add_message(request,
+                             messages.ERROR,
+                             "%s %s" % (_("Bill is being edited by"),
+                                        request.user))
+        return False
+    if request.session.get('bill_in_use', None) and\
+    request.session['bill_in_use'] != bill.id:
+        request = remove_edition(request)
+    request.session['bill_in_use'] = bill.id
+    bill.used_by(request.user)
     return True
 
 
