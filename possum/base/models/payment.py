@@ -27,7 +27,6 @@ from generic import Nom
 class PaiementType(Nom):
     """Type de paiment"""
     fixed_value = models.BooleanField("ticket ?", default=False)
-#    last_value = models.PositiveIntegerField("dernière valeur", default=0)
 
     class Meta:
         app_label = 'base'
@@ -52,8 +51,7 @@ class PaiementType(Nom):
 
 
 class Paiement(models.Model):
-    """valeur_unitaire: pour gerer les montants des tickets restos"""
-    # facture = models.ForeignKey('Facture', related_name="paiement-facture")
+    """valeur_unitaire: pour gérer les montants des tickets restos"""
     type = models.ForeignKey(PaiementType, related_name="paiement-type")
     montant = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     valeur_unitaire = models.DecimalField(max_digits=9, decimal_places=2,

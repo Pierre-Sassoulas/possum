@@ -26,7 +26,7 @@ from possum.base.models import Facture, PaiementType, Paiement, ProduitVendu, \
     Produit
 
 
-class Tests_Bill(TestCase):
+class TestsBill(TestCase):
     fixtures = ['demo.json']
 
     def setUp(self):

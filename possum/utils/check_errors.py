@@ -18,7 +18,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""Check errors in bills by add all products and compare with montant
+"""
+    Check errors in bills by adding all products and compare with montant
 """
 from decimal import Decimal
 import os
@@ -29,7 +30,6 @@ sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
 from possum.base.models import Facture
-
 
 diff = Decimal("0")
 nb = 0
@@ -48,11 +48,12 @@ for bill in Facture.objects.all():
 if nb:
     if diff > Decimal("0"):
         print("Ouch, there are errors on %d bills for %.2f%s" % (nb, diff,
-                                                                 _("$")))
+              _("$")))
         print("There are more money than it should.")
     else:
-        print("Ouch, there are errors on %d bills for %.2f%s" % (nb, diff, 
-                                                                 _("$")))
+        print("Ouch, there are errors on %d bills for %.2f%s" % (nb, diff,
+              _("$")))
         print("This is very bad, there are less money than it should.")
 else:
     print("Perfect, there are no errors!")
+

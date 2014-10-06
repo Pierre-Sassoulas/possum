@@ -29,7 +29,7 @@ from possum.base.models import VAT
 from possum.base.views import permission_required
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @permission_required('base.p1')

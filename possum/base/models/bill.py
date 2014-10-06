@@ -32,7 +32,7 @@ from printer import Printer
 from product_sold import ProduitVendu
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class Facture(models.Model):
@@ -128,7 +128,7 @@ class Facture(models.Model):
         Example: we have appetizer, entree and dessert, we want send first
         appetizer in kitchen.
         """
-        logger.debug("[%s] update kitchen" % self.id)
+        LOGGER.debug("[%s] update kitchen" % self.id)
         todolist = []
         for product in self.produits.filter(sent=False).iterator():
             if product.est_un_menu():
@@ -273,7 +273,7 @@ class Facture(models.Model):
     def update(self):
         """Update prize and kitchen
         """
-        logger.debug("[%s] update bill" % self.id)
+        LOGGER.debug("[%s] update bill" % self.id)
         self.total_ttc = Decimal("0")
         self.restant_a_payer = Decimal("0")
         for vatonbill in self.vats.iterator():
@@ -285,7 +285,7 @@ class Facture(models.Model):
                 if not sold.produit.price_surcharged:
                     # just in case for backwards comtability
                     # in case Produit has no price_surcharged
-                    logger.info("[%s] product without price_surcharged" %
+                    LOGGER.info("[%s] product without price_surcharged" %
                                 sold.produit.id)
                     sold.produit.update_vats(keep_clone=False)
                 sold.set_prize(sold.produit.price_surcharged)
@@ -302,10 +302,10 @@ class Facture(models.Model):
             self.total_ttc += sold.prix
             vatonbill, created = self.vats.get_or_create(vat=vat)
             if created:
-                logger.debug("[%s] new vat_on_bill" % self)
+                LOGGER.debug("[%s] new vat_on_bill" % self)
             vatonbill.total += value
             vatonbill.save()
-            logger.debug(vatonbill)
+            LOGGER.debug(vatonbill)
         self.restant_a_payer = self.total_ttc
         for payment in self.paiements.iterator():
             self.restant_a_payer -= payment.montant
@@ -324,7 +324,7 @@ class Facture(models.Model):
             sold.save()
             self.produits.add(sold)
         else:
-            logger.warning("[%s] try to add an inactive Produit()" % self.id)
+            LOGGER.warning("[%s] try to add an inactive Produit()" % self.id)
 
     def del_payment(self, payment):
         """Delete a payment
@@ -336,7 +336,7 @@ class Facture(models.Model):
             self.save()
             self.update()
         else:
-            logger.warning("[%s] on essaye de supprimer un paiement "
+            LOGGER.warning("[%s] on essaye de supprimer un paiement "
                            "qui n'est pas dans la facture: %s"
                            % (self, payment))
 
@@ -347,15 +347,15 @@ class Facture(models.Model):
         :return: True if it is ok
         """
         if self.restant_a_payer <= Decimal("0"):
-            logger.info("[%s] nouveau paiement ignore car restant"
+            LOGGER.info("[%s] nouveau paiement ignore car restant"
                         " a payer <= 0 (%5.2f)" % (self,
                                                    self.restant_a_payer))
             return False
         if not self.produits:
-            logger.debug("Pas de produit, donc rien a payer")
+            LOGGER.debug("Pas de produit, donc rien a payer")
             return False
         if float(montant) == 0.0:
-            logger.debug("Le montant n'est pas indique.")
+            LOGGER.debug("Le montant n'est pas indique.")
             return False
         return True
 
@@ -379,7 +379,7 @@ class Facture(models.Model):
         else:
             paiement.montant = Decimal(montant)
         # On enregistre ce paiement
-        logger.debug("Nouveau paiement : {0}".format(paiement))
+        LOGGER.debug("Nouveau paiement : {0}".format(paiement))
         paiement.save()
         self.paiements.add(paiement)
         if paiement.montant > self.restant_a_payer:
@@ -443,7 +443,7 @@ class Facture(models.Model):
         if self.onsite:
             if self.produits.filter(produit__categorie__disable_surtaxe=True
                                     ).count() > 0:
-                logger.debug("pas de surtaxe")
+                LOGGER.debug("pas de surtaxe")
                 return False
             if self.table:
                 return self.table.is_surcharged()
@@ -519,11 +519,11 @@ class Facture(models.Model):
             else:
                 key = "%s" % sold.produit_id
             if key in sold_dict:
-                logger.debug("[%s] increment count for this key" % key)
+                LOGGER.debug("[%s] increment count for this key" % key)
                 sold_dict[key].count += 1
                 sold_dict[key].members.append(sold)
             else:
-                logger.debug("[%s] new key" % key)
+                LOGGER.debug("[%s] new key" % key)
                 sold_dict[key] = sold
                 sold_dict[key].count = 1
                 sold_dict[key].members = [sold, ]

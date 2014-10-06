@@ -29,7 +29,7 @@ from possum.base.models import Facture
 from possum.base.models import Follow
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @login_required

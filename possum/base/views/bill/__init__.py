@@ -40,7 +40,7 @@ from possum.base.views import permission_required, remove_edition, \
                               cleanup_payment
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @permission_required('base.p3')
@@ -139,7 +139,7 @@ def set_number(request, bill_id, count):
 def update_categories(request):
     """Update categories in request.session
     """
-    logger.debug('update categories in cache')
+    LOGGER.debug('update categories in cache')
     last_carte_changed = Config().get_carte_changed().value
     request.session['last_carte_changed'] = last_carte_changed
     categories = []
@@ -149,8 +149,8 @@ def update_categories(request):
             category.products = products
             categories.append(category)
         else:
-            logger.debug("[%s] category without products" % category)
-    logger.debug(categories)
+            LOGGER.debug("[%s] category without products" % category)
+    LOGGER.debug(categories)
     request.session['categories'] = categories
 
 
@@ -178,9 +178,9 @@ def categories(request, bill_id, cat_id=None):
                 # we need to update
                 update_categories(request)
             else:
-                logger.debug('use categories in cache')
+                LOGGER.debug('use categories in cache')
         else:
-            logger.debug('Not possible ! last_carte_changed not set ?')
+            LOGGER.debug('Not possible ! last_carte_changed not set ?')
             update_categories(request)
     else:
         update_categories(request)
@@ -283,13 +283,13 @@ def sold_delete(request, bill_id, sold_id):
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     request.session["products_modified"] = bill_id
     if sold in bill.produits.all():
-        logger.debug("[%s] remove ProduitVendu(%s)" % (bill_id, sold))
+        LOGGER.debug("[%s] remove ProduitVendu(%s)" % (bill_id, sold))
         bill.produits.remove(sold)
         sold.delete()
     else:
         menus = bill.produits.filter(contient=sold)
         if menus:
-            logger.debug("[%s] remove ProduitVendu(%s) from a menu" % (
+            LOGGER.debug("[%s] remove ProduitVendu(%s) from a menu" % (
                          bill_id, sold))
             menu = menus[0]
             menu.contient.remove(sold)
@@ -342,7 +342,7 @@ def sold_working(request, bill_id, sold_id):
     """
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     if sold.produit.est_un_menu():
-        category = sold.getFreeCategorie()
+        category = sold.get_free_categorie()
         if category:
             return redirect('subproduct_select', bill_id, sold.id,
                             category.id)
@@ -410,14 +410,14 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
         old = context['sold'].cuisson
         context['sold'].cuisson = cooking
         context['sold'].save()
-        logger.debug("[S%s] cooking saved" % sold_id)
+        LOGGER.debug("[S%s] cooking saved" % sold_id)
         if old == None:
-            logger.debug("[%s] no cooking present" % bill_id)
+            LOGGER.debug("[%s] no cooking present" % bill_id)
             # certainement un nouveau produit donc on veut retourner
             # sur le panneau de saisie des produits
             return redirect('bill_sold_working', bill_id, context['sold'].id)
         else:
-            logger.debug("[%s] cooking replacement" % bill_id)
+            LOGGER.debug("[%s] cooking replacement" % bill_id)
             return redirect('bill_view', bill_id)
     return render(request, 'bill/cooking.html', context)
 
@@ -678,17 +678,17 @@ def set_edition_status(request, bill):
     """
     if not bill:
         return False
-    if bill.in_use_by:
-        if bill.in_use_by != request.user:
-            messages.add_message(request, messages.ERROR, "%s %s" % (
-                                 _("Bill is being edited by"), request.user))
-            return False
-    else:
-        if request.session.get('bill_in_use', None):
-            if request.session['bill_in_use'] != bill.id:
-                request = remove_edition(request)
-        request.session['bill_in_use'] = bill.id
-        bill.used_by(request.user)
+    if bill.in_use_by and bill.in_use_by != request.user:
+        messages.add_message(request,
+                             messages.ERROR,
+                             "%s %s" % (_("Bill is being edited by"),
+                                        request.user))
+        return False
+    if request.session.get('bill_in_use', None) and\
+    request.session['bill_in_use'] != bill.id:
+        request = remove_edition(request)
+    request.session['bill_in_use'] = bill.id
+    bill.used_by(request.user)
     return True
 
 

@@ -37,7 +37,9 @@ class Zone(Nom):
         app_label = 'base'
 
     def is_surcharged(self):
-#       logging.debug("surtaxe de %d centimes sur la zone %s" % (self.surtaxe))
+        '''
+        :return: TODO
+        '''
         return self.surtaxe
 
     def tables(self):

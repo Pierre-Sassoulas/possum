@@ -30,7 +30,7 @@ from django.utils.translation import ugettext as _
 from possum.base.views import permission_required, remove_edition
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 @login_required
@@ -48,16 +48,16 @@ def profile(request):
                 request.user.save()
                 messages.add_message(request, messages.SUCCESS,
                                      _("Password changed"))
-                logger.info('[%s] password changed' % request.user.username)
+                LOGGER.info('[%s] password changed' % request.user.username)
             else:
                 messages.add_message(request, messages.ERROR,
                                      _("New password invalid"))
-                logger.warning('[%s] new password invalid' % 
+                LOGGER.warning('[%s] new password invalid' % 
                                request.user.username)
         else:
             messages.add_message(request, messages.ERROR,
                                  _("Invalid password"))
-            logger.warning('[%s] chk password failed' % request.user.username)
+            LOGGER.warning('[%s] chk password failed' % request.user.username)
     return render(request, 'base/profile.html', context)
 
 
@@ -85,9 +85,9 @@ def users_new(request):
         user.email = mail
         try:
             user.save()
-            logger.info("[%s] new user [%s]" % (request.user.username, login))
+            LOGGER.info("[%s] new user [%s]" % (request.user.username, login))
         except:
-            logger.warning("[%s] new user failed: [%s] [%s] [%s] [%s]" % (
+            LOGGER.warning("[%s] new user failed: [%s] [%s] [%s] [%s]" % (
                            request.user.username, login, first_name,
                            last_name, mail))
             messages.add_message(request, messages.ERROR,
@@ -103,21 +103,21 @@ def users_change(request, user_id):
     mail = request.POST.get('mail', '').strip()
     user = get_object_or_404(User, pk=user_id)
     if login != user.username:
-        logger.info("[%s] new login: [%s] > [%s]" % (
+        LOGGER.info("[%s] new login: [%s] > [%s]" % (
                     request.user.username, user.username, login))
         user.username = login
     if first_name != user.first_name:
-        logger.info("[%s] new first name for [%s]: [%s] > [%s]" % (
+        LOGGER.info("[%s] new first name for [%s]: [%s] > [%s]" % (
                     request.user.username, user.username, user.first_name,
                     first_name))
         user.first_name = first_name
     if last_name != user.last_name:
-        logger.info("[%s] new last name for [%s]: [%s] > [%s]" % (
+        LOGGER.info("[%s] new last name for [%s]: [%s] > [%s]" % (
                     request.user.username, user.username, user.last_name,
                     last_name))
         user.last_name = last_name
     if mail != user.email:
-        logger.info("[%s] new mail for [%s]: [%s] > [%s]" % (
+        LOGGER.info("[%s] new mail for [%s]: [%s] > [%s]" % (
                     request.user.username, user.username, user.email, mail))
         user.email = mail
 
@@ -126,7 +126,7 @@ def users_change(request, user_id):
     except:
         messages.add_message(request, messages.ERROR,
                              _("Changes could not be saved"))
-        logger.warning("[%s] save failed for [%s]" % (request.user.username,
+        LOGGER.warning("[%s] save failed for [%s]" % (request.user.username,
                                                       user.username))
     return redirect('users')
 
@@ -142,12 +142,12 @@ def users_active(request, user_id):
         messages.add_message(request, messages.ERROR,
                              _("We must have at least one active user with "
                                "P1 permission"))
-        logger.warning("[%s] we must have at least one active user "
+        LOGGER.warning("[%s] we must have at least one active user "
                        "with P1 permission")
     else:
         user.is_active = new
         user.save()
-        logger.info("[%s] user [%s] active: %s" % (request.user.username,
+        LOGGER.info("[%s] user [%s] active: %s" % (request.user.username,
                                                    user.username,
                                                    user.is_active))
     return redirect('users')
@@ -163,7 +163,7 @@ def users_passwd(request, user_id):
     user.save()
     messages.add_message(request, messages.SUCCESS,
                          "%s: %s" % (_("New password is"), passwd))
-    logger.info("[%s] user [%s] new password" % (request.user.username,
+    LOGGER.info("[%s] user [%s] new password" % (request.user.username,
                                                  user.username))
     return redirect('users')
 
@@ -178,7 +178,7 @@ def users_change_perm(request, user_id, codename):
         if perm in user.user_permissions.all():
             if codename == 'p1' and perm.user_set.count() == 1:
                 # we must have at least one person with this permission
-                logger.info("[%s] user [%s] perm [%s]: at least should have "
+                LOGGER.info("[%s] user [%s] perm [%s]: at least should have "
                             "one person" % (request.user.username,
                                             user.username,
                                             codename))
@@ -187,17 +187,17 @@ def users_change_perm(request, user_id, codename):
                                        "with P1 permission"))
             else:
                 user.user_permissions.remove(perm)
-                logger.info("[%s] user [%s] remove perm: %s" % (
+                LOGGER.info("[%s] user [%s] remove perm: %s" % (
                             request.user.username,
                             user.username,
                             codename))
         else:
             user.user_permissions.add(perm)
-            logger.info("[%s] user [%s] add perm: %s" % (
+            LOGGER.info("[%s] user [%s] add perm: %s" % (
                         request.user.username,
                         user.username,
                         codename))
     else:
-        logger.warning("[%s] wrong perm info: [%s]" % (request.user.username,
+        LOGGER.warning("[%s] wrong perm info: [%s]" % (request.user.username,
                                                        codename))
     return redirect('users')

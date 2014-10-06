@@ -30,7 +30,7 @@ from generic import Nom
 from options import Option
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class Produit(Nom):
@@ -100,7 +100,7 @@ class Produit(Nom):
         if not self.id or \
                 Stat.objects.filter(key="%d_product_nb" % self.id).count() == 0:
             # if not needed, we don't clone the knight
-            logger.info("product doesn't need clone")
+            LOGGER.info("product doesn't need clone")
             return self
         product = Produit()
         product.actif = self.actif
@@ -122,7 +122,7 @@ class Produit(Nom):
         for p in self.produits_ok.distinct():
             product.produits_ok.add(p)
         product.save()
-        logger.debug("[P%s] cloned, new Produit[P%s]" % (self.id, product.id))
+        LOGGER.debug("[P%s] cloned, new Produit[P%s]" % (self.id, product.id))
         return product
 
     def set_prize(self, prize):
@@ -169,7 +169,7 @@ class Produit(Nom):
                     self.price_surcharged != price_surcharged or \
                     self.vat_surcharged != vat_surcharged or \
                     self.vat_takeaway != vat_takeaway:
-                logger.debug("[P%s] new values" % self.id)
+                LOGGER.debug("[P%s] new values" % self.id)
                 if keep_clone:
                     product = self._clone_product()
                 else:
@@ -183,7 +183,7 @@ class Produit(Nom):
             else:
                 return self
         else:
-            logger.warning("[%s] categorie without VAT" % self.categorie)
+            LOGGER.warning("[%s] categorie without VAT" % self.categorie)
 
     def get_prize_takeaway(self):
         if self.categorie:

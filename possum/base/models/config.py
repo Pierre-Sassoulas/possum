@@ -23,7 +23,7 @@ import logging
 from django.db import models
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class Config(models.Model):
@@ -50,16 +50,16 @@ class Config(models.Model):
         """
         record = self.get_carte_changed()
         if date == record.value:
-            logger.debug("[last_carte_changed] no change")
+            LOGGER.debug("[last_carte_changed] no change")
             return False
         else:
-            logger.debug("[last_carte_changed] has changed")
+            LOGGER.debug("[last_carte_changed] has changed")
             return True
 
     def set_carte_changed(self):
         """Record now has last changed date for carte
         """
-        logger.debug("[last_carte_changed] set new date")
+        LOGGER.debug("[last_carte_changed] set new date")
         record = self.get_carte_changed()
         record.value = datetime.now().strftime("%Y%m%d-%H%M")
         record.save()
@@ -71,7 +71,7 @@ class Config(models.Model):
         try:
             record = Config.objects.get(key="last_carte_changed")
         except Config.DoesNotExist:
-            logger.debug("[last_carte_changed] created")
+            LOGGER.debug("[last_carte_changed] created")
             record = Config(key="last_carte_changed")
             record.value = datetime.now().strftime("%Y%m%d-%H%M")
             record.save()
