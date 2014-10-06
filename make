@@ -72,23 +72,29 @@ function tests {
         mkdir reports
     fi
     ./manage.py validate_templates --settings=possum.settings_tests
-    if [ ! $? == 0 ]
+    if [ "$?" != "0" ]
     then
-        exit $?
+        exit 1
+    fi
+    ./manage.py jenkins --settings=possum.settings_tests
+    if [ "$?" != "0" ]
+    then
+        exit 1
     fi
     csslint possum/base/static/possum --format=lint-xml > reports/csslint.report
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
     clonedigger --cpd-output -o reports/clonedigger.xml $(find possum -name "*.py" | fgrep -v '/migrations/' | fgrep -v '/tests/' | xargs echo )
     sloccount --duplicates --wide --details possum | fgrep -v .git | fgrep -v '/migrations/' | fgrep -v '/highcharts/' > reports/soccount.sc
-    ./manage.py jenkins --settings=possum.settings_tests
     utests
-    exit $?
 }
 
 function utests {
     enter_virtualenv
     ./manage.py test --settings=possum.settings_tests
-    return $?
+    if [ "$?" != "0" ]
+    then
+        exit 1
+    fi
 }
 
 function fastcoverage {
