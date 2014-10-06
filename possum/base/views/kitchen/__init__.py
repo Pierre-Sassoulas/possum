@@ -18,13 +18,15 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import messages
 import logging
+
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.translation import ugettext as _
+
 from possum.base.models import Facture
 from possum.base.models import Follow
-from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)

@@ -18,12 +18,14 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import messages
 import logging
+
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import ugettext as _
+
 from possum.base.models import Zone, Table
 from possum.base.views import permission_required
-from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)
@@ -54,7 +56,7 @@ def tables_zone_new(request):
 
 @permission_required('base.p1')
 def tables_table(request, zone_id, table_id):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['table'] = get_object_or_404(Table, pk=table_id)
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
@@ -71,7 +73,7 @@ def tables_table(request, zone_id, table_id):
 
 @permission_required('base.p1')
 def tables_zone(request, zone_id):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['zone'] = get_object_or_404(Zone, pk=zone_id)
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
@@ -88,6 +90,6 @@ def tables_zone(request, zone_id):
 
 @permission_required('base.p1')
 def tables(request):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['zones'] = Zone.objects.all()
     return render(request, 'base/manager/tables/home.html', context)

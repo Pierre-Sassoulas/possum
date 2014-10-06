@@ -1,14 +1,14 @@
 astroid==1.2.1
 clonedigger==1.0.11-beta
 coverage==3.7.1
+Django==1.6.7
 django-chartit==0.1
 django-debug-toolbar==1.2.1
 django-extensions==1.4.0
 django-jenkins==0.16.3
-Django==1.6.7
 docutils==0.12
-flake8-todo==0.3
 flake8==2.2.3
+flake8-todo==0.3
 ipython==2.2.0
 Jinja2==2.7.3
 logilab-common==0.62.1

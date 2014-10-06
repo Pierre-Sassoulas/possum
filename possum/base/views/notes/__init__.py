@@ -19,12 +19,14 @@
 #
 
 import logging
+
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+
+from possum.base.forms import NoteForm
 from possum.base.models import Note
 from possum.base.views import permission_required
-from possum.base.forms import NoteForm
 
 
 logger = logging.getLogger(__name__)

@@ -19,6 +19,7 @@
 #
 
 from django.db import models
+
 from category import Categorie
 from product_sold import ProduitVendu
 

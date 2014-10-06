@@ -18,11 +18,12 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 from datetime import datetime
+import logging
 import os
 import unicodedata
+
 from django.conf import settings
 from django.db import models
-import logging
 
 
 logger = logging.getLogger(__name__)
@@ -42,14 +43,14 @@ def sans_accent(message):
 
 class Printer(models.Model):
     """Printer model
-    options: options used with pycups.printFile()
-    header: you can add a text before the text to print (restaurant name)
-    width: width of the ticket
-    footer: same as header but after :)
-    kitchen_lines: number of white lines to heading ticket of kitchen
-    kitchen: used to print in kitchen
-    billing: used to print bills
-    manager: used to print rapport, ...
+    :param options: options used with pycups.printFile()
+    :param header: you can add a text before the text to print (restaurant name)
+    :param width: width of the ticket
+    :param footer: same as header but after :)
+    :param kitchen_lines: number of white lines to heading ticket of kitchen
+    :param kitchen: used to print in kitchen
+    :param billing: used to print bills
+    :param manager: used to print rapport, ...
     """
     name = models.CharField(max_length=40)
     options = models.CharField(max_length=120)
@@ -83,7 +84,7 @@ class Printer(models.Model):
         return result
 
     def get_available_printers(self):
-        """Return a string list of availables printers
+        """Return a string list of available printers
         """
         result = []
         try:
@@ -97,6 +98,9 @@ class Printer(models.Model):
         return result
 
     def print_file(self, filename):
+        '''
+        TODO Docstring
+        '''
         try:
             conn = cups.Connection()
         except RuntimeError:
@@ -111,16 +115,16 @@ class Printer(models.Model):
             return False
 
     def print_msg(self, msg):
-        """Try to print a msg, we create a list with msg
+        """Try to print a message, we create a list with message
         """
         list_to_print = msg.split("\n")
         return self.print_list(list_to_print, "possum")
 
     def print_list(self, list_to_print, name, with_header=False, kitchen=False):
         """Generate a print list from a list which contains informations
-        in string and serveral business objects.
+        in string and several business objects.
         """
-        path = "%s/%s-%s.txt" % (settings.PATH_TICKET, self.id, name)
+        path = "{0}/{1}-{2}.txt".format(settings.PATH_TICKET, self.id, name)
         ticket_to_print = open(path, "w")
         if kitchen and self.kitchen_lines:
             ticket_to_print.write("\n"*self.kitchen_lines)

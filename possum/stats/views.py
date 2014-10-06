@@ -17,19 +17,22 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.shortcuts import render, redirect
-import logging
 import datetime
-from possum.base.views import permission_required
-from possum.stats.models import Stat
-from possum.base.forms import DateForm, WeekForm, MonthForm, YearForm
+import logging
+
+from chartit import PivotDataPool, PivotChart
+from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
-from possum.base.models import Printer
-from possum.base.models import Categorie, VAT, PaiementType, Produit
-from chartit import PivotDataPool, PivotChart
 from django.db.models import Avg
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+
+from possum.base.forms import DateForm, WeekForm, MonthForm, YearForm
+from possum.base.models import Categorie, VAT, PaiementType, Produit
+from possum.base.models import Printer
+from possum.base.views import permission_required
+from possum.stats.models import Stat
 
 
 logger = logging.getLogger(__name__)
@@ -53,6 +56,7 @@ def send(request, subject, message):
     """
     if request.user.email:
         try:
+            # TODO mail uninitialized ?
             send_mail(subject, mail, settings.DEFAULT_FROM_EMAIL,
                       [request.user.email], fail_silently=False)
         except:
@@ -74,11 +78,11 @@ def print_msg(request, msg):
         printer = printers[0]
         if printer.print_msg(msg):
             messages.add_message(request, messages.SUCCESS,
-                                 u"L'impression a été envoyée sur %s" %
+                                 u"L'impression a été envoyée sur %s" % 
                                  printer.name)
         else:
             messages.add_message(request, messages.ERROR,
-                                 u"L'impression a échouée sur %s" %
+                                 u"L'impression a échouée sur %s" % 
                                  printer.name)
     else:
         messages.add_message(request, messages.ERROR,
@@ -278,10 +282,10 @@ def get_datapool_year(year, keys):
             'source': objects.filter(key=key),
             'categories': 'month'},
             'terms': {keys[key]: Avg('value')}
-            })
+        })
     return PivotDataPool(
-            series=series,
-            sortf_mapf_mts=(month_sort, month_name, True))
+        series=series,
+        sortf_mapf_mts=(month_sort, month_name, True))
 
 
 def get_chart(datasource, graph, keys, title, xaxis):
@@ -290,27 +294,27 @@ def get_chart(datasource, graph, keys, title, xaxis):
     """
     terms = [keys[x] for x in keys.keys()]
     return PivotChart(
-                datasource=datasource,
-                series_options=[{
-                    'options': {
-                        'type': graph,
-                        'stacking': False
+        datasource=datasource,
+        series_options=[{
+                        'options': {
+                            'type': graph,
+                            'stacking': False
                         },
-                    'terms': terms
-                    }],
-                chart_options={
-                    'title': {
-                        'text': title},
-                    'credits': {
-                        'enabled': False
-                        },
-                    'xAxis': {
-                        'title': {
-                            'text': xaxis}},
-                    'yAxis': {
-                        'title': {
-                            'text': ''}},
-                    })
+                        'terms': terms
+                        }],
+        chart_options={
+            'title': {
+                'text': title},
+            'credits': {
+                'enabled': False
+            },
+            'xAxis': {
+                'title': {
+                    'text': xaxis}},
+            'yAxis': {
+                'title': {
+                    'text': ''}},
+        })
 
 
 def get_chart_year_products(year, category):
@@ -368,10 +372,10 @@ def select_charts(request, context, choice, year):
             chart['keys'][key] = "%s" % vat
         charts.append(chart)
     elif choice == 'payments':
-        chart1 = {'title': "Nombre de paiements par type pour l'année %s" %
+        chart1 = {'title': "Nombre de paiements par type pour l'année %s" % 
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des paiements par type pour l'année %s" %
+        chart2 = {'title': "Valeur des paiements par type pour l'année %s" % 
                   year, }
         chart2['keys'] = {}
         for payment in PaiementType.objects.iterator():
@@ -382,10 +386,10 @@ def select_charts(request, context, choice, year):
         charts.append(chart1)
         charts.append(chart2)
     elif choice == 'categories':
-        chart1 = {'title': "Nombre de vente par catégorie pour l'année %s" %
+        chart1 = {'title': "Nombre de vente par catégorie pour l'année %s" % 
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %s" %
+        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %s" % 
                   year, }
         chart2['keys'] = {}
         for cat in Categorie.objects.iterator():
@@ -427,9 +431,9 @@ def select_charts(request, context, choice, year):
             logger.warning("datasource error with %s" % chart['title'])
         else:
             context[key].append(get_chart(datasource, 'line',
-                                                   chart['keys'],
-                                                   chart['title'],
-                                                   "Mois"))
+                                          chart['keys'],
+                                          chart['title'],
+                                          "Mois"))
     return context
 
 
@@ -439,7 +443,7 @@ def charts(request, choice='ttc'):
     chart1: pour un seul graphique
     chart2: pour 2 graphiques
     """
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
     year = datetime.datetime.now().year
     if request.method == 'POST':

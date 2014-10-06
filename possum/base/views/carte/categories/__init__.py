@@ -18,18 +18,20 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
+
+from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
-import logging
-from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import ugettext as _
+
 from possum.base.models import Categorie
-from possum.stats.models import Stat
 from possum.base.models import Printer
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
-from django.utils.translation import ugettext as _
+from possum.stats.models import Stat
 
 
 logger = logging.getLogger(__name__)
@@ -68,7 +70,7 @@ def categories_print(request):
             printer = printers[0]
             if printer.print_list(result, "carte_complete"):
                 messages.add_message(request, messages.SUCCESS,
-                                     _("Printing was sent to %s") %
+                                     _("Printing was sent to %s") % 
                                      printer.name)
             else:
                 messages.add_message(request, messages.ERROR,
@@ -94,7 +96,7 @@ def categories_delete(request, cat_id):
     context = {'menu_manager': True, }
     context['current_cat'] = get_object_or_404(Categorie, pk=cat_id)
     context['categories'] = Categorie.objects.order_by('priorite',
-                                                      'nom').exclude(id=cat_id)
+                                                       'nom').exclude(id=cat_id)
     cat_report_id = request.POST.get('cat_report', '').strip()
     action = request.POST.get('valide', '').strip()
     if action == "Supprimer":

@@ -18,17 +18,19 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
+
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
-import logging
-from django.shortcuts import get_object_or_404
-from possum.base.models import Categorie
-from possum.base.models import Produit
-from possum.base.models import Option
-from possum.base.views import permission_required
-from possum.base.forms import OptionForm
 from django.utils.translation import ugettext as _
+
+from possum.base.forms import OptionForm
+from possum.base.models import Categorie
+from possum.base.models import Option
+from possum.base.models import Produit
+from possum.base.views import permission_required
 
 
 logger = logging.getLogger(__name__)
@@ -96,7 +98,7 @@ def products_new(request, cat_id):
             except Exception as ex:
                 messages.add_message(request, messages.ERROR,
                                      _("Changes could not be saved"))
-                logger.warning(_("Changes could not be saved")+": "+ex)
+                logger.warning(_("Changes could not be saved") + ": " + ex)
             else:
                 return redirect('categories_view', context['category'].id)
     return render(request, 'base/carte/product_new.html', context)

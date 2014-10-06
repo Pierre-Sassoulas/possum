@@ -18,16 +18,18 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import messages
-from django.contrib.auth.context_processors import PermWrapper
-from django.shortcuts import render, redirect
 import logging
 import os
-from django.contrib.auth.decorators import login_required
-from django.utils.functional import wraps
-from possum.base.models import Config, Facture
+
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.context_processors import PermWrapper
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.utils.functional import wraps
 from django.utils.translation import ugettext as _
+
+from possum.base.models import Config, Facture
 
 
 logger = logging.getLogger(__name__)
@@ -68,7 +70,7 @@ def remove_edition(request):
 @login_required
 def home(request):
     request = remove_edition(request)
-    context = { 'menu_home': True, }
+    context = {'menu_home': True, }
     return render(request, 'home.html', context)
 
 
@@ -91,7 +93,7 @@ def permission_required(perm, **kwargs):
 
 @permission_required('base.p3')
 def shutdown(request):
-    context = { 'menu_home': True, }
+    context = {'menu_home': True, }
     config = Config.objects.filter(key="default_shutdown")
     if config:
         cmd = config[0].value

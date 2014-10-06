@@ -23,12 +23,13 @@
 import os
 import sys
 
+from possum.base.views.carte.categories import update_colors
+
 
 sys.path.append('.')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
 
-from possum.base.views.carte.categories import update_colors
 
 
 update_colors()

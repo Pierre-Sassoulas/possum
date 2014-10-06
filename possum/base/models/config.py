@@ -17,9 +17,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.db import models
-import logging
 from datetime import datetime
+import logging
+
+from django.db import models
 
 
 logger = logging.getLogger(__name__)

@@ -18,24 +18,26 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
+
 from django.contrib import messages
 from django.shortcuts import redirect
-import logging
 from django.shortcuts import render, get_object_or_404
-from possum.base.models import Facture
+from django.utils.translation import ugettext as _
+
+from possum.base.forms import NoteForm
 from possum.base.models import Categorie
-from possum.base.models import Zone, Table
-from possum.base.models import Printer
+from possum.base.models import Config
 from possum.base.models import Cuisson
-from possum.base.models import Produit, ProduitVendu
+from possum.base.models import Facture
+from possum.base.models import Note
+from possum.base.models import Option
 from possum.base.models import PaiementType, Paiement
+from possum.base.models import Printer
+from possum.base.models import Produit, ProduitVendu
+from possum.base.models import Zone, Table
 from possum.base.views import permission_required, remove_edition, \
                               cleanup_payment
-from possum.base.models import Note
-from possum.base.models import Config
-from possum.base.models import Option
-from possum.base.forms import NoteForm
-from django.utils.translation import ugettext as _
 
 
 logger = logging.getLogger(__name__)

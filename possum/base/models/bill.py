@@ -19,15 +19,17 @@
 #
 import datetime
 from decimal import Decimal
-from django.db import models
 import logging
+
+from django.contrib.auth.models import User
+from django.db import models
+
 from category import Categorie
 from config import Config
 from follow import Follow
 from payment import Paiement, PaiementType
 from printer import Printer
 from product_sold import ProduitVendu
-from django.contrib.auth.models import User
 
 
 logger = logging.getLogger(__name__)

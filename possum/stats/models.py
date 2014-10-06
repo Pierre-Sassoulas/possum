@@ -20,14 +20,16 @@
 
 import datetime
 from decimal import Decimal
-from django.db import models
+import itertools
 import logging
 import os
+
 from django.conf import settings
-import itertools
+from django.db import models
 from django.db.models import Max, Avg
-from possum.base.models import Facture
+
 from possum.base.models import Categorie
+from possum.base.models import Facture
 from possum.base.models import PaiementType
 from possum.base.models import Produit
 from possum.base.models import VAT
@@ -277,6 +279,7 @@ def update_day(date):
 
 
 class Stat(models.Model):
+
     """Statistics, full list of keys:
     Common:
     nb_bills      : number of invoices
@@ -348,7 +351,7 @@ class Stat(models.Model):
             # we prepare list of days with bills to add
             bills = Facture.objects.filter(saved_in_stats=False)
             grouped = itertools.groupby(bills, lambda record:
-                                        record.date_creation\
+                                        record.date_creation
                                         .strftime("%Y-%m-%d"))
             for day, bills_this_day in grouped:
                 update_day(day)
