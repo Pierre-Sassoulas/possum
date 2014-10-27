@@ -37,7 +37,6 @@ The key word: try to keep it simple for the final user.
 * `French documentation <http://doc.possum-software.org/fr/>`_
 * `Freecode <http://freecode.com/projects/possum>`_
 * `Openhub <https://www.openhub.net/p/possum-software>`_
-* `Youtube <https://www.youtube.com/channel/UCsJxTNRkKsd_bCAfPNf1dZg/playlists>`_
 
 Community
 ---------
@@ -62,3 +61,8 @@ Devs
 * `Issues <https://github.com/possum-software/possum/issues>`_
 * `Jenkins <http://jenkins.possum-software.org/view/Tous/>`_
 
+Videos
+------
+
+* `Dailymotion <http://www.dailymotion.com/possum_software>`_
+* `Youtube <https://www.youtube.com/channel/UCsJxTNRkKsd_bCAfPNf1dZg/playlists>`_
