@@ -169,7 +169,7 @@ EOF
         ./manage.py syncdb --noinput --migrate
     fi
     ./manage.py migrate
-    possum/utils/update_categories_css.py
+    ./manage.py update_css
     update_js
 }
 
