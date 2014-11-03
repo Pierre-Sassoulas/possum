@@ -34,6 +34,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Produit(Nom):
+
     """Produit qui peut être vendu.
 
     options_ok: liste des options autorisées pour ce produit
@@ -64,6 +65,12 @@ class Produit(Nom):
                                        default=0)
 
     def __cmp__(self, other):
+        '''
+
+        :param other:
+        :type other:
+        :return: Boolean
+        '''
         if self.categorie == other.categorie:
             return cmp(self.nom, other.nom)
         else:
@@ -126,9 +133,12 @@ class Produit(Nom):
         return product
 
     def set_prize(self, prize):
-        """With new prize, we have to create a new product to keep statistics
+        ''' With new prize, we have to create a new product to keep statistics
         and historics.
-        """
+
+        :param prize:
+        :type prize:
+        '''
         if Decimal(prize) != Decimal(self.prix):
             product = self._clone_product()
             product.prix = prize
@@ -138,14 +148,18 @@ class Produit(Nom):
             return self
 
     def set_category(self, category):
+        '''
+        :param category: TODO
+        :type category:
+        '''
         self.categorie = category
         self.update_vats()
 
     def update_vats(self, keep_clone=True):
-        """Update vat_onsite and vat_takeaway with price in TTC
+        ''' Update vat_onsite and vat_takeaway with price in TTC
 
-        keep_clone=True : we keep a clean with old values
-        """
+        :param Boolean keep_clone: we keep a clean with old values
+        '''
         price_surcharge, created = Config.objects.get_or_create(key="price_"
                                                                 "surcharge")
         if created:
@@ -186,6 +200,9 @@ class Produit(Nom):
             LOGGER.warning("[%s] categorie without VAT" % self.categorie)
 
     def get_prize_takeaway(self):
+        '''
+        :return: TODO
+        '''
         if self.categorie:
             if self.categorie.vat_takeaway:
                 ttc = self.prix * self.categorie.vat_takeaway.value
@@ -196,6 +213,9 @@ class Produit(Nom):
             return self.prix
 
     def get_prize_onsite(self):
+        '''
+        :return: TODO
+        '''
         if self.categorie:
             if self.categorie.vat_onsite:
                 ttc = self.prix * self.categorie.vat_onsite.value
@@ -206,6 +226,9 @@ class Produit(Nom):
             return self.prix
 
     def get_list_with_all_products(self):
+        '''
+        :return: TODO
+        '''
         result = []
         result.append(datetime.now().strftime("%d/%m/%Y %H:%M"))
         for category in Categorie.objects.order_by('priorite', 'nom'):
@@ -220,8 +243,12 @@ class Produit(Nom):
         return result
 
     def save(self, force_insert=False, using=None):
-        """We overload this method to keep last date carte
+        ''' We overload this method to keep last date carte
         has changed
-        """
+
+        :param Boolean force_insert:
+        :param using: TODO
+        :type using:
+        '''
         Config().set_carte_changed()
         super(Produit, self).save(force_insert=force_insert, using=using)

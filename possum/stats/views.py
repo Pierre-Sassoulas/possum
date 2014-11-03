@@ -77,11 +77,11 @@ def print_msg(request, msg):
         printer = printers[0]
         if printer.print_msg(msg):
             messages.add_message(request, messages.SUCCESS,
-                                 u"L'impression a été envoyée sur %s" % 
+                                 u"L'impression a été envoyée sur %s" %
                                  printer.name)
         else:
             messages.add_message(request, messages.ERROR,
-                                 u"L'impression a échouée sur %s" % 
+                                 u"L'impression a échouée sur %s" %
                                  printer.name)
     else:
         messages.add_message(request, messages.ERROR,
@@ -371,10 +371,10 @@ def select_charts(request, context, choice, year):
             chart['keys'][key] = "%s" % vat
         charts.append(chart)
     elif choice == 'payments':
-        chart1 = {'title': "Nombre de paiements par type pour l'année %s" % 
+        chart1 = {'title': "Nombre de paiements par type pour l'année %s" %
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des paiements par type pour l'année %s" % 
+        chart2 = {'title': "Valeur des paiements par type pour l'année %s" %
                   year, }
         chart2['keys'] = {}
         for payment in PaiementType.objects.iterator():
@@ -385,10 +385,10 @@ def select_charts(request, context, choice, year):
         charts.append(chart1)
         charts.append(chart2)
     elif choice == 'categories':
-        chart1 = {'title': "Nombre de vente par catégorie pour l'année %s" % 
+        chart1 = {'title': "Nombre de vente par catégorie pour l'année %s" %
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %s" % 
+        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %s" %
                   year, }
         chart2['keys'] = {}
         for cat in Categorie.objects.iterator():

@@ -37,8 +37,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 logger = logging.getLogger("possum.base")
 
 
-
-
 # ajout des utilisateurs
 for username in ['demo', 'demo1', 'demo2']:
     if User.objects.filter(username=username).count() == 0:

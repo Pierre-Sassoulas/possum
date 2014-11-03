@@ -23,6 +23,7 @@ from generic import Nom
 
 
 class Zone(Nom):
+
     """Un zone peut avoir une surtaxe par exemple dans le cas d'une majoration
     pour le service en terrasse. Dans ce cas, prix_surtaxe est ajouté au
     prix HT de tous les produits dans les categories 'surtaxable'.
@@ -43,12 +44,14 @@ class Zone(Nom):
         return self.surtaxe
 
     def tables(self):
-        """Return list of tables for this zone."""
+        """
+        :return: A list of tables for this zone."""
         return Table.objects.filter(zone=self)
 
 
 class Table(Nom):
-    """ Une table dépend obligatoirement d'une zone """
+
+    """ A table must be linked to a Zone """
 
     zone = models.ForeignKey(Zone, related_name="table-zone")
 
@@ -56,9 +59,9 @@ class Table(Nom):
         app_label = 'base'
 
     def is_surcharged(self):
-        ''' By default there is no surcharge. '''
+        ''' By default there is no surcharge.
+        :return: Boolean '''
         if self.zone:
-            result = self.zone.is_surcharged()
+            return self.zone.is_surcharged()
         else:
-            result = False
-        return result
+            return False

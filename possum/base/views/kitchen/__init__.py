@@ -45,7 +45,7 @@ def kitchen(request):
             if not bill.follow.done:
                 # on enlève les ProduitVendu de type menu
                 todo = bill.follow.produits.\
-                            filter(produit__categories_ok__isnull=True)
+                    filter(produit__categories_ok__isnull=True)
                 bill.todo = bill.reduced_sold_list(todo, full=True)
                 if bill.category_to_follow:
                     category_to_follow = bill.category_to_follow

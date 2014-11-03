@@ -31,5 +31,3 @@ from product import Produit
 from product_sold import ProduitVendu
 from vat import VAT
 from vatonbill import VATOnBill
-
-

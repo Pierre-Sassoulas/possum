@@ -50,8 +50,9 @@ class TestsUrls(TestCase):
         ''' Test that the home urls work. '''
         urls = [
             reverse('categories'),
-            # il doit y avoir une imprimante            reverse('categories_print'),
-            #            reverse('categories_send'),
+            # il doit y avoir une imprimante
+            # reverse('categories_print'),
+            # reverse('categories_send'),
             reverse('categories'),
             reverse('categories_add'),
             #            reverse('categories_new'),

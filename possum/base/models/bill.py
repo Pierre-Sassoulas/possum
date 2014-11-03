@@ -17,25 +17,26 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-import datetime
 from decimal import Decimal
+import datetime
 import logging
 
 from django.contrib.auth.models import User
 from django.db import models
 
-from category import Categorie
-from config import Config
-from follow import Follow
-from payment import Paiement, PaiementType
-from printer import Printer
-from product_sold import ProduitVendu
+from possum.base.models.category import Categorie
+from possum.base.models.config import Config
+from possum.base.models.follow import Follow
+from possum.base.models.payment import Paiement, PaiementType
+from possum.base.models.printer import Printer
+from possum.base.models.product_sold import ProduitVendu
 
 
 LOGGER = logging.getLogger(__name__)
 
 
 class Facture(models.Model):
+
     """Main class of POSSUM
 
     :param DateTime date_creation: Creation of bill
@@ -97,6 +98,9 @@ class Facture(models.Model):
         )
 
     def __unicode__(self):
+        '''
+        :return: Unicode for a Facture
+        '''
         if self.date_creation:
             # TODO strftime copy pasted =~ 20 time (Date class ?)
             date = self.date_creation.strftime("%H:%M %d/%m")
@@ -105,10 +109,12 @@ class Facture(models.Model):
         return u"%s" % date
 
     def __cmp__(self, other):
-        """We sort Facture() by date, new Facture first and older after
+        """
+        We sort Facture() by date, new Facture first and older after
 
         :param Facture self:
         :param Facture other:
+        :return etype: Boolean 
         """
         return cmp(self.date_creation, other.date_creation)
 
@@ -285,7 +291,7 @@ class Facture(models.Model):
                 if not sold.produit.price_surcharged:
                     # just in case for backwards comtability
                     # in case Produit has no price_surcharged
-                    LOGGER.info("[%s] product without price_surcharged" %
+                    LOGGER.info("[%s] product without price_surcharged" % 
                                 sold.produit.id)
                     sold.produit.update_vats(keep_clone=False)
                 sold.set_prize(sold.produit.price_surcharged)
@@ -429,7 +435,8 @@ class Facture(models.Model):
         return False
 
     def is_empty(self):
-        """:return: True if bill is empty"""
+        """
+        :return: True if bill is empty"""
         if self.restant_a_payer == 0 and self.produits.count() == 0:
             return True
         else:
@@ -453,9 +460,12 @@ class Facture(models.Model):
             return False
 
     def get_bills_for(self, date):
-        """Retourne la liste des factures soldees du jour 'date'
+        ''' Retourne la liste des factures soldees du jour 'date'
         date de type datetime
-        """
+
+        :param date:
+        :type date:
+        '''
         date_min = datetime.datetime(date.year, date.month, date.day, 5)
         tmp = date_min + datetime.timedelta(days=1)
         date_max = datetime.datetime(tmp.year, tmp.month, tmp.day, 5)
@@ -503,7 +513,7 @@ class Facture(models.Model):
                                   with_header=True)
 
     def reduced_sold_list(self, sold_list, full=False):
-        """les élèments ProduitVendu de sold_list
+        ''' les élèments ProduitVendu de sold_list
         sont regroupés par 'élèment identique en fonction soit:
         - du Produit() (full=False)
         - du Produit(), des options et des notes (full=True)
@@ -511,7 +521,12 @@ class Facture(models.Model):
         On ajoute sur chaque élèment:
         - count: le nombre total
         - members: la liste des instances
-        """
+
+        :param sold_list:
+        :type sold_list:
+        :param full:
+        :type full:
+        '''
         sold_dict = {}
         for sold in sold_list:
             if full:

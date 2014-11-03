@@ -37,7 +37,7 @@ from possum.base.models import Printer
 from possum.base.models import Produit, ProduitVendu
 from possum.base.models import Zone, Table
 from possum.base.views import permission_required, remove_edition, \
-                              cleanup_payment
+    cleanup_payment
 
 
 LOGGER = logging.getLogger(__name__)
@@ -411,7 +411,7 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
         context['sold'].cuisson = cooking
         context['sold'].save()
         LOGGER.debug("[S%s] cooking saved" % sold_id)
-        if old == None:
+        if old is None:
             LOGGER.debug("[%s] no cooking present" % bill_id)
             # certainement un nouveau produit donc on veut retourner
             # sur le panneau de saisie des produits
@@ -495,7 +495,7 @@ def bill_payment_delete(request, bill_id, payment_id):
 
 @permission_required('base.p3')
 def bill_payment_view(request, bill_id, payment_id):
-    context = { 'menu_bills': True, }
+    context = {'menu_bills': True, }
     context['bill_id'] = bill_id
     context['payment'] = get_object_or_404(Paiement, pk=payment_id)
     return render(request, 'payments/view.html', context)
@@ -511,7 +511,7 @@ def amount_payment(request):
         messages.add_message(request, messages.ERROR, _("Invalid bill"))
         return redirect('bill_home')
 
-    context = { 'menu_bills': True, }
+    context = {'menu_bills': True, }
     context['bill_id'] = bill_id
     context['left'] = request.session.get('left', "0000")
     context['right'] = request.session.get('right', "00")
@@ -527,7 +527,7 @@ def amount_count(request):
         messages.add_message(request, messages.ERROR, _("Invalid bill"))
         return redirect('bill_home')
 
-    context = { 'menu_bills': True, }
+    context = {'menu_bills': True, }
     context['bill_id'] = bill_id
     context['tickets_count'] = request.session.get('tickets_count', 1)
     context['range'] = range(1, 50)
@@ -620,7 +620,7 @@ def save_payment(request, bill_id):
     else:
         messages.add_message(request, messages.ERROR, _("Invalid payment"))
         return redirect('prepare_payment', bill_id)
-    if type(type_payment) != type(PaiementType()):
+    if not isinstance(type_payment, type(PaiementType())):
         messages.add_message(request, messages.ERROR, _("Invalid payment"))
         return redirect('prepare_payment', bill_id)
     left = request.session.get('left', "0")
@@ -685,7 +685,7 @@ def set_edition_status(request, bill):
                                         request.user))
         return False
     if request.session.get('bill_in_use', None) and\
-    request.session['bill_in_use'] != bill.id:
+            request.session['bill_in_use'] != bill.id:
         request = remove_edition(request)
     request.session['bill_in_use'] = bill.id
     bill.used_by(request.user)
@@ -705,7 +705,7 @@ def prepare_payment(request, bill_id):
         request.session.pop('is_left')
     if not set_edition_status(request, bill):
         return redirect('bill_view', bill.id)
-    context = { 'menu_bills': True, }
+    context = {'menu_bills': True, }
     context['bill_id'] = bill_id
     request.session['bill_id'] = bill_id
     context['type_payments'] = PaiementType.objects.all()

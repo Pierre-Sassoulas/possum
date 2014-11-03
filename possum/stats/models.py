@@ -450,7 +450,7 @@ class Stat(models.Model):
                 # if current better than average, we add a flag
                 key = 'avg_%s' % stat.key
                 if key in context.keys() and \
-                float(stat.value) > float(context[key]):
+                        float(stat.value) > float(context[key]):
                     LOGGER.debug("[%s] better" % stat.key)
                     context["%s_better" % stat.key] = True
             else:
