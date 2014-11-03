@@ -23,10 +23,11 @@
 import os
 import sys
 
+sys.path.append('.')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
+
 from possum.base.views.carte.categories import update_colors
 
 
-sys.path.append('.')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 update_colors()
 print("File updated")
