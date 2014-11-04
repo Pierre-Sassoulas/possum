@@ -40,7 +40,6 @@ LOGGER = logging.getLogger(__name__)
 def carte(request):
     ''' This is not used.
     :param HttpRequest request:
-    :type request:
     '''
     context = {'menu_manager': True, }
     return render(request, 'base/carte.html', context)
@@ -50,7 +49,6 @@ def is_valid_product(request, name, prize):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param name:
     :type name:
     :param prize:
@@ -73,7 +71,6 @@ def products_view(request, product_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     '''
@@ -94,7 +91,6 @@ def products_option(request, product_id, option_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     :param option_id:
@@ -115,7 +111,6 @@ def products_new(request, cat_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param cat_id:
     :type cat_id:
     '''
@@ -143,7 +138,6 @@ def products_set_category(request, product_id, cat_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     :param cat_id:
@@ -160,7 +154,6 @@ def products_category(request, product_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     '''
@@ -175,7 +168,6 @@ def products_del_produits_ok(request, product_id, sub_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     :param sub_id:
@@ -193,7 +185,6 @@ def products_select_produits_ok(request, product_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     '''
@@ -213,7 +204,6 @@ def products_add_produits_ok(request, product_id, sub_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     :param sub_id:
@@ -231,7 +221,6 @@ def products_del_categories_ok(request, product_id, cat_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     :param cat_id:
@@ -249,7 +238,6 @@ def products_add_categories_ok(request, product_id, cat_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     :param cat_id:
@@ -267,7 +255,6 @@ def products_select_categories_ok(request, product_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     '''
@@ -287,7 +274,6 @@ def products_cooking(request, product_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     '''
@@ -303,7 +289,6 @@ def products_enable(request, product_id):
     '''
     TODO
     :param HttpRequest request:
-    :type request:
     :param product_id:
     :type product_id:
     '''
