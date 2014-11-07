@@ -60,6 +60,7 @@ Devs
 
 * `Issues <https://github.com/possum-software/possum/issues>`_
 * `Jenkins <http://jenkins.possum-software.org/view/Tous/>`_
+* `Sonar <http://sonar.possum-software.org/>`_
 
 Videos
 ------
