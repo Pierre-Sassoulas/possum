@@ -24,18 +24,14 @@ from .common_settings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# DJANGO-DEBUG-TOOLBAR CONFIGURATION
-INSTALLED_APPS += (
-    'debug_toolbar',
-)
-
 TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'en'
 
+INSTALLED_APPS += (
+    'debug_toolbar',
+)
 # IPs allowed to see django-debug-toolbar output.
 INTERNAL_IPS = ('127.0.0.1',)
-
-# END DJANGO-DEBUG-TOOLBAR CONFIGURATION
 
 DATABASES = {
     'default': {
