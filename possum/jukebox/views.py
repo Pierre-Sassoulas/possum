@@ -22,7 +22,7 @@ from django.shortcuts import render_to_response
 from mpd import MPDClient
 
 from .musicplayerd import check_cnx
-from .playlists import playlistsform
+from .playlists import PlaylistsForm
 
 
 client = MPDClient()
@@ -40,4 +40,4 @@ def musicplayerd(request):
         client.load(request.GET['pl'])
         client.play()
     return render_to_response('jukebox/musicplayerd.html',
-                              {'pl_form': playlistsform})
+                              {'pl_form': PlaylistsForm})

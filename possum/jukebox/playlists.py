@@ -24,24 +24,22 @@ from mpd import MPDClient
 from .musicplayerd import check_cnx
 
 
-def makeplistnames():
+def make_playlist_names():
     '''
-    TODO
-    :return: A list of
+    :return: A list of String corresponding to the playlist names
     '''
     client = MPDClient()
     check_cnx(client)
     plists = client.listplaylists()
-
     playlist_names = list()
     for i in range(0, len(plists)):
         playlist_names.append((plists[i]['playlist'], plists[i]['playlist']))
     return playlist_names
 
 
-class playlistsform(forms.Form):
+class PlaylistsForm(forms.Form):
     '''
-    classdocs
+    The form for a Playlist.
     '''
     pl = forms.ChoiceField(label='Choose a playlist :',
-                           choices=makeplistnames())
+                           choices=make_playlist_names())
