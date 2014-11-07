@@ -35,6 +35,10 @@ LOGGER = logging.getLogger(__name__)
 
 @login_required
 def profile(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     request = remove_edition(request)
     context = {'menu_profile': True, }
     context['perms_list'] = settings.PERMS
@@ -52,7 +56,7 @@ def profile(request):
             else:
                 messages.add_message(request, messages.ERROR,
                                      _("New password invalid"))
-                LOGGER.warning('[%s] new password invalid' %
+                LOGGER.warning('[%s] new password invalid' % 
                                request.user.username)
         else:
             messages.add_message(request, messages.ERROR,
@@ -63,6 +67,10 @@ def profile(request):
 
 @permission_required('base.p1')
 def users(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     context['perms_list'] = settings.PERMS
     context['users'] = User.objects.all()
@@ -73,6 +81,10 @@ def users(request):
 
 @permission_required('base.p1')
 def users_new(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     login = request.POST.get('login', '').strip()
     first_name = request.POST.get('first_name', '').strip()
     last_name = request.POST.get('last_name', '').strip()
@@ -97,6 +109,12 @@ def users_new(request):
 
 @permission_required('base.p1')
 def users_change(request, user_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param user_id:
+    :type user_id:
+    '''
     login = request.POST.get('login', '').strip()
     first_name = request.POST.get('first_name', '').strip()
     last_name = request.POST.get('last_name', '').strip()
@@ -133,6 +151,12 @@ def users_change(request, user_id):
 
 @permission_required('base.p1')
 def users_active(request, user_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param user_id:
+    :type user_id:
+    '''
     user = get_object_or_404(User, pk=user_id)
     new = not user.is_active
     p1 = Permission.objects.get(codename="p1")
@@ -155,8 +179,12 @@ def users_active(request, user_id):
 
 @permission_required('base.p1')
 def users_passwd(request, user_id):
-    """Set a new random password for a user.
-    """
+    ''' Set a new random password for a user.
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param user_id:
+    :type user_id:
+    '''
     user = get_object_or_404(User, pk=user_id)
     passwd = UserManager().make_random_password(length=10)
     user.set_password(passwd)
@@ -170,6 +198,14 @@ def users_passwd(request, user_id):
 
 @permission_required('base.p1')
 def users_change_perm(request, user_id, codename):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param user_id:
+    :type user_id:
+    :param codename:
+    :type codename:
+    '''
     user = get_object_or_404(User, pk=user_id)
     # little test because because user can do ugly things :)
     # now we are sure that it is a good permission

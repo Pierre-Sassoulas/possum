@@ -35,6 +35,10 @@ LOGGER = logging.getLogger(__name__)
 
 @permission_required('base.p1')
 def archives(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     if request.method == 'POST':
         try:
@@ -56,6 +60,12 @@ def archives(request):
 
 @permission_required('base.p1')
 def archives_bill(request, bill_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param bill_id:
+    :type bill_id:
+    '''
     context = {'menu_manager': True, }
     bill = get_object_or_404(Facture, pk=bill_id)
     if not bill.est_soldee():

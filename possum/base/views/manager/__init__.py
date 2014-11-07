@@ -29,12 +29,20 @@ from possum.base.views import permission_required
 
 @permission_required('base.p1')
 def credits(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, 'version': settings.POSSUM_VERSION}
     return render(request, 'base/manager/credits.html', context)
 
 
 @permission_required('base.p1')
 def manager(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     if os.path.isfile(settings.LOCK_STATS):
         context['working_on_update'] = True

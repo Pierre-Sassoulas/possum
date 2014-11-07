@@ -31,8 +31,8 @@ LOGGER = logging.getLogger(__name__)
 
 try:
     import cups
-except:
-    LOGGER.critical("cups can't be loaded, printer doesn't work !")
+except Exception as err:
+    LOGGER.critical("Printer library encountered an error :\n{0}".format(err))
 
 
 def sans_accent(message):
@@ -42,7 +42,6 @@ def sans_accent(message):
 
 
 class Printer(models.Model):
-
     """Printer model
     :param options: options used with pycups.printFile()
     :param header: you can add a text before the text to print (restaurant name)
@@ -70,22 +69,21 @@ class Printer(models.Model):
         return self.name
 
     def get_resume(self):
-        """Usefull to have a brief resume:
-        K : kitchen
-        B : billing
-        M : manager
         """
-        result = ""
+        Useful to have a brief resume:
+        :return: A character in [K,B,M] K : kitchen, B : billing, M : manager
+        """
         if self.kitchen:
-            result += "K"
+            return "K"
         if self.billing:
-            result += "B"
+            return "B"
         if self.manager:
-            result += "M"
-        return result
+            return "M"
+        return ""
 
     def get_available_printers(self):
-        """Return a string list of available printers
+        """
+        :return: A string list of available printers
         """
         result = []
         try:
@@ -117,7 +115,7 @@ class Printer(models.Model):
     def print_msg(self, msg):
         ''' Try to print a message, we create a list with message
 
-        :param String msg:
+        :param String msg: A message to print
         :return: TODO
         '''
         list_to_print = msg.split("\n")

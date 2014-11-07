@@ -32,6 +32,10 @@ LOGGER = logging.getLogger(__name__)
 
 @permission_required('base.p1')
 def home(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     context['printers'] = Printer.objects.all()
     return render(request, 'printers/home.html', context)
@@ -39,6 +43,10 @@ def home(request):
 
 @permission_required('base.p1')
 def printer_add(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     context['printers'] = Printer().get_available_printers()
     return render(request, 'printers/add.html', context)
@@ -46,7 +54,12 @@ def printer_add(request):
 
 @permission_required('base.p1')
 def printer_added(request, name):
-    """Save new printer"""
+    ''' Save new printer
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param name:
+    :type name:
+    '''
     printer = Printer(name=name)
     printer.save()
     return redirect('printer_home')
@@ -54,6 +67,13 @@ def printer_added(request, name):
 
 @permission_required('base.p1')
 def printer_view(request, printer_id):
+    '''
+    
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    '''
     context = {'menu_manager': True, }
     context['printer'] = get_object_or_404(Printer, pk=printer_id)
     if request.method == 'POST':
@@ -73,6 +93,12 @@ def printer_view(request, printer_id):
 
 @permission_required('base.p1')
 def printer_select_width(request, printer_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    '''
     context = {'menu_manager': True, }
     context['printer'] = get_object_or_404(Printer, pk=printer_id)
     context['max'] = range(14, 120)
@@ -82,6 +108,14 @@ def printer_select_width(request, printer_id):
 
 @permission_required('base.p1')
 def printer_set_width(request, printer_id, number):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    :param number:
+    :type number:
+    '''
     printer = get_object_or_404(Printer, pk=printer_id)
     printer.width = number
     printer.save()
@@ -90,6 +124,12 @@ def printer_set_width(request, printer_id, number):
 
 @permission_required('base.p1')
 def printer_test_print(request, printer_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    '''
     printer = get_object_or_404(Printer, pk=printer_id)
     if printer.print_test():
         messages.add_message(request, messages.SUCCESS,
@@ -102,6 +142,12 @@ def printer_test_print(request, printer_id):
 
 @permission_required('base.p1')
 def printer_change_kitchen(request, printer_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    '''
     printer = get_object_or_404(Printer, pk=printer_id)
     new = not printer.kitchen
     printer.kitchen = new
@@ -111,6 +157,12 @@ def printer_change_kitchen(request, printer_id):
 
 @permission_required('base.p1')
 def printer_change_billing(request, printer_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    '''
     printer = get_object_or_404(Printer, pk=printer_id)
     new = not printer.billing
     printer.billing = new
@@ -120,6 +172,12 @@ def printer_change_billing(request, printer_id):
 
 @permission_required('base.p1')
 def printer_change_manager(request, printer_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    '''
     printer = get_object_or_404(Printer, pk=printer_id)
     new = not printer.manager
     printer.manager = new
@@ -129,8 +187,14 @@ def printer_change_manager(request, printer_id):
 
 @permission_required('base.p1')
 def kitchen_header(request, printer_id, number=-1):
-    """Show and set numbers of lines on ticket header for kitchen
-    """
+    ''' Show and set numbers of lines on ticket header for kitchen
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param printer_id:
+    :type printer_id:
+    :param number:
+    :type number:
+    '''
     context = {'menu_manager': True, }
     context['printer'] = get_object_or_404(Printer, pk=printer_id)
     context['numbers'] = range(0, 15)

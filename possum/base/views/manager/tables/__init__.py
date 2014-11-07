@@ -33,6 +33,12 @@ LOGGER = logging.getLogger(__name__)
 
 @permission_required('base.p1')
 def tables_zone_delete(request, zone_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param zone_id:
+    :type zone_id:
+    '''
     zone = get_object_or_404(Zone, pk=zone_id)
     Table.objects.filter(zone=zone).delete()
     zone.delete()
@@ -41,6 +47,12 @@ def tables_zone_delete(request, zone_id):
 
 @permission_required('base.p1')
 def tables_table_new(request, zone_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param zone_id:
+    :type zone_id:
+    '''
     zone = get_object_or_404(Zone, pk=zone_id)
     table = Table(zone=zone)
     table.save()
@@ -49,6 +61,10 @@ def tables_table_new(request, zone_id):
 
 @permission_required('base.p1')
 def tables_zone_new(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     zone = Zone()
     zone.save()
     return redirect('tables_zone', zone.id)
@@ -56,6 +72,14 @@ def tables_zone_new(request):
 
 @permission_required('base.p1')
 def tables_table(request, zone_id, table_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param zone_id:
+    :type zone_id:
+    :param table_id:
+    :type table_id:
+    '''
     context = {'menu_manager': True, }
     context['table'] = get_object_or_404(Table, pk=table_id)
     if request.method == 'POST':
@@ -73,6 +97,12 @@ def tables_table(request, zone_id, table_id):
 
 @permission_required('base.p1')
 def tables_zone(request, zone_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param zone_id:
+    :type zone_id:
+    '''
     context = {'menu_manager': True, }
     context['zone'] = get_object_or_404(Zone, pk=zone_id)
     if request.method == 'POST':
@@ -90,6 +120,10 @@ def tables_zone(request, zone_id):
 
 @permission_required('base.p1')
 def tables(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     context['zones'] = Zone.objects.all()
     return render(request, 'base/manager/tables/home.html', context)

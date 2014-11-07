@@ -41,6 +41,7 @@ LOGGER = logging.getLogger(__name__)
 def categories_send(request):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     '''
     result = Produit().get_list_with_all_products()
     subject = _("Carte")
@@ -68,6 +69,7 @@ def categories_send(request):
 def categories_print(request):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     '''
     result = Produit().get_list_with_all_products()
     if result:
@@ -76,7 +78,7 @@ def categories_print(request):
             printer = printers[0]
             if printer.print_list(result, "carte_complete"):
                 messages.add_message(request, messages.SUCCESS,
-                                     _("Printing was sent to %s") %
+                                     _("Printing was sent to %s") % 
                                      printer.name)
             else:
                 messages.add_message(request, messages.ERROR,
@@ -94,6 +96,7 @@ def categories_print(request):
 def categories(request):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     '''
     context = {'menu_manager': True, }
     context['categories'] = Categorie.objects.order_by('priorite', 'nom')
@@ -103,8 +106,8 @@ def categories(request):
 @permission_required('base.p2')
 def categories_delete(request, cat_id):
     '''
-
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -168,6 +171,12 @@ def categories_delete(request, cat_id):
 
 @permission_required('base.p2')
 def categories_view(request, cat_id):
+    '''
+    :param request:
+    :type request:
+    :param cat_id:
+    :type cat_id:
+    '''
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=cat_id)
     products = Produit.objects.filter(categorie__id=cat_id)
@@ -180,6 +189,7 @@ def categories_view(request, cat_id):
 def categories_add(request):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     '''
     context = {'menu_manager': True, }
     return render(request, 'base/carte/categories_add.html', context)
@@ -189,6 +199,7 @@ def categories_add(request):
 def categories_new(request):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     '''
     priority = request.POST.get('priority', '').strip()
     name = request.POST.get('name', '').strip()
@@ -216,6 +227,7 @@ def categories_new(request):
 def categories_name(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -228,6 +240,7 @@ def categories_name(request, cat_id):
 def categories_color(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -240,8 +253,8 @@ def categories_color(request, cat_id):
 @permission_required('base.p2')
 def categories_less_priority(request, cat_id, nb=1):
     '''
-
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     :param nb:
@@ -257,8 +270,8 @@ def categories_less_priority(request, cat_id, nb=1):
 @permission_required('base.p2')
 def categories_more_priority(request, cat_id, nb=1):
     '''
-
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     :param nb:
@@ -275,6 +288,7 @@ def categories_more_priority(request, cat_id, nb=1):
 def categories_surtaxable(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -295,6 +309,7 @@ def categories_surtaxable(request, cat_id):
 def categories_vat_takeaway(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -325,6 +340,7 @@ def categories_vat_onsite(request, cat_id):
 def categories_set_vat(request, cat_id, vat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     :param vat_id:
@@ -370,6 +386,7 @@ def update_colors():
 def categories_set_color(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -393,6 +410,7 @@ def categories_set_color(request, cat_id):
 def categories_set_name(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -416,6 +434,7 @@ def categories_set_name(request, cat_id):
 def categories_set_kitchen(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''
@@ -430,6 +449,7 @@ def categories_set_kitchen(request, cat_id):
 def categories_disable_surtaxe(request, cat_id):
     '''
     :param HttpRequest request:
+    :return rtype: HttpResponse
     :param cat_id:
     :type cat_id:
     '''

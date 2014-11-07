@@ -50,7 +50,7 @@ def ajax_play(request):
     return HttpResponse(HTML_to_return)
 
 
-def ajax_pause():
+def ajax_pause(request):
     '''
     :return rtype: HttpResponse
     '''
@@ -60,7 +60,7 @@ def ajax_pause():
     return HttpResponse(HTML_to_return)
 
 
-def ajax_next():
+def ajax_next(request):
     '''
     :return rtype: HttpResponse
     '''
@@ -70,7 +70,7 @@ def ajax_next():
     return HttpResponse(HTML_to_return)
 
 
-def ajax_previous():
+def ajax_previous(request):
     '''
     :return rtype: HttpResponse
     '''
@@ -80,7 +80,7 @@ def ajax_previous():
     return HttpResponse(HTML_to_return)
 
 
-def ajax_info():
+def ajax_info(request):
     '''
     :return rtype: HttpResponse
     '''
