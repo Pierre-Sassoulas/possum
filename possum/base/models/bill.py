@@ -114,7 +114,7 @@ class Facture(models.Model):
 
         :param Facture self:
         :param Facture other:
-        :return etype: Boolean 
+        :return etype: Boolean
         """
         return cmp(self.date_creation, other.date_creation)
 
@@ -291,7 +291,7 @@ class Facture(models.Model):
                 if not sold.produit.price_surcharged:
                     # just in case for backwards comtability
                     # in case Produit has no price_surcharged
-                    LOGGER.info("[%s] product without price_surcharged" % 
+                    LOGGER.info("[%s] product without price_surcharged" %
                                 sold.produit.id)
                     sold.produit.update_vats(keep_clone=False)
                 sold.set_prize(sold.produit.price_surcharged)

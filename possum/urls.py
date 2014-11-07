@@ -29,7 +29,9 @@ from django.conf.urls import patterns, url, include
 # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 # Uncomment the next line to enable the admin:
 # url(r'^admin/', include(admin.site.urls)),
+
 urlpatterns = patterns('possum.base.views',
+                       url(r'^jukebox/', include('possum.jukebox.urls')),
                        url(r'^$', 'home', name='home'),
                        url(r'^shutdown/$', 'shutdown', name='shutdown'),
                        )

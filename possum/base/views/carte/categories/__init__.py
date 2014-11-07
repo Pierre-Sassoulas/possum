@@ -76,7 +76,7 @@ def categories_print(request):
             printer = printers[0]
             if printer.print_list(result, "carte_complete"):
                 messages.add_message(request, messages.SUCCESS,
-                                     _("Printing was sent to %s") % 
+                                     _("Printing was sent to %s") %
                                      printer.name)
             else:
                 messages.add_message(request, messages.ERROR,
@@ -103,7 +103,7 @@ def categories(request):
 @permission_required('base.p2')
 def categories_delete(request, cat_id):
     '''
-    
+
     :param HttpRequest request:
     :param cat_id:
     :type cat_id:

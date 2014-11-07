@@ -56,7 +56,7 @@ def bill_new(request):
 
 def set_option(sold_id, option_id):
     '''
-    Enable/Disable an Option on a ProduitVendu. 
+    Enable/Disable an Option on a ProduitVendu.
     :param sold_id: TODO
     :type sold_id:
     :param option_id:
@@ -129,7 +129,7 @@ def bill_print(request, bill_id):
 @permission_required('base.p3')
 def table_select(request, bill_id):
     ''' Select/modify table of a bill
-    :param HttpRequest request: 
+    :param HttpRequest request:
     :param bill_id: TODO
     :type bill_id:
     '''
@@ -142,8 +142,8 @@ def table_select(request, bill_id):
 @permission_required('base.p3')
 def table_set(request, bill_id, table_id):
     ''' Select/modify table of a bill
-    
-    :param HttpRequest request: 
+
+    :param HttpRequest request:
     :param bill_id: TODO
     :type bill_id:
     :param table_id:
@@ -465,7 +465,7 @@ def sold_working(request, bill_id, sold_id):
 
     request.session['menu_id'] : si présent, défini le menu
 
-    TODO: gerer request.session['product_to_add'] et 
+    TODO: gerer request.session['product_to_add'] et
     request.session['product_count']
 
     :param HttpRequest request:

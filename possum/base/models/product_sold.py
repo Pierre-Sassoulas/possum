@@ -84,7 +84,7 @@ class ProduitVendu(models.Model):
 
     def is_full(self):
         """
-        True if all the elements  (sub products for a formule) are presents 
+        True if all the elements  (sub products for a formule) are presents
         else false.
         :return: Boolean
         """
@@ -95,7 +95,7 @@ class ProduitVendu(models.Model):
             return True
         elif nb_produits > nb_categories:
             LOGGER.warning(
-                "product id [%s] have more products that categories authorized" % 
+                "product id [%s] have more products that categories authorized" %
                 self.id)
             return True
         else:
@@ -131,7 +131,7 @@ class ProduitVendu(models.Model):
                     return categorie
         else:
             LOGGER.warning(
-                "Product [%s] have no categories_ok, return None" % 
+                "Product [%s] have no categories_ok, return None" %
                 self.id)
         return None
 
