@@ -53,7 +53,7 @@ html_static_path = [os.path.join('..', '_static')]
 # html_use_smartypants = True
 
 html_theme_options = {
-    'navbar_site_name': "Doc",
+    'navbar_site_name': "Sommaire",
     'navbar_links': [
             ("Home", "http://www.possum-software.org", True),
         ],

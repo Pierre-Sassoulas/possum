@@ -50,7 +50,7 @@ html_static_path = [os.path.join('..', '_static')]
 # using the given strftime format.
 # html_last_updated_fmt = '%b %d, %Y'
 html_theme_options = {
-    'navbar_site_name': "Doc",
+    'navbar_site_name': "Summary",
     'navbar_links': [
             ("Home", "http://www.possum-software.org", True),
         ],
