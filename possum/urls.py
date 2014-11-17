@@ -29,9 +29,7 @@ from django.conf.urls import patterns, url, include
 # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 # Uncomment the next line to enable the admin:
 # url(r'^admin/', include(admin.site.urls)),
-
 urlpatterns = patterns('possum.base.views',
-                       url(r'^jukebox/', include('possum.jukebox.urls')),
                        url(r'^$', 'home', name='home'),
                        url(r'^shutdown/$', 'shutdown', name='shutdown'),
                        )
@@ -129,15 +127,19 @@ urlpatterns += patterns('possum.base.views.carte',
                             'products_select_produits_ok',
                             name='products_select_produits_ok'),
                         url(r'^carte/products/(?P<product_id>\d+)/produits_ok/(?P<sub_id>\d+)/add/$',
-                            'products_add_produits_ok', name='products_add_produits_ok'),
+                            'products_add_produits_ok',
+                            name='products_add_produits_ok'),
                         url(r'^carte/products/(?P<product_id>\d+)/produits_ok/(?P<sub_id>\d+)/del/$',
-                            'products_del_produits_ok', name='products_del_produits_ok'),
+                            'products_del_produits_ok',
+                            name='products_del_produits_ok'),
                         url(r'^carte/products/(?P<product_id>\d+)/category/(?P<cat_id>\d+)/set/$',
                             'products_set_category',
                             name='products_set_category'),
-                        url(r'^carte/products/(?P<product_id>\d+)/enable/$', 'products_enable',
+                        url(r'^carte/products/(?P<product_id>\d+)/enable/$',
+                            'products_enable',
                             name='products_enable'),
-                        url(r'^carte/products/(?P<product_id>\d+)/cooking/$', 'products_cooking',
+                        url(r'^carte/products/(?P<product_id>\d+)/cooking/$',
+                            'products_cooking',
                             name='products_cooking'),
                         )
 
@@ -223,10 +225,14 @@ urlpatterns += patterns('possum.base.views.bill',
                         )
 
 urlpatterns += patterns('possum.base.views.kitchen',
-                        url(r'^kitchen/$', 'kitchen', name='kitchen'),
-                        url(r'^kitchen/(?P<bill_id>\d+)/$', 'kitchen_for_bill',
+                        url(r'^kitchen/$',
+                            'kitchen',
+                            name='kitchen'),
+                        url(r'^kitchen/(?P<bill_id>\d+)/$',
+                            'kitchen_for_bill',
                             name='kitchen_for_bill'),
-                        url(r'^follow/(?P<follow_id>\d+)/done/$', 'follow_done',
+                        url(r'^follow/(?P<follow_id>\d+)/done/$',
+                            'follow_done',
                             name='follow_done'),
                         )
 
@@ -340,6 +346,9 @@ if settings.DEBUG:
                                 {'document_root': settings.MEDIA_ROOT},
                                 name="django_serve"),
                             )
+
+# urlpatterns += patterns('', url(r'^jukebox/', include('possum.jukebox.urls')),)
+
 #    import debug_toolbar
 #    urlpatterns += patterns('',
 #        url(r'^__debug__/', include(debug_toolbar.urls)),
