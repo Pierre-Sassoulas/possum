@@ -27,6 +27,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Config(models.Model):
+
     """Possum Configuration
     """
     key = models.CharField(max_length=32)
@@ -36,6 +37,10 @@ class Config(models.Model):
         return self.key
 
     def __cmp__(self, other):
+        '''
+        :param Config other: A config to be compared to this one.
+        :return: Boolean
+        '''
         return cmp(self.key, other.key)
 
     class Meta:
@@ -43,11 +48,16 @@ class Config(models.Model):
         ordering = ['key']
 
     def is_carte_changed(self, date):
-        """Check if carte has changed since 'date' (Str)
+        ''' Check if carte has changed since 'date' (Str)
 
         True: carte has changed
         False: no change
-        """
+
+        :param date:
+        :type date:
+
+        :return etype: Boolean
+        '''
         record = self.get_carte_changed()
         if date == record.value:
             LOGGER.debug("[last_carte_changed] no change")
@@ -58,6 +68,7 @@ class Config(models.Model):
 
     def set_carte_changed(self):
         """Record now has last changed date for carte
+        :return: TODO
         """
         LOGGER.debug("[last_carte_changed] set new date")
         record = self.get_carte_changed()
@@ -66,7 +77,8 @@ class Config(models.Model):
         return record
 
     def get_carte_changed(self):
-        """Return Config for last date carte has changed
+        """
+        :return: Config for last date carte has changed
         """
         try:
             record = Config.objects.get(key="last_carte_changed")
@@ -76,4 +88,3 @@ class Config(models.Model):
             record.value = datetime.now().strftime("%Y%m%d-%H%M")
             record.save()
         return record
-

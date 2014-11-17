@@ -22,6 +22,7 @@ from django.db import models
 
 
 class Note(models.Model):
+
     """Note on a ProduitVendu"""
     message = models.CharField(max_length=35, default="")
 
@@ -30,5 +31,7 @@ class Note(models.Model):
         ordering = ['message']
 
     def __cmp__(self, other):
+        '''
+        :param Note other: A Note to be compared to this one.
+        '''
         return cmp(self.message, other.message)
-

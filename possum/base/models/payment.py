@@ -25,6 +25,7 @@ from generic import Nom
 
 
 class PaiementType(Nom):
+
     """Type de paiment"""
     fixed_value = models.BooleanField("ticket ?", default=False)
 
@@ -51,6 +52,7 @@ class PaiementType(Nom):
 
 
 class Paiement(models.Model):
+
     """valeur_unitaire: pour gérer les montants des tickets restos"""
     type = models.ForeignKey(PaiementType, related_name="paiement-type")
     montant = models.DecimalField(max_digits=9, decimal_places=2, default=0)
@@ -67,7 +69,7 @@ class Paiement(models.Model):
         tmp = u"%s %.2f%s" % (self.type, self.montant, _("$"))
         if self.type.fixed_value:
             tmp += u" (%d tic. x %.2f%s)" % (self.nb_tickets,
-                                            self.valeur_unitaire, _("$"))
+                                             self.valeur_unitaire, _("$"))
         return tmp
 
     def __cmp__(self, other):

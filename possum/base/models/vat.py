@@ -24,6 +24,7 @@ from django.db import models
 
 
 class VAT(models.Model):
+
     """name is a symbolic name
     tax is for example '19.6' for 19.6%
     value: is used to minimize operations (example: 0.196
@@ -43,14 +44,20 @@ class VAT(models.Model):
         ordering = ['name']
 
     def set_tax(self, tax):
+        '''
+        :param Float tax:
+        '''
         self.tax = tax
         self.value = Decimal(tax) / 100
         self.save()
 
     def get_tax_for(self, prize):
-        """Retourne la part de taxe
+        ''' Retourne la part de taxe
         pour un prix HT
-        """
+
+        :param Float prize:
+        :return: Float VAT
+        '''
         if self.tax:
             if prize:
                 return Decimal(prize) * self.value
@@ -60,9 +67,11 @@ class VAT(models.Model):
             return Decimal('0')
 
     def get_ttc_for(self, prize):
-        """Retourne le prix TTC
+        ''' Retourne le prix TTC
         pour un prix HT
-        """
+
+        :param Float prize:
+        '''
         if self.tax:
             if prize:
                 return Decimal(prize) * (1 + self.value)

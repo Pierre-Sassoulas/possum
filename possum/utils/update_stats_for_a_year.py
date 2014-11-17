@@ -36,10 +36,14 @@ year = int(input("Quelle année mettre à jour (ex: 2013) ? "))
 
 
 before = datetime.datetime.now()
-print("[%s] delete stats before update" % datetime.datetime.now().strftime("%H:%M"))
+print(
+    "[%s] delete stats before update" %
+    datetime.datetime.now().strftime("%H:%M"))
 Stat.objects.filter(year=year).delete()
 
-print("[%s] change status for bills" % datetime.datetime.now().strftime("%H:%M"))
+print(
+    "[%s] change status for bills" %
+    datetime.datetime.now().strftime("%H:%M"))
 bills = Facture.objects.filter(date_creation__gte="%d-01-01 00:00:00" % year,
                                date_creation__lt="%d-12-31 23:59:59" % year)
 for bill in bills.iterator():

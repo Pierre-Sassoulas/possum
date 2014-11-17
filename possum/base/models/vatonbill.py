@@ -22,7 +22,9 @@ from django.db import models
 
 
 class VATOnBill(models.Model):
-    """VAT for a bill
+
+    """
+    VAT for a bill
     """
     vat = models.ForeignKey('VAT', related_name="bill-vat")
     total = models.DecimalField(max_digits=9, decimal_places=2, default=0)
@@ -31,7 +33,14 @@ class VATOnBill(models.Model):
         app_label = 'base'
 
     def __cmp__(self, other):
+        '''
+        :param VATOnBill other:
+        :return: Boolean
+        '''
         return cmp(self.vat.name, other.vat.name)
 
     def __unicode__(self):
+        '''
+        :return: Unicode
+        '''
         return "%s: %s" % (self.vat.name, self.total)

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Possum MPD Client</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <p>Bienvenue sur le player !</p>
+    
+    <form action="musicplayerd" method="GET">
+    	{{ pl_form.as_p }}
+    	<p>
+    	<input type="submit" value="Lancer" />
+    	</p>
+    </form>
+    
+    <div id="infos"></div>
+    
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <button id="next">Next</button>
+    <button id="previous">Previous</button>
+    
+    <SCRIPT type="text/javascript">
+    
+    $("button#play").click(ajaxplay);
+    $("button#pause").click(ajaxpause);
+    $("button#next").click(ajaxnext);
+    $("button#previous").click(ajaxprevious);
+    
+    function ajaxplay()
+    {
+    	$.ajax({
+    		url: '/ajax/play',
+    		type : 'GET'
+    	});
+    	return false;
+    }
+    
+    function ajaxpause()
+    {
+    	$.ajax({
+    		url: '/ajax/pause',
+    		type : 'GET'
+    	});
+    	return false;
+    }
+    
+    function ajaxnext()
+    {
+    	$.ajax({
+    		url: '/ajax/next',
+    		type : 'GET'
+    	});
+    	return false;
+    }
+    
+    function ajaxprevious()
+    {
+    	$.ajax({
+    		url: '/ajax/previous',
+    		type : 'GET'
+    	});
+    	return false;
+    }
+    
+    setInterval(getinfo, 1000);
+    
+    function getinfo()
+    {
+    	$.get('/ajax/info', function( data ) {
+    		  $( "div#infos" ).html( data );
+    		});
+    }
+    
+    </SCRIPT>
+    
+  </body>
+</html>
