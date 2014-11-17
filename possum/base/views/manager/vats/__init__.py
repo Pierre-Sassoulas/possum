@@ -27,13 +27,15 @@ from django.utils.translation import ugettext as _
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
-
-
 LOGGER = logging.getLogger(__name__)
 
 
 @permission_required('base.p1')
 def vats(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     context['vats'] = VAT.objects.order_by('name')
     return render(request, 'base/manager/vats/home.html', context)
@@ -41,12 +43,26 @@ def vats(request):
 
 @permission_required('base.p1')
 def vats_view(request, vat_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param vat_id:
+    :type vat_id:
+    '''
     context = {'menu_manager': True, }
     context['vat'] = get_object_or_404(VAT, pk=vat_id)
     return render(request, 'base/manager/vats/view.html', context)
 
 
 def check_name_and_tax(request, name, tax):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param name:
+    :type name:
+    :param tax:
+    :type tax:
+    '''
     if not name:
         messages.add_message(request, messages.ERROR,
                              _("You must enter a name"))
@@ -57,6 +73,12 @@ def check_name_and_tax(request, name, tax):
 
 @permission_required('base.p1')
 def vats_change(request, vat_id):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    :param vat_id:
+    :type vat_id:
+    '''
     context = {'menu_manager': True, }
     context['vat'] = get_object_or_404(VAT, pk=vat_id)
     if request.method == 'POST':
@@ -81,6 +103,10 @@ def vats_change(request, vat_id):
 
 @permission_required('base.p1')
 def vat_new(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, }
     context['vats'] = VAT.objects.order_by('name')
     if request.method == 'POST':

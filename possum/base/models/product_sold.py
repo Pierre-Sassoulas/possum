@@ -32,6 +32,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class ProduitVendu(models.Model):
+
     """le prix sert a affiche correctement les prix pour les surtaxes
 
     options1 et options2 sont les options sélectionnées.
@@ -56,7 +57,7 @@ class ProduitVendu(models.Model):
         ordering = ['produit', ]
 
     def __unicode__(self):
-        """Affichage différent si menu ou pas
+        """ Different display if we have a menu or not
         """
         if self.notes.count():
             tmp = "* "
@@ -83,9 +84,9 @@ class ProduitVendu(models.Model):
 
     def is_full(self):
         """
-        True si tous les élèments sous présents (les sous produits pour
-        les formules) et False sinon.
-        :return: boolean
+        True if all the elements  (sub products for a formule) are presents
+        else false.
+        :return: Boolean
         """
         nb_produits = self.contient.count()
         nb_categories = self.produit.categories_ok.count()
@@ -93,13 +94,19 @@ class ProduitVendu(models.Model):
             LOGGER.debug("product is full")
             return True
         elif nb_produits > nb_categories:
-            LOGGER.warning("product id [%s] have more products that categories authorized" % self.id)
+            msg = "product id [%s] have more products" % self.id
+            msg += " that categories authorized"
+            LOGGER.warning(msg)
             return True
         else:
             LOGGER.debug("product is not full")
             return False
 
     def __cmp__(self, other):
+        '''
+        :param ProduitVendu other:
+        :return: boolean
+        '''
         if self.produit.categorie == other.produit.categorie:
             return cmp(self.produit.nom, other.produit.nom)
         else:
@@ -113,19 +120,24 @@ class ProduitVendu(models.Model):
         return self.produit.categories_ok.count()
 
     def get_free_categorie(self):
-        """Retourne la premiere categorie dans la liste categories_ok
+        """
+        :return: La premiere categorie dans la liste categories_ok
         qui n'a pas de produit dans la partir 'contient'. Sinon retourne
-        None """
+        None
+        """
         if self.produit.categories_ok.count() > 0:
-            for categorie in self.produit.categories_ok.order_by("priorite").iterator():
-                if self.contient.filter(produit__categorie=categorie).count() == 0:
+            for categorie in self.produit.categories_ok.order_by("priorite"):
+                if self.contient.filter(
+                        produit__categorie=categorie).count() == 0:
                     return categorie
         else:
-            LOGGER.warning("Product [%s] have no categories_ok, return None" % self.id)
+            msg = "Product [%s] have no categories_ok, return None" % self.id
+            LOGGER.warning(msg)
         return None
 
     def get_identifier(self):
-        """Retourne un identifiant qui défini le Produit() et ses options
+        """
+        :return: un identifiant qui défini le Produit() et ses options
         """
         if self.notes.count():
             notes = "N".join([str(i.id) for i in self.notes.all()])
@@ -146,8 +158,9 @@ class ProduitVendu(models.Model):
         return "P%s_C%s_O%s_N%s" % (produit, cuisson, options, notes)
 
     def set_prize(self, prize):
-        """Set prize for the product sold
-        """
+        ''' Set prize for the product sold
+        :param Decimal prize:
+        '''
         if self.prix != prize:
             LOGGER.debug("[%s] prize: %s > %s" % (self.id, self.prix, prize))
             self.prix = prize

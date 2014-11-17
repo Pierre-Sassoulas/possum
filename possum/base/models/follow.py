@@ -25,6 +25,7 @@ from product_sold import ProduitVendu
 
 
 class Follow(models.Model):
+
     """Suivi des envois en cuisine:
     category est la categorie envoyée en cuisine"""
     category = models.ForeignKey(Categorie)

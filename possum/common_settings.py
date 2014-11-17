@@ -18,8 +18,8 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os
 from os.path import abspath, dirname, join, normpath
+import os
 import random
 import sys
 
@@ -274,4 +274,3 @@ LOGGING = {
         }
     }
 }
-

@@ -33,7 +33,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def get_notes(request):
-    context = { 'menu_manager': True, }
+    context = {'menu_manager': True, }
     context['notes'] = Note.objects.all()
     return context
 
@@ -73,4 +73,3 @@ def view(request, note_id=None):
             # new note
             context['note'] = NoteForm()
     return render(request, 'notes/home.html', context)
-

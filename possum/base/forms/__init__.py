@@ -45,25 +45,44 @@ years_list = [i for i in range(first_year, last_year)]
 
 
 class DateForm(forms.Form):
+
+    '''
+    Form permitting to choose a date.
+    '''
     date = forms.DateField(widget=SelectDateWidget(years=years_list))
 
 
 class WeekForm(forms.Form):
+
+    '''
+    Form permitting to choose a week.
+    '''
     week = forms.ChoiceField(label="Semaine", choices=weeks_choice)
     year = forms.ChoiceField(label="Année", choices=years_choice)
 
 
 class MonthForm(forms.Form):
+
+    '''
+    Form permitting to choose a month.
+    '''
     month = forms.ChoiceField(label="Mois", choices=months_choice)
     year = forms.ChoiceField(label="Année", choices=years_choice)
 
 
 class YearForm(forms.Form):
+
+    '''
+    Form permitting to choose a year.
+    '''
     year = forms.ChoiceField(label="Année", choices=years_choice)
 
 
 class LoginForm(forms.Form):
-    """ Class LoginForm representing a form to log an User in. """
+
+    '''
+    Class LoginForm representing a form to log an User in.
+    '''
     username = forms.CharField(max_length=100,
                                widget=forms.TextInput(
                                attrs={'placeholder': 'identifiant:'}))
@@ -72,10 +91,18 @@ class LoginForm(forms.Form):
 
 
 class NoteForm(forms.ModelForm):
+
+    '''
+    TODO
+    '''
     class Meta:
         model = Note
 
 
 class OptionForm(forms.ModelForm):
+
+    '''
+    TODO
+    '''
     class Meta:
         model = Option

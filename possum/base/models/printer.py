@@ -31,8 +31,8 @@ LOGGER = logging.getLogger(__name__)
 
 try:
     import cups
-except:
-    LOGGER.critical("cups can't be loaded, printer doesn't work !")
+except Exception as err:
+    LOGGER.critical("Printer library encountered an error :\n{0}".format(err))
 
 
 def sans_accent(message):
@@ -42,6 +42,7 @@ def sans_accent(message):
 
 
 class Printer(models.Model):
+
     """Printer model
     :param options: options used with pycups.printFile()
     :param header: you can add a text before the text to print (restaurant name)
@@ -69,22 +70,21 @@ class Printer(models.Model):
         return self.name
 
     def get_resume(self):
-        """Usefull to have a brief resume:
-        K : kitchen
-        B : billing
-        M : manager
         """
-        result = ""
+        Useful to have a brief resume:
+        :return: A character in [K,B,M] K : kitchen, B : billing, M : manager
+        """
         if self.kitchen:
-            result += "K"
+            return "K"
         if self.billing:
-            result += "B"
+            return "B"
         if self.manager:
-            result += "M"
-        return result
+            return "M"
+        return ""
 
     def get_available_printers(self):
-        """Return a string list of available printers
+        """
+        :return: A string list of available printers
         """
         result = []
         try:
@@ -103,33 +103,41 @@ class Printer(models.Model):
         :param filename:
         :return: Boolean
         '''
-        try:
-            conn = cups.Connection()
-        except RuntimeError:
-            return False
         if not os.path.exists(filename):
             return False
         title = filename.split("/")[-1]
         try:
+            conn = cups.Connection()
             conn.printFile(self.name, filename, title=title, options={})
             return True
         except:
             return False
 
     def print_msg(self, msg):
-        """Try to print a message, we create a list with message
-        """
+        ''' Try to print a message, we create a list with message
+
+        :param String msg: A message to print
+        :return: TODO
+        '''
         list_to_print = msg.split("\n")
         return self.print_list(list_to_print, "possum")
 
-    def print_list(self, list_to_print, name, with_header=False, kitchen=False):
-        """Generate a print list from a list which contains informations
+    def print_list(self, list_to_print, name, with_header=False,
+                   kitchen=False):
+        ''' Generate a print list from a list which contains informations
         in string and several business objects.
-        """
+
+        :param list_to_print: TODO
+        :type list_to_print:
+        :param name: TODO
+        :type name:
+        :param Boolean with_header:
+        :param Boolean kitchen:
+        '''
         path = "{0}/{1}-{2}.txt".format(settings.PATH_TICKET, self.id, name)
         ticket_to_print = open(path, "w")
         if kitchen and self.kitchen_lines:
-            ticket_to_print.write("\n"*self.kitchen_lines)
+            ticket_to_print.write("\n" * self.kitchen_lines)
         if with_header:
             ticket_to_print.write(self.header)
         for line in list_to_print:

@@ -34,9 +34,11 @@ LOGGER = logging.getLogger(__name__)
 
 @login_required
 def kitchen(request):
-    """Affiche la liste plats qui ne sont pas encore
+    ''' Affiche la liste plats qui ne sont pas encore
     préparés
-    """
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_kitchen': True, }
     liste = []
     for bill in Facture().non_soldees():
@@ -45,7 +47,7 @@ def kitchen(request):
             if not bill.follow.done:
                 # on enlève les ProduitVendu de type menu
                 todo = bill.follow.produits.\
-                            filter(produit__categories_ok__isnull=True)
+                    filter(produit__categories_ok__isnull=True)
                 bill.todo = bill.reduced_sold_list(todo, full=True)
                 if bill.category_to_follow:
                     category_to_follow = bill.category_to_follow
@@ -59,8 +61,10 @@ def kitchen(request):
 
 @login_required
 def follow_done(request, follow_id):
-    """All is ready for this table ?
-    """
+    ''' All is ready for this table ?
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     follow = get_object_or_404(Follow, pk=follow_id)
     follow.done = True
     follow.save()
@@ -69,6 +73,12 @@ def follow_done(request, follow_id):
 
 @login_required
 def kitchen_for_bill(request, bill_id):
+    '''
+    :param request:
+    :type request:
+    :param bill_id:
+    :type bill_id:
+    '''
     context = {'menu_kitchen': True, }
     context['facture'] = get_object_or_404(Facture, pk=bill_id)
     if context['facture'].est_soldee():
