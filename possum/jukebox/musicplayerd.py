@@ -33,7 +33,11 @@ def check_cnx(aclient):
     try:
         aclient.status()
     except ConnectionError:
-        aclient.connect("localhost", 8000)
+        try:
+            aclient.connect("localhost", 8000)
+        except:
+            print "TODO: on doit tester les cas d'erreurs"
+            return False
 
 
 def ajax_play(request):

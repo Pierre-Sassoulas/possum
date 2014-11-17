@@ -30,11 +30,13 @@ def make_playlist_names():
     '''
     client = MPDClient()
     check_cnx(client)
-    plists = client.listplaylists()
-    playlist_names = list()
-    for i in range(0, len(plists)):
-        playlist_names.append((plists[i]['playlist'], plists[i]['playlist']))
-    return playlist_names
+    print "On doit tester le retour !!"
+    return []
+#    plists = client.listplaylists()
+#    playlist_names = list()
+#    for i in range(0, len(plists)):
+#        playlist_names.append((plists[i]['playlist'], plists[i]['playlist']))
+#    return playlist_names
 
 
 class PlaylistsForm(forms.Form):
