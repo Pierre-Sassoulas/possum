@@ -94,9 +94,9 @@ class ProduitVendu(models.Model):
             LOGGER.debug("product is full")
             return True
         elif nb_produits > nb_categories:
-            LOGGER.warning(
-                "product id [%s] have more products that categories authorized" %
-                self.id)
+            msg = "product id [%s] have more products" % self.id
+            msg += " that categories authorized"
+            LOGGER.warning(msg)
             return True
         else:
             LOGGER.debug("product is not full")
@@ -126,13 +126,13 @@ class ProduitVendu(models.Model):
         None
         """
         if self.produit.categories_ok.count() > 0:
-            for categorie in self.produit.categories_ok.order_by("priorite").iterator():
-                if self.contient.filter(produit__categorie=categorie).count() == 0:
+            for categorie in self.produit.categories_ok.order_by("priorite"):
+                if self.contient.filter(
+                        produit__categorie=categorie).count() == 0:
                     return categorie
         else:
-            LOGGER.warning(
-                "Product [%s] have no categories_ok, return None" %
-                self.id)
+            msg = "Product [%s] have no categories_ok, return None" % self.id
+            LOGGER.warning(msg)
         return None
 
     def get_identifier(self):
@@ -159,9 +159,7 @@ class ProduitVendu(models.Model):
 
     def set_prize(self, prize):
         ''' Set prize for the product sold
-
-        :param prize: TODO
-        :type prize:
+        :param Decimal prize:
         '''
         if self.prix != prize:
             LOGGER.debug("[%s] prize: %s > %s" % (self.id, self.prix, prize))

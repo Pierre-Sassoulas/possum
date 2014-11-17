@@ -56,7 +56,7 @@ def profile(request):
             else:
                 messages.add_message(request, messages.ERROR,
                                      _("New password invalid"))
-                LOGGER.warning('[%s] new password invalid' % 
+                LOGGER.warning('[%s] new password invalid' %
                                request.user.username)
         else:
             messages.add_message(request, messages.ERROR,

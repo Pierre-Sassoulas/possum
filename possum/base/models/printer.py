@@ -42,6 +42,7 @@ def sans_accent(message):
 
 
 class Printer(models.Model):
+
     """Printer model
     :param options: options used with pycups.printFile()
     :param header: you can add a text before the text to print (restaurant name)

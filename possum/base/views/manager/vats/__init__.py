@@ -27,8 +27,6 @@ from django.utils.translation import ugettext as _
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import permission_required
-
-
 LOGGER = logging.getLogger(__name__)
 
 

@@ -68,7 +68,7 @@ def printer_added(request, name):
 @permission_required('base.p1')
 def printer_view(request, printer_id):
     '''
-    
+
     :param HttpRequest request:
     :return rtype: HttpResponse
     :param printer_id:

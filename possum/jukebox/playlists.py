@@ -38,6 +38,7 @@ def make_playlist_names():
 
 
 class PlaylistsForm(forms.Form):
+
     '''
     The form for a Playlist.
     '''
