@@ -190,6 +190,7 @@ INSTALLED_APPS = (
     'chartit',
     'possum.base',
     'possum.stats',
+    'possum.jukebox',
     'django_extensions',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
