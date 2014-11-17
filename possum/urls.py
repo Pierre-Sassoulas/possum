@@ -23,6 +23,7 @@ from django.conf.urls import patterns, url, include
 
 # TODO Refactor category_id in cat_id or cat_id in category_id
 CAT_RGX = '(?P<cat_id>\d+)'
+CATEGORY_RGX = '(?P<category_id>\d+)'
 VAT_RGX = '(?P<vat_id>\d+)'
 PRD_RGX = '(?P<product_id>\d+)'
 OPT_RGX = '(?P<option_id>\d+)'
@@ -31,6 +32,11 @@ SLD_RGX = '(?P<sold_id>\d+)'
 PRT_RGX = '(?P<printer_id>\d+)'
 USR_RGX = '(?P<user_id>\d+)'
 NOT_RGX = '(?P<note_id>\d+)'
+SUB_RGX = '(?P<sub_id>\d+)'
+TAB_RGX = '(?P<table_id>\d+)'
+COOK_RGX = '(?P<cooking_id>\d+)'
+NB_RGX = '(?P<number>\d+)'
+ZON_RGX = '(?P<zone_id>\d+)'
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -131,10 +137,10 @@ urlpatterns += patterns('possum.base.views.carte',
                         url(r'^carte/products/' + PRD_RGX + '/produits_ok/select/$',
                             'products_select_produits_ok',
                             name='products_select_produits_ok'),
-                        url(r'^carte/products/' + PRD_RGX + '/produits_ok/(?P<sub_id>\d+)/add/$',
+                        url(r'^carte/products/' + PRD_RGX + '/produits_ok/' + SUB_RGX + '/add/$',
                             'products_add_produits_ok',
                             name='products_add_produits_ok'),
-                        url(r'^carte/products/' + PRD_RGX + '/produits_ok/(?P<sub_id>\d+)/del/$',
+                        url(r'^carte/products/' + PRD_RGX + '/produits_ok/' + SUB_RGX + '/del/$',
                             'products_del_produits_ok', name='products_del_produits_ok'),
                         url(r'^carte/products/' + PRD_RGX + '/category/' + CAT_RGX + '/set/$',
                             'products_set_category', name='products_set_category'),
@@ -149,12 +155,12 @@ urlpatterns += patterns('possum.base.views.bill',
                         url(r'^bill/' + BIL_RGX + '/table/select/$',
                             'table_select',
                             name='table_select'),
-                        url(r'^bill/' + BIL_RGX + '/table/set/(?P<table_id>\d+)/$', 'table_set',
+                        url(r'^bill/' + BIL_RGX + '/table/set/' + TAB_RGX + '/$', 'table_set',
                             name='table_set'),
                         url(r'^bill/' + BIL_RGX + '/couverts/select/$',
                             'couverts_select',
                             name='couverts_select'),
-                        url(r'^bill/' + BIL_RGX + '/couverts/set/(?P<number>\d+)/$',
+                        url(r'^bill/' + BIL_RGX + '/couverts/set/' + NB_RGX + '/$',
                             'couverts_set', name='couverts_set'),
                         url(r'^bill/' + BIL_RGX + '/categories/$',
                             'categories',
@@ -167,15 +173,15 @@ urlpatterns += patterns('possum.base.views.bill',
                             name='bill_set_number'),
                         url(r'^bill/' + BIL_RGX + '/product/add/' + PRD_RGX + '/$',
                             'product_add', name='product_add'),
-                        url(r'^bill/' + BIL_RGX + '/product/(?P<category_id>\d+)/select/$',
+                        url(r'^bill/' + BIL_RGX + '/product/' + CATEGORY_RGX + '/select/$',
                             'product_select', name='product_select'),
                         url(r'^bill/' + BIL_RGX + '/product/' + PRD_RGX + '/made_with/$',
                             'product_select_made_with',
                             name='product_select_made_with'),
-                        url(r'^bill/' + BIL_RGX + '/product/' + PRD_RGX + '/made_with/(?P<category_id>\d+)/$',
+                        url(r'^bill/' + BIL_RGX + '/product/' + PRD_RGX + '/made_with/' + CATEGORY_RGX + '/$',
                             'product_set_made_with',
                             name='product_set_made_with'),
-                        url(r'^bill/' + BIL_RGX + '/sold/' + SLD_RGX + '/category/(?P<category_id>\d+)/select/$',
+                        url(r'^bill/' + BIL_RGX + '/sold/' + SLD_RGX + '/category/' + CATEGORY_RGX + '/select/$',
                             'subproduct_select', name='subproduct_select'),
                         url(r'^bill/' + BIL_RGX + '/' + SLD_RGX + '/options/$',
                             'sold_options',
@@ -197,7 +203,7 @@ urlpatterns += patterns('possum.base.views.bill',
                             name='sold_option'),
                         url(r'^bill/' + BIL_RGX + '/sold/' + SLD_RGX + '/cooking/$',
                             'sold_cooking', name='sold_cooking'),
-                        url(r'^bill/' + BIL_RGX + '/sold/' + SLD_RGX + '/cooking/(?P<cooking_id>\d+)/$',
+                        url(r'^bill/' + BIL_RGX + '/sold/' + SLD_RGX + '/cooking/' + COOK_RGX + '/$',
                             'sold_cooking', name='sold_cooking'),
                         url(r'^bill/' + BIL_RGX + '/sold/' + SLD_RGX + '/delete/$',
                             'sold_delete', name='sold_delete'),
@@ -217,7 +223,7 @@ urlpatterns += patterns('possum.base.views.bill',
                             'type_payment', name='type_payment'),
                         url(r'^bill/' + BIL_RGX + '/payment/save/$',
                             'save_payment', name='save_payment'),
-                        url(r'^bill/' + BIL_RGX + '/payment/count/(?P<number>\d+)/$',
+                        url(r'^bill/' + BIL_RGX + '/payment/count/' + NB_RGX + '/$',
                             'payment_count', name='payment_count'),
                         url(r'^bill/' + BIL_RGX + '/print/$',
                             'bill_print', name='bill_print'),
@@ -229,7 +235,7 @@ urlpatterns += patterns('possum.base.views.bill',
                             name='amount_payment'),
                         url(r'^amount/del/$', 'amount_payment_del',
                             name='amount_payment_del'),
-                        url(r'^amount/add/(?P<number>\d)/$',
+                        url(r'^amount/add/(?P<number>\d)/$',  # TOCHECK Regex for number different than NB_RGX
                             'amount_payment_add', name='amount_payment_add'),
                         url(r'^amount/right/$', 'amount_payment_right',
                             name='amount_payment_right'),
@@ -291,11 +297,11 @@ urlpatterns += patterns('possum.base.views.manager.printers',
                             'printer_select_width', name='printer_select_width'),
                         url(r'^printers/' + PRT_RGX + '/test/$',
                             'printer_test_print', name='printer_test_print'),
-                        url(r'^printers/' + PRT_RGX + '/width/set/(?P<number>\d+)/$',
+                        url(r'^printers/' + PRT_RGX + '/width/set/' + NB_RGX + '/$',
                             'printer_set_width', name='printer_set_width'),
                         url(r'^printers/' + PRT_RGX + '/kitchen_header/$',
                             'kitchen_header', name='printer_kitchen_header'),
-                        url(r'^printers/' + PRT_RGX + '/kitchen_header/(?P<number>\d+)/$',
+                        url(r'^printers/' + PRT_RGX + '/kitchen_header/' + NB_RGX + '/$',
                             'kitchen_header', name='printer_kitchen_header'),
                         )
 
@@ -336,13 +342,13 @@ urlpatterns += patterns('possum.base.views.manager.tables',
                         url(r'^manager/tables/$', 'tables', name='tables'),
                         url(r'^manager/tables/new/$',
                             'tables_zone_new', name='tables_zone_new'),
-                        url(r'^manager/tables/(?P<zone_id>\d+)/$',
+                        url(r'^manager/tables/' + ZON_RGX + '/$',
                             'tables_zone', name='tables_zone'),
-                        url(r'^manager/tables/(?P<zone_id>\d+)/new/$',
+                        url(r'^manager/tables/' + ZON_RGX + '/new/$',
                             'tables_table_new', name='tables_table_new'),
-                        url(r'^manager/tables/(?P<zone_id>\d+)/(?P<table_id>\d+)/$',
+                        url(r'^manager/tables/' + ZON_RGX + '/' + TAB_RGX + '/$',
                             'tables_table', name='tables_table'),
-                        url(r'^manager/tables/(?P<zone_id>\d+)/delete/$',
+                        url(r'^manager/tables/' + ZON_RGX + '/delete/$',
                             'tables_zone_delete', name='tables_zone_delete'),
                         )
 
