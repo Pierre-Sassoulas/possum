@@ -31,7 +31,7 @@ from version import POSSUM_VERSION
 # from django.utils.translation import ugettext as _
 # PATH CONFIGURATION
 # Absolute filesystem path to this Django project directory.
-DJANGO_ROOT = os.path.dirname(os.path.dirname(__file__))
+DJANGO_ROOT = dirname(dirname(__file__))
 SITE_NAME = "possum"
 # Absolute filesystem path to the top-level project folder.
 SITE_ROOT = dirname(DJANGO_ROOT)

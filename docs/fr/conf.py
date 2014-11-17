@@ -2,11 +2,12 @@
 from datetime import datetime
 import os
 import sys
+import sphinx_bootstrap_theme
 
 # if needed, create possum/settings.py
-POSSUM = os.path.join("..", "..")
-CONF = os.path.join("..", "..", "possum", "settings.py")
-CONF_TEMPLATE = os.path.join("..", "..", "possum", "settings_production.py")
+POSSUM = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+CONF = os.path.join(POSSUM, "possum", "settings.py")
+CONF_TEMPLATE = os.path.join(POSSUM, "possum", "settings_production.py")
 if not os.path.isfile(CONF):
     import shutil
     shutil.copyfile(CONF_TEMPLATE, CONF)
@@ -37,10 +38,9 @@ exclude_trees = ['_build']
 default_role = 'obj'
 
 pygments_style = 'sphinx'
-html_theme = 'default'
-html_theme_options = {}
+html_theme = 'bootstrap'
+html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 html_title = "%s %s" % (project, release)
-html_logo = os.path.join("..", "images", "bandeau-192.png")
 html_favicon = os.path.join("..", "_static", "favicon.ico")
 html_static_path = [os.path.join('..', '_static')]
 
@@ -52,10 +52,28 @@ html_static_path = [os.path.join('..', '_static')]
 # typographically correct entities.
 # html_use_smartypants = True
 
+html_theme_options = {
+    'navbar_site_name': "Doc",
+    'navbar_links': [
+            ("Home", "http://www.possum-software.org", True),
+        ],
+    'navbar_sidebarrel': True,
+    'navbar_pagenav': True,
+    'navbar_pagenav_name': "Page",
+    'globaltoc_depth': 2,
+    'globaltoc_includehidden': "true",
+    #'navbar_class': "navbar navbar-inverse",
+    'navbar_fixed_top': "true",
+    'source_link_position': "nav",
+    # Bootswatch (http://bootswatch.com/) theme.
+    'bootswatch_theme': "sandstone",
+    'bootstrap_version': "3",
+}
+
 # Custom sidebar templates, maps document names to template names.
 # html_sidebars = {}
 html_sidebars = {
-    '**': ['globaltoc.html', 'searchbox.html', 'openhub.html'],
+#    '**': ['globaltoc.html', 'searchbox.html', 'openhub.html'],
 }
 #    '**': ['globaltoc.html', 'localtoc.html', 'searchbox.html'],
 #    'using/windows': ['windowssidebar.html', 'searchbox.html'],

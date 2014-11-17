@@ -44,7 +44,7 @@ Firstly, you must have an account on `Github <https://github.com>`_.
 You have to create a fork `here <https://github.com/possum-software/possum>`_
 (top right).
 
-Now, you will use your fork. This is an example with my username 
+Now, you will use your fork. This is an example with my username
 **sbonnegent**. Full documentation is on
 `Github (fork a repo) <https://help.github.com/articles/fork-a-repo>`_.
 
@@ -61,7 +61,7 @@ In short::
   $ git push
 
 Changes are in your fork, now you can create a pull request directly on Github.
-All pull requests must be sync with Possum development branch (dev). 
+All pull requests must be sync with Possum development branch (dev).
 
 After that, you must check state of your request on
 `Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
@@ -197,4 +197,5 @@ Stats
 
 .. automodule:: possum.stats.models
    :members:
+
 
