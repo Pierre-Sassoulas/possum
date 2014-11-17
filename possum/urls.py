@@ -356,7 +356,7 @@ if settings.DEBUG:
                                 name="django_serve"),
                             )
 
-# urlpatterns += patterns('', url(r'^jukebox/', include('possum.jukebox.urls')),)
+urlpatterns += patterns('', url(r'^jukebox/', include('possum.jukebox.urls')),)
 
 #    import debug_toolbar
 #    urlpatterns += patterns('',
