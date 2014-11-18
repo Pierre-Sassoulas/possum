@@ -32,5 +32,5 @@ developed with Python / Django.
 
 The key word: try to keep it simple for the final user.
 
-* `Possum <http://www.possum-software.org/>`_
+`www.possum-software.org <http://www.possum-software.org/>`_
 
