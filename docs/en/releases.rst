@@ -8,6 +8,8 @@ Release date: unknown
 
 * MPD Client
 * optimization on bills workflow
+* check for new version
+* django 1.7
 
 v0.5.1
 ------
