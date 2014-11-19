@@ -23,8 +23,8 @@ templates_path = [os.path.join('..', '_templates')]
 source_suffix = '.rst'
 source_encoding = 'utf-8'
 master_doc = 'index'
-project = u'Possum'
-copyright = u'2008-%d, Bonnegent Sébastien' % datetime.now().year
+project = u'POSSUM'
+copyright = u'2008-%d, Possum Software' % datetime.now().year
 
 version = POSSUM_VERSION
 release = version
