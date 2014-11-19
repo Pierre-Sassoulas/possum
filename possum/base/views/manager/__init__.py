@@ -30,9 +30,6 @@ from possum.base.models import Facture
 from possum.base.views import permission_required
 
 
-LOGGER = logging.getLogger(__name__)
-
-
 @permission_required('base.p1')
 def credits(request):
     '''
@@ -68,14 +65,19 @@ def check_new_version(request):
     :return rtype: HttpResponse
     '''
     context = {'menu_manager': True, }
-    response = urllib2.urlopen('http://last.possum-software.org/')
-    version = response.read().split('\n')
-    if version != settings.POSSUM_VERSION:
-        LOGGER.info("new version")
-        messages.add_message(request, messages.WARNING,
-                             "%s: %s" % (_("New version available"), version))
+    try:
+        response = urllib2.urlopen('http://last.possum-software.org/')
+        version = response.read().split('\n')[0]
+    except:
+        messages.add_message(request, messages.ERROR,
+                             _("Impossible to get an answer"))
     else:
-        messages.add_message(request, messages.SUCCESS,
-                             _("You have last version"))
+        if version != settings.POSSUM_VERSION:
+            messages.add_message(request, messages.WARNING,
+                                 "%s: %s" % (_("New release available"),
+                                 version))
+        else:
+            messages.add_message(request, messages.SUCCESS,
+                                 _("You have last release"))
 
     return redirect('credits')

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 16:52+0100\n"
+"POT-Creation-Date: 2014-11-19 14:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -248,12 +248,16 @@ msgstr ""
 msgid "VAT type not defined"
 msgstr ""
 
-#: possum/base/views/manager/__init__.py:76
-msgid "New version available"
+#: possum/base/views/manager/__init__.py:73
+msgid "Impossible to get an answer"
 msgstr ""
 
-#: possum/base/views/manager/__init__.py:79
-msgid "You have last version"
+#: possum/base/views/manager/__init__.py:77
+msgid "New release available"
+msgstr ""
+
+#: possum/base/views/manager/__init__.py:81
+msgid "You have last release"
 msgstr ""
 
 #: possum/base/views/manager/archives/__init__.py:51
@@ -747,27 +751,31 @@ msgstr ""
 msgid "You are currently using version"
 msgstr ""
 
-#: possum/templates/base/manager/credits.html:13
-msgid "A big thank you to"
+#: possum/templates/base/manager/credits.html:12
+msgid "new release"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:15
-msgid "for the original idea and the need"
-msgstr ""
-
-#: possum/templates/base/manager/credits.html:16
-msgid "acronym for software"
+msgid "A big thank you to"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:17
-msgid "for the logo, icons and patience"
+msgid "for the original idea and the need"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:18
-msgid "icon to stop"
+msgid "acronym for software"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:19
+msgid "for the logo, icons and patience"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:20
+msgid "icon to stop"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:21
 msgid "icon to logout"
 msgstr ""
 

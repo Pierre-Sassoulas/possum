@@ -245,6 +245,8 @@ urlpatterns += patterns('possum.base.views.kitchen',
 urlpatterns += patterns('possum.base.views.manager',
                         url(r'^manager/$', 'manager', name='manager'),
                         url(r'^manager/credits/$', 'credits', name='credits'),
+                        url(r'^manager/check/$', 'check_new_version',
+                            name='check_new_version'),
                         )
 
 

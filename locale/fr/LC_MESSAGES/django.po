@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 16:52+0100\n"
+"POT-Creation-Date: 2014-11-19 14:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,14 +247,16 @@ msgstr "TVA sur place"
 msgid "VAT type not defined"
 msgstr "Type de TVA non défini"
 
-#: possum/base/views/manager/__init__.py:76
-#, fuzzy
-msgid "New version available"
+#: possum/base/views/manager/__init__.py:73
+msgid "Impossible to get an answer"
+msgstr "Impossible d'obtenir une réponse"
+
+#: possum/base/views/manager/__init__.py:77
+msgid "New release available"
 msgstr "Nouvelle version disponible"
 
-#: possum/base/views/manager/__init__.py:79
-#, fuzzy
-msgid "You have last version"
+#: possum/base/views/manager/__init__.py:81
+msgid "You have last release"
 msgstr "Vous utilisez la dernière version"
 
 #: possum/base/views/manager/archives/__init__.py:51
@@ -784,27 +786,31 @@ msgstr "Logiciel libre sous licence GPLv3 créé par S. Bonnegent."
 msgid "You are currently using version"
 msgstr "Vous utilisez actuellement la version"
 
-#: possum/templates/base/manager/credits.html:13
+#: possum/templates/base/manager/credits.html:12
+msgid "new release"
+msgstr "nouvelle version"
+
+#: possum/templates/base/manager/credits.html:15
 msgid "A big thank you to"
 msgstr "Un grand merci à"
 
-#: possum/templates/base/manager/credits.html:15
+#: possum/templates/base/manager/credits.html:17
 msgid "for the original idea and the need"
 msgstr "pour l'idée originale et le besoin"
 
-#: possum/templates/base/manager/credits.html:16
+#: possum/templates/base/manager/credits.html:18
 msgid "acronym for software"
 msgstr "pour l'acronyme du logiciel"
 
-#: possum/templates/base/manager/credits.html:17
+#: possum/templates/base/manager/credits.html:19
 msgid "for the logo, icons and patience"
 msgstr "pour le logo, les icônes et la patience"
 
-#: possum/templates/base/manager/credits.html:18
+#: possum/templates/base/manager/credits.html:20
 msgid "icon to stop"
 msgstr "pour l'icone d'arrêt"
 
-#: possum/templates/base/manager/credits.html:19
+#: possum/templates/base/manager/credits.html:21
 msgid "icon to logout"
 msgstr "pour l'icone de déconnexion"
 
