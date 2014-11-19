@@ -24,7 +24,6 @@ from mpd import MPDClient, ConnectionError
 
 client = MPDClient()
 
-
 def check_cnx(aclient):
     '''
     :param aclient:
@@ -32,8 +31,13 @@ def check_cnx(aclient):
     '''
     try:
         aclient.status()
-    except ConnectionError:
-        aclient.connect("localhost", 8000)
+        return True
+    except:
+        try:
+            aclient.connect("localhost", 6600)
+            return True
+        except:
+            return False
 
 
 def ajax_play(request):
