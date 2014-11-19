@@ -1,15 +1,23 @@
 Release notes
 =============
 
+v0.7.0
+------
+
+Release date: ??/??/????
+
+* directories **migrations** removed (south)
+
 v0.6.0
 ------
 
-Release date: unknown
+Release date: ??/??/2015
 
 * MPD Client
 * optimization on bills workflow
 * check for new version
 * django 1.7
+* South removed
 
 v0.5.1
 ------
