@@ -15,11 +15,10 @@ If it is not already here, you can create an issue on
 Stay informed
 -------------
 
-* `Freecode <http://freecode.com/projects/possum>`_
 * `Google+ <https://plus.google.com/113982636103042531268/posts>`_
-* `RSS releases <http://freecode.com/projects/possum/releases.atom>`_ 
+* `RSS releases <http://www.possum-software.org/rss.xml>`_
 * `Twitter releases <https://twitter.com/possum_software>`_
-* `Twitter commits <https://twitter.com/possum_commits>`_  
+* `Twitter commits <https://twitter.com/possum_commits>`_
 
 You use Possum and want to tell the world
 -----------------------------------------

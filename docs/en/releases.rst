@@ -44,7 +44,7 @@ Release date: 2012
 
 * using Django + South for the backend
 * sales statistics
-* opening the project on `GitHub <http://github.com>`_ and `Freecode <http://freecode.com>`_
+* opening the project on `GitHub <http://github.com>`_
 * early documentation with Sphinx
 
 v0.3.0
