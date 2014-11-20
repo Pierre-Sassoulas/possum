@@ -8,7 +8,7 @@ Release date: ??/??/2015
 
 * MPD Client
 * optimization on bills workflow
-* check for new version
+* check for new version for manager
 * django 1.7
 * South removed
 
