@@ -1,17 +1,6 @@
 POSSUM
 ======
 
-.. image:: https://www.openhub.net/p/711589/widgets/project_thin_badge.gif
-    :target: https://www.openhub.net/p/possum-software
-    :alt: Users
-    :scale: 100%
-
-.. image:: http://jenkins.possum-software.org/job/possum-dev/badge/icon
-    :target: http://jenkins.possum-software.org/job/possum-dev/
-    :alt: Build Status
-    :scale: 100%
-
-
 POSSUM is a software for point of sales (POS) specially designed for 
 restaurant / bar / brasserie.
 
