@@ -146,11 +146,15 @@ function update {
     fi
     enter_virtualenv
     pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    # Hack waiting new release of django-chartit
+    #  https://github.com/pgollakota/django-chartit
+    #  http://stackoverflow.com/questions/23564529/chartit-is-not-a-valid-tag-librarydjango
+    find env -name chartit.py -exec sed -ie 's/from django.utils import simplejson/import simplejson/' {} \;
     if [ ! -e possum/settings.py ]
     then
         # default conf is production
         cp possum/settings_production.py possum/settings.py
-        ./manage.py syncdb --noinput --migrate
+        ./manage.py syncdb --noinput
         possum/utils/init_db.py
         cat << 'EOF'
 -------------------------------------------------------
@@ -166,7 +170,7 @@ EOF
     fi
     if [ ! -e possum.db ]
     then
-        ./manage.py syncdb --noinput --migrate
+        ./manage.py syncdb --noinput
     fi
     ./manage.py migrate
     ./manage.py update_css

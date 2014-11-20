@@ -30,7 +30,7 @@ def make_playlist_names():
     '''
     client = MPDClient()
     check_cnx(client)
-    print "On doit tester le retour !!"
+    print "TODO: On doit tester le retour !!"
     return []
 #    plists = client.listplaylists()
 #    playlist_names = list()
