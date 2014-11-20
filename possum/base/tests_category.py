@@ -18,8 +18,7 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.utils.unittest.case import TestCase
-
+from django.test import TestCase
 from possum.base.models import Categorie
 
 
@@ -33,10 +32,6 @@ class TestsCategories(TestCase):
         liste.append(cat3)
         liste.append(cat2)
         liste.append(cat1)
-        self.assertEqual(cat3, liste[0])
-        self.assertEqual(cat2, liste[1])
-        self.assertEqual(cat1, liste[2])
+        self.assertEqual([cat3, cat2, cat1], liste)
         liste.sort()
-        self.assertEqual(cat1, liste[0])
-        self.assertEqual(cat2, liste[1])
-        self.assertEqual(cat3, liste[2])
+        self.assertEqual([cat2, cat1, cat3], liste)

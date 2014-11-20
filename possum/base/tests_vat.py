@@ -18,10 +18,10 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import unittest
+from django.test import TestCase
 
 
-class TestsVAT(unittest.TestCase):
+class TestsVAT(TestCase):
 
     """name is a symbolic name
     tax is for example '19.6' for 19.6%
