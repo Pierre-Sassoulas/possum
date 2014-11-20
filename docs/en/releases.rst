@@ -1,13 +1,6 @@
 Release notes
 =============
 
-v0.7.0
-------
-
-Release date: ??/??/????
-
-* directories **migrations** removed (south)
-
 v0.6.0
 ------
 
