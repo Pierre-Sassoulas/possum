@@ -24,3 +24,4 @@ You use Possum and want to tell the world
 -----------------------------------------
 
 * `Openhub <https://www.openhub.net/p/possum-software>`_
+
