@@ -66,7 +66,10 @@ def check_new_version(request):
     '''
     context = {'menu_manager': True, }
     try:
-        response = urllib2.urlopen('http://last.possum-software.org/')
+        req = urllib2.Request('http://last.possum-software.org/', headers={
+                              'User-Agent': 'Possum/' + settings.POSSUM_VERSION
+                              })
+        response = urllib2.urlopen(req)
         version = response.read().split('\n')[0]
     except:
         messages.add_message(request, messages.ERROR,
