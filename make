@@ -155,14 +155,14 @@ function update {
         # default conf is production
         cp possum/settings_production.py possum/settings.py
         ./manage.py syncdb --noinput
-        possum/utils/init_db.py
+        ./manage.py init_db
         cat << 'EOF'
 -------------------------------------------------------
-To use Possum, copy and adapt possum/utils/init_db.py.
+To use Possum, copy and adapt possum/base/management/commands/init_db.py.
 
 Example:
-  cp possum/utils/init_db.py possum/utils/init_mine.py
-  # adapt possum/utils/init_yours.py file
+  cp possum/base/management/commands/init_db.py possum/base/management/commands/init_mine.py
+  # adapt possum/base/management/commands/init_mine.py file
   # and execute it
   ./make init_mine
 -------------------------------------------------------
@@ -230,7 +230,7 @@ init_mine)
 init_demo)
     enter_virtualenv
     clear_db
-    possum/utils/init_demo.py
+    ./manage.py init_demo
     ;;
 load_demo)
     enter_virtualenv
@@ -263,7 +263,7 @@ models_changed)
     ./manage.py schemamigration stats --auto
     ./manage.py migrate
     clear_db
-    possum/utils/init_demo.py
+    ./manage.py init_demo
     create_json_demo
     graph_models
     ;;
