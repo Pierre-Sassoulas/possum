@@ -60,14 +60,15 @@ Cette opération va installer et configurer tout l'environnement virtuel nécess
 à Possum.
 
 Il nous reste maintenant à initialiser les données, pour cela il est recommandé
-de copier le fichier d'initialisation **possum/utils/init_db.py**. Pour un exemple
-plus complet, vous pouvez vous inspirer du fichier **possum/utils/init_demo.py**:
+de copier le fichier d'initialisation **possum/base/management/commands/init_db.py**.
+Pour un exemple plus complet, vous pouvez vous inspirer du fichier 
+**possum/base/management/commands/init_demo.py**:
 
 ::
 
-  sudo cp possum/utils/init_db.py possum/utils/init_mine.py
-  # adapt file possum/utils/init_mine.py
-  sudo gedit possum/utils/init_mine.py
+  sudo cp possum/base/management/commands/init_db.py possum/base/management/commands/init_mine.py
+  # adapt file possum/base/management/commands/init_mine.py
+  sudo gedit possum/base/management/commands/init_mine.py
   # and run it:
   sudo ./make init_mine
 

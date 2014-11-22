@@ -32,11 +32,12 @@ def check_cnx(aclient):
     '''
     try:
         aclient.status()
-    except ConnectionError:
+        return True
+    except:
         try:
             aclient.connect("localhost", 8000)
+            return True
         except:
-            print "TODO: on doit tester les cas d'erreurs"
             return False
 
 
