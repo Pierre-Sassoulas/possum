@@ -8,7 +8,9 @@
     <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/></a></br>
     {% trans "Software under GPLv3 license created by S. Bonnegent." %}
     {% trans "You are currently using version" %}
-    <b>{{version}}</b>.</p>
+    <b>{{version}}</b>
+    (<a href="{% url "check_new_version" %}">{% trans "new release" %} ?</a>).
+</p>
 
 <h2>{% trans "A big thank you to" %} ...</h2>
 <ul id="credits">

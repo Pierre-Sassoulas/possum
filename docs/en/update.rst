@@ -1,8 +1,7 @@
 Updated
 =======
 
-From the git repository 
------------------------
+Updates are made exclusively from the git repository.
 
 It is considered that the **possum-software** directory is located in **/opt**:
 

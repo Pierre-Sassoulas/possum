@@ -21,6 +21,9 @@ le framework Django.
 
 Le maître mot: essayer de rester simple pour l'utilisateur.
 
+La page d'accueil du projet est ici:
+`www.possum-software.org <http://www.possum-software.org>`_
+
 Historique
 ==========
 

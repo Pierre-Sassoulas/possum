@@ -1,8 +1,7 @@
 Mise à jour
 ===========
 
-À partir du dépôt git
----------------------
+Les mises à jours sont exclusivement effectuées à partir du dépôt git.
 
 On considére que le répertoire **possum-software** se trouve dans **/opt**:
 

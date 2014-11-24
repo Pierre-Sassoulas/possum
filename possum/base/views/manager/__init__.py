@@ -19,9 +19,12 @@
 #
 
 import os
+import urllib2
 
+from django.contrib import messages
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.utils.translation import ugettext as _
 
 from possum.base.models import Facture
 from possum.base.views import permission_required
@@ -53,3 +56,31 @@ def manager(request):
         if count:
             context['bills_to_update'] = count
     return render(request, 'base/manager/home.html', context)
+
+
+@permission_required('base.p1')
+def check_new_version(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
+    context = {'menu_manager': True, }
+    try:
+        req = urllib2.Request('http://last.possum-software.org/', headers={
+                              'User-Agent': 'Possum/' + settings.POSSUM_VERSION
+                              })
+        response = urllib2.urlopen(req)
+        version = response.read().split('\n')[0]
+    except:
+        messages.add_message(request, messages.ERROR,
+                             _("Impossible to get an answer"))
+    else:
+        if version != settings.POSSUM_VERSION:
+            messages.add_message(request, messages.WARNING,
+                                 "%s: %s" % (_("New release available"),
+                                 version))
+        else:
+            messages.add_message(request, messages.SUCCESS,
+                                 _("You have last release"))
+
+    return redirect('credits')

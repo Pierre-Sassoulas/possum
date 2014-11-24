@@ -4,10 +4,13 @@ Release notes
 v0.6.0
 ------
 
-Release date: unknown
+Release date: ??/??/2015
 
 * MPD Client
 * optimization on bills workflow
+* check for new version for manager
+* django 1.7
+* South removed
 
 v0.5.1
 ------
@@ -41,7 +44,7 @@ Release date: 2012
 
 * using Django + South for the backend
 * sales statistics
-* opening the project on `GitHub <http://github.com>`_ and `Freecode <http://freecode.com>`_
+* opening the project on `GitHub <http://github.com>`_
 * early documentation with Sphinx
 
 v0.3.0

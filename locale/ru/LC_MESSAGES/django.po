@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 17:43+0200\n"
+"POT-Creation-Date: 2014-11-19 14:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: possum/common_settings.py:73
+#: possum/common_settings.py:96
 msgid "French"
 msgstr ""
 
-#: possum/common_settings.py:74
+#: possum/common_settings.py:97
 msgid "English"
 msgstr ""
 
-#: possum/common_settings.py:75
+#: possum/common_settings.py:98
 msgid "Russian"
 msgstr ""
 
-#: possum/base/models/payment.py:68 possum/base/models/payment.py:71
+#: possum/base/models/payment.py:69 possum/base/models/payment.py:72
 #: possum/templates/base/carte/product.html:35
 #: possum/templates/base/carte/product.html:38
 #: possum/templates/base/carte/product.html:41
@@ -48,40 +48,41 @@ msgstr ""
 #: possum/templates/payments/home.html:60
 #: possum/templates/payments/view.html:12
 #: possum/templates/payments/view.html:15 possum/templates/stats/home.html:128
-#: possum/templates/stats/home.html:137
+#: possum/templates/stats/home.html:137 possum/utils/check_errors.py:51
+#: possum/utils/check_errors.py:55
 msgid "$"
 msgstr ""
 
-#: possum/base/views/__init__.py:85
+#: possum/base/views/__init__.py:87
 msgid "You do not have permission"
 msgstr ""
 
-#: possum/base/views/__init__.py:103
+#: possum/base/views/__init__.py:105
 msgid "Statistics being calculated, please wait"
 msgstr ""
 
-#: possum/base/views/__init__.py:108
+#: possum/base/views/__init__.py:110
 msgid "Server shutting down"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:73
+#: possum/base/views/bill/__init__.py:88
 msgid "You must choose a table"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:77
+#: possum/base/views/bill/__init__.py:92
 msgid "You must specify the number of guests"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:81
+#: possum/base/views/bill/__init__.py:96
 msgid "Error in printing (printer ok?)"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:84
+#: possum/base/views/bill/__init__.py:99
 msgid "sent"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:93
-#: possum/base/views/carte/categories/__init__.py:81
+#: possum/base/views/bill/__init__.py:113
+#: possum/base/views/carte/categories/__init__.py:91
 #: possum/templates/base/carte/category.html:109
 #: possum/templates/base/carte/product_select_produits_ok.html:11
 #: possum/templates/bill/categories.html:70
@@ -90,205 +91,217 @@ msgstr ""
 msgid "No product"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:98
+#: possum/base/views/bill/__init__.py:118
 msgid "No printer configured"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:102
+#: possum/base/views/bill/__init__.py:122
 msgid "The bill is printed"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:105
+#: possum/base/views/bill/__init__.py:125
 msgid "Printing has failed"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:220
+#: possum/base/views/bill/__init__.py:288
 msgid "VAT on site is not defined"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:223
+#: possum/base/views/bill/__init__.py:291
 msgid "VAT take away is not defined"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:461
-#: possum/base/views/kitchen/__init__.py:74
+#: possum/base/views/bill/__init__.py:634
+#: possum/base/views/kitchen/__init__.py:86
 msgid "This invoice has already been ended"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:471
+#: possum/base/views/bill/__init__.py:650
 msgid "The bill contains payments"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:509
-#: possum/base/views/bill/__init__.py:525
+#: possum/base/views/bill/__init__.py:712
+#: possum/base/views/bill/__init__.py:729
 msgid "Invalid bill"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:577
-#: possum/base/views/bill/__init__.py:601
+#: possum/base/views/bill/__init__.py:786
+#: possum/base/views/bill/__init__.py:826
 msgid "Invalid number"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:614
-#: possum/base/views/bill/__init__.py:682
+#: possum/base/views/bill/__init__.py:841
+#: possum/base/views/bill/__init__.py:912
 msgid "Bill is being edited by"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:619
-#: possum/base/views/bill/__init__.py:622
-#: possum/base/views/bill/__init__.py:632
-#: possum/base/views/bill/__init__.py:638
+#: possum/base/views/bill/__init__.py:846
+#: possum/base/views/bill/__init__.py:849
+#: possum/base/views/bill/__init__.py:859
+#: possum/base/views/bill/__init__.py:865
 msgid "Invalid payment"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:642
+#: possum/base/views/bill/__init__.py:869
 msgid "Payment could not be saved"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:647
+#: possum/base/views/bill/__init__.py:874
 msgid "This invoice has been ended"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:655
+#: possum/base/views/bill/__init__.py:882
 msgid "Payment saved"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:699
+#: possum/base/views/bill/__init__.py:933
 msgid "Nothing to pay"
 msgstr ""
 
-#: possum/base/views/carte/__init__.py:50
-#: possum/base/views/manager/vats/__init__.py:50
+#: possum/base/views/carte/__init__.py:61
+#: possum/base/views/manager/vats/__init__.py:68
 msgid "You must enter a name"
 msgstr ""
 
-#: possum/base/views/carte/__init__.py:54
+#: possum/base/views/carte/__init__.py:65
 msgid "You must enter a price"
 msgstr ""
 
-#: possum/base/views/carte/__init__.py:98
-#: possum/base/views/carte/__init__.py:99
-#: possum/base/views/carte/__init__.py:220
-#: possum/base/views/carte/categories/__init__.py:310
-#: possum/base/views/carte/categories/__init__.py:329
-#: possum/base/views/manager/printers/__init__.py:68
-#: possum/base/views/manager/tables/__init__.py:66
-#: possum/base/views/manager/tables/__init__.py:83
-#: possum/base/views/manager/user/__init__.py:125
-#: possum/base/views/manager/vats/__init__.py:74
-#: possum/base/views/manager/vats/__init__.py:94
+#: possum/base/views/carte/__init__.py:129
+#: possum/base/views/carte/__init__.py:130
+#: possum/base/views/carte/__init__.py:327
+#: possum/base/views/carte/categories/__init__.py:403
+#: possum/base/views/carte/categories/__init__.py:427
+#: possum/base/views/manager/printers/__init__.py:90
+#: possum/base/views/manager/tables/__init__.py:92
+#: possum/base/views/manager/tables/__init__.py:115
+#: possum/base/views/manager/user/__init__.py:146
+#: possum/base/views/manager/vats/__init__.py:98
+#: possum/base/views/manager/vats/__init__.py:122
 msgid "Changes could not be saved"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:41
+#: possum/base/views/carte/categories/__init__.py:47
 #: possum/templates/base/manager/home.html:8
 #: possum/templates/base/manager/users.html:72
 msgid "Carte"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:51
+#: possum/base/views/carte/categories/__init__.py:57
 msgid "Message could not be sent"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:54
+#: possum/base/views/carte/categories/__init__.py:60
 #, python-format
 msgid "Message was sent to %s"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:58
+#: possum/base/views/carte/categories/__init__.py:64
 msgid "You have no email address"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:71
+#: possum/base/views/carte/categories/__init__.py:81
 #, python-format
 msgid "Printing was sent to %s"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:75
+#: possum/base/views/carte/categories/__init__.py:85
 #, python-format
 msgid "Printing has failed on %s"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:79
+#: possum/base/views/carte/categories/__init__.py:89
 msgid "No printers 'manager' available"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:114
+#: possum/base/views/carte/categories/__init__.py:134
 msgid "Category does not exist"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:144
+#: possum/base/views/carte/categories/__init__.py:164
 msgid "Category contains products, deletion canceled"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:185
+#: possum/base/views/carte/categories/__init__.py:219
 msgid "New category has not been created"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:188
+#: possum/base/views/carte/categories/__init__.py:222
 msgid "You must choose a name for the new category"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:244
+#: possum/base/views/carte/categories/__init__.py:318
 #: possum/templates/base/carte/category.html:59
 #: possum/templates/base/carte/category.html:61
 #: possum/templates/base/carte/product.html:46
 msgid "VAT take away"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:254
+#: possum/base/views/carte/categories/__init__.py:333
 #: possum/templates/base/carte/category.html:52
 #: possum/templates/base/carte/category.html:54
 #: possum/templates/base/carte/product.html:43
 msgid "VAT on site"
 msgstr ""
 
-#: possum/base/views/carte/categories/__init__.py:278
+#: possum/base/views/carte/categories/__init__.py:365
 msgid "VAT type not defined"
 msgstr ""
 
-#: possum/base/views/manager/archives/__init__.py:45
+#: possum/base/views/manager/__init__.py:73
+msgid "Impossible to get an answer"
+msgstr ""
+
+#: possum/base/views/manager/__init__.py:77
+msgid "New release available"
+msgstr ""
+
+#: possum/base/views/manager/__init__.py:81
+msgid "You have last release"
+msgstr ""
+
+#: possum/base/views/manager/archives/__init__.py:51
 msgid "The date is not valid"
 msgstr ""
 
-#: possum/base/views/manager/archives/__init__.py:61
+#: possum/base/views/manager/archives/__init__.py:73
 msgid "This bill has not yet ended"
 msgstr ""
 
-#: possum/base/views/manager/printers/__init__.py:94
+#: possum/base/views/manager/printers/__init__.py:136
 msgid "Printing has been accepted"
 msgstr ""
 
-#: possum/base/views/manager/printers/__init__.py:97
+#: possum/base/views/manager/printers/__init__.py:139
 msgid "Printing test has failed"
 msgstr ""
 
-#: possum/base/views/manager/user/__init__.py:47
+#: possum/base/views/manager/user/__init__.py:54
 msgid "Password changed"
 msgstr ""
 
-#: possum/base/views/manager/user/__init__.py:51
+#: possum/base/views/manager/user/__init__.py:58
 msgid "New password invalid"
 msgstr ""
 
-#: possum/base/views/manager/user/__init__.py:56
+#: possum/base/views/manager/user/__init__.py:63
 msgid "Invalid password"
 msgstr ""
 
-#: possum/base/views/manager/user/__init__.py:91
+#: possum/base/views/manager/user/__init__.py:106
 msgid "User creation failed"
 msgstr ""
 
-#: possum/base/views/manager/user/__init__.py:140
-#: possum/base/views/manager/user/__init__.py:183
+#: possum/base/views/manager/user/__init__.py:167
+#: possum/base/views/manager/user/__init__.py:222
 msgid "We must have at least one active user with P1 permission"
 msgstr ""
 
-#: possum/base/views/manager/user/__init__.py:162
+#: possum/base/views/manager/user/__init__.py:193
 msgid "New password is"
 msgstr ""
 
-#: possum/base/views/manager/vats/__init__.py:53
+#: possum/base/views/manager/vats/__init__.py:71
 msgid "You must enter a percentage tax"
 msgstr ""
 
@@ -348,7 +361,7 @@ msgstr ""
 
 #: possum/templates/base/categories_delete.html:4
 #: possum/templates/base/carte/product.html:18
-#: possum/templates/kitchen/home.html:9 possum/templates/kitchen/view.html:16
+#: possum/templates/kitchen/home.html:9 possum/templates/kitchen/view.html:17
 msgid "Category"
 msgstr ""
 
@@ -618,7 +631,7 @@ msgid "Save"
 msgstr ""
 
 #: possum/templates/base/carte/product.html:9
-#: possum/templates/kitchen/home.html:10 possum/templates/kitchen/view.html:17
+#: possum/templates/kitchen/home.html:10 possum/templates/kitchen/view.html:18
 msgid "Product"
 msgstr ""
 
@@ -660,7 +673,7 @@ msgstr ""
 
 #: possum/templates/base/carte/product.html:50
 #: possum/templates/bill/sold.html:36 possum/templates/kitchen/home.html:11
-#: possum/templates/kitchen/view.html:18
+#: possum/templates/kitchen/view.html:19
 #: possum/templates/printers/view.html:31
 msgid "Options"
 msgstr ""
@@ -738,27 +751,31 @@ msgstr ""
 msgid "You are currently using version"
 msgstr ""
 
-#: possum/templates/base/manager/credits.html:13
-msgid "A big thank you to"
+#: possum/templates/base/manager/credits.html:12
+msgid "new release"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:15
-msgid "for the original idea and the need"
-msgstr ""
-
-#: possum/templates/base/manager/credits.html:16
-msgid "acronym for software"
+msgid "A big thank you to"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:17
-msgid "for the logo, icons and patience"
+msgid "for the original idea and the need"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:18
-msgid "icon to stop"
+msgid "acronym for software"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:19
+msgid "for the logo, icons and patience"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:20
+msgid "icon to stop"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:21
 msgid "icon to logout"
 msgstr ""
 
@@ -776,7 +793,7 @@ msgstr ""
 
 #: possum/templates/base/manager/home.html:16
 #: possum/templates/bill/sold.html:50 possum/templates/kitchen/home.html:12
-#: possum/templates/kitchen/view.html:19
+#: possum/templates/kitchen/view.html:20
 msgid "Notes"
 msgstr ""
 
@@ -798,7 +815,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:25
+#: possum/templates/base/manager/home.html:26
 msgid ""
 "\n"
 "The display of information requires updating statistics with\n"
@@ -806,17 +823,17 @@ msgid ""
 "may take time (see more minutes).\n"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:32
+#: possum/templates/base/manager/home.html:33
 msgid ""
 "\n"
 "The update is in progress, you should not turn off the server.\n"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:35
+#: possum/templates/base/manager/home.html:36
 msgid "Work in progress ..."
 msgstr ""
 
-#: possum/templates/base/manager/home.html:38
+#: possum/templates/base/manager/home.html:39
 #, python-format
 msgid ""
 "\n"
@@ -824,41 +841,41 @@ msgid ""
 "resulted in waiting.\n"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:44
+#: possum/templates/base/manager/home.html:45
 msgid "Update"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:47
+#: possum/templates/base/manager/home.html:48
 msgid ""
 "\n"
 "There are no pending bill, the data are up to date.\n"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:50
+#: possum/templates/base/manager/home.html:51
 msgid "Data up to date"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:54
+#: possum/templates/base/manager/home.html:55
 msgid "Rapports"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:57
+#: possum/templates/base/manager/home.html:58
 msgid "day"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:59
+#: possum/templates/base/manager/home.html:60
 msgid "week"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:61
+#: possum/templates/base/manager/home.html:62
 msgid "month"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:64
+#: possum/templates/base/manager/home.html:65
 msgid "Graphics"
 msgstr ""
 
-#: possum/templates/base/manager/home.html:67
+#: possum/templates/base/manager/home.html:68
 msgid "year"
 msgstr ""
 
@@ -1172,7 +1189,7 @@ msgstr ""
 msgid "No edition"
 msgstr ""
 
-#: possum/templates/kitchen/home.html:6 possum/templates/kitchen/view.html:15
+#: possum/templates/kitchen/home.html:6 possum/templates/kitchen/view.html:16
 msgid "Time"
 msgstr ""
 
@@ -1192,7 +1209,7 @@ msgstr ""
 msgid "Back bill"
 msgstr ""
 
-#: possum/templates/kitchen/view.html:11
+#: possum/templates/kitchen/view.html:12
 msgid "guests"
 msgstr ""
 

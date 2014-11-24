@@ -24,6 +24,7 @@ from mpd import MPDClient, ConnectionError
 
 client = MPDClient()
 
+
 def check_cnx(aclient):
     '''
     :param aclient:
@@ -34,7 +35,7 @@ def check_cnx(aclient):
         return True
     except:
         try:
-            aclient.connect("localhost", 6600)
+            aclient.connect("localhost", 8000)
             return True
         except:
             return False

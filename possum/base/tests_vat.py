@@ -18,16 +18,28 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from tests_bill import TestsBill
-from tests_categories import TestsCategories
-from tests_product import TestsProducts
-from tests_urls import TestsUrls
-from tests_vat import TestsVAT
+from django.test import TestCase
 
 
-# from test_dailystat import Test_DailyStat
-# from test_monthlystat import Test_MonthlyStat
-# from test_printer import Test_Printer
-# from test_product import Test_Produit, Test_ProduitVendu
-# from test_weeklystat import Test_WeeklyStat
-# from test_views import Test_Views
+class TestsVAT(TestCase):
+
+    """name is a symbolic name
+    tax is for example '19.6' for 19.6%
+    value: is used to minimize operations (example: 0.196
+    """
+
+    def test_set_tax(self):
+        """ Test for setting a Tax """
+        pass  # TODO
+
+    def test_get_tax_for(self):
+        """Retourne la part de taxe
+        pour un prix HT
+        """
+        pass  # TODO
+
+    def test_get_ttc_for(self):
+        """Retourne le prix TTC
+        pour un prix HT
+        """
+        pass  # TODO
