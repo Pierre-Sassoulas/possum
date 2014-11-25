@@ -191,15 +191,15 @@ def update_categories(request):
 
 
 @permission_required('base.p3')
-def categories(request, bill_id, cat_id=None):
+def categories(request, bill_id, category_id=None):
     ''' Select a product to add on a bill.
 
     session[count]: default is 1, number of products to add
     :param HttpRequest request:
     :param bill_id: TODO
     :type bill_id:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     bill = get_object_or_404(Facture, pk=bill_id)
     if not set_edition_status(request, bill):
@@ -228,8 +228,8 @@ def categories(request, bill_id, cat_id=None):
     context['categories'] = request.session['categories']
     context['products_sold'] = bill.reduced_sold_list(bill.produits.all())
     # we preload a category
-    if cat_id:
-        context['current_cat'] = int(cat_id)
+    if category_id:
+        context['current_cat'] = int(category_id)
     return render(request, 'bill/categories.html', context)
 
 

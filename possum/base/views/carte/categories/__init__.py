@@ -104,21 +104,21 @@ def categories(request):
 
 
 @permission_required('base.p2')
-def categories_delete(request, cat_id):
+def categories_delete(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['current_cat'] = get_object_or_404(Categorie, pk=cat_id)
+    context['current_cat'] = get_object_or_404(Categorie, pk=category_id)
     context['categories'] = Categorie.objects.order_by('priorite',
-                                                       'nom').exclude(id=cat_id)
+                                                       'nom').exclude(id=category_id)
     cat_report_id = request.POST.get('cat_report', '').strip()
     action = request.POST.get('valide', '').strip()
     if action == "Supprimer":
-        products_list = Produit.objects.filter(categorie__id=cat_id)
+        products_list = Produit.objects.filter(categorie__id=category_id)
         # we have to report stats and products ?
         if cat_report_id:
             try:
@@ -132,13 +132,13 @@ def categories_delete(request, cat_id):
                                request.user.username, cat_report_id))
                 messages.add_message(request, messages.ERROR,
                                      _("Category does not exist"))
-                return redirect('categories_delete', cat_id)
+                return redirect('categories_delete', category_id)
             report_info = "from [%s] to [%s]" % (context['current_cat'],
                                                  report)
             LOGGER.info("move stats %s" % report_info)
             for key in ["category_nb", "category_value"]:
                 new_key = "%s_%" % (cat_report_id, key)
-                for s in Stat.objects.filter(key="%s_%s" % (cat_id, key)):
+                for s in Stat.objects.filter(key="%s_%s" % (category_id, key)):
                     new, created = Stat.objects.get_or_create(key=new_key,
                                                               year=s.year,
                                                               month=s.month,
@@ -170,16 +170,16 @@ def categories_delete(request, cat_id):
 
 
 @permission_required('base.p2')
-def categories_view(request, cat_id):
+def categories_view(request, category_id):
     '''
     :param request:
     :type request:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
-    products = Produit.objects.filter(categorie__id=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
+    products = Produit.objects.filter(categorie__id=category_id)
     context['products_enable'] = products.filter(actif=True)
     context['products_disable'] = products.filter(actif=False)
     return render(request, 'base/carte/category.html', context)
@@ -224,75 +224,75 @@ def categories_new(request):
 
 
 @permission_required('base.p2')
-def categories_name(request, cat_id):
+def categories_name(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
     return render(request, 'base/carte/name.html', context)
 
 
 @permission_required('base.p2')
-def categories_color(request, cat_id):
+def categories_color(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
     context['categories'] = Categorie.objects.order_by('priorite', 'nom')
     return render(request, 'base/carte/color.html', context)
 
 
 @permission_required('base.p2')
-def categories_less_priority(request, cat_id, nb=1):
+def categories_less_priority(request, category_id, nb=1):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     :param nb:
     :type nb:
     '''
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     cat.set_less_priority(nb)
     LOGGER.info("[%s] cat [%s] priority - %d" % (request.user.username,
                                                  cat.nom, nb))
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 @permission_required('base.p2')
-def categories_more_priority(request, cat_id, nb=1):
+def categories_more_priority(request, category_id, nb=1):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     :param nb:
     :type nb:
     '''
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     cat.set_more_priority(nb)
     LOGGER.info("[%s] cat [%s] priority + %d" % (request.user.username,
                                                  cat.nom, nb))
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 @permission_required('base.p2')
-def categories_surtaxable(request, cat_id):
+def categories_surtaxable(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     new = not cat.surtaxable
     cat.surtaxable = new
     if cat.surtaxable:
@@ -302,19 +302,19 @@ def categories_surtaxable(request, cat_id):
         product.update_vats()
     LOGGER.info("[%s] cat [%s] surtaxable: %s" % (request.user.username,
                 cat.nom, cat.surtaxable))
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 @permission_required('base.p2')
-def categories_vat_takeaway(request, cat_id):
+def categories_vat_takeaway(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
     context['type_vat'] = _("VAT take away")
     request.session['vat'] = 'vat_takeaway'
     context['vats'] = VAT.objects.order_by('name')
@@ -322,14 +322,14 @@ def categories_vat_takeaway(request, cat_id):
 
 
 @permission_required('base.p2')
-def categories_vat_onsite(request, cat_id):
+def categories_vat_onsite(request, category_id):
     '''
     :param HttpRequest request:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
     context['type_vat'] = _("VAT on site")
     request.session['vat'] = 'vat_onsite'
     context['vats'] = VAT.objects.order_by('name')
@@ -337,16 +337,16 @@ def categories_vat_onsite(request, cat_id):
 
 
 @permission_required('base.p2')
-def categories_set_vat(request, cat_id, vat_id):
+def categories_set_vat(request, category_id, vat_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     :param vat_id:
     :type vat_id:
     '''
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     vat = get_object_or_404(VAT, pk=vat_id)
     type_vat = request.session.get('vat', "")
     if type_vat:
@@ -363,7 +363,7 @@ def categories_set_vat(request, cat_id, vat_id):
     else:
         messages.add_message(request, messages.ERROR,
                              _("VAT type not defined"))
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 def update_colors():
@@ -383,15 +383,15 @@ def update_colors():
 
 
 @permission_required('base.p2')
-def categories_set_color(request, cat_id):
+def categories_set_color(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     color = request.POST.get('color', '').strip()
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     if not cat.color or color != cat.color:
         LOGGER.info("[%s] new categorie color [%s]" % (request.user.username,
                                                        cat.nom))
@@ -403,19 +403,19 @@ def categories_set_color(request, cat_id):
                                  _("Changes could not be saved"))
         else:
             update_colors()
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 @permission_required('base.p2')
-def categories_set_name(request, cat_id):
+def categories_set_name(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     name = request.POST.get('name', '').strip()
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     if name != cat.nom:
         LOGGER.info("[%s] new categorie name: [%s] > [%s]" % (
                     request.user.username, cat.nom, name))
@@ -427,36 +427,36 @@ def categories_set_name(request, cat_id):
                              _("Changes could not be saved"))
         LOGGER.warning("[%s] save failed for [%s]" % (
                        request.user.username, cat.nom))
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 @permission_required('base.p2')
-def categories_set_kitchen(request, cat_id):
+def categories_set_kitchen(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     new = not cat.made_in_kitchen
     cat.made_in_kitchen = new
     cat.save()
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
 
 
 @permission_required('base.p2')
-def categories_disable_surtaxe(request, cat_id):
+def categories_disable_surtaxe(request, category_id):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
-    cat = get_object_or_404(Categorie, pk=cat_id)
+    cat = get_object_or_404(Categorie, pk=category_id)
     new = not cat.disable_surtaxe
     cat.disable_surtaxe = new
     if cat.disable_surtaxe:
         cat.surtaxable = False
     cat.save()
-    return redirect('categories_view', cat_id)
+    return redirect('categories_view', category_id)
