@@ -21,21 +21,20 @@
 from django.conf import settings
 from django.conf.urls import patterns, url, include
 
-CAT_RGX = 'categorie/(?P<cat_id>\d+)/'
-CATEGORY_RGX = '(?P<category_id>\d+)/'
-VAT_RGX = 'vat/(?P<vat_id>\d+)/'
-PRD_RGX = 'product/(?P<product_id>\d+)/'
-OPT_RGX = 'option/(?P<option_id>\d+)/'
-BIL_RGX = 'bill/(?P<bill_id>\d+)/'
-SLD_RGX = 'sold/(?P<sold_id>\d+)/'
-PRT_RGX = 'printer/(?P<printer_id>\d+)/'
-USR_RGX = 'user/(?P<user_id>\d+)/'
-NOT_RGX = 'note/(?P<note_id>\d+)/'
-SUB_RGX = 'produits_ok/(?P<sub_id>\d+)/'
-TAB_RGX = 'table/(?P<table_id>\d+)/'
-COOK_RGX = 'cooking/(?P<cooking_id>\d+)/'
-NB_RGX = '(?P<number>\d+)/'
-ZON_RGX = 'table/(?P<zone_id>\d+)/'
+CAT_RGX = r'categorie/(?P<cat_id>\d+)/'
+VAT_RGX = r'vat/(?P<vat_id>\d+)/'
+PRD_RGX = r'product/(?P<product_id>\d+)/'
+OPT_RGX = r'option/(?P<option_id>\d+)/'
+BIL_RGX = r'bill/(?P<bill_id>\d+)/'
+SLD_RGX = r'sold/(?P<sold_id>\d+)/'
+PRT_RGX = r'printer/(?P<printer_id>\d+)/'
+USR_RGX = r'user/(?P<user_id>\d+)/'
+NOT_RGX = r'note/(?P<note_id>\d+)/'
+SUB_RGX = r'produits_ok/(?P<sub_id>\d+)/'
+TAB_RGX = r'table/(?P<table_id>\d+)/'
+COOK_RGX = r'cooking/(?P<cooking_id>\d+)/'
+NB_RGX = r'(?P<number>\d+)/'
+ZON_RGX = r'table/(?P<zone_id>\d+)/'
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -176,15 +175,15 @@ urlpatterns += patterns('possum.base.views.bill',
                             name='bill_set_number'),
                         url(r'^' + BIL_RGX + 'product/add/' + PRD_RGX + '$',
                             'product_add', name='product_add'),
-                        url(r'^' + BIL_RGX + 'product/' + CATEGORY_RGX + 'select/$',
+                        url(r'^' + BIL_RGX + 'product/' + CAT_RGX + 'select/$',
                             'product_select', name='product_select'),
                         url(r'^' + BIL_RGX + 'product/' + PRD_RGX + 'made_with/$',
                             'product_select_made_with',
                             name='product_select_made_with'),
-                        url(r'^' + BIL_RGX + 'product/' + PRD_RGX + 'made_with/' + CATEGORY_RGX + '$',
+                        url(r'^' + BIL_RGX + 'product/' + PRD_RGX + 'made_with/' + CAT_RGX + '$',
                             'product_set_made_with',
                             name='product_set_made_with'),
-                        url(r'^' + BIL_RGX + SLD_RGX + 'category/' + CATEGORY_RGX + 'select/$',
+                        url(r'^' + BIL_RGX + SLD_RGX + 'category/' + CAT_RGX + 'select/$',
                             'subproduct_select', name='subproduct_select'),
                         url(r'^' + BIL_RGX + SLD_RGX + 'options/$',
                             'sold_options',
