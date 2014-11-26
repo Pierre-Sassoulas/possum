@@ -9,7 +9,7 @@ tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
 
 There are also some usefull tools to audit code:
 
-* `Jenkins <http://jenkins.possum-software.org/view/Tous/>`_
+* `Jenkins <http://jenkins.possum-software.org/>`_
 * `Sonar <http://sonar.possum-software.org/>`_
 
 Version number
