@@ -107,15 +107,15 @@ def products_option(request, product_id, option_id):
 
 
 @permission_required('base.p2')
-def products_new(request, cat_id):
+def products_new(request, category_id):
     '''
     TODO
     :param HttpRequest request:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
         prize = request.POST.get('prize', '').strip()
@@ -134,17 +134,17 @@ def products_new(request, cat_id):
 
 
 @permission_required('base.p2')
-def products_set_category(request, product_id, cat_id):
+def products_set_category(request, product_id, category_id):
     '''
     TODO
     :param HttpRequest request:
     :param product_id:
     :type product_id:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     product = get_object_or_404(Produit, pk=product_id)
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     product.set_category(category)
     return redirect('products_view', product_id)
 
@@ -217,34 +217,34 @@ def products_add_produits_ok(request, product_id, sub_id):
 
 
 @permission_required('base.p2')
-def products_del_categories_ok(request, product_id, cat_id):
+def products_del_categories_ok(request, product_id, category_id):
     '''
     TODO
     :param HttpRequest request:
     :param product_id:
     :type product_id:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     product = get_object_or_404(Produit, pk=product_id)
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     product.categories_ok.remove(category)
     product.save()
     return redirect('products_view', product_id)
 
 
 @permission_required('base.p2')
-def products_add_categories_ok(request, product_id, cat_id):
+def products_add_categories_ok(request, product_id, category_id):
     '''
     TODO
     :param HttpRequest request:
     :param product_id:
     :type product_id:
-    :param cat_id:
-    :type cat_id:
+    :param category_id:
+    :type category_id:
     '''
     product = get_object_or_404(Produit, pk=product_id)
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     product.categories_ok.add(category)
     product.save()
     return redirect('products_view', product_id)

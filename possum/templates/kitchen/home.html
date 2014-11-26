@@ -40,7 +40,7 @@
             <!-- There are a category to follow -->
             {% if facture.after %}
             <tr><td colspan="3" align="center">{% trans "To follow" %} ...</td>
-                <td class="cat_id{{facture.category_to_follow_id}}">
+                <td class="category_id{{facture.category_to_follow_id}}">
                     {{facture.category_to_follow}}</td>
                 {% for product in facture.after %}
                 {% if not forloop.first %}
