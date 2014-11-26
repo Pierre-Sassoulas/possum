@@ -29,11 +29,7 @@ Soit on utilise la dernière version à jour:
 Soit on télécharge la dernière version
 stable de POSSUM ici: `GitHub <https://github.com/possum-software/possum/releases>`_
 
-::
-
-  tar xzf possum-software-possum-*.tar.gz
-
-Nous allons prendre la première option.
+Nous allons prendre la première option, et c'est l'option recommandée.
 
 Prérequis
 ---------
