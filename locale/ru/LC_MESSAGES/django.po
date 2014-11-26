@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-19 14:36+0100\n"
+"POT-Creation-Date: 2014-11-23 22:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -404,7 +404,9 @@ msgstr ""
 #: possum/templates/base/categories_delete.html:38
 #: possum/templates/base/carte/category.html:72
 #: possum/templates/base/manager/tables/home.html:21
-#: possum/templates/bill/bill.html:31 possum/templates/notes/home.html:38
+#: possum/templates/bill/bill.html:31
+#: possum/templates/jukebox/musicplayerd.html:25
+#: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr ""
 
@@ -1187,6 +1189,30 @@ msgstr ""
 
 #: possum/templates/editions/home.html:29
 msgid "No edition"
+msgstr ""
+
+#: possum/templates/jukebox/musicplayerd.html:4
+msgid "Music Player"
+msgstr ""
+
+#: possum/templates/jukebox/musicplayerd.html:8
+msgid "Change playlist"
+msgstr ""
+
+#: possum/templates/jukebox/musicplayerd.html:21
+msgid "Play"
+msgstr ""
+
+#: possum/templates/jukebox/musicplayerd.html:22
+msgid "Pause"
+msgstr ""
+
+#: possum/templates/jukebox/musicplayerd.html:23
+msgid "Next"
+msgstr ""
+
+#: possum/templates/jukebox/musicplayerd.html:24
+msgid "Previous"
 msgstr ""
 
 #: possum/templates/kitchen/home.html:6 possum/templates/kitchen/view.html:16
