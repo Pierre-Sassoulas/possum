@@ -181,7 +181,6 @@ if not os.path.isfile(CAT_CSS):
     open(CAT_CSS, "w")
 
 INSTALLED_APPS = (
-    'south',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

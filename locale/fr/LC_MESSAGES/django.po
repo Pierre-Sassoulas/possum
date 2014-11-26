@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-23 22:17+0100\n"
+"POT-Creation-Date: 2014-11-26 15:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,6 +247,18 @@ msgstr "TVA sur place"
 msgid "VAT type not defined"
 msgstr "Type de TVA non défini"
 
+#: possum/base/views/manager/__init__.py:76
+msgid "Impossible to get an answer"
+msgstr "Impossible d'obtenir une réponse"
+
+#: possum/base/views/manager/__init__.py:80
+msgid "New release available"
+msgstr "Nouvelle version disponible"
+
+#: possum/base/views/manager/__init__.py:84
+msgid "You have last release"
+msgstr "Vous utilisez la dernière version"
+
 #: possum/base/views/manager/archives/__init__.py:51
 msgid "The date is not valid"
 msgstr "La date n'est pas valide"
@@ -291,6 +303,14 @@ msgstr "Le nouveau mot de passe est"
 #: possum/base/views/manager/vats/__init__.py:71
 msgid "You must enter a percentage tax"
 msgstr "Vous devez saisir le pourcentage de taxe"
+
+#: possum/jukebox/forms.py:39 possum/jukebox/musicplayerd.py:31
+msgid "Stop"
+msgstr ""
+
+#: possum/jukebox/musicplayerd.py:33
+msgid "Error"
+msgstr ""
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
 msgid "This page is currently unavailable"
@@ -404,7 +424,7 @@ msgstr "pas de report"
 #: possum/templates/base/carte/category.html:72
 #: possum/templates/base/manager/tables/home.html:21
 #: possum/templates/bill/bill.html:31
-#: possum/templates/jukebox/musicplayerd.html:25
+#: possum/templates/jukebox/musicplayerd.html:31
 #: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr "Supprimer"
@@ -776,27 +796,31 @@ msgstr "Logiciel libre sous licence GPLv3 créé par S. Bonnegent."
 msgid "You are currently using version"
 msgstr "Vous utilisez actuellement la version"
 
-#: possum/templates/base/manager/credits.html:13
+#: possum/templates/base/manager/credits.html:12
+msgid "new release"
+msgstr "nouvelle version"
+
+#: possum/templates/base/manager/credits.html:15
 msgid "A big thank you to"
 msgstr "Un grand merci à"
 
-#: possum/templates/base/manager/credits.html:15
+#: possum/templates/base/manager/credits.html:17
 msgid "for the original idea and the need"
 msgstr "pour l'idée originale et le besoin"
 
-#: possum/templates/base/manager/credits.html:16
+#: possum/templates/base/manager/credits.html:18
 msgid "acronym for software"
 msgstr "pour l'acronyme du logiciel"
 
-#: possum/templates/base/manager/credits.html:17
+#: possum/templates/base/manager/credits.html:19
 msgid "for the logo, icons and patience"
 msgstr "pour le logo, les icônes et la patience"
 
-#: possum/templates/base/manager/credits.html:18
+#: possum/templates/base/manager/credits.html:20
 msgid "icon to stop"
 msgstr "pour l'icone d'arrêt"
 
-#: possum/templates/base/manager/credits.html:19
+#: possum/templates/base/manager/credits.html:21
 msgid "icon to logout"
 msgstr "pour l'icone de déconnexion"
 
@@ -1109,7 +1133,9 @@ msgstr "Aucune cuisson"
 msgid "How many guests ?"
 msgstr "Combien de couverts ?"
 
-#: possum/templates/bill/home.html:4 possum/templates/kitchen/home.html:63
+#: possum/templates/bill/home.html:4
+#: possum/templates/jukebox/musicplayerd.html:34
+#: possum/templates/kitchen/home.html:63
 #, python-format
 msgid ""
 "This page will automatically refresh every\n"
@@ -1240,27 +1266,27 @@ msgstr "par"
 msgid "No edition"
 msgstr "Aucune édition"
 
-#: possum/templates/jukebox/musicplayerd.html:4
+#: possum/templates/jukebox/musicplayerd.html:6
 msgid "Music Player"
 msgstr "Lecteur de musique"
 
-#: possum/templates/jukebox/musicplayerd.html:8
+#: possum/templates/jukebox/musicplayerd.html:10
 msgid "Change playlist"
 msgstr "Changer la playlist"
 
-#: possum/templates/jukebox/musicplayerd.html:21
+#: possum/templates/jukebox/musicplayerd.html:27
 msgid "Play"
 msgstr "Lecture"
 
-#: possum/templates/jukebox/musicplayerd.html:22
+#: possum/templates/jukebox/musicplayerd.html:28
 msgid "Pause"
 msgstr "Pause"
 
-#: possum/templates/jukebox/musicplayerd.html:23
+#: possum/templates/jukebox/musicplayerd.html:29
 msgid "Next"
 msgstr "Suivant"
 
-#: possum/templates/jukebox/musicplayerd.html:24
+#: possum/templates/jukebox/musicplayerd.html:30
 msgid "Previous"
 msgstr "Précédent"
 

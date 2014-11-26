@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-23 22:17+0100\n"
+"POT-Creation-Date: 2014-11-26 15:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -248,6 +248,18 @@ msgstr ""
 msgid "VAT type not defined"
 msgstr ""
 
+#: possum/base/views/manager/__init__.py:76
+msgid "Impossible to get an answer"
+msgstr ""
+
+#: possum/base/views/manager/__init__.py:80
+msgid "New release available"
+msgstr ""
+
+#: possum/base/views/manager/__init__.py:84
+msgid "You have last release"
+msgstr ""
+
 #: possum/base/views/manager/archives/__init__.py:51
 msgid "The date is not valid"
 msgstr ""
@@ -291,6 +303,14 @@ msgstr ""
 
 #: possum/base/views/manager/vats/__init__.py:71
 msgid "You must enter a percentage tax"
+msgstr ""
+
+#: possum/jukebox/forms.py:39 possum/jukebox/musicplayerd.py:31
+msgid "Stop"
+msgstr ""
+
+#: possum/jukebox/musicplayerd.py:33
+msgid "Error"
 msgstr ""
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
@@ -393,7 +413,7 @@ msgstr ""
 #: possum/templates/base/carte/category.html:72
 #: possum/templates/base/manager/tables/home.html:21
 #: possum/templates/bill/bill.html:31
-#: possum/templates/jukebox/musicplayerd.html:25
+#: possum/templates/jukebox/musicplayerd.html:31
 #: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr ""
@@ -741,27 +761,31 @@ msgstr ""
 msgid "You are currently using version"
 msgstr ""
 
-#: possum/templates/base/manager/credits.html:13
-msgid "A big thank you to"
+#: possum/templates/base/manager/credits.html:12
+msgid "new release"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:15
-msgid "for the original idea and the need"
-msgstr ""
-
-#: possum/templates/base/manager/credits.html:16
-msgid "acronym for software"
+msgid "A big thank you to"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:17
-msgid "for the logo, icons and patience"
+msgid "for the original idea and the need"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:18
-msgid "icon to stop"
+msgid "acronym for software"
 msgstr ""
 
 #: possum/templates/base/manager/credits.html:19
+msgid "for the logo, icons and patience"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:20
+msgid "icon to stop"
+msgstr ""
+
+#: possum/templates/base/manager/credits.html:21
 msgid "icon to logout"
 msgstr ""
 
@@ -1062,7 +1086,9 @@ msgstr ""
 msgid "How many guests ?"
 msgstr ""
 
-#: possum/templates/bill/home.html:4 possum/templates/kitchen/home.html:63
+#: possum/templates/bill/home.html:4
+#: possum/templates/jukebox/musicplayerd.html:34
+#: possum/templates/kitchen/home.html:63
 #, python-format
 msgid ""
 "This page will automatically refresh every\n"
@@ -1175,27 +1201,27 @@ msgstr ""
 msgid "No edition"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:4
+#: possum/templates/jukebox/musicplayerd.html:6
 msgid "Music Player"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:8
+#: possum/templates/jukebox/musicplayerd.html:10
 msgid "Change playlist"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:21
+#: possum/templates/jukebox/musicplayerd.html:27
 msgid "Play"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:22
+#: possum/templates/jukebox/musicplayerd.html:28
 msgid "Pause"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:23
+#: possum/templates/jukebox/musicplayerd.html:29
 msgid "Next"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:24
+#: possum/templates/jukebox/musicplayerd.html:30
 msgid "Previous"
 msgstr ""
 

@@ -4,13 +4,14 @@
 from mpd import MPDClient
 from django.utils.translation import ugettext as _
 
+
 def check_cnx(aclient):
     try:
         aclient.status()
         return True
     except:
         try:
-            aclient.connect("localhost", 6600)
+            aclient.connect("localhost", 8000)
             return True
         except:
             return False

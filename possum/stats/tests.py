@@ -23,7 +23,7 @@ from decimal import Decimal
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.test.client import Client
+from django.test import Client
 
 from possum.base.models import Facture
 from possum.stats.models import Stat
@@ -38,28 +38,25 @@ class StatTests(TestCase):
         self.client = Client()
 
     def tearDown(self):
-        self.logout()
+        self.client.logout()
 
     def assert_http_status(self, urls, status, msg='without logging in'):
         for url in urls:
-            resp = self.client.get(url)
-            self.assertEqual(resp.status_code, status,
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, status,
                              "For '{0}' {1}, the http response".format(
                                  url, msg)
-                             + ' status is {0} '.format(resp.status_code)
+                             + ' status is {0} '.format(response.status_code)
                              + 'but it should be {0}'.format(status))
 
-    def login(self):
-        self.client.post('/users/login/',
-                         {'username': 'demo', 'password': 'demo'})
-
-    def logout(self):
-        self.client.logout()
-
-    def assert_http_status_after_login(self, urls, status):
-        self.login()
-        self.assert_http_status(urls, status, 'after a standard login')
-        self.logout()
+    def assert_http_status_after_login(self, urls):
+        client = Client()
+        self.assertTrue(client.login(username='demo', password='demo'))
+        for url in urls:
+            print url
+            response = client.get(url)
+            self.assertEqual(response.status_code, 200)
+        client.logout()
 
     def test_login_for_urls(self):
         ''' Test that the reports urls work. '''
@@ -77,7 +74,7 @@ class StatTests(TestCase):
             reverse('stats_charts', args=('42',)),
         ]
         self.assert_http_status(urls, 302)
-        self.assert_http_status_after_login(urls, 200)
+        self.assert_http_status_after_login(urls)
 
     def test_stats_monthly(self):
         """Test stats for a month

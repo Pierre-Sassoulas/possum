@@ -2,10 +2,15 @@
 Development
 ===========
 
-
 The project is open to all contributions, the easiest way is to start by forking
-the `project <https://github.com/possum-software/possum/>`_ and consult
+the `project <https://github.com/possum-software/possum/>`_ on **GitHub**
+and consult
 tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
+
+There are also some usefull tools to audit code:
+
+* `Jenkins <http://jenkins.possum-software.org/>`_
+* `Sonar <http://sonar.possum-software.org/>`_
 
 Version number
 ==============

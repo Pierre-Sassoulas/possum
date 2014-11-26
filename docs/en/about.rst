@@ -19,6 +19,9 @@ All source code of Possum is under GPLv3 and documentation under FDL.
 
 The key word: keep it simple for users.
 
+Homepage of Possum is here:                                                     
+`www.possum-software.org <http://www.possum-software.org>`_
+
 History
 =======
 

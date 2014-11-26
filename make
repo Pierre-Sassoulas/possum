@@ -84,7 +84,7 @@ function tests {
     csslint possum/base/static/possum --format=lint-xml > reports/csslint.report
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
     clonedigger --cpd-output -o reports/clonedigger.xml $(find possum -name "*.py" | fgrep -v '/migrations/' | fgrep -v '/tests/' | xargs echo )
-    sloccount --duplicates --wide --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
+    sloccount --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
     utests
 }
 
@@ -146,19 +146,25 @@ function update {
     fi
     enter_virtualenv
     pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    # Hack waiting new release of django-chartit
+    #  https://github.com/pgollakota/django-chartit
+    #  http://stackoverflow.com/questions/23564529/chartit-is-not-a-valid-tag-librarydjango
+    find env -name chartit.py -exec sed -ie 's/from django.utils import simplejson/import simplejson/' {} \;
+    # cleanup all .pyc files in possum
+    find possum -name "*.pyc" -exec rm -f {} \;
     if [ ! -e possum/settings.py ]
     then
         # default conf is production
         cp possum/settings_production.py possum/settings.py
-        ./manage.py syncdb --noinput --migrate
-        possum/utils/init_db.py
+        ./manage.py syncdb --noinput
+        ./manage.py init_db
         cat << 'EOF'
 -------------------------------------------------------
-To use Possum, copy and adapt possum/utils/init_db.py.
+To use Possum, copy and adapt possum/base/management/commands/init_db.py.
 
 Example:
-  cp possum/utils/init_db.py possum/utils/init_mine.py
-  # adapt possum/utils/init_yours.py file
+  cp possum/base/management/commands/init_db.py possum/base/management/commands/init_mine.py
+  # adapt possum/base/management/commands/init_mine.py file
   # and execute it
   ./make init_mine
 -------------------------------------------------------
@@ -166,7 +172,7 @@ EOF
     fi
     if [ ! -e possum.db ]
     then
-        ./manage.py syncdb --noinput --migrate
+        ./manage.py syncdb --noinput
     fi
     ./manage.py migrate
     ./manage.py update_css
@@ -226,7 +232,7 @@ init_mine)
 init_demo)
     enter_virtualenv
     clear_db
-    possum/utils/init_demo.py
+    ./manage.py init_demo
     ;;
 load_demo)
     enter_virtualenv
@@ -259,7 +265,7 @@ models_changed)
     ./manage.py schemamigration stats --auto
     ./manage.py migrate
     clear_db
-    possum/utils/init_demo.py
+    ./manage.py init_demo
     create_json_demo
     graph_models
     ;;

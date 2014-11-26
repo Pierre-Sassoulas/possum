@@ -23,8 +23,8 @@ templates_path = [os.path.join('..', '_templates')]
 source_suffix = '.rst'
 source_encoding = 'utf-8'
 master_doc = 'index'
-project = u'Possum'
-copyright = u'2008-%d, Bonnegent Sébastien' % datetime.now().year
+project = u'POSSUM'
+copyright = u'2008-%d, Possum Software' % datetime.now().year
 
 version = POSSUM_VERSION
 release = version
@@ -53,7 +53,7 @@ html_static_path = [os.path.join('..', '_static')]
 # html_use_smartypants = True
 
 html_theme_options = {
-    'navbar_site_name': "Doc",
+    'navbar_site_name': "Sommaire",
     'navbar_links': [
             ("Home", "http://www.possum-software.org", True),
         ],

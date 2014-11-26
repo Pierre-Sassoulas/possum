@@ -23,8 +23,8 @@ templates_path = [os.path.join('..', '_templates')]
 source_suffix = '.rst'
 source_encoding = 'utf-8'
 master_doc = 'index'
-project = u'Possum'
-copyright = u'2008-%d, Bonnegent Sébastien' % datetime.now().year
+project = u'POSSUM'
+copyright = u'2008-%d, Possum Software' % datetime.now().year
 
 version = POSSUM_VERSION
 release = version
@@ -50,14 +50,14 @@ html_static_path = [os.path.join('..', '_static')]
 # using the given strftime format.
 # html_last_updated_fmt = '%b %d, %Y'
 html_theme_options = {
-    'navbar_site_name': "Doc",
+    'navbar_site_name': "Summary",
     'navbar_links': [
             ("Home", "http://www.possum-software.org", True),
         ],
     'navbar_sidebarrel': True,
     'navbar_pagenav': True,
     'navbar_pagenav_name': "Page",
-    'globaltoc_depth': 2,
+    'globaltoc_depth': 1,
     'globaltoc_includehidden': "true",
     #'navbar_class': "navbar navbar-inverse",
     'navbar_fixed_top': "true",
@@ -98,7 +98,6 @@ html_show_sourcelink = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Possumdoc'
 
-
 # -- Options for LaTeX output --------------------------------------------------
 
 # The paper size ('letter' or 'a4').
@@ -109,10 +108,10 @@ htmlhelp_basename = 'Possumdoc'
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
-latex_documents = [
-  ('index', 'Possum.tex', u'Possum Documentation',
-   u'Bonnegent Sébastien', 'manual'),
-]
+#latex_documents = [
+#  ('index', 'Possum.tex', u'Possum Documentation',
+#   u'Bonnegent Sébastien', 'manual'),
+#]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.

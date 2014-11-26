@@ -37,6 +37,7 @@ def make_playlist_names():
     for i in plists:
         playlist_names.append((i['playlist'], i['playlist']))
     playlist_names.append(('-1', _("Stop")))
+    print "TODO: On doit tester le retour !!"
     return playlist_names
 
 
