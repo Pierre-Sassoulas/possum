@@ -1,80 +1,40 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Possum MPD Client</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <p>Bienvenue sur le player !</p>
-    
-    <form action="musicplayerd" method="GET">
-    	{{ pl_form.as_p }}
-    	<p>
-    	<input type="submit" value="Lancer" />
-    	</p>
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+{% load staticfiles %}
+
+    <h1>{% trans "Music Player" %}</h1>
+
+    <form id="formpl" action="" method="GET">
+      <fieldset>
+        <legend>{% trans "Change playlist" %} :</legend>
+        {{ pl_form.as_p }}
+      	<p>
+      	<input id="subbtn" type="submit" value="Lancer" />
+      	</p>
+      </fieldset>
     </form>
-    
-    <div id="infos"></div>
-    
-    <button id="play">Play</button>
-    <button id="pause">Pause</button>
-    <button id="next">Next</button>
-    <button id="previous">Previous</button>
-    
-    <SCRIPT type="text/javascript">
-    
-    $("button#play").click(ajaxplay);
-    $("button#pause").click(ajaxpause);
-    $("button#next").click(ajaxnext);
-    $("button#previous").click(ajaxprevious);
-    
-    function ajaxplay()
-    {
-    	$.ajax({
-    		url: '/ajax/play',
-    		type : 'GET'
-    	});
-    	return false;
-    }
-    
-    function ajaxpause()
-    {
-    	$.ajax({
-    		url: '/ajax/pause',
-    		type : 'GET'
-    	});
-    	return false;
-    }
-    
-    function ajaxnext()
-    {
-    	$.ajax({
-    		url: '/ajax/next',
-    		type : 'GET'
-    	});
-    	return false;
-    }
-    
-    function ajaxprevious()
-    {
-    	$.ajax({
-    		url: '/ajax/previous',
-    		type : 'GET'
-    	});
-    	return false;
-    }
-    
-    setInterval(getinfo, 1000);
-    
-    function getinfo()
-    {
-    	$.get('/ajax/info', function( data ) {
-    		  $( "div#infos" ).html( data );
-    		});
-    }
-    
-    </SCRIPT>
-    
-  </body>
-</html>
+
+    <div>
+    	<pre id="song">{{song}}</pre>
+    	<pre id="artist">{{artist}}</pre>
+    	<pre id="time">{{time}}</pre>
+    </div>
+
+    <progress id="progressbar" value="{{percent}}" max="100"></progress>
+
+    <p id="commands">
+      <button id="play">{% trans "Play" %}</button>
+      <button id="pause">{% trans "Pause" %}</button>
+      <button id="next">{% trans "Next" %}</button>
+      <button id="previous">{% trans "Previous" %}</button>
+      <button id="remove">{% trans "Remove" %}</button>
+    </p>
+
+    <p>{% blocktrans %}This page will automatically refresh every
+    {{need_auto_refresh}} seconds{% endblocktrans %}</p>
+
+<script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "jukebox.js" %}"></script>
+
+{% endblock %}
