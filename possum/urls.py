@@ -21,7 +21,7 @@
 from django.conf import settings
 from django.conf.urls import patterns, url, include
 
-CAT_RGX = r'categorie/(?P<cat_id>\d+)/'
+CAT_RGX = r'categorie/(?P<category_id>\d+)/'
 VAT_RGX = r'vat/(?P<vat_id>\d+)/'
 PRD_RGX = r'product/(?P<product_id>\d+)/'
 OPT_RGX = r'option/(?P<option_id>\d+)/'
