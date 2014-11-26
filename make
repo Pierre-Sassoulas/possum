@@ -150,6 +150,8 @@ function update {
     #  https://github.com/pgollakota/django-chartit
     #  http://stackoverflow.com/questions/23564529/chartit-is-not-a-valid-tag-librarydjango
     find env -name chartit.py -exec sed -ie 's/from django.utils import simplejson/import simplejson/' {} \;
+    # cleanup all .pyc files in possum
+    find possum -name "*.pyc" -exec rm -f {} \;
     if [ ! -e possum/settings.py ]
     then
         # default conf is production
