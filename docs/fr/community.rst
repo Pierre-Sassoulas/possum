@@ -18,8 +18,6 @@ Rester informé
 
 * `Google+ <https://plus.google.com/113982636103042531268/posts>`_
 * `RSS releases <http://www.possum-software.org/rss.xml>`_
-* `Twitter releases <https://twitter.com/possum_software>`_
-* `Twitter commits <https://twitter.com/possum_commits>`_
 
 Vous utilisez Possum et voulez le dire au monde entier
 ------------------------------------------------------
