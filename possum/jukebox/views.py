@@ -51,6 +51,10 @@ def musicplayerd(request):
 
 
 def ajax_play(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
@@ -68,6 +72,9 @@ def ajax_play(request):
 
 
 def ajax_pause(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
@@ -76,6 +83,9 @@ def ajax_pause(request):
 
 
 def ajax_next(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
@@ -84,6 +94,9 @@ def ajax_next(request):
 
 
 def ajax_previous(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
@@ -92,6 +105,9 @@ def ajax_previous(request):
 
 
 def ajax_info(request):
+    '''
+    :param HttpRequest request:
+    '''
     client = MPDClient()
     check_cnx(client)
     infos = getinfos()
@@ -100,6 +116,9 @@ def ajax_info(request):
 
 
 def ajax_remove(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)

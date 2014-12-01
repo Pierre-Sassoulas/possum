@@ -59,6 +59,11 @@ SECRET_FILE = normpath(join(DJANGO_ROOT, SITE_NAME, 'secret_key'))
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
+MPD_HOST = "localhost"
+MPD_PORT = 8000
+MPD_LOGIN = ""
+MPD_PWD = ""
+
 
 def create_secret_key():
     ''' Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then
