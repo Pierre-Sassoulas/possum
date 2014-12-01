@@ -19,6 +19,8 @@ List of commands:
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
     model              :  generate doc/images/models-base.png
+    makemigrations     :  Generate the migrations file.
+    migrates           :  Apply the migrations
     models_changed     :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
     run                :  run ./manage.py runserver_plus in virtualenv
@@ -203,6 +205,24 @@ function graph_models {
     done
 }
 
+function makemigrations {
+    enter_virtualenv
+    for app in $APPS
+    do
+        ./manage.py makemigrations
+        echo "[migrations created for ${app}]"
+    done
+}
+
+function migrates {
+    enter_virtualenv
+    for app in $APPS
+    do
+        ./manage.py migrates
+        echo "[migrations applied for ${app}]"
+    done
+}
+
 function clear_db {
     enter_virtualenv
     if [ -e possum.db ]
@@ -256,6 +276,12 @@ doc)
     ;;
 model)
     graph_models
+    ;;
+makemigrations)
+    makemigrations
+    ;;
+migrates)
+    migrates
     ;;
 update)
     update
