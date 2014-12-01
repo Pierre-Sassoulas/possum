@@ -71,7 +71,7 @@ class StatTests(TestCase):
         ]
         self.assert_http_status(urls, 302)
         # login() does not work, so for now we disable this check
-        #self.assert_http_status_after_login(urls)
+        # self.assert_http_status_after_login(urls)
 
     def test_stats_monthly(self):
         """Test stats for a month

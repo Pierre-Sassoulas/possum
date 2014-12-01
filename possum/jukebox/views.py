@@ -101,51 +101,76 @@ def musicplayerd(request):
     else:
         return render_to_response('500.html')
 
+
 def ajax_play(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
     if 'pl' in request.GET:
-    	plname = request.GET['pl']
-        if(plname!='0'):
+        plname = request.GET['pl']
+        if(plname != '0'):
             client.stop()
             client.clear()
-            if(plname!='-1'):
-		        client.load(plname)
-		        client.play()
+            if(plname != '-1'):
+                client.load(plname)
+                client.play()
     else:
         client.play()
     return HttpResponse(HTML_to_return)
 
+
 def ajax_pause(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
     client.pause(1)
     return HttpResponse(HTML_to_return)
 
+
 def ajax_next(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
     client.next()
     return HttpResponse(HTML_to_return)
 
+
 def ajax_previous(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
     client.previous()
     return HttpResponse(HTML_to_return)
 
+
 def ajax_info(request):
+    '''
+    :param HttpRequest request:
+    '''
     client = MPDClient()
     check_cnx(client)
     infos = getinfos()
     HTML_to_return = json.dumps(infos)
     return HttpResponse(HTML_to_return)
 
+
 def ajax_remove(request):
+    '''
+    :param HttpRequest request:
+    '''
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
