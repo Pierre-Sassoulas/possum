@@ -23,8 +23,7 @@ List of commands:
     migrates           :  Apply the migrations
     models_changed     :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
-    run                :  run ./manage.py runserver in virtualenv with the standard settings
-    rundev             :  run ./manage.py runserver in virtualenv with the dev settings
+    run                :  run ./manage.py runserver in virtualenv with the file settings.py
     translation        :  create/update translations
     tests              :  make tests and coverage
     update             :  install/update Possum environnement
@@ -313,10 +312,6 @@ sh)
 run)
     enter_virtualenv
     ./manage.py runserver --settings=possum.settings
-    ;;
-rundev)
-    enter_virtualenv
-    ./manage.py runserver --settings=possum.settings_dev
     ;;
 translation)
     enter_virtualenv
