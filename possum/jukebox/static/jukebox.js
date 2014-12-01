@@ -15,7 +15,7 @@ String.prototype.toMMSS = function () {
 
 function setinfos()
 {
-	$.get('ajax/info', function( data ) {
+	$.get('info', function( data ) {
 		  infos = $.parseJSON(data);
 		  $("pre#song").html(infos.song);
 		  $("pre#artist").html(infos.artist);
@@ -58,7 +58,7 @@ function ajaxpause()
 function ajaxfunct(strfunct)
 {
 	$.ajax({
-		url: 'ajax/'+strfunct,
+		url: strfunct,
 		type : 'GET'
 	});
 	setinfos();
@@ -85,7 +85,7 @@ $(document).ready(function(){
 	$("input#subbtn").remove();
 	$("select#id_pl").change(function(){
 		$.ajax({
-		url: 'ajax/play',
+		url: 'play',
 		type : 'GET',
 		data : "pl="+$("select#id_pl").val()
 	    });

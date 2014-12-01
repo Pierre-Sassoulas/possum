@@ -20,14 +20,52 @@
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.utils.translation import ugettext as _
 from mpd import MPDClient
 import json
 
-from .musicplayerd import check_cnx
-from .musicplayerd import getinfos
-
 from .forms import PlaylistsForm
 
+def check_cnx(aclient):
+    try:
+        aclient.status()
+        return True
+    except:
+        try:
+            aclient.timeout = 2
+            aclient.connect("localhost", 6600)
+            return True
+        except:
+            return False
+
+def getinfos():
+    client = MPDClient()
+    if check_cnx(client):
+        status = client.status()['state']
+        if (status == 'play' or status == 'pause'):
+            infos = {'song':client.currentsong()['title'],
+                     'artist':client.currentsong()['artist'],
+                     'elapsed':client.status()['elapsed'],
+                     'time':client.currentsong()['time'],
+                     }
+            return infos
+        else:
+            return {'song': _("Stop"), 'time':0,}
+    else:
+        return {'song': _("Error"), 'time':0,}
+
+def make_playlist_names(client):
+    '''
+    :return: A list of String corresponding to the playlist names
+    '''
+    playlist_names = list()
+    playlist_names.append(('0', ''))
+    if check_cnx(client) :
+        plists = client.listplaylists()
+        for i in plists:
+            playlist_names.append((i['playlist'], i['playlist']))
+    playlist_names.append(('-1', _("Stop")))
+    return playlist_names
 
 def musicplayerd(request):
     '''
@@ -36,15 +74,29 @@ def musicplayerd(request):
     '''
     client = MPDClient()
     if check_cnx(client) :
-        context = {'pl_form': PlaylistsForm,
+        plnames = make_playlist_names(client)
+        pl_form = PlaylistsForm()
+        pl_form.fields['pl'].choices = plnames
+        context = {'pl_form': pl_form,
     	           'need_auto_refresh': 60,
     	           }
         if 'pl' in request.GET:
-            client.stop()
-            client.clear()
-            client.load(request.GET['pl'])
-            client.play()
-            context = dict(context.items() + getinfos().items())
+            if request.GET['pl'] != '0' :
+                if request.GET['pl'] != '-1':
+                    nowpl = client.playlist()
+                    rqplfull = client.listplaylistinfo(request.GET['pl'])
+                    rqpl = list()
+                    for song in rqplfull :
+                        rqpl.append('file: '+song['file'])
+                    if not nowpl == rqpl :
+                        client.stop()
+                        client.clear()
+                        client.load(request.GET['pl'])
+                        client.play()
+                else :
+                    client.stop()
+                    client.clear()
+        context = dict(context.items() + getinfos().items())
         return render_to_response('jukebox/musicplayerd.html',context)
     else:
         return render_to_response('500.html')

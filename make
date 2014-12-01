@@ -145,6 +145,8 @@ function update {
         virtualenv --python=python2 env
     fi
     enter_virtualenv
+    # before all, we must have last release of Django
+    pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
     pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
     # Hack waiting new release of django-chartit
     #  https://github.com/pgollakota/django-chartit

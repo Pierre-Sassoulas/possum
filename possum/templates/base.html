@@ -8,8 +8,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name=author content="S. Bonnegent">
     <script type="text/javascript" src="{% static "possum/base.js" %}"></script>
-    {% if chart1 or chart2 %}
     <script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
+    {% if chart1 or chart2 %}
     <script type="text/javascript" src="{% static "highcharts/js/highcharts.js" %}"></script>
         {% load chartit %}
         {% if chart1 %}
