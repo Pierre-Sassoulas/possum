@@ -44,7 +44,7 @@ class TestsUrls(TestCase):
             reverse('home'),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test__carte_categories(self):
         ''' Test that the home urls work. '''
@@ -75,7 +75,7 @@ class TestsUrls(TestCase):
             # reverse('categories_set_kitchen', args=('42',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_carte(self):
         ''' Test that the carte urls work. '''
@@ -95,7 +95,7 @@ class TestsUrls(TestCase):
             # reverse('products_cooking', args=('3',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_bill(self):
         ''' Test that the bill urls work. '''
@@ -138,14 +138,14 @@ class TestsUrls(TestCase):
             reverse('bill_view', args=(self.latest_bill.id,)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
         urls = [
             reverse('table_set', args=('5', '2')),
             reverse('couverts_set', args=('4', '7')),
             reverse('bill_send_kitchen', args=('5',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 302)
+        # self.assert_http_status_after_login(urls, 302)
 
     def test_kitchen(self):
         ''' Test that the kitchen urls work. '''
@@ -154,7 +154,7 @@ class TestsUrls(TestCase):
             # reverse('kitchen_for_bill', args=('4',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_manager(self):
         ''' Test that the manager urls work. '''
@@ -163,7 +163,7 @@ class TestsUrls(TestCase):
             reverse('credits'),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_archives(self):
         ''' Test that the archives urls work. '''
@@ -172,7 +172,7 @@ class TestsUrls(TestCase):
             reverse('archives_bill', args=('15',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_printer(self):
         ''' Test that the carte urls work. '''
@@ -189,7 +189,7 @@ class TestsUrls(TestCase):
             # reverse('printer_set_width', args=('42', '73',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_user(self):
         ''' Test that the user urls work. '''
@@ -204,7 +204,7 @@ class TestsUrls(TestCase):
 #        for perm in ["p1", "p2", "p3"]:
 # urls.append(reverse('users_change_perm', args=('2', perm,)))
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_authentication(self):
         ''' Test that the login/logout urls work. '''
@@ -226,7 +226,7 @@ class TestsUrls(TestCase):
             reverse('vats_change', args=('1',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def test_table(self):
         ''' Test that the table urls work'''
@@ -239,7 +239,7 @@ class TestsUrls(TestCase):
             # reverse('tables_zone_delete', args=('2',)),
         ]
         self.assert_http_status(urls, 302)
-        #self.assert_http_status_after_login(urls, 200)
+        # self.assert_http_status_after_login(urls, 200)
 
     def assert_http_status(self, urls, status, msg='without logging in'):
         for url in urls:

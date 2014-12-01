@@ -22,10 +22,10 @@ import logging
 
 from django.db import models
 
-from category import Categorie
-from note import Note
-from options import Cuisson, Option
-from product import Produit
+from possum.base.models.category import Categorie
+from possum.base.models.note import Note
+from possum.base.models.options import Cuisson, Option
+from possum.base.models.product import Produit
 
 
 LOGGER = logging.getLogger(__name__)

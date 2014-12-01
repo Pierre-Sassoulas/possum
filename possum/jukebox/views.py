@@ -35,35 +35,37 @@ def musicplayerd(request):
     :return rtype: HttpResponse
     '''
     client = MPDClient()
-    if check_cnx(client) :
+    if check_cnx(client):
         context = {'pl_form': PlaylistsForm,
-    	           'need_auto_refresh': 60,
-    	           }
+                   'need_auto_refresh': 60,
+                   }
         if 'pl' in request.GET:
             client.stop()
             client.clear()
             client.load(request.GET['pl'])
             client.play()
             context = dict(context.items() + getinfos().items())
-        return render_to_response('jukebox/musicplayerd.html',context)
+        return render_to_response('jukebox/musicplayerd.html', context)
     else:
         return render_to_response('500.html')
+
 
 def ajax_play(request):
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
     if 'pl' in request.GET:
-    	plname = request.GET['pl']
-        if(plname!='0'):
+        plname = request.GET['pl']
+        if(plname != '0'):
             client.stop()
             client.clear()
-            if(plname!='-1'):
-		        client.load(plname)
-		        client.play()
+            if(plname != '-1'):
+                client.load(plname)
+                client.play()
     else:
         client.play()
     return HttpResponse(HTML_to_return)
+
 
 def ajax_pause(request):
     HTML_to_return = ''
@@ -72,12 +74,14 @@ def ajax_pause(request):
     client.pause(1)
     return HttpResponse(HTML_to_return)
 
+
 def ajax_next(request):
     HTML_to_return = ''
     client = MPDClient()
     check_cnx(client)
     client.next()
     return HttpResponse(HTML_to_return)
+
 
 def ajax_previous(request):
     HTML_to_return = ''
@@ -86,12 +90,14 @@ def ajax_previous(request):
     client.previous()
     return HttpResponse(HTML_to_return)
 
+
 def ajax_info(request):
     client = MPDClient()
     check_cnx(client)
     infos = getinfos()
     HTML_to_return = json.dumps(infos)
     return HttpResponse(HTML_to_return)
+
 
 def ajax_remove(request):
     HTML_to_return = ''

@@ -20,8 +20,8 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from config import Config
-from generic import Nom
+from possum.base.models.config import Config
+from possum.base.models.generic import Nom
 
 
 class PaiementType(Nom):

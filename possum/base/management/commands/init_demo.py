@@ -50,7 +50,6 @@ class Command(BaseCommand):
                             i))
                 user.save()
 
-
         # Type de paiements
         PaiementType(nom='AMEX', fixed_value=False).save()
         PaiementType(nom='ANCV', fixed_value=True).save()
@@ -59,21 +58,17 @@ class Command(BaseCommand):
         PaiementType(nom='Espece', fixed_value=False).save()
         PaiementType(nom='Tic. Resto.', fixed_value=True).save()
 
-
         # Type de paiements par défaut pour les remboursements lorsque
         # le paiement dépasse le montant de la facture
         id_type_paiement = PaiementType.objects.get(nom="Espece").id
         Config(key="payment_for_refunds", value=id_type_paiement).save()
 
-
         # Default PaymentType to select by default on the payment page
         id_type_paiement = PaiementType.objects.get(nom="Espece").id
         Config(key="default_type_payment", value=id_type_paiement).save()
 
-
         # Montant de la surtaxe
         Config(key="price_surcharge", value="0.20").save()
-
 
         # Tables
         z = Zone(nom='Bar', surtaxe=False)
@@ -87,7 +82,6 @@ class Command(BaseCommand):
         z.save()
         for i in xrange(15, 26):
             Table(nom="T%02d" % i, zone=z).save()
-
 
         # TVA
         vat_alcool = VAT(name="alcool")
@@ -179,7 +173,6 @@ class Command(BaseCommand):
                        categorie=plat)
         pave.save()
 
-
         # pour les menu
         menu = Categorie(nom="Menu",
                          priorite=22,
@@ -205,7 +198,6 @@ class Command(BaseCommand):
         # mis a jour des TTC et TVA
         for product in Produit.objects.all():
             product.update_vats(keep_clone=False)
-
 
         def create_bill(finish=True):
             """Create a bill
@@ -245,8 +237,8 @@ class Command(BaseCommand):
                 bill.add_payment(type_payment, bill.total_ttc)
             return bill
 
-
-        # on ajoute des données pour avoir des jolies graphiques de démonstrations
+        # on ajoute des données pour avoir des jolies graphiques de
+        # démonstrations
         now = datetime.datetime.now()
         for month in xrange(1, 13):
             for i in xrange(20):

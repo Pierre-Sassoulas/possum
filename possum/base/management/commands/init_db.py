@@ -58,7 +58,10 @@ class Command(BaseCommand):
 
         self.stdout.write("Setup permissions for manager")
         for i in xrange(1, 10):
-            user.user_permissions.add(Permission.objects.get(codename="p%d" % i))
+            user.user_permissions.add(
+                Permission.objects.get(
+                    codename="p%d" %
+                    i))
         user.save()
 
         self.stdout.write("Add a pos user")

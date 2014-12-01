@@ -78,7 +78,7 @@ def check_new_version(request):
         if version != settings.POSSUM_VERSION:
             messages.add_message(request, messages.WARNING,
                                  "%s: %s" % (_("New release available"),
-                                 version))
+                                             version))
         else:
             messages.add_message(request, messages.SUCCESS,
                                  _("You have last release"))
