@@ -121,9 +121,9 @@ class ProduitVendu(models.Model):
 
     def get_free_categorie(self):
         """
-        :return: La premiere categorie dans la liste categories_ok
-        qui n'a pas de produit dans la partir 'contient'. Sinon retourne
-        None
+
+        :return: La premiere categorie dans la liste categories_ok qui n'a pas\
+        de produit dans la partir 'contient'. Sinon retourne None.
         """
         if self.produit.categories_ok.count() > 0:
             for categorie in self.produit.categories_ok.order_by("priorite"):

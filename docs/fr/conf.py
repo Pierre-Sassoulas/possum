@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import sys
 import sphinx_bootstrap_theme
+from django.conf import settings
 
 # if needed, create possum/settings.py
 POSSUM = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -13,6 +14,7 @@ if not os.path.isfile(CONF):
     shutil.copyfile(CONF_TEMPLATE, CONF)
 
 sys.path.append(POSSUM)
+settings.configure()
 from version import POSSUM_VERSION
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest',
@@ -55,8 +57,8 @@ html_static_path = [os.path.join('..', '_static')]
 html_theme_options = {
     'navbar_site_name': "Sommaire",
     'navbar_links': [
-            ("Home", "http://www.possum-software.org", True),
-        ],
+        ("Home", "http://www.possum-software.org", True),
+    ],
     'navbar_sidebarrel': True,
     'navbar_pagenav': True,
     'navbar_pagenav_name': "Page",
@@ -73,7 +75,7 @@ html_theme_options = {
 # Custom sidebar templates, maps document names to template names.
 # html_sidebars = {}
 html_sidebars = {
-#    '**': ['globaltoc.html', 'searchbox.html', 'openhub.html'],
+    #    '**': ['globaltoc.html', 'searchbox.html', 'openhub.html'],
 }
 #    '**': ['globaltoc.html', 'localtoc.html', 'searchbox.html'],
 #    'using/windows': ['windowssidebar.html', 'searchbox.html'],
@@ -108,7 +110,7 @@ html_show_sourcelink = False
 htmlhelp_basename = 'Possumdoc'
 
 
-# -- Options for LaTeX output --------------------------------------------------
+# -- Options for LaTeX output --------------------------------------------
 
 # The paper size ('letter' or 'a4').
 # latex_paper_size = 'letter'
@@ -119,8 +121,8 @@ htmlhelp_basename = 'Possumdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Possum.tex', u'Possum Documentation',
-   u'Bonnegent Sébastien', 'manual'),
+    ('index', 'Possum.tex', u'Possum Documentation',
+     u'Bonnegent Sébastien', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
