@@ -20,33 +20,45 @@
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.conf import settings
 from django.utils.translation import ugettext as _
 from mpd import MPDClient
 import json
 
 from .forms import PlaylistsForm
 
-def check_cnx(aclient):
+def check_cnx():
+    if not settings.MPD_HOST:
+        print "settings.MPD_HOST not set !"
+        return False
     try:
-        aclient.status()
+        settings.MPD_CLIENT.ping()
+        print "settings.MPD_CLIENT OK !"
         return True
     except:
         try:
-            aclient.timeout = 2
-            aclient.connect("localhost", 6600)
+            print "settings.MPD_CLIENT KO !"
+            settings.MPD_CLIENT = MPDClient()
+            settings.MPD_CLIENT.timeout = 2
+            if settings.MPD_PWD :
+                    settings.MPD_CLIENT.password(settings.MPD_PWD)
+            settings.MPD_CLIENT.connect(settings.MPD_HOST, settings.MPD_PORT)
+            print "settings.MPD_CLIENT OK (new instance) !"
             return True
         except:
+            print "settings.MPD_CLIENT KO (new instance) !"
             return False
 
 def getinfos():
-    client = MPDClient()
-    if check_cnx(client):
-        status = client.status()['state']
-        if (status == 'play' or status == 'pause'):
-            infos = {'song':client.currentsong()['title'],
-                     'artist':client.currentsong()['artist'],
-                     'elapsed':client.status()['elapsed'],
-                     'time':client.currentsong()['time'],
+    if check_cnx():
+        status = settings.MPD_CLIENT.status()
+        if (status['state'] == 'play' or status['state'] == 'pause'):
+            currsong = settings.MPD_CLIENT.currentsong()
+            infos = {'song':currsong['title'],
+                     'artist':currsong['artist'],
+                     'elapsed':status['elapsed'],
+                     'time':currsong['time'],
+                     'status':status['state'],
                      }
             return infos
         else:
@@ -54,16 +66,15 @@ def getinfos():
     else:
         return {'song': _("Error"), 'time':0,}
 
-def make_playlist_names(client):
+def make_playlist_names():
     '''
     :return: A list of String corresponding to the playlist names
     '''
     playlist_names = list()
     playlist_names.append(('0', ''))
-    if check_cnx(client) :
-        plists = client.listplaylists()
-        for i in plists:
-            playlist_names.append((i['playlist'], i['playlist']))
+    plists = settings.MPD_CLIENT.listplaylists()
+    for i in plists:
+        playlist_names.append((i['playlist'], i['playlist']))
     playlist_names.append(('-1', _("Stop")))
     return playlist_names
 
@@ -72,9 +83,8 @@ def musicplayerd(request):
     :param HttpRequest request:
     :return rtype: HttpResponse
     '''
-    client = MPDClient()
-    if check_cnx(client) :
-        plnames = make_playlist_names(client)
+    if check_cnx() :
+        plnames = make_playlist_names()
         pl_form = PlaylistsForm()
         pl_form.fields['pl'].choices = plnames
         context = {'pl_form': pl_form,
@@ -83,19 +93,19 @@ def musicplayerd(request):
         if 'pl' in request.GET:
             if request.GET['pl'] != '0' :
                 if request.GET['pl'] != '-1':
-                    nowpl = client.playlist()
-                    rqplfull = client.listplaylistinfo(request.GET['pl'])
+                    nowpl = settings.MPD_CLIENT.playlist()
+                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(request.GET['pl'])
                     rqpl = list()
                     for song in rqplfull :
                         rqpl.append('file: '+song['file'])
                     if not nowpl == rqpl :
-                        client.stop()
-                        client.clear()
-                        client.load(request.GET['pl'])
-                        client.play()
+                        settings.MPD_CLIENT.stop()
+                        settings.MPD_CLIENT.clear()
+                        settings.MPD_CLIENT.load(request.GET['pl'])
+                        settings.MPD_CLIENT.play()
                 else :
-                    client.stop()
-                    client.clear()
+                    settings.MPD_CLIENT.stop()
+                    settings.MPD_CLIENT.clear()
         context = dict(context.items() + getinfos().items())
         return render_to_response('jukebox/musicplayerd.html',context)
     else:
@@ -108,18 +118,17 @@ def ajax_play(request):
     :return rtype: HttpResponse
     '''
     HTML_to_return = ''
-    client = MPDClient()
-    check_cnx(client)
+    check_cnx()
     if 'pl' in request.GET:
         plname = request.GET['pl']
         if(plname != '0'):
-            client.stop()
-            client.clear()
+            settings.MPD_CLIENT.stop()
+            settings.MPD_CLIENT.clear()
             if(plname != '-1'):
-                client.load(plname)
-                client.play()
+                settings.MPD_CLIENT.load(plname)
+                settings.MPD_CLIENT.play()
     else:
-        client.play()
+        settings.MPD_CLIENT.play()
     return HttpResponse(HTML_to_return)
 
 
@@ -128,9 +137,8 @@ def ajax_pause(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    client = MPDClient()
-    check_cnx(client)
-    client.pause(1)
+    check_cnx()
+    settings.MPD_CLIENT.pause(1)
     return HttpResponse(HTML_to_return)
 
 
@@ -139,9 +147,8 @@ def ajax_next(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    client = MPDClient()
-    check_cnx(client)
-    client.next()
+    check_cnx()
+    settings.MPD_CLIENT.next()
     return HttpResponse(HTML_to_return)
 
 
@@ -150,9 +157,8 @@ def ajax_previous(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    client = MPDClient()
-    check_cnx(client)
-    client.previous()
+    check_cnx()
+    settings.MPD_CLIENT.previous()
     return HttpResponse(HTML_to_return)
 
 
@@ -160,8 +166,6 @@ def ajax_info(request):
     '''
     :param HttpRequest request:
     '''
-    client = MPDClient()
-    check_cnx(client)
     infos = getinfos()
     HTML_to_return = json.dumps(infos)
     return HttpResponse(HTML_to_return)
@@ -172,7 +176,6 @@ def ajax_remove(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    client = MPDClient()
-    check_cnx(client)
-    client.delete()
+    check_cnx()
+    settings.MPD_CLIENT.delete()
     return HttpResponse(HTML_to_return)
