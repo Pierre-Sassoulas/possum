@@ -61,7 +61,7 @@ SECRET_FILE = normpath(join(DJANGO_ROOT, SITE_NAME, 'secret_key'))
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-MPD_HOST = "localhost"
+MPD_HOST = ""
 MPD_PORT = 6600
 MPD_PWD = ""
 
