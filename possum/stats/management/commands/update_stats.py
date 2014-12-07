@@ -18,15 +18,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""Update statistics
-"""
-import os
-import sys
-
+from django.core.management.base import BaseCommand
 from possum.stats.models import Stat
 
 
-sys.path.append('.')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
+class Command(BaseCommand):
+    args = ""
+    help = "Update statistics"
 
-Stat().update()
+    def handle(self, *args, **options):
+        Stat().update()
