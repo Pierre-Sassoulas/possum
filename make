@@ -214,11 +214,11 @@ function makemigrations {
     done
 }
 
-function migrates {
+function migrate {
     enter_virtualenv
     for app in $APPS
     do
-        ./manage.py migrates
+        ./manage.py migrate
         echo "[migrations applied for ${app}]"
     done
 }
@@ -280,8 +280,8 @@ model)
 makemigrations)
     makemigrations
     ;;
-migrates)
-    migrates
+migrate)
+    migrate
     ;;
 update)
     update
@@ -322,3 +322,4 @@ translation)
     my_help
     ;;
 esac
+

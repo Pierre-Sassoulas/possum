@@ -18,12 +18,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Permission
+from django.core.management.base import BaseCommand
 
-from possum.base.models import Categorie, Cuisson, Paiement, PaiementType, \
-    Facture, Produit, ProduitVendu, Follow, Table, Zone, VAT, \
-    Printer, VATOnBill, Config
+from possum.base.models import (Categorie, Cuisson, Paiement, PaiementType,
+                                Facture, Produit, Follow, Table, Zone, VAT,
+                                Printer, VATOnBill, Config)
 from possum.stats.models import Stat
 
 
@@ -48,6 +48,11 @@ class Command(BaseCommand):
         Paiement.objects.all().delete()
         Config.objects.all().delete()
 
+        Cuisson(priorite=10, nom_facture="B", nom="bleu").save()
+        Cuisson(priorite=15, nom_facture="S", nom="saignant").save()
+        Cuisson(priorite=20, nom_facture="AP", nom="a point").save()
+        Cuisson(priorite=25, nom_facture="BC", nom="bien cuit").save()
+
         self.stdout.write("Add a manager")
         user = User(username="demo",
                     first_name="first name",
@@ -59,16 +64,11 @@ class Command(BaseCommand):
         self.stdout.write("Setup permissions for manager")
         for i in xrange(1, 10):
             user.user_permissions.add(
-                Permission.objects.get(
-                    codename="p%d" %
-                    i))
+                Permission.objects.get(codename="p%d" % i))
         user.save()
 
         self.stdout.write("Add a pos user")
-        user = User(username="pos",
-                    first_name="",
-                    last_name="",
-                    email="")
+        user = User(username="pos", first_name="", last_name="", email="")
         user.set_password("pos")
         user.save()
 
@@ -96,3 +96,4 @@ class Command(BaseCommand):
 
         # Le montant de surtaxe, si utilisé
         Config(key="price_surcharge", value="0.20").save()
+
