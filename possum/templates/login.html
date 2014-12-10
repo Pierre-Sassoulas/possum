@@ -4,8 +4,8 @@
 {% load staticfiles %}
 {% load i18n %}
 
-<div id="login">
-<form method='post' action='/users/login/' name='login'>{% csrf_token %}
+<form method='post' action='/users/login/' name='login' class='center'>
+    {% csrf_token %}
     <table>
         <tr><td colspan=2 align="center">
                 <img src="{% static "images/bandeau-128.png" %}" alt="logo"/>
@@ -16,5 +16,4 @@
         </td></tr>
     </table>
 </form>
-</div>
 {% endblock %}
