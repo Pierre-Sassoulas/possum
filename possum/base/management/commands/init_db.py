@@ -96,4 +96,3 @@ class Command(BaseCommand):
 
         # Le montant de surtaxe, si utilisé
         Config(key="price_surcharge", value="0.20").save()
-

@@ -63,10 +63,10 @@ In short::
   $ git remote add -t dev upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
 
-Launching a developement server
+Launching a development server
 -------------------------------
 
-In order to launch a developement server you can use 
+In order to launch a development server you can use 
 
 ::
 
