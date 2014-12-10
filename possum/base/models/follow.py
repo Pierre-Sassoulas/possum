@@ -20,8 +20,8 @@
 
 from django.db import models
 
-from category import Categorie
-from product_sold import ProduitVendu
+from possum.base.models.category import Categorie
+from possum.base.models.product_sold import ProduitVendu
 
 
 class Follow(models.Model):

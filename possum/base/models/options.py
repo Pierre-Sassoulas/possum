@@ -20,7 +20,7 @@
 
 from django.db import models
 
-from generic import Priorite, NomDouble
+from possum.base.models.generic import Priorite, NomDouble
 
 
 class Cuisson(NomDouble, Priorite):

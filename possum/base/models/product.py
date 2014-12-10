@@ -24,10 +24,10 @@ import logging
 
 from django.db import models
 
-from category import Categorie
-from config import Config
-from generic import Nom
-from options import Option
+from possum.base.models.category import Categorie
+from possum.base.models.config import Config
+from possum.base.models.generic import Nom
+from possum.base.models.options import Option
 
 
 LOGGER = logging.getLogger(__name__)
@@ -104,8 +104,9 @@ class Produit(Nom):
         """
         from possum.stats.models import Stat
         # if not a new product or any product sold
-        if not self.id or \
-                Stat.objects.filter(key="%d_product_nb" % self.id).count() == 0:
+        if not self.id or Stat.objects.filter(
+                key="%d_product_nb" %
+                self.id).count() == 0:
             # if not needed, we don't clone the knight
             LOGGER.info("product doesn't need clone")
             return self

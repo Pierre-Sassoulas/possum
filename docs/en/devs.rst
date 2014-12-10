@@ -44,6 +44,9 @@ In short:
 How to contribute
 =================
 
+Get started
+-----------
+
 Firstly, you must have an account on `Github <https://github.com>`_.
 
 You have to create a fork `here <https://github.com/possum-software/possum>`_
@@ -59,24 +62,47 @@ In short::
   $ cd possum-software
   $ git remote add -t dev upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
-  $ cp possum/settings_dev.py possum/settings.py
+
+Launching a development server
+-------------------------------
+
+In order to launch a development server you can use 
+
+::
+
   $ ./make update
-  $ echo "make changes"
+  $ ./make run
+
+The settings file that is used is settings.py. You may want to copy the content of 
+settings_dev.py or settings_production.py in it to get the setting you want while 
+running the command.
+
+::
+
+  $ cp possum/settings_dev.py possum/settings.py
+
+
+Preparing your pull request
+---------------------------
+
+::
+
+  $ echo "make changes and commit"
   $ git commit -a -m "cool stuff"
+  $ git rebase -i 
   $ git push
 
-Changes are in your fork, now you can create a pull request directly on Github.
+Your changes are clean in your fork, now you can create a pull request directly on Github.
 All pull requests must be sync with Possum development branch (dev).
 
 After that, you must check state of your request on
 `Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
 if the number of violations is up, your request will not be accepted.
 
-You can fetch any new changes from the original repository and merge it
-to your fork with::
+You can fetch any new changes from the original repository and rebase your fork with::
 
   $ git fetch upstream
-  $ git merge upstream/dev
+  $ git rebase upstream/dev
 
 Or view differences with::
 

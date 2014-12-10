@@ -19,30 +19,11 @@
 #
 
 from django import forms
-from mpd import MPDClient
-
-from .musicplayerd import check_cnx
-
-
-def make_playlist_names():
-    '''
-    :return: A list of String corresponding to the playlist names
-    '''
-    client = MPDClient()
-    check_cnx(client)
-    print "TODO: On doit tester le retour !!"
-    return []
-#    plists = client.listplaylists()
-#    playlist_names = list()
-#    for i in range(0, len(plists)):
-#        playlist_names.append((plists[i]['playlist'], plists[i]['playlist']))
-#    return playlist_names
-
+from django.utils.translation import ugettext as _
 
 class PlaylistsForm(forms.Form):
 
     '''
     The form for a Playlist.
     '''
-    pl = forms.ChoiceField(label='Choose a playlist :',
-                           choices=make_playlist_names())
+    pl = forms.ChoiceField(label='', choices=[('0', ''), ('-1', _("Stop"))])

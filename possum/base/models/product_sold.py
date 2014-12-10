@@ -22,10 +22,10 @@ import logging
 
 from django.db import models
 
-from category import Categorie
-from note import Note
-from options import Cuisson, Option
-from product import Produit
+from possum.base.models.category import Categorie
+from possum.base.models.note import Note
+from possum.base.models.options import Cuisson, Option
+from possum.base.models.product import Produit
 
 
 LOGGER = logging.getLogger(__name__)
@@ -121,9 +121,9 @@ class ProduitVendu(models.Model):
 
     def get_free_categorie(self):
         """
-        :return: La premiere categorie dans la liste categories_ok
-        qui n'a pas de produit dans la partir 'contient'. Sinon retourne
-        None
+
+        :return: La premiere categorie dans la liste categories_ok qui n'a pas\
+        de produit dans la partir 'contient'. Sinon retourne None.
         """
         if self.produit.categories_ok.count() > 0:
             for categorie in self.produit.categories_ok.order_by("priorite"):

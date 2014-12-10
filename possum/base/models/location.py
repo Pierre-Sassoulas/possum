@@ -19,7 +19,7 @@
 #
 from django.db import models
 
-from generic import Nom
+from possum.base.models.generic import Nom
 
 
 class Zone(Nom):

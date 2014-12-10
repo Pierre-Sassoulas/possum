@@ -25,6 +25,8 @@ import sys
 
 from django.utils.translation import ugettext_lazy as _
 
+from mpd import MPDClient
+
 from version import POSSUM_VERSION
 
 
@@ -57,17 +59,28 @@ PERMS = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9']
 # SECRET_KEY. Will be auto-generated the first time this file is interpreted.
 SECRET_FILE = normpath(join(DJANGO_ROOT, SITE_NAME, 'secret_key'))
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+MPD_HOST = ""
+MPD_PORT = 6600
+MPD_PWD = ""
+
+if MPD_HOST :
+    MPD_CLIENT = MPDClient()
+    MPD_CLIENT.timeout = 2
+    if MPD_PWD :
+            MPD_CLIENT.password(MPD_PWD)
 
 def create_secret_key():
     ''' Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then
     generate a random SECRET_KEY and save it into our SECRET_FILE for future
      loading. If everything fails, then just raise an exception. '''
-    with open(abspath(SECRET_FILE), 'w') as f:
-        SECRET_KEY_TEXT = "".join([random.choice("abcdefghijklmnopqrstuvwxyz"
+    with open(abspath(SECRET_FILE), 'w') as file_:
+        secret_key_text = "".join([random.choice("abcdefghijklmnopqrstuvwxyz"
                                                  "0123456789!@#$%^&*(-_=+)")
                                    for i in range(50)])
-        f.write(SECRET_KEY_TEXT)
-    return SECRET_KEY_TEXT
+        file_.write(secret_key_text)
+    return secret_key_text
 
 try:
     if os.path.isfile(SECRET_FILE):
@@ -78,8 +91,8 @@ try:
         SECRET_KEY_TEXT = create_secret_key()
     SECRET_KEY = SECRET_KEY_TEXT
 except IOError as exc:
-        raise Exception('Cannot open file `%s` for writing. (%s)'
-                        % (SECRET_FILE, exc))
+    raise Exception('Cannot open file `%s` for writing. (%s)'
+                    % (SECRET_FILE, exc))
 
 # END KEY CONFIGURATION
 # This address is used to send automatically bugs and errors.
