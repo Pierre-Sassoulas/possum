@@ -27,6 +27,7 @@ import json
 
 from .forms import PlaylistsForm
 
+
 def check_cnx():
     if not settings.MPD_HOST:
         print "settings.MPD_HOST not set !"
@@ -40,8 +41,8 @@ def check_cnx():
             print "settings.MPD_CLIENT KO !"
             settings.MPD_CLIENT = MPDClient()
             settings.MPD_CLIENT.timeout = 2
-            if settings.MPD_PWD :
-                    settings.MPD_CLIENT.password(settings.MPD_PWD)
+            if settings.MPD_PWD:
+                settings.MPD_CLIENT.password(settings.MPD_PWD)
             settings.MPD_CLIENT.connect(settings.MPD_HOST, settings.MPD_PORT)
             print "settings.MPD_CLIENT OK (new instance) !"
             return True
@@ -49,22 +50,23 @@ def check_cnx():
             print "settings.MPD_CLIENT KO (new instance) !"
             return False
 
+
 def getinfos():
     if check_cnx():
         status = settings.MPD_CLIENT.status()
         if (status['state'] == 'play' or status['state'] == 'pause'):
             currsong = settings.MPD_CLIENT.currentsong()
-            infos = {'song':currsong['title'],
-                     'artist':currsong['artist'],
-                     'elapsed':status['elapsed'],
-                     'time':currsong['time'],
-                     'status':status['state'],
-                     }
+            infos = {'song': currsong['title'],
+                     'artist': currsong['artist'],
+                     'elapsed': status['elapsed'],
+                     'time': currsong['time'],
+                     'status': status['state'], }
             return infos
         else:
-            return {'song': _("Stop"), 'time':0,}
+            return {'song': _("Stop"), 'time': 0, }
     else:
-        return {'song': _("Error"), 'time':0,}
+        return {'song': _("Error"), 'time': 0, }
+
 
 def make_playlist_names():
     '''
@@ -78,36 +80,37 @@ def make_playlist_names():
     playlist_names.append(('-1', _("Stop")))
     return playlist_names
 
+
 def musicplayerd(request):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
     '''
-    if check_cnx() :
+    if check_cnx():
         plnames = make_playlist_names()
         pl_form = PlaylistsForm()
         pl_form.fields['pl'].choices = plnames
         context = {'pl_form': pl_form,
-    	           'need_auto_refresh': 60,
-    	           }
+                   'need_auto_refresh': 60, }
         if 'pl' in request.GET:
-            if request.GET['pl'] != '0' :
+            if request.GET['pl'] != '0':
                 if request.GET['pl'] != '-1':
                     nowpl = settings.MPD_CLIENT.playlist()
-                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(request.GET['pl'])
+                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(
+                        request.GET['pl'])
                     rqpl = list()
-                    for song in rqplfull :
-                        rqpl.append('file: '+song['file'])
-                    if not nowpl == rqpl :
+                    for song in rqplfull:
+                        rqpl.append('file: ' + song['file'])
+                    if not nowpl == rqpl:
                         settings.MPD_CLIENT.stop()
                         settings.MPD_CLIENT.clear()
                         settings.MPD_CLIENT.load(request.GET['pl'])
                         settings.MPD_CLIENT.play()
-                else :
+                else:
                     settings.MPD_CLIENT.stop()
                     settings.MPD_CLIENT.clear()
         context = dict(context.items() + getinfos().items())
-        return render_to_response('jukebox/musicplayerd.html',context)
+        return render_to_response('jukebox/musicplayerd.html', context)
     else:
         return render_to_response('500.html')
 
