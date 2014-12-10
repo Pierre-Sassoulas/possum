@@ -3,6 +3,6 @@ Développement
 =============
 
 Pour toutes les informations concernant le développement, il faut se référer
-à la documentation en anglais: `Possum <http://possum.readthedocs.org/en/>`_.
+à la documentation en anglais: `Documentation <http://doc.possum-software.org/>`_.
 
 
