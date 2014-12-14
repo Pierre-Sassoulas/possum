@@ -1,6 +1,8 @@
 #!/bin/bash
 JQUERY="jquery-2.0.3.min.js"
 HIGHCHARTS="Highcharts-3.0.6.zip"
+BOOTSTRAP_VERSION="3.3.1"
+BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
 APPS="base stats"
 
 function my_help {
@@ -108,16 +110,21 @@ function fastcoverage {
 
 function update_js {
     # update javascript part
+    # JQuery
     if [ ! -e possum/base/static/jquery.min.js ]
     then
         echo "Download and install JQuery..."
         wget http://code.jquery.com/${JQUERY} -O possum/base/static/jquery.min.js
     fi
-
-    if [ ! -d possum/base/static/highcharts ]
-    then
-        mkdir -v possum/base/static/highcharts
-    fi
+    # Init
+    for lib in highcharts bootstrap
+    do
+        if [ ! -d possum/base/static/${lib} ]
+        then
+            mkdir -v possum/base/static/${lib}
+        fi
+    done
+    # Highcharts
     if [ ! -e possum/base/static/highcharts/${HIGHCHARTS} ]
     then
         echo "Download HighCharts..."
@@ -127,7 +134,21 @@ function update_js {
     then
         echo "Unzip HighCharts..."
         pushd possum/base/static/highcharts/ >/dev/null
-        unzip Highcharts-3.0.6.zip
+        unzip ${HIGHCHARTS}
+        popd >/dev/null
+    fi
+    # BootStrap
+    if [ ! -e possum/base/static/bootstrap/${BOOTSTRAP} ]
+    then
+        echo "Download BootStrap..."
+        wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
+            -O possum/base/static/bootstrap/${BOOTSTRAP}
+    fi
+    if [ ! -e possum/base/static/bootstrap/dist/js/bootstrap.min.js ]
+    then
+        echo "Unzip BootStrap..."
+        pushd possum/base/static/bootstrap/ >/dev/null
+        unzip ${BOOTSTRAP}
         popd >/dev/null
     fi
     enter_virtualenv
