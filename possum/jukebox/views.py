@@ -17,6 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
+import logging
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -27,27 +28,28 @@ import json
 
 from .forms import PlaylistsForm
 
+LOGGER = logging.getLogger(__name__)
 
 def check_cnx():
     if not settings.MPD_HOST:
-        print "settings.MPD_HOST not set !"
+        LOGGER.debug("settings.MPD_HOST not set !")
         return False
     try:
         settings.MPD_CLIENT.ping()
-        print "settings.MPD_CLIENT OK !"
+        LOGGER.debug("settings.MPD_CLIENT OK !")
         return True
     except:
         try:
-            print "settings.MPD_CLIENT KO !"
+            LOGGER.debug("settings.MPD_CLIENT KO !")
             settings.MPD_CLIENT = MPDClient()
             settings.MPD_CLIENT.timeout = 2
             if settings.MPD_PWD:
                 settings.MPD_CLIENT.password(settings.MPD_PWD)
             settings.MPD_CLIENT.connect(settings.MPD_HOST, settings.MPD_PORT)
-            print "settings.MPD_CLIENT OK (new instance) !"
+            LOGGER.debug("settings.MPD_CLIENT OK (new instance) !")
             return True
         except:
-            print "settings.MPD_CLIENT KO (new instance) !"
+            LOGGER.debug("settings.MPD_CLIENT KO (new instance) !")
             return False
 
 
@@ -74,9 +76,10 @@ def make_playlist_names():
     '''
     playlist_names = list()
     playlist_names.append(('0', ''))
-    plists = settings.MPD_CLIENT.listplaylists()
-    for i in plists:
-        playlist_names.append((i['playlist'], i['playlist']))
+    if check_cnx():
+        plists = settings.MPD_CLIENT.listplaylists()
+        for i in plists:
+            playlist_names.append((i['playlist'], i['playlist']))
     playlist_names.append(('-1', _("Stop")))
     return playlist_names
 
@@ -121,17 +124,17 @@ def ajax_play(request):
     :return rtype: HttpResponse
     '''
     HTML_to_return = ''
-    check_cnx()
-    if 'pl' in request.GET:
-        plname = request.GET['pl']
-        if(plname != '0'):
-            settings.MPD_CLIENT.stop()
-            settings.MPD_CLIENT.clear()
-            if(plname != '-1'):
-                settings.MPD_CLIENT.load(plname)
-                settings.MPD_CLIENT.play()
-    else:
-        settings.MPD_CLIENT.play()
+    if check_cnx():
+        if 'pl' in request.GET:
+            plname = request.GET['pl']
+            if(plname != '0'):
+                settings.MPD_CLIENT.stop()
+                settings.MPD_CLIENT.clear()
+                if(plname != '-1'):
+                    settings.MPD_CLIENT.load(plname)
+                    settings.MPD_CLIENT.play()
+        else:
+            settings.MPD_CLIENT.play()
     return HttpResponse(HTML_to_return)
 
 
@@ -140,8 +143,8 @@ def ajax_pause(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    check_cnx()
-    settings.MPD_CLIENT.pause(1)
+    if check_cnx():
+        settings.MPD_CLIENT.pause(1)
     return HttpResponse(HTML_to_return)
 
 
@@ -150,8 +153,8 @@ def ajax_next(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    check_cnx()
-    settings.MPD_CLIENT.next()
+    if check_cnx():
+        settings.MPD_CLIENT.next()
     return HttpResponse(HTML_to_return)
 
 
@@ -160,8 +163,8 @@ def ajax_previous(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    check_cnx()
-    settings.MPD_CLIENT.previous()
+    if check_cnx():
+        settings.MPD_CLIENT.previous()
     return HttpResponse(HTML_to_return)
 
 
@@ -179,6 +182,6 @@ def ajax_remove(request):
     :param HttpRequest request:
     '''
     HTML_to_return = ''
-    check_cnx()
-    settings.MPD_CLIENT.delete()
+    if check_cnx():
+        settings.MPD_CLIENT.delete()
     return HttpResponse(HTML_to_return)
