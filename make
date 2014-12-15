@@ -237,7 +237,6 @@ function clear_db {
     fi
     ./manage.py syncdb --noinput
     ./manage.py migrate
-#    ./manage.py flush --noinput
 }
 
 if [ ! $# -eq 1 ]
