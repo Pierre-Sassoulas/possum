@@ -35,8 +35,9 @@ def check_cnx():
         LOGGER.debug("settings.MPD_HOST not set !")
         return False
     try:
-        settings.MPD_CLIENT.ping()
-        LOGGER.debug("settings.MPD_CLIENT OK !")
+        settings.MPD_CLIENT.clearerror()
+        pingmpd = settings.MPD_CLIENT.ping()
+        LOGGER.debug("settings.MPD_CLIENT " + pingmpd)
         return True
     except:
         try:
@@ -116,7 +117,13 @@ def musicplayerd(request):
         context = dict(context.items() + getinfos().items())
         return render_to_response('jukebox/musicplayerd.html', context)
     else:
-        return render_to_response('500.html')
+        if not settings.MPD_HOST:
+            context = {'warning': _("/!\ The music server is not configured !"),
+                       'need_auto_refresh': 120, }
+        else:
+            context = {'warning': _("/!\ The music server is unreachable !"),
+                       'need_auto_refresh': 120, }
+        return render_to_response('jukebox/musicplayerd.html', context)
 
 def is_same_pl(nowpl,rqplfull):
     '''
