@@ -56,16 +56,20 @@ def check_cnx():
 def getinfos():
     if check_cnx():
         status = settings.MPD_CLIENT.status()
-        if (status['state'] == 'play' or status['state'] == 'pause'):
-            currsong = settings.MPD_CLIENT.currentsong()
-            infos = {'song': currsong['title'],
-                     'artist': currsong['artist'],
-                     'elapsed': status['elapsed'],
-                     'time': currsong['time'],
-                     'status': status['state'], }
-            return infos
-        else:
-            return {'song': _("Stop"), 'time': 0, }
+        try:
+            if (status['state'] == 'play' or status['state'] == 'pause'):
+                currsong = settings.MPD_CLIENT.currentsong()
+                infos = {'song': currsong['title'],
+                         'artist': currsong['artist'],
+                         'elapsed': status['elapsed'],
+                         'time': currsong['time'],
+                         'status': status['state'], }
+                return infos
+            else:
+                return {'song': _("Stop"), 'time': 0, }
+        except:
+            LOGGER.debug("error retriving state of mpd")
+            return {'song': _("Error"), 'time': 0, }
     else:
         return {'song': _("Error"), 'time': 0, }
 
@@ -94,17 +98,14 @@ def musicplayerd(request):
         pl_form = PlaylistsForm()
         pl_form.fields['pl'].choices = plnames
         context = {'pl_form': pl_form,
-                   'need_auto_refresh': 60, }
+                   'need_auto_refresh': 120, }
         if 'pl' in request.GET:
             if request.GET['pl'] != '0':
                 if request.GET['pl'] != '-1':
                     nowpl = settings.MPD_CLIENT.playlist()
                     rqplfull = settings.MPD_CLIENT.listplaylistinfo(
                         request.GET['pl'])
-                    rqpl = list()
-                    for song in rqplfull:
-                        rqpl.append('file: ' + song['file'])
-                    if not nowpl == rqpl:
+                    if not is_same_pl(nowpl,rqplfull):
                         settings.MPD_CLIENT.stop()
                         settings.MPD_CLIENT.clear()
                         settings.MPD_CLIENT.load(request.GET['pl'])
@@ -117,6 +118,16 @@ def musicplayerd(request):
     else:
         return render_to_response('500.html')
 
+def is_same_pl(nowpl,rqplfull):
+    '''
+    :param nowpl: the actual playlist from MPD_CLIENT.playlist
+    :param rqplfull: the requested playlist from MPD_CLIENT.listplaylistinfo
+    :return: Boolean
+    '''
+    rqpl = list()
+    for song in rqplfull:
+        rqpl.append('file: ' + song['file'])
+    return nowpl == rqpl
 
 def ajax_play(request):
     '''
