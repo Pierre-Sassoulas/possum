@@ -65,11 +65,12 @@ MPD_HOST = ""
 MPD_PORT = 6600
 MPD_PWD = ""
 
-if MPD_HOST :
+if MPD_HOST:
     MPD_CLIENT = MPDClient()
     MPD_CLIENT.timeout = 2
-    if MPD_PWD :
+    if MPD_PWD:
             MPD_CLIENT.password(MPD_PWD)
+
 
 def create_secret_key():
     ''' Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then
