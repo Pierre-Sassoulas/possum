@@ -29,7 +29,9 @@ List of commands:
     update             :  install/update Possum environnement
 
 Note: If you need to define a proxy, set $http_proxy.
-Example: export http_proxy="http://proxy.possum-software.org:8080/"
+Example:
+    export http_proxy="http://proxy.possum-software.org:8080/"
+    export https_proxy="https://proxy.possum-software.org:8080/"
 
 Note2: (*) must be root to do it
 
@@ -148,8 +150,8 @@ function update {
     fi
     enter_virtualenv
     # before all, we must have last release of Django
-    pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
-    pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    pip install --upgrade $(grep -i django requirements.txt)
+    pip install --requirement requirements.txt --upgrade
     # Hack waiting new release of django-chartit
     #  https://github.com/pgollakota/django-chartit
     #  http://stackoverflow.com/questions/23564529/chartit-is-not-a-valid-tag-librarydjango
