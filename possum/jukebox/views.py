@@ -20,7 +20,9 @@
 import logging
 
 from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib import messages
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from mpd import MPDClient
@@ -29,12 +31,18 @@ import json
 from .forms import PlaylistsForm
 
 LOGGER = logging.getLogger(__name__)
+playlist_names = list()
+
 
 def check_cnx():
+    '''
+    :return: Boolean about if the mpd server is reachable
+    '''
     if not settings.MPD_HOST:
         LOGGER.debug("settings.MPD_HOST not set !")
         return False
     try:
+        # if previous errors, ignore them
         settings.MPD_CLIENT.clearerror()
         pingmpd = settings.MPD_CLIENT.ping()
         LOGGER.debug("settings.MPD_CLIENT " + pingmpd)
@@ -43,6 +51,7 @@ def check_cnx():
         try:
             LOGGER.debug("settings.MPD_CLIENT KO !")
             settings.MPD_CLIENT = MPDClient()
+            # Timeout important to avoid freeze while using and testing
             settings.MPD_CLIENT.timeout = 2
             if settings.MPD_PWD:
                 settings.MPD_CLIENT.password(settings.MPD_PWD)
@@ -55,6 +64,9 @@ def check_cnx():
 
 
 def getinfos():
+    '''
+    :return: Informations on the current playback
+    '''
     if check_cnx():
         status = settings.MPD_CLIENT.status()
         try:
@@ -79,14 +91,16 @@ def make_playlist_names():
     '''
     :return: A list of String corresponding to the playlist names
     '''
-    playlist_names = list()
+    # reset the shared var playlist_names to build an updated list
+    del playlist_names[:]
     playlist_names.append(('0', ''))
     if check_cnx():
         plists = settings.MPD_CLIENT.listplaylists()
+        j = 1
         for i in plists:
-            playlist_names.append((i['playlist'], i['playlist']))
+            playlist_names.append((j, i['playlist']))
+            j = j + 1
     playlist_names.append(('-1', _("Stop")))
-    return playlist_names
 
 
 def musicplayerd(request):
@@ -95,46 +109,73 @@ def musicplayerd(request):
     :return rtype: HttpResponse
     '''
     if check_cnx():
-        plnames = make_playlist_names()
+        make_playlist_names()
         pl_form = PlaylistsForm()
-        pl_form.fields['pl'].choices = plnames
+        pl_form.fields['pl'].choices = playlist_names
         context = {'pl_form': pl_form,
                    'need_auto_refresh': 120, }
         if 'pl' in request.GET:
-            if request.GET['pl'] != '0':
-                if request.GET['pl'] != '-1':
-                    nowpl = settings.MPD_CLIENT.playlist()
-                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(
-                        request.GET['pl'])
-                    if not is_same_pl(nowpl,rqplfull):
-                        settings.MPD_CLIENT.stop()
-                        settings.MPD_CLIENT.clear()
-                        settings.MPD_CLIENT.load(request.GET['pl'])
-                        settings.MPD_CLIENT.play()
-                else:
-                    settings.MPD_CLIENT.stop()
-                    settings.MPD_CLIENT.clear()
+            change_pl(request.GET['pl'])
+        # append infos on current playback to the context
         context = dict(context.items() + getinfos().items())
         return render_to_response('jukebox/musicplayerd.html', context)
     else:
         if not settings.MPD_HOST:
-            context = {'warning': _("/!\ The music server is not configured !"),
-                       'need_auto_refresh': 120, }
+            messages.add_message(
+                request, messages.ERROR, _("The music server is not set."))
         else:
-            context = {'warning': _("/!\ The music server is unreachable !"),
-                       'need_auto_refresh': 120, }
-        return render_to_response('jukebox/musicplayerd.html', context)
+            messages.add_message(
+                request, messages.ERROR, _("The music server is unreachable."))
+        return render(
+            request, 'jukebox/musicplayerd.html', {'need_auto_refresh': 120, })
 
-def is_same_pl(nowpl,rqplfull):
+
+def is_same_pl(nowpl, rqplfull):
     '''
     :param nowpl: the actual playlist from MPD_CLIENT.playlist
     :param rqplfull: the requested playlist from MPD_CLIENT.listplaylistinfo
     :return: Boolean
     '''
-    rqpl = list()
-    for song in rqplfull:
-        rqpl.append('file: ' + song['file'])
-    return nowpl == rqpl
+    try:
+        rqpl = list()
+        # building a list like nowpl from rqplfull to compare
+        for song in rqplfull:
+            rqpl.append('file: ' + song['file'])
+        return nowpl == rqpl
+    except:
+        LOGGER.debug("error comparing playlists: " + nowpl + " vs " + rqplfull)
+        return True
+
+
+def change_pl(plid):
+    '''
+    :param Integer plid: the generated id of the playlist
+    '''
+    if plid:
+        # 0 is the empty line of playlist_names so no action
+        if plid != '0':
+            if check_cnx():
+                # -1 is the Stop line of playlist_names
+                if plid != '-1':
+                    nowpl = settings.MPD_CLIENT.playlist()
+                    rqplname = playlist_names[int(plid)][1]
+                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(rqplname)
+                    if not is_same_pl(nowpl, rqplfull):
+                        results = "error changing playlist : "
+                        try:
+                            settings.MPD_CLIENT.clearerror()
+                            # Prevents errors when multiple commands in a row
+                            settings.MPD_CLIENT.command_list_ok_begin()
+                            settings.MPD_CLIENT.stop()
+                            settings.MPD_CLIENT.clear()
+                            settings.MPD_CLIENT.load(rqplname)
+                            settings.MPD_CLIENT.play()
+                            results += settings.MPD_CLIENT.command_list_end()
+                        except:
+                            LOGGER.debug(results)
+                else:
+                    settings.MPD_CLIENT.stop()
+
 
 def ajax_play(request):
     '''
@@ -143,16 +184,13 @@ def ajax_play(request):
     '''
     HTML_to_return = ''
     if check_cnx():
-        if 'pl' in request.GET:
-            plname = request.GET['pl']
-            if(plname != '0'):
-                settings.MPD_CLIENT.stop()
-                settings.MPD_CLIENT.clear()
-                if(plname != '-1'):
-                    settings.MPD_CLIENT.load(plname)
-                    settings.MPD_CLIENT.play()
-        else:
-            settings.MPD_CLIENT.play()
+        try:
+            if 'pl' in request.GET:
+                change_pl(request.GET['pl'])
+            else:
+                settings.MPD_CLIENT.play()
+        except:
+            LOGGER.debug("error while pressing play")
     return HttpResponse(HTML_to_return)
 
 
@@ -162,7 +200,10 @@ def ajax_pause(request):
     '''
     HTML_to_return = ''
     if check_cnx():
-        settings.MPD_CLIENT.pause(1)
+        try:
+            settings.MPD_CLIENT.pause(1)
+        except:
+            LOGGER.debug("error while pressing pause")
     return HttpResponse(HTML_to_return)
 
 
@@ -172,7 +213,10 @@ def ajax_next(request):
     '''
     HTML_to_return = ''
     if check_cnx():
-        settings.MPD_CLIENT.next()
+        try:
+            settings.MPD_CLIENT.next()
+        except:
+            LOGGER.debug("error while pressing next")
     return HttpResponse(HTML_to_return)
 
 
@@ -182,7 +226,10 @@ def ajax_previous(request):
     '''
     HTML_to_return = ''
     if check_cnx():
-        settings.MPD_CLIENT.previous()
+        try:
+            settings.MPD_CLIENT.previous()
+        except:
+            LOGGER.debug("error while pressing previous")
     return HttpResponse(HTML_to_return)
 
 
@@ -190,8 +237,12 @@ def ajax_info(request):
     '''
     :param HttpRequest request:
     '''
-    infos = getinfos()
-    HTML_to_return = json.dumps(infos)
+    HTML_to_return = ''
+    try:
+        infos = getinfos()
+        HTML_to_return = json.dumps(infos)
+    except:
+        LOGGER.debug("error retriving song infos")
     return HttpResponse(HTML_to_return)
 
 
@@ -201,5 +252,8 @@ def ajax_remove(request):
     '''
     HTML_to_return = ''
     if check_cnx():
-        settings.MPD_CLIENT.delete()
+        try:
+            settings.MPD_CLIENT.delete()
+        except:
+            LOGGER.debug("error while pressing remove")
     return HttpResponse(HTML_to_return)
