@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-15 21:21+0100\n"
+"POT-Creation-Date: 2014-12-22 16:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,21 +304,21 @@ msgstr ""
 msgid "Russian"
 msgstr ""
 
-#: possum/jukebox/forms.py:30 possum/jukebox/views.py:70
-#: possum/jukebox/views.py:88
+#: possum/jukebox/forms.py:30 possum/jukebox/views.py:82
+#: possum/jukebox/views.py:103
 msgid "Stop"
 msgstr ""
 
-#: possum/jukebox/views.py:73 possum/jukebox/views.py:75
+#: possum/jukebox/views.py:85 possum/jukebox/views.py:87
 msgid "Error"
 msgstr ""
 
-#: possum/jukebox/views.py:121
-msgid "/!\\ The music server is not configured !"
+#: possum/jukebox/views.py:125
+msgid "The music server is not set."
 msgstr ""
 
-#: possum/jukebox/views.py:124
-msgid "/!\\ The music server is unreachable !"
+#: possum/jukebox/views.py:128
+msgid "The music server is unreachable."
 msgstr ""
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
@@ -465,7 +465,7 @@ msgstr ""
 #: possum/templates/base/categories_delete.html:38
 #: possum/templates/base/manager/tables/home.html:21
 #: possum/templates/bill/bill.html:31
-#: possum/templates/jukebox/musicplayerd.html:33
+#: possum/templates/jukebox/musicplayerd.html:31
 #: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr ""
@@ -1078,7 +1078,7 @@ msgid "How many guests ?"
 msgstr ""
 
 #: possum/templates/bill/home.html:4
-#: possum/templates/jukebox/musicplayerd.html:36
+#: possum/templates/jukebox/musicplayerd.html:34
 #: possum/templates/kitchen/home.html:63
 #, python-format
 msgid ""
@@ -1204,23 +1204,23 @@ msgstr ""
 msgid "Music Player"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:12
+#: possum/templates/jukebox/musicplayerd.html:10
 msgid "Change playlist"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:29
+#: possum/templates/jukebox/musicplayerd.html:27
 msgid "Play"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:30
+#: possum/templates/jukebox/musicplayerd.html:28
 msgid "Pause"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:31
+#: possum/templates/jukebox/musicplayerd.html:29
 msgid "Next"
 msgstr ""
 
-#: possum/templates/jukebox/musicplayerd.html:32
+#: possum/templates/jukebox/musicplayerd.html:30
 msgid "Previous"
 msgstr ""
 

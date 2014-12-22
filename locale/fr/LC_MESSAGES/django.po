@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-15 21:21+0100\n"
+"POT-Creation-Date: 2014-12-22 16:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -305,22 +305,22 @@ msgstr "Anglais"
 msgid "Russian"
 msgstr "Russe"
 
-#: possum/jukebox/forms.py:30 possum/jukebox/views.py:70
-#: possum/jukebox/views.py:88
+#: possum/jukebox/forms.py:30 possum/jukebox/views.py:82
+#: possum/jukebox/views.py:103
 msgid "Stop"
 msgstr "Stop"
 
-#: possum/jukebox/views.py:73 possum/jukebox/views.py:75
+#: possum/jukebox/views.py:85 possum/jukebox/views.py:87
 msgid "Error"
 msgstr "Erreur"
 
-#: possum/jukebox/views.py:121
-msgid "/!\\ The music server is not configured !"
-msgstr "/!\\ Le serveur de musique n'est pas configuré !"
+#: possum/jukebox/views.py:125
+msgid "The music server is not set."
+msgstr "Le serveur de musique n'est pas configuré !"
 
-#: possum/jukebox/views.py:124
-msgid "/!\\ The music server is unreachable !"
-msgstr "/!\\ Le serveur de musique n'est pas joignable !"
+#: possum/jukebox/views.py:128
+msgid "The music server is unreachable."
+msgstr "Le serveur de musique n'est pas joignable !"
 
 #: possum/templates/404.html:8 possum/templates/500.html:8
 msgid "This page is currently unavailable"
@@ -466,7 +466,7 @@ msgstr "N'est pas préparé dans la cuisine"
 #: possum/templates/base/categories_delete.html:38
 #: possum/templates/base/manager/tables/home.html:21
 #: possum/templates/bill/bill.html:31
-#: possum/templates/jukebox/musicplayerd.html:33
+#: possum/templates/jukebox/musicplayerd.html:31
 #: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr "Supprimer"
@@ -1127,7 +1127,7 @@ msgid "How many guests ?"
 msgstr "Combien de couverts ?"
 
 #: possum/templates/bill/home.html:4
-#: possum/templates/jukebox/musicplayerd.html:36
+#: possum/templates/jukebox/musicplayerd.html:34
 #: possum/templates/kitchen/home.html:63
 #, python-format
 msgid ""
@@ -1271,23 +1271,23 @@ msgstr "Éteindre le serveur"
 msgid "Music Player"
 msgstr "Lecteur de musique"
 
-#: possum/templates/jukebox/musicplayerd.html:12
+#: possum/templates/jukebox/musicplayerd.html:10
 msgid "Change playlist"
 msgstr "Changer la playlist"
 
-#: possum/templates/jukebox/musicplayerd.html:29
+#: possum/templates/jukebox/musicplayerd.html:27
 msgid "Play"
 msgstr "Lecture"
 
-#: possum/templates/jukebox/musicplayerd.html:30
+#: possum/templates/jukebox/musicplayerd.html:28
 msgid "Pause"
 msgstr "Pause"
 
-#: possum/templates/jukebox/musicplayerd.html:31
+#: possum/templates/jukebox/musicplayerd.html:29
 msgid "Next"
 msgstr "Suivant"
 
-#: possum/templates/jukebox/musicplayerd.html:32
+#: possum/templates/jukebox/musicplayerd.html:30
 msgid "Previous"
 msgstr "Précédent"
 
