@@ -149,6 +149,7 @@ function update_js {
         echo "Unzip BootStrap..."
         pushd possum/base/static/bootstrap/ >/dev/null
         unzip ${BOOTSTRAP}
+        cp -f dist/fonts/glyphicons-halflings-regular.* ../fonts/
         popd >/dev/null
     fi
     enter_virtualenv
