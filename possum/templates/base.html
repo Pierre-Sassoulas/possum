@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}"/>
     <link rel="stylesheet" href="{% static "bootstrap/bootstrap-theme.min.css" %}"/>
-    <!--link rel="stylesheet" href="{% static "possum/base.css" %}"/-->
     <link rel="stylesheet" href="{% static "categories.css" %}"/>
     <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.png" %}" />
     <meta name=author content="S. Bonnegent">
@@ -26,83 +25,58 @@
     {% endif %}
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                </button>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- NavBar for mobile -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarmobile">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Possum</a>
+        </div>
+        <!-- NavBar for PC -->
+        <div class="collapse navbar-collapse" id="navbarmobile">
+            <ul class="nav navbar-nav">
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-                    <li><a href="{% url 'bill_home' %}">{% trans "Orders" %}</a></li>
-                    <li><a href="{% url 'kitchen' %}">{% trans "Kitchen" %}</a></li>
-                    <li><a href="{% url 'manager' %}">{% trans "Manager" %}</a></li>
-                    <li><script type="text/javascript">window.onload = date_heure('myclock');</script></li>
-                    <li><a href="{% url 'profile' %}">{{user.username}}</a></li>
-                    <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                <li {% if menu_home %}class="active"{% endif %}>
+                    <a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                <li {% if menu_bills %}class="active"{% endif %}>
+                    <a href="{% url 'bill_home' %}">{% trans "Orders" %}</a></li>
+                <li {% if menu_kitchen %}class="active"{% endif %}>
+                    <a href="{% url 'kitchen' %}">{% trans "Kitchen" %}</a></li>
+                <li {% if menu_manager %}class="active"{% endif %}>
+                    <a href="{% url 'manager' %}">{% trans "Manager" %}</a></li>
                 {% endif %}
-                </ul>
-            </div><!--/.nav-collapse -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li {% if menu_profile %}class="active"{% endif %}>
+                    <a href="{% url 'profile' %}">{{user.username}}</a></li>
+                <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </nav>
-    <ul id="menu">
-        {% if request.user.is_authenticated %}
-        <li
-        {% if menu_home %}
-            class="menuSelected"
-        {% endif %}
-            onclick='window.location="{% url 'home' %}"'>
-            {% trans "Home" %}
-        </li>
-        {% if menu_bills %}
-            <li class="menuSelected"
-                onclick='window.location="{% url 'bill_home' %}"'>
-                {% trans "Orders" %}
-            </li>
-        {% endif %}
-        {% if menu_kitchen %}
-            <li class="menuSelected"
-                onclick='window.location="{% url 'kitchen' %}"'>
-                {% trans "Kitchen" %}
-            </li>
-        {% endif %}
-        {% if menu_manager %}
-            <li class="menuSelected"
-                onclick='window.location="{% url 'manager' %}"'>
-                {% trans "Manager" %}
-            </li>
-        {% endif %}
-        <li>
-            <div id="myclock">
-                <script type="text/javascript">
-                    window.onload = date_heure('myclock');</script>
-            </div>
-        </li>
-            <li class="{% if menu_profile %}menuSelected{% endif %}"
-                onclick='window.location="{% url 'profile' %}"'>
-                {{user.username}}
-            </li>
-        {% else %}
-        <li>Login</li>
-        {% endif %}
-    </ul>
-    <div class="content">
+<div class="container">
         {% if messages %}
-        <ul id="messages">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {{ message }}</li>
+            <div class="row">
+                {% if message.tags == "error" %}
+                    <div class="alert alert-danger">
+                {% else %}
+                    <div class="alert alert-{{ message.tags }}">
+                {% endif %}
+                    <p>{{ message }}</p></div>
+            </div>
             {% endfor %}
-        </ul>
         {% endif %}
         {% block content %}
         <p>{% trans "Template error, page is empty" %}</p>
         {% endblock %}
-    </div>
 </div>
 <script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
