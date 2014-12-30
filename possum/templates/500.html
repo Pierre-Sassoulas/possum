@@ -2,12 +2,11 @@
 {% block content %}
 {% load staticfiles %}
 {% load i18n %}
-<div id="login">
-    <img src="{% static "images/bandeau-192.png" %}" alt="Possum"/></br>
+<div class="jumbotron">
+    <h1>500</h1>
     <p>{% trans "This page is currently unavailable" %}</p>
-<ul>
-    <li onclick='window.location="{% url "home" %}"'>{% trans "Home" %}</li>
-</ul>
+    <p><a class="btn btn-primary btn-lg pull-right" href="{% url "home" %}"
+        >{% trans "Home" %}</a></p>
 </div>
 {% endblock %}
 
