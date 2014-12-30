@@ -1,9 +1,9 @@
 {% load staticfiles %}
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <title>POSSUM</title>
+    <title>Possum</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}"/>
@@ -28,13 +28,14 @@
     <nav class="navbar navbar-default" role="navigation">
         <!-- NavBar for mobile -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarmobile">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#navbarmobile">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Possum</a>
+            <div class="navbar-brand">Possum</div>
         </div>
         <!-- NavBar for PC -->
         <div class="collapse navbar-collapse" id="navbarmobile">
@@ -62,8 +63,8 @@
         </div>
     </nav>
 <div class="container">
-        {% if messages %}
-            {% for message in messages %}
+    {% if messages %}
+        {% for message in messages %}
             <div class="row">
                 {% if message.tags == "error" %}
                     <div class="alert alert-danger">
@@ -72,11 +73,11 @@
                 {% endif %}
                     <p>{{ message }}</p></div>
             </div>
-            {% endfor %}
-        {% endif %}
-        {% block content %}
+        {% endfor %}
+    {% endif %}
+    {% block content %}
         <p>{% trans "Template error, page is empty" %}</p>
-        {% endblock %}
+    {% endblock %}
 </div>
 <script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>

@@ -2,18 +2,54 @@
 {% block content %}
 {% load staticfiles %}
 {% load i18n %}
-<ul id="bigmenu">
-<li onclick='window.location="{% url 'bill_home' %}"'>{% trans "Orders" %}</br>
-    <img src="{% static "images/order.png" %}" alt="{% trans "Orders" %}"/></li>
-<li onclick='window.location="{% url 'kitchen' %}"'>{% trans 'Kitchen' %}</br>
-    <img src="{% static "images/kitchen.png" %}" alt="{% trans 'Kitchen' %}"/></li>
-<li onclick='window.location="{% url 'manager' %}"'>{% trans 'Manager' %}</br>
-    <img src="{% static "images/manager.png" %}" alt="{% trans 'Manager' %}"/></li>
-<li onclick='window.location="{% url 'logout' %}"'>{% trans 'Logout' %}</br>
-    <img src="{% static "images/logout.png" %}" alt="{% trans 'Logout' %}"/></li>
-<li onclick='window.location="{% url 'shutdown' %}"'>{% trans 'Shutdown server' %}</br>
-    <img src="{% static "images/shutdown.png" %}" alt="{% trans 'Shutdown server' %}"/></li>
-<ul>
+<div class="row">
+    <div class="col-md-6">
+        <div class="media">
+            <a class="pull-left" href="{% url 'bill_home' %}">
+                <img src="{% static "images/order.png" %}" alt="{% trans "Orders" %}"/>
+            </a>
+            <div class="media-body">
+                <h2>{% trans "Orders" %}</h2>
+                <p>Prise de commandes et suivis</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="media">
+            <a class="pull-left" href="{% url 'kitchen' %}">
+                <img src="{% static "images/kitchen.png" %}" alt="{% trans 'Kitchen' %}"/>
+            </a>
+            <div class="media-body">
+                <h2>{% trans "Kitchen" %}</h2>
+                <p>Suivi des préparations en cours et en attente</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="media">
+            <a class="pull-left" href="{% url 'manager' %}">
+                <img src="{% static "images/manager.png" %}" alt="{% trans "Manager" %}"/>
+            </a>
+            <div class="media-body">
+                <h2>{% trans "Manager" %}</h2>
+                <p>Gestion de la carte, résultats, ...</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="media">
+            <a class="pull-left" href="{% url 'shutdown' %}">
+                <img src="{% static "images/shutdown.png" %}" alt="{% trans 'Shutdown server' %}"/>
+            </a>
+            <div class="media-body">
+                <h2>{% trans 'Shutdown server' %}</h2>
+                <p>Arrêt du serveur</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
