@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}"/>
     <link rel="stylesheet" href="{% static "bootstrap/bootstrap-theme.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "bootstrap-datepicker/css/datepicker3.css" %}"/>
+    <link rel="stylesheet" href="{% static "possum/base.css" %}"/>
     <link rel="stylesheet" href="{% static "categories.css" %}"/>
     <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.png" %}" />
     <meta name=author content="S. Bonnegent">
@@ -47,8 +49,23 @@
                     <a href="{% url 'bill_home' %}">{% trans "Orders" %}</a></li>
                 <li {% if menu_kitchen %}class="active"{% endif %}>
                     <a href="{% url 'kitchen' %}">{% trans "Kitchen" %}</a></li>
-                <li {% if menu_manager %}class="active"{% endif %}>
-                    <a href="{% url 'manager' %}">{% trans "Manager" %}</a></li>
+                <li {% if menu_manager %}class="active"{% endif %} class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">{% trans "Manager" %} <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{% url 'archives' %}">{% trans "Archives" %}</a></li>
+                        <li><a href="{% url 'categories' %}">{% trans "Carte" %}</a></li>
+                        <li><a href="{% url 'credits' %}">{% trans "Credits" %}</a></li>
+                        <li><a href="{% url 'editions_home' %}">{% trans "In use" %}</a></li>
+                        <li><a href="{% url 'printer_home' %}">{% trans "Printers" %}</a></li>
+                        <li><a href="{% url 'notes_home' %}">{% trans "Notes" %}</a></li>
+                        <li><a href="{% url 'tables' %}">{% trans "Tables" %}</a></li>
+                        <li><a href="{% url 'vats' %}">{% trans "VAT" %}</a></li>
+                        <li><a href="{% url 'users' %}">{% trans "Users" %}</a></li>
+                    </ul>
+                </li>
+                <li {% if menu_sales %}class="active"{% endif %}>
+                    <a href="{% url 'sales_home' %}">{% trans "Sales" %}</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -67,9 +84,9 @@
         {% for message in messages %}
             <div class="row">
                 {% if message.tags == "error" %}
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger" role="alert">
                 {% else %}
-                    <div class="alert alert-{{ message.tags }}">
+                    <div class="alert alert-{{ message.tags }}" role="alert">
                 {% endif %}
                     <p>{{ message }}</p></div>
             </div>
@@ -78,9 +95,16 @@
     {% block content %}
         <p>{% trans "Template error, page is empty" %}</p>
     {% endblock %}
+{% if need_auto_refresh %}
+<footer>
+    <p><small>{% blocktrans %}This page will automatically refresh every
+        {{need_auto_refresh}} seconds{% endblocktrans %}</p></small>
+</footer>
+{% endif %}
 </div>
 <script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "bootstrap-datepicker/js/bootstrap-datepicker.js" %}"></script>
 <script type="text/javascript" src="{% static "possum/base.js" %}"></script>
 </body>
 </html>

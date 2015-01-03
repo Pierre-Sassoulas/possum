@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<table>
+<h1>{% trans "Kitchen" %}</h1>
+<table class="table table-striped">
+    <thead>
     <tr>
-        <td>{% trans "Time" %}</td>
-        <td>{% trans "Table" %}</td>
-        <td>{% trans "Guests" %}</td>
-        <td>{% trans "Category" %}</td>
-        <td>{% trans "Product" %}</td>
-        <td>{% trans "Options" %}</td>
-        <td>{% trans "Notes" %}</td>
+        <th>{% trans "Time" %}</th>
+        <th>{% trans "Table" %}</th>
+        <th>{% trans "Guests" %}</th>
+        <th>{% trans "Category" %}</th>
+        <th>{% trans "Product" %}</th>
+        <th>{% trans "Options" %}</th>
+        <th>{% trans "Notes" %}</th>
     </tr>
+    </thead>
+    <tbody>
     {% for facture in factures %}
         {% if facture.following %}
     <tr>
@@ -32,8 +36,9 @@
                     {% if not forloop.last %} / {% endif %}
                 {% endfor %}</td>
             {% if forloop.first %}
-            <td onclick='window.location="{% url 'follow_done' facture.follow.id %}"'
-                align='center'>{% trans "Done" %} ?</td>
+            <td align="center"><form action="{% url 'follow_done' facture.follow.id %}" 
+                method="get"><button type="button" class="btn btn-success"
+                >{% trans "Done" %} ?</button></form></td>
             {% endif %}
             </tr>
             {% endfor %}
@@ -59,8 +64,7 @@
             {% endif %}
         {% endif %}
     {% endfor %}
+    </tbody>
 </table>
-<p>{% blocktrans %}This page will automatically refresh every
-    {{need_auto_refresh}} seconds{% endblocktrans %}</p>
 {% endblock %}
 

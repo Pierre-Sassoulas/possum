@@ -3,6 +3,7 @@ JQUERY="jquery-2.0.3.min.js"
 HIGHCHARTS="Highcharts-3.0.6.zip"
 BOOTSTRAP_VERSION="3.3.1"
 BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
+DATEPICKER_VERSION="1.3.1"
 APPS="base stats"
 
 function my_help {
@@ -117,7 +118,7 @@ function update_js {
         wget http://code.jquery.com/${JQUERY} -O possum/base/static/jquery.min.js
     fi
     # Init
-    for lib in highcharts bootstrap
+    for lib in highcharts bootstrap bootstrap-datepicker
     do
         if [ ! -d possum/base/static/${lib} ]
         then
@@ -150,6 +151,29 @@ function update_js {
         pushd possum/base/static/bootstrap/ >/dev/null
         unzip ${BOOTSTRAP}
         cp -f dist/fonts/glyphicons-halflings-regular.* ../fonts/
+        popd >/dev/null
+    fi
+    # BootStrap Date-Picker
+    if [ ! -e possum/base/static/bootstrap-datepicker/${DATEPICKER_VERSION}.zip ]
+    then
+        echo "Download BootStrap Date-Picker..."
+        wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
+            -O possum/base/static/bootstrap-datepicker/${DATEPICKER_VERSION}.zip
+    fi
+    if [ ! -e possum/base/static/bootstrap-datepicker/bootstrap-datepicker-${DATEPICKER_VERSION} ]
+    then
+        echo "Unzip BootStrap Date-Picker..."
+        pushd possum/base/static/bootstrap-datepicker/ >/dev/null
+        unzip ${DATEPICKER_VERSION}.zip
+        for dir in js css
+        do
+            if [ -e ${dir} ]
+            then
+                # old version
+                rm -rf ${dir}
+            fi
+            cp -a bootstrap-datepicker-${DATEPICKER_VERSION}/${dir} ${dir}
+        done
         popd >/dev/null
     fi
     enter_virtualenv

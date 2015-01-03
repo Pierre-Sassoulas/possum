@@ -48,7 +48,7 @@ def update(request):
     else:
         messages.add_message(request, messages.ERROR,
                              "Les données ne peuvent être mis à jour")
-    return redirect("manager")
+    return redirect("sales_home")
 
 
 def send(request, subject, message):
@@ -189,7 +189,7 @@ def check_for_outputs(request, context):
 def daily(request):
     """Show stats for a day
     """
-    context = {'menu_manager': True, }
+    context = {'menu_sales': True, }
     date = datetime.datetime.now()
     if request.method == 'POST':
         try:
@@ -212,7 +212,7 @@ def daily(request):
 def weekly(request):
     """Show stats for a week
     """
-    context = {'menu_manager': True, }
+    context = {'menu_sales': True, }
     date = datetime.datetime.now()
     year = date.year
     week = date.isocalendar()[1]
@@ -236,7 +236,7 @@ def weekly(request):
 def monthly(request):
     """Show stats for a month
     """
-    context = {'menu_manager': True, }
+    context = {'menu_sales': True, }
     date = datetime.datetime.now()
     year = date.year
     month = date.month
@@ -442,7 +442,7 @@ def charts(request, choice='ttc'):
     chart1: pour un seul graphique
     chart2: pour 2 graphiques
     """
-    context = {'menu_manager': True, }
+    context = {'menu_sales': True, }
     context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
     year = datetime.datetime.now().year
     if request.method == 'POST':

@@ -10,7 +10,7 @@
             </a>
             <div class="media-body">
                 <h2>{% trans "Orders" %}</h2>
-                <p>Prise de commandes et suivis</p>
+                <p>Prise de commandes et facturation</p>
             </div>
         </div>
     </div>
@@ -29,12 +29,15 @@
 <div class="row">
     <div class="col-md-6">
         <div class="media">
-            <a class="pull-left" href="{% url 'manager' %}">
+            <a class="pull-left" href="{% url 'sales_home' %}">
                 <img src="{% static "images/manager.png" %}" alt="{% trans "Manager" %}"/>
             </a>
             <div class="media-body">
                 <h2>{% trans "Manager" %}</h2>
-                <p>Gestion de la carte, résultats, ...</p>
+                <p>{% trans "Archives" %}, {% trans "Carte" %}, {% trans "Credits" %},
+                    {% trans "In use" %}, {% trans "Printers" %}, {% trans "Notes" %},
+                    {% trans "Tables" %}, {% trans "VAT" %}, {% trans "Users" %}
+                </p>
             </div>
         </div>
     </div>
@@ -45,7 +48,6 @@
             </a>
             <div class="media-body">
                 <h2>{% trans 'Shutdown server' %}</h2>
-                <p>Arrêt du serveur</p>
             </div>
         </div>
     </div>
