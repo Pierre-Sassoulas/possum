@@ -92,6 +92,7 @@
             </div>
         {% endfor %}
     {% endif %}
+    <main class="col-md-9">
     {% block content %}
         <p>{% trans "Template error, page is empty" %}</p>
     {% endblock %}
@@ -101,6 +102,8 @@
         {{need_auto_refresh}} seconds{% endblocktrans %}</p></small>
 </footer>
 {% endif %}
+</main>
+{% block side %}{% endblock %}
 </div>
 <script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
 <script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>

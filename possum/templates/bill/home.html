@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% block content %}
 {% load i18n %}
-<main class="col-md-9">
-<h1>{% trans "Bills" %}</h1> 
+{% block content %}
+<h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1> 
 <p><ul class="list-inline">
     {% for facture in factures %}
         <li class="possum-base possum-bg" onclick="window.location='{% url "bill_view" facture.id %}'">
@@ -15,11 +14,14 @@
         <li class="possum-base possum-bg">{% trans "No bill" %}</li>
     {% endfor %}
 </ul></p>
-</main>
+{% endblock %}
+{% block side %}
 <aside class="col-md-3 well">
-<p><form action="{% url 'bill_new' %}" method="get">
-    <button type="button" class="btn btn-primary pull-right"
+<p>
+<form action="{% url 'bill_new' %}" method="get">
+    <button type="submit" class="btn btn-primary pull-right"
         >{% trans "New order" %}</button>
+</form>
 </p>
 </aside>
 {% endblock %}

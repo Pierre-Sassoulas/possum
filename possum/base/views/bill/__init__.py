@@ -613,6 +613,7 @@ def bill_home(request):
     context = {'menu_bills': True, }
     context['need_auto_refresh'] = 30
     context['factures'] = Facture().non_soldees()
+    context['count'] = len(context['factures'])
     return render(request, 'bill/home.html', context)
 
 
