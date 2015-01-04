@@ -4,7 +4,7 @@
 <h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1> 
 <p><ul class="list-inline">
     {% for facture in factures %}
-        <li class="possum-base possum-bg" onclick="window.location='{% url "bill_view" facture.id %}'">
+        <li class="possum-base alert alert-info" onclick="window.location='{% url "bill_view" facture.id %}'">
         {{facture}}</br>
         {% trans "Table" %}: {% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</br>
         {% trans "Guests" %}: {{facture.couverts}}</br>
@@ -17,12 +17,13 @@
 {% endblock %}
 {% block side %}
 <aside class="col-md-3 well">
-<p>
+<ul class="list-unstyled">
+<li>
 <form action="{% url 'bill_new' %}" method="get">
-    <button type="submit" class="btn btn-primary pull-right"
+    <button type="submit" class="btn btn-primary"
         >{% trans "New order" %}</button>
-</form>
-</p>
+</form></li>
+</ul>
 </aside>
 {% endblock %}
 

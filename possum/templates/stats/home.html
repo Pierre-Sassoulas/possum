@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-{% block content %}
 {% load i18n %}
-<main class="col-md-9">
+{% block content %}
 {% if date_form %}
 <h1>{% trans "Report of the day" %}: {{date|date:'l d F Y'}}</h1>
 {% elif week_form %}
@@ -116,15 +115,21 @@
     <li class="possum-base possum-bg">{% trans "No data" %}</li>
     {% endfor %}
 </ul></p>
-</main>
+
+{% endblock %}
+{% block side %}
 <aside class="col-md-3 well">
 <h2>{% trans "Date" %}</h2>
+<form method='post' action='{% url "stats_daily" %}' name='journalier'>
+{% csrf_token %}
+<div id="datepicker-container">
     <div class="input-group date">
         <input type='text' class="form-control" />
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
+</div>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad1" value="day">{% trans "day" %}
+    <input type="radio" name="rapport_type" id="rad1" value="day" checked>{% trans "day" %}
 </label>
 <label class="radio-inline">
     <input type="radio" name="rapport_type" id="rad1" value="week">{% trans "week" %}
@@ -132,8 +137,9 @@
 <label class="radio-inline">
     <input type="radio" name="rapport_type" id="rad3" value="month">{% trans "month" %}
 </label>
-<button type="button" class="btn btn-primary pull-right">Afficher</button>
-{% if date_form %}
+<button type="submit" class="btn btn-primary pull-right">{% trans "View" %}</button>
+</form>
+{% if date_form2 %}
 <form method='post' action='{% url "stats_daily" %}' name='journalier'>
 {% csrf_token %}
 <ul id="date_form">
@@ -199,11 +205,14 @@
 <script type="text/javascript">
     // When the document is ready
     $(document).ready(function () {
-        $('.input-group .date').datepicker({
-            format: 'mm-dd-yyyy',
-            weekStart: 2,
-            startDate: "01-10-2013",
-            endDate: "01-12-2013"
+        $('#datepicker-container .input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: "3/1/2014",
+            endDate: "3/1/2015",
+            keyboardNavigation: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
         });
     });
 </script>

@@ -25,6 +25,11 @@
     {% if need_auto_refresh %}
     <meta http-equiv="refresh" content="{{need_auto_refresh}}">
     {% endif %}
+    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js' %}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{% static "possum/base.js" %}"></script>
 </head>
 <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -105,9 +110,5 @@
 </main>
 {% block side %}{% endblock %}
 </div>
-<script type="text/javascript" src="{% static "jquery.min.js" %}"></script>
-<script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
-<script type="text/javascript" src="{% static "bootstrap-datepicker/js/bootstrap-datepicker.js" %}"></script>
-<script type="text/javascript" src="{% static "possum/base.js" %}"></script>
 </body>
 </html>
