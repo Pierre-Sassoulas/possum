@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_with_aside.html" %}
 {% block content %}
 {% load i18n %}
 <h1>{% trans "Sales" %}</h1> 
@@ -36,7 +36,12 @@ There are no pending bill, the data are up to date.
 {% endif %}
 {% endblock %}
 {% block side %}
-<aside class="col-md-3 well">
+<h2>{% trans "Rapports" %}</h2>
+<ul>
+    <li><a href="{% url "stats_text" %}">{% trans "textes" %}</a></li>
+    <li><a href="{% url "stats_charts" %}">{% trans "graphiques" %}</a></li>
+</ul>
+
 <h2>{% trans "Rapports" %}</h2>
 <ul>
     <li><a href="{% url "stats_daily" %}">{% trans "day" %}</a></li>
@@ -48,6 +53,5 @@ There are no pending bill, the data are up to date.
 <ul>
     <li><a href="{% url "stats_charts" %}">{% trans "year" %}</a></li>
 </ul>
-</aside>
 {% endblock %}
 

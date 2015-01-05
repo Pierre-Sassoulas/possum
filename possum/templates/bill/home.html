@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_with_aside.html" %}
 {% load i18n %}
 {% block content %}
 <h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1> 
@@ -16,7 +16,6 @@
 </ul></p>
 {% endblock %}
 {% block side %}
-<aside class="col-md-3 well">
 <ul class="list-unstyled">
 <li>
 <form action="{% url 'bill_new' %}" method="get">
@@ -24,6 +23,5 @@
         >{% trans "New order" %}</button>
 </form></li>
 </ul>
-</aside>
 {% endblock %}
 

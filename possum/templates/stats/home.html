@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_with_aside.html" %}
 {% load i18n %}
 {% block content %}
 {% if date_form %}
@@ -118,7 +118,6 @@
 
 {% endblock %}
 {% block side %}
-<aside class="col-md-3 well">
 <h2>{% trans "Date" %}</h2>
 <form method='post' action='{% url "stats_daily" %}' name='journalier'>
 {% csrf_token %}
@@ -201,7 +200,6 @@
         {% trans "Send" %}</button>
 </div>
 </form>
-</aside>
 <script type="text/javascript">
     // When the document is ready
     $(document).ready(function () {

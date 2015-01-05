@@ -97,7 +97,7 @@
             </div>
         {% endfor %}
     {% endif %}
-    <main class="col-md-9">
+    {% block main %}<main>{% endblock %}
     {% block content %}
         <p>{% trans "Template error, page is empty" %}</p>
     {% endblock %}
@@ -108,7 +108,7 @@
 </footer>
 {% endif %}
 </main>
-{% block side %}{% endblock %}
+{% block __internal_side %}{% endblock %}
 </div>
 </body>
 </html>

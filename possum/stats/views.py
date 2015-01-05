@@ -186,6 +186,31 @@ def check_for_outputs(request, context):
 
 
 @permission_required('base.p1')
+def text(request):
+    """Show stats
+    TODO: finish him !
+    daily / monthly / weekly + urls to remove
+    """
+    context = {'menu_sales': True, }
+    date = datetime.datetime.now()
+    if request.method == 'POST':
+        try:
+            year = int(request.POST.get('date_year'))
+            month = int(request.POST.get('date_month'))
+            day = int(request.POST.get('date_day'))
+            date = datetime.datetime(year, month, day)
+        except:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 "La date saisie n'est pas valide.")
+    context['date_form'] = DateForm({'date': date, })
+    context['date'] = date
+    context = Stat().get_data_for_day(context)
+    check_for_outputs(request, context)
+    return render(request, 'stats/home.html', context)
+
+
+@permission_required('base.p1')
 def daily(request):
     """Show stats for a day
     """

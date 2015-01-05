@@ -23,6 +23,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns('possum.stats.views',
                        url(r'^update/$', 'update', name='stats_update'),
+                       url(r'^text/$', 'text', name='stats_text'),
                        url(r'^daily/$', 'daily', name='stats_daily'),
                        url(r'^weekly/$', 'weekly', name='stats_weekly'),
                        url(r'^monthly/$', 'monthly', name='stats_monthly'),
