@@ -57,9 +57,7 @@ class StatTests(TestCase):
     def test_login_for_urls(self):
         ''' Test that the reports urls work. '''
         urls = [
-            reverse('stats_daily'),
-            reverse('stats_weekly'),
-            reverse('stats_monthly'),
+            reverse('stats_text'),
             reverse('stats_charts'),
             reverse('stats_charts', args=('ttc',)),
             reverse('stats_charts', args=('bar',)),

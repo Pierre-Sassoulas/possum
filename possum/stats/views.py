@@ -29,7 +29,7 @@ from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 
 from possum.base.forms import DateForm, WeekForm, MonthForm, YearForm
-from possum.base.models import Categorie, VAT, PaiementType, Produit
+from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import permission_required
 from possum.stats.models import Stat
@@ -104,10 +104,7 @@ def prepare_full_output(context):
     msg = """
 Nb factures: """
     msg += get_value(context, 'nb_bills')
-    msg += "Total TTC: "
-    msg += get_value(context, 'total_ttc')
-    for vat in context['vats']:
-        msg += "TTC %s: %.2f\n" % (vat, vat.nb)
+    msg += prepare_vats_output(context)
     msg += """
 Restauration:
 Nb couverts: """
@@ -125,14 +122,17 @@ Nb factures: """
     msg += "TM/facture: "
     msg += get_value(context, 'bar_average')
     msg += "\n"
-    for payment in context['payments']:
-        msg += "%s: %.2f\n" % (payment, payment.nb)
+    if 'payments' in context:
+        for payment in context['payments']:
+            msg += "%s: %.2f\n" % (payment, payment.nb)
     msg += "\n"
-    for category in context['categories']:
-        msg += "%s: %s\n" % (category.nom, category.nb)
+    if 'categories' in context:
+        for category in context['categories']:
+            msg += "%s: %s\n" % (category.nom, category.nb)
     msg += "\n"
-    for product in context['products']:
-        msg += "%s: %s\n" % (product.nom, product.nb)
+    if 'products' in context:
+        for product in context['products']:
+            msg += "%s: %s\n" % (product.nom, product.nb)
     msg += "\nFait le %s" % datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     return msg
 
@@ -142,25 +142,10 @@ def prepare_vats_output(context):
     """
     msg = "Total TTC: "
     msg += get_value(context, 'total_ttc')
-    for vat in context['vats']:
-        msg += "TTC %s: %.2f\n" % (vat, vat.nb)
+    if 'vats' in context:
+        for vat in context['vats']:
+            msg += "TTC %s: %.2f\n" % (vat, vat.nb)
     return msg
-
-
-def get_subject(request):
-    """Get subject for email
-    """
-    week = request.POST.get('week')
-    month = request.POST.get('month')
-    year = request.POST.get('year')
-    date = request.POST.get('date')
-    if week:
-        subject = "Rapport semaine %s/%s" % (week, year)
-    elif month:
-        subject = "Rapport mensuel %s/%s" % (month, year)
-    else:
-        subject = "Rapport du %s" % date.strftime("%d/%m/%Y")
-    return subject
 
 
 def check_for_outputs(request, context):
@@ -168,19 +153,19 @@ def check_for_outputs(request, context):
     """
     if context and request.method == 'POST':
         if "full_mail" in request.POST:
-            subject = get_subject(request)
+            subject = context['title']
             msg = prepare_full_output(context)
             send(request, subject, msg)
         if "full_print" in request.POST:
-            msg = get_subject(request)
+            msg = context['title']
             msg += prepare_full_output(context)
             print_msg(request, msg)
         if "vats_mail" in request.POST:
-            subject = get_subject(request)
+            subject = context['title']
             msg = prepare_vats_output(context)
             send(request, subject, msg)
         if "vats_print" in request.POST:
-            msg = get_subject(request)
+            msg = context['title']
             msg += prepare_vats_output(context)
             print_msg(request, msg)
 
@@ -188,96 +173,42 @@ def check_for_outputs(request, context):
 @permission_required('base.p1')
 def text(request):
     """Show stats
-    TODO: finish him !
-    daily / monthly / weekly + urls to remove
     """
-    context = {'menu_sales': True, }
-    date = datetime.datetime.now()
+    context = {'menu_sales': True, 'date': datetime.datetime.now()}
+    # to limit datepicker choice
+    first_order = Facture.objects.first()
+    if first_order:
+        context['first_date'] = first_order.date_creation.strftime("%d/%m/%Y")
+    last_order = Facture.objects.last()
+    if last_order:
+        context['last_date'] = last_order.date_creation.strftime("%d/%m/%Y")
     if request.method == 'POST':
         try:
-            year = int(request.POST.get('date_year'))
-            month = int(request.POST.get('date_month'))
-            day = int(request.POST.get('date_day'))
-            date = datetime.datetime(year, month, day)
+            date = datetime.datetime.strptime(request.POST.get('date'),
+                                              "%d/%m/%Y")
         except:
             messages.add_message(request,
                                  messages.ERROR,
                                  "La date saisie n'est pas valide.")
-    context['date_form'] = DateForm({'date': date, })
-    context['date'] = date
-    context = Stat().get_data_for_day(context)
-    check_for_outputs(request, context)
-    return render(request, 'stats/home.html', context)
-
-
-@permission_required('base.p1')
-def daily(request):
-    """Show stats for a day
-    """
-    context = {'menu_sales': True, }
-    date = datetime.datetime.now()
-    if request.method == 'POST':
-        try:
-            year = int(request.POST.get('date_year'))
-            month = int(request.POST.get('date_month'))
-            day = int(request.POST.get('date_day'))
-            date = datetime.datetime(year, month, day)
-        except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context['date_form'] = DateForm({'date': date, })
-    context['date'] = date
-    context = Stat().get_data_for_day(context)
-    check_for_outputs(request, context)
-    return render(request, 'stats/home.html', context)
-
-
-@permission_required('base.p1')
-def weekly(request):
-    """Show stats for a week
-    """
-    context = {'menu_sales': True, }
-    date = datetime.datetime.now()
-    year = date.year
-    week = date.isocalendar()[1]
-    if request.method == 'POST':
-        try:
-            year = int(request.POST.get('year'))
-            week = int(request.POST.get('week'))
-        except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context['week_form'] = WeekForm({'year': year, 'week': week})
-    context['week'] = week
-    context['year'] = year
-    context = Stat().get_data_for_week(context)
-    check_for_outputs(request, context)
-    return render(request, 'stats/home.html', context)
-
-
-@permission_required('base.p1')
-def monthly(request):
-    """Show stats for a month
-    """
-    context = {'menu_sales': True, }
-    date = datetime.datetime.now()
-    year = date.year
-    month = date.month
-    if request.method == 'POST':
-        try:
-            year = int(request.POST.get('year'))
-            month = int(request.POST.get('month'))
-        except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context['month_form'] = MonthForm({'year': year, 'month': month})
-    context['month'] = month
-    context['year'] = year
-    context = Stat().get_data_for_month(context)
-    check_for_outputs(request, context)
+        else:
+            context['date'] = date
+            if request.POST.get('rapport_type') == "month":
+                context['rapport'] = "month"
+                context['title'] = "%s: %s" % (_("Report of the month"),
+                                               date.strftime("%m/%Y"))
+                context = Stat().get_data_for_month(context)
+            elif request.POST.get('rapport_type') == "week":
+                context['rapport'] = "week"
+                context['title'] = "%s: %d %s" % (_("Report of the week"),
+                                                  date.year,
+                                                  date.isocalendar()[1])
+                context = Stat().get_data_for_week(context)
+            else:
+                context['rapport'] = "day"
+                context['title'] = "%s: %s" % (_("Report of the day"),
+                                               date.strftime("%d/%m/%Y"))
+                context = Stat().get_data_for_day(context)
+            check_for_outputs(request, context)
     return render(request, 'stats/home.html', context)
 
 

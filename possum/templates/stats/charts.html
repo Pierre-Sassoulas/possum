@@ -1,9 +1,34 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base_with_aside.html" %}
 {% load i18n %}
-<ul id="back">
-    <li onclick='window.location="{% url "stats_charts" "ttc" %}"'
-        {% if ttc %}class="selected"{% endif %}>{% trans "Sales" %}</li>
+{% block content %}
+<h1>Graphique du ...</h1>
+
+<div id='chart_view_1'><p>{% trans "No data" %}</p></div>
+<div id='chart_view_2'></div>
+
+{% endblock %}
+{% block side %}
+<h2>{% trans "Date" %}</h2>
+<form method='post' action='{% url "stats_charts" %}'>
+{% csrf_token %}
+<div id="datepicker-container">
+    <div class="input-group date">
+        <input type='text' class="form-control" name="date"
+               value="{{date|date:'d/m/Y'}}"/>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    </div>
+</div>
+<label class="radio">
+    <input type="radio" name="rapport_type" id="rad1" value="ttc"
+    {% if ttc %}checked{% endif %}>{% trans "Sales" %}
+</label></br>
+<label class="radio">
+    <input type="radio" name="rapport_type" id="rad2" value="bar"
+    {% if ttc %}checked{% endif %}>{% trans "Bar" %}
+</label>
+<ul class="list-inline">
+    <li><a href="{% url "stats_charts" "ttc" %}">
+        {% if ttc %}class="selected"{% endif %} {% trans "Sales" %}</a></li>
     <li onclick='window.location="{% url "stats_charts" "bar" %}"'
         {% if bar %}class="selected"{% endif %}>{% trans "Bar" %}</li>
     <li onclick='window.location="{% url "stats_charts" "guests" %}"'
@@ -26,11 +51,6 @@
     <li><input type='submit' value="{% trans "Display the year" %}"></li>
 </form>
 </ul>
-
-<h1></h1>
-
-<div id='chart_view_1'><p>{% trans "No data" %}</p></div>
-<div id='chart_view_2'></div>
 
 {% endblock %}
 

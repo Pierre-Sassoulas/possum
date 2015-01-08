@@ -1,13 +1,8 @@
 {% extends "base_with_aside.html" %}
 {% load i18n %}
 {% block content %}
-{% if date_form %}
-<h1>{% trans "Report of the day" %}: {{date|date:'l d F Y'}}</h1>
-{% elif week_form %}
-<h1>{% trans "Report of the week" %}: {{week}}/{{year}}</h1>
-{% elif month_form %}
-<h1>{% trans "Report of the month" %}: {{month}}/{{year}}</h1>
-{% endif %}
+<h1>{% block title %}{% trans "Report of the day" %}: 
+    {{date|date:'d/m/Y'}}{% endblock %}</h1>
 <table class="table table-striped">
 <thead>
     <tr>
@@ -119,66 +114,31 @@
 {% endblock %}
 {% block side %}
 <h2>{% trans "Date" %}</h2>
-<form method='post' action='{% url "stats_daily" %}' name='journalier'>
+<form method='post' action='{% url "stats_text" %}'>
 {% csrf_token %}
 <div id="datepicker-container">
     <div class="input-group date">
-        <input type='text' class="form-control" />
+        <input type='text' class="form-control" name="date"
+               value="{{date|date:'d/m/Y'}}"/>
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
 </div>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad1" value="day" checked>{% trans "day" %}
+    <input type="radio" name="rapport_type" id="rad1" value="day"
+        {% if rapport != "week" and rapport != "month" %}checked{% endif %}>
+        {% trans "day" %}
 </label>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad1" value="week">{% trans "week" %}
+    <input type="radio" name="rapport_type" id="rad1" value="week"
+        {% if rapport == "week" %}checked{% endif %}>{% trans "week" %}
 </label>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad3" value="month">{% trans "month" %}
+    <input type="radio" name="rapport_type" id="rad3" value="month"
+        {% if rapport == "month" %}checked{% endif %}>{% trans "month" %}
 </label>
 <button type="submit" class="btn btn-primary pull-right">{% trans "View" %}</button>
-</form>
-{% if date_form2 %}
-<form method='post' action='{% url "stats_daily" %}' name='journalier'>
-{% csrf_token %}
-<ul id="date_form">
-    {{ date_form.as_ul }}
-    <li><input type='submit' value='{% trans "Display day" %}'></li>
-</form>
-<form method='post' action='{% url "stats_daily" %}' name='journalier' class="form-horizontal" role="form">
-{% csrf_token %}
-<input type="hidden" name="date_day" value="{{date.day}}">
-<input type="hidden" name="date_month" value="{{date.month}}">
-<input type="hidden" name="date_year" value="{{date.year}}">
 
-{% elif week_form %}
-<form method='post' action='{% url "stats_weekly" %}' name='hebdomadaire'>
-{% csrf_token %}
-<ul id="week_form">
-    {{ week_form.as_ul }}
-    <li><input type='submit' value='{% trans "Display week" %}'></li>
-</form>
-<form method='post' action='{% url "stats_weekly" %}' name='hebdomadaire'>
-{% csrf_token %}
-<input type="hidden" name="week" value="{{week}}">
-<input type="hidden" name="year" value="{{year}}">
-
-{% elif month_form %}
-<form method='post' action='{% url "stats_monthly" %}' name='mensuel'>
-{% csrf_token %}
-<ul id="month_form">
-    {{ month_form.as_ul }}
-    <li><input type='submit' value='{% trans "Display month" %}'></li>
-</form>
-<form method='post' action='{% url "stats_monthly" %}' name='mensuel'>
-{% csrf_token %}
-<input type="hidden" name="month" value="{{month}}">
-<input type="hidden" name="year" value="{{year}}">
-{% endif %}
-
-</ul>
-
-<h2>{% trans "Outputs" %}</h2>
+<h2>{% trans "Options" %}</h2>
 <div class="form-group">
     <input type="checkbox" name="full_mail" value="a">
     {% trans "Full report by email" %}
@@ -195,18 +155,14 @@
     <input type="checkbox" name="vats_print" value="a">
     {% trans "VAT printed report" %}
 </div>
-<div class="form-group">
-    <button type="button" class="btn btn-primary pull-right">
-        {% trans "Send" %}</button>
-</div>
 </form>
 <script type="text/javascript">
     // When the document is ready
     $(document).ready(function () {
         $('#datepicker-container .input-group.date').datepicker({
             format: "dd/mm/yyyy",
-            startDate: "3/1/2014",
-            endDate: "3/1/2015",
+            startDate: "{{first_date}}",
+            endDate: "{{last_date}}",
             keyboardNavigation: false,
             calendarWeeks: true,
             autoclose: true,

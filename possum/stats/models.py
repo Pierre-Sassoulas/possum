@@ -392,14 +392,11 @@ class Stat(models.Model):
         """Prepare stats for a week
         context must contains 'year' and 'week' : Integer
         """
-        if 'year' not in context:
-            LOGGER.warning("no year in context")
+        if 'date' not in context:
+            LOGGER.warning("no date in context")
             return context
-        if 'week' not in context:
-            LOGGER.warning("no week in context")
-            return context
-        week = context['week']
-        year = context['year']
+        week = context['date'].isocalendar()[1]
+        year = context['date'].year
         all_time = Stat.objects.filter(interval="c")
         last = int(year) - 1
         objects = Stat.objects.filter(interval="w", week=week)
@@ -411,14 +408,11 @@ class Stat(models.Model):
         """Prepare stats for a month
         context must contains 'year' and 'month' : Integer
         """
-        if 'year' not in context:
-            LOGGER.warning("no year in context")
+        if 'date' not in context:
+            LOGGER.warning("no date in context")
             return context
-        if 'month' not in context:
-            LOGGER.warning("no month in context")
-            return context
-        month = context['month']
-        year = context['year']
+        month = context['date'].month
+        year = context['date'].year
         all_time = Stat.objects.filter(interval="b")
         last = int(year) - 1
         objects = Stat.objects.filter(interval="m", month=month)
