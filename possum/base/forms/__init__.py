@@ -31,16 +31,13 @@ LOGGER = logging.getLogger(__name__)
 
 
 try:
-    first_year = Facture.objects.all()[0].date_creation.year
-    last_year = Facture.objects.latest().date_creation.year + 1
+    first_year = Facture.objects.first().date_creation.year
+    last_year = Facture.objects.last().date_creation.year + 1
 except:
     LOGGER.debug("no Facture, we keep default data")
     first_year = int(datetime.now().year)
     last_year = first_year + 1
 
-weeks_choice = [(unicode(i), i) for i in range(54)]
-months_choice = [(unicode(i), i) for i in range(1, 13)]
-years_choice = [(unicode(i), i) for i in range(first_year, last_year)]
 years_list = [i for i in range(first_year, last_year)]
 
 
@@ -50,32 +47,6 @@ class DateForm(forms.Form):
     Form permitting to choose a date.
     '''
     date = forms.DateField(widget=SelectDateWidget(years=years_list))
-
-
-class WeekForm(forms.Form):
-
-    '''
-    Form permitting to choose a week.
-    '''
-    week = forms.ChoiceField(label="Semaine", choices=weeks_choice)
-    year = forms.ChoiceField(label="Année", choices=years_choice)
-
-
-class MonthForm(forms.Form):
-
-    '''
-    Form permitting to choose a month.
-    '''
-    month = forms.ChoiceField(label="Mois", choices=months_choice)
-    year = forms.ChoiceField(label="Année", choices=years_choice)
-
-
-class YearForm(forms.Form):
-
-    '''
-    Form permitting to choose a year.
-    '''
-    year = forms.ChoiceField(label="Année", choices=years_choice)
 
 
 class LoginForm(forms.Form):

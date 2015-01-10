@@ -3,54 +3,58 @@
 {% block content %}
 <h1>Graphique du ...</h1>
 
-<div id='chart_view_1'><p>{% trans "No data" %}</p></div>
-<div id='chart_view_2'></div>
+<div class="media">
+    <div id='chart_view_1'><p>{% trans "No data" %}</p></div>
+    <div id='chart_view_2'></div>
+</div>
 
 {% endblock %}
 {% block side %}
 <h2>{% trans "Date" %}</h2>
 <form method='post' action='{% url "stats_charts" %}'>
 {% csrf_token %}
-<div id="datepicker-container">
-    <div class="input-group date">
-        <input type='text' class="form-control" name="date"
-               value="{{date|date:'d/m/Y'}}"/>
-        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-    </div>
+<div class="form-group form-inline">
+    <select name="year" class="form-control">
+        {% for a_choice in years %}
+        <option {% ifequal a_choice year %}selected{% endifequal %}
+                >{{a_choice}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary form-control">{% trans "View" %}</button>
 </div>
-<label class="radio">
-    <input type="radio" name="rapport_type" id="rad1" value="ttc"
-    {% if ttc %}checked{% endif %}>{% trans "Sales" %}
-</label></br>
-<label class="radio">
-    <input type="radio" name="rapport_type" id="rad2" value="bar"
-    {% if ttc %}checked{% endif %}>{% trans "Bar" %}
-</label>
-<ul class="list-inline">
-    <li><a href="{% url "stats_charts" "ttc" %}">
-        {% if ttc %}class="selected"{% endif %} {% trans "Sales" %}</a></li>
-    <li onclick='window.location="{% url "stats_charts" "bar" %}"'
-        {% if bar %}class="selected"{% endif %}>{% trans "Bar" %}</li>
-    <li onclick='window.location="{% url "stats_charts" "guests" %}"'
-        {% if guests %}class="selected"{% endif %}>{% trans "Restaurant" %}</li>
-    <li onclick='window.location="{% url "stats_charts" "vats" %}"'
-        {% if vats %}class="selected"{% endif %}>{% trans "VAT" %}</li>
-    <li onclick='window.location="{% url "stats_charts" "payments" %}"'
-        {% if payments %}class="selected"{% endif %}>{% trans "Payments" %}</li>
-    <li onclick='window.location="{% url "stats_charts" "categories" %}"'
-        {% if categories %}class="selected"{% endif %}>{% trans "Categories" %}</li>
+<div class="radio-group-vertical form-group">
+    <label class="radio">
+        <input type="radio" name="choice" id="rad1" value="ttc"
+        {% ifequal choice "ttc" %}checked{% endifequal %}>{% trans "Sales" %}
+    </label>
+    <label class="radio">
+        <input type="radio" name="choice" id="rad2" value="bar"
+        {% ifequal choice "bar" %}checked{% endifequal %}>{% trans "Bar" %}
+    </label>
+    <label class="radio">
+        <input type="radio" name="choice" id="rad3" value="guests"
+        {% ifequal choice "guests" %}checked{% endifequal %}>{% trans "Restaurant" %}
+    </label>
+    <label class="radio">
+        <input type="radio" name="choice" id="rad4" value="vats"
+        {% ifequal choice " vats" %}checked{% endifequal %}>{% trans "VAT" %}
+    </label>
+    <label class="radio">
+        <input type="radio" name="choice" id="rad5" value="payments"
+        {% ifequal choice "payments" %}checked{% endifequal %}>{% trans "Payments" %}
+    </label>
+    <label class="radio">
+        <input type="radio" name="choice" id="rad6" value="categories"
+        {% ifequal choice "categories" %}checked{% endifequal %}>{% trans "Categories" %}
+    </label>
     {% for cat in cat_list %}
-    <li onclick='window.location="{% url "stats_charts" cat.id %}"'
-        class="cat_{{cat.id}}"
-    {% ifequal choice cat.id %}class="selected"{% endifequal %}>{{cat.nom}}</li>
+    <label class="radio cat_{{cat.id}}">
+        <input type="radio" name="choice" id="rad_cat_{{cat.id}}" value="{{cat.id}}"
+        {% ifequal choice cat.id %}checked{% endifequal %}>{{cat.nom}}
+    </label>
     {% endfor %}
-
-<form method='post' action='{% url "stats_charts" choice %}' name='year'>
-    {% csrf_token %}
-    {{ year_form.as_ul }}
-    <li><input type='submit' value="{% trans "Display the year" %}"></li>
+</div>
 </form>
-</ul>
 
 {% endblock %}
 

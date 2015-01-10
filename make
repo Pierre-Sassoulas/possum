@@ -279,7 +279,8 @@ function clear_db {
         fi
         mv possum.db backup/possum.db.$(date +%Y%m%d%H%M)
     fi
-    ./manage.py syncdb --noinput --migrate
+    ./manage.py syncdb --noinput
+    ./manage.py migrate
 #    ./manage.py flush --noinput
 }
 
@@ -305,7 +306,8 @@ init_demo)
 load_demo)
     enter_virtualenv
     clear_db
-    ./manage.py syncdb --noinput --migrate
+    ./manage.py syncdb --noinput
+    ./manage.py migrate
     ./manage.py loaddata demo
     ;;
 utests)

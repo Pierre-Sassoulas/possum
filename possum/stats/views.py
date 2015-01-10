@@ -28,7 +28,7 @@ from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 
-from possum.base.forms import DateForm, WeekForm, MonthForm, YearForm
+from possum.base.forms import DateForm
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import permission_required
@@ -299,38 +299,40 @@ def get_chart_year_products(year, category):
     return charts
 
 
-def select_charts(request, context, choice, year):
+def select_charts(request, context):
     """Select and construct graphics
     """
     charts = []
+    choice = context['choice']
+    year = context['year']
     if choice == 'ttc':
-        chart = {'title': "Total TTC pour l'année %s" % year, }
+        chart = {'title': "Total TTC pour l'année %d" % year, }
         chart['keys'] = {"total_ttc": 'total ttc',
                          "guests_total_ttc": 'restauration',
                          "bar_total_ttc": 'bar'}
         charts.append(chart)
     elif choice == 'bar':
-        chart = {'title': "Activité bar pour l'année %s" % year, }
+        chart = {'title': "Activité bar pour l'année %d" % year, }
         chart['keys'] = {"bar_average": 'TM/facture',
                          "bar_nb": 'nb factures'}
         charts.append(chart)
     elif choice == 'guests':
-        chart = {'title': "Activité restaurant pour l'année %s" % year, }
+        chart = {'title': "Activité restaurant pour l'année %d" % year, }
         chart['keys'] = {"guests_average": 'TM/couvert',
                          "guests_nb": 'nb couverts'}
         charts.append(chart)
     elif choice == 'vats':
-        chart = {'title': "TTC des TVA pour l'année %s" % year, }
+        chart = {'title': "TTC des TVA pour l'année %d" % year, }
         chart['keys'] = {}
         for vat in VAT.objects.iterator():
             key = "%s_vat" % vat.id
             chart['keys'][key] = "%s" % vat
         charts.append(chart)
     elif choice == 'payments':
-        chart1 = {'title': "Nombre de paiements par type pour l'année %s" %
+        chart1 = {'title': "Nombre de paiements par type pour l'année %d" %
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des paiements par type pour l'année %s" %
+        chart2 = {'title': "Valeur des paiements par type pour l'année %d" %
                   year, }
         chart2['keys'] = {}
         for payment in PaiementType.objects.iterator():
@@ -341,10 +343,10 @@ def select_charts(request, context, choice, year):
         charts.append(chart1)
         charts.append(chart2)
     elif choice == 'categories':
-        chart1 = {'title': "Nombre de vente par catégorie pour l'année %s" %
+        chart1 = {'title': "Nombre de vente par catégorie pour l'année %d" %
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %s" %
+        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %d" %
                   year, }
         chart2['keys'] = {}
         for cat in Categorie.objects.iterator():
@@ -361,11 +363,11 @@ def select_charts(request, context, choice, year):
             messages.add_message(request, messages.ERROR,
                                  "Ce type de graphique n'existe pas.")
         else:
-            chart1 = {'title': u"Nombre de vente pour la catégorie [%s] en %s"
+            chart1 = {'title': u"Nombre de vente pour la catégorie [%s] en %d"
                       % (category.nom, year), }
             chart1['keys'] = {}
             chart2 = {'title': u"Valeur des ventes pour la catégorie [%s] en "
-                      "%s" % (category.nom, year), }
+                      "%d" % (category.nom, year), }
             chart2['keys'] = {}
             for product in Produit.objects.filter(categorie=category):
                 name = "%s #%s" % (product.nom, product.id)
@@ -393,23 +395,35 @@ def select_charts(request, context, choice, year):
 
 
 @permission_required('base.p1')
-def charts(request, choice='ttc'):
+def charts(request):
     """
     chart1: pour un seul graphique
     chart2: pour 2 graphiques
     """
-    context = {'menu_sales': True, }
+    context = {'menu_sales': True, 'choice': 'ttc'}
     context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
-    year = datetime.datetime.now().year
+    # available years
+    context['year'] = datetime.datetime.now().year
+    context['years'] = [context['year'], ]
+    first_order = Facture.objects.first()
+    if first_order:
+        first_year = first_order.date_creation.year
+        last_order = Facture.objects.last()
+        if last_order.date_creation.year > first_year:
+            # more recent year first
+            context['years'] = range(last_order.date_creation.year,
+                                     first_year-1, -1)
+        elif last_order.date_creation.year == first_year:
+            context['years'] = range(context['year'], first_year-1, -1)
     if request.method == 'POST':
         try:
-            year = int(request.POST.get('year'))
+            context['year'] = int(request.POST.get('year'))
+            choice = request.POST.get('choice')
         except:
             messages.add_message(request, messages.ERROR,
                                  "La date saisie n'est pas valide.")
-    context = select_charts(request, context, choice, year)
-    context[choice] = True
-    context['choice'] = choice
-    context['year_form'] = YearForm({'year': year})
-    context['year'] = year
+        else:
+            if choice:
+                context['choice'] = choice
+    context = select_charts(request, context)
     return render(request, 'stats/charts.html', context)

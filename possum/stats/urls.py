@@ -25,6 +25,4 @@ urlpatterns = patterns('possum.stats.views',
                        url(r'^update/$', 'update', name='stats_update'),
                        url(r'^text/$', 'text', name='stats_text'),
                        url(r'^charts/$', 'charts', name='stats_charts'),
-                       url(r'^charts/(?P<choice>[a-zA-Z0-9_-]+)/$', 'charts',
-                           name='stats_charts'),
                        )
