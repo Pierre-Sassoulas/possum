@@ -37,22 +37,23 @@ function setinfos() {
   });
 }
 
-$("button#play").click(ajaxplay);
-$("button#pause").click(ajaxpause);
+$("button#playpause").click(ajaxplaypause);
 $("button#next").click(ajaxnext);
 $("button#previous").click(ajaxprevious);
 $("button#remove").click(ajaxremove);
 
-function ajaxplay() {
-  ajaxfunct('play');
-  return false;
-}
-
-function ajaxpause() {
-  ajaxfunct('pause');
-  clearInterval(intervId);
-  clearInterval(intervFin);
-  console.log("paused");
+function ajaxplaypause() {
+  $.get('playpause', function(data) {
+    if(data=='paused') {
+      clearInterval(intervId);
+      clearInterval(intervFin);
+      console.log("paused");
+    }
+    else {
+      // one second interval to be less agressive towards the server
+      setTimeout(setinfos,1000);
+    }
+  });
   return false;
 }
 
@@ -61,7 +62,8 @@ function ajaxfunct(strfunct) {
     url: strfunct,
     type: 'GET'
   });
-  setinfos();
+  // one second interval to be less agressive towards the server
+  setTimeout(setinfos,1000);
   return false;
 }
 
@@ -74,21 +76,29 @@ function ajaxprevious() {
 }
 
 function ajaxremove() {
-  ajaxfunct('remove');
+  $.ajax({
+    url: 'remove',
+    type: 'GET',
+    data: "pl=" + $("select#id_pl").val()
+  });
+  // one second interval to be less agressive towards the server
+  setTimeout(setinfos,1000);
+  return false;
 }
 
 $(document).ready(function() {
   setinfos();
   $("input#subbtn").remove();
+  // remove the useless stop button if javascript is ok
+  $("select#id_pl option[value='-1']").remove();
   $("select#id_pl").change(function() {
-    if ($("select#id_pl").val() != '0') {
-      $.ajax({
-        url: 'play',
-        type: 'GET',
-        data: "pl=" + $("select#id_pl").val()
-      });
-      $("select#id_pl").val('0');
-    }
-    setinfos();
+    $.ajax({
+      url: 'playpl',
+      type: 'GET',
+      data: "pl=" + $("select#id_pl").val()
+    });
+    setTimeout(setinfos,1000);
   });
+  // prevent the browser to change the position of the playlist to the previous position
+  $("select#id_pl").val('0');
 });
