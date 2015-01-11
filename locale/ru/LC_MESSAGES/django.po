@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-22 16:27+0100\n"
+"POT-Creation-Date: 2015-01-11 18:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,50 +100,50 @@ msgstr ""
 msgid "VAT take away is not defined"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:634
+#: possum/base/views/bill/__init__.py:664
 #: possum/base/views/kitchen/__init__.py:86
 msgid "This invoice has already been ended"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:650
+#: possum/base/views/bill/__init__.py:680
 msgid "The bill contains payments"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:712
-#: possum/base/views/bill/__init__.py:729
+#: possum/base/views/bill/__init__.py:742
+#: possum/base/views/bill/__init__.py:759
 msgid "Invalid bill"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:786
-#: possum/base/views/bill/__init__.py:826
+#: possum/base/views/bill/__init__.py:816
+#: possum/base/views/bill/__init__.py:856
 msgid "Invalid number"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:841
-#: possum/base/views/bill/__init__.py:912
+#: possum/base/views/bill/__init__.py:871
+#: possum/base/views/bill/__init__.py:942
 msgid "Bill is being edited by"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:846
-#: possum/base/views/bill/__init__.py:849
-#: possum/base/views/bill/__init__.py:859
-#: possum/base/views/bill/__init__.py:865
+#: possum/base/views/bill/__init__.py:876
+#: possum/base/views/bill/__init__.py:879
+#: possum/base/views/bill/__init__.py:889
+#: possum/base/views/bill/__init__.py:895
 msgid "Invalid payment"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:869
+#: possum/base/views/bill/__init__.py:899
 msgid "Payment could not be saved"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:874
+#: possum/base/views/bill/__init__.py:904
 msgid "This invoice has been ended"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:882
+#: possum/base/views/bill/__init__.py:912
 msgid "Payment saved"
 msgstr ""
 
-#: possum/base/views/bill/__init__.py:933
+#: possum/base/views/bill/__init__.py:963
 msgid "Nothing to pay"
 msgstr ""
 
@@ -307,7 +307,7 @@ msgid "Russian"
 msgstr ""
 
 #: possum/jukebox/forms.py:30 possum/jukebox/views.py:82
-#: possum/jukebox/views.py:103
+#: possum/jukebox/views.py:117
 msgid "Stop"
 msgstr ""
 
@@ -315,11 +315,11 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: possum/jukebox/views.py:125
+#: possum/jukebox/views.py:139
 msgid "The music server is not set."
 msgstr ""
 
-#: possum/jukebox/views.py:128
+#: possum/jukebox/views.py:142
 msgid "The music server is unreachable."
 msgstr ""
 
@@ -467,7 +467,7 @@ msgstr ""
 #: possum/templates/base/categories_delete.html:38
 #: possum/templates/base/manager/tables/home.html:21
 #: possum/templates/bill/bill.html:31
-#: possum/templates/jukebox/musicplayerd.html:31
+#: possum/templates/jukebox/musicplayerd.html:30
 #: possum/templates/notes/home.html:38
 msgid "Remove"
 msgstr ""
@@ -1080,7 +1080,7 @@ msgid "How many guests ?"
 msgstr ""
 
 #: possum/templates/bill/home.html:4
-#: possum/templates/jukebox/musicplayerd.html:34
+#: possum/templates/jukebox/musicplayerd.html:33
 #: possum/templates/kitchen/home.html:63
 #, python-format
 msgid ""
@@ -1211,19 +1211,15 @@ msgid "Change playlist"
 msgstr ""
 
 #: possum/templates/jukebox/musicplayerd.html:27
-msgid "Play"
+msgid "Previous"
 msgstr ""
 
 #: possum/templates/jukebox/musicplayerd.html:28
-msgid "Pause"
+msgid "Play/Pause"
 msgstr ""
 
 #: possum/templates/jukebox/musicplayerd.html:29
 msgid "Next"
-msgstr ""
-
-#: possum/templates/jukebox/musicplayerd.html:30
-msgid "Previous"
 msgstr ""
 
 #: possum/templates/kitchen/home.html:6 possum/templates/kitchen/view.html:16
