@@ -1,13 +1,44 @@
 {% extends "base_with_aside.html" %}
 {% load i18n %}
+{% load staticfiles %}
+{% block extrajs %}
+<script src="{% static "highcharts/js/highcharts.js" %}"></script>
+<script src="{% static "highcharts/js/modules/exporting.js" %}"></script>
+{% endblock %}
 {% block content %}
 <h1>Graphique du ...</h1>
-
-<div class="media">
-    <div id='chart_view_1'><p>{% trans "No data" %}</p></div>
-    <div id='chart_view_2'></div>
+<div class="panel panel-default">
+<div id="chart_panel" class="panel-body" style="width:100%;height:314px"></div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+
+    // Glucose Average by Day chart
+     var avgByDayOptions = {
+        chart: {
+            renderTo: 'chart_panel',
+            type: 'line',
+        },
+        legend: {enabled: false},
+        title: {text: 'Average Glucose by Day'},
+        subtitle: {text: 'Last 14 Days'},
+        xAxis: {title: {text: null}, labels: {rotation: -45}},
+        yAxis: {title: {text: null}},
+        series: [{}],
+    };
+
+    var chartDataUrl = "{% url 'stats_dump' %}";
+    $.getJSON(chartDataUrl,
+        function(data) {
+            avgByDayOptions.xAxis.categories = data['chart_data']['dates'];
+            avgByDayOptions.series[0].name = 'Avg Glucose (mg/dL)';
+            avgByDayOptions.series[0].data = data['chart_data']['values'];
+            var chart = new Highcharts.Chart(avgByDayOptions);
+    });
+
+} );
+</script>
 {% endblock %}
 {% block side %}
 <h2>{% trans "Date" %}</h2>

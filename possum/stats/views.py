@@ -19,6 +19,7 @@
 #
 import datetime
 import logging
+import json
 
 from chartit import PivotDataPool, PivotChart
 from django.conf import settings
@@ -26,6 +27,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Avg
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 
 from possum.base.forms import DateForm
@@ -427,3 +429,10 @@ def charts(request):
                 context['choice'] = choice
     context = select_charts(request, context)
     return render(request, 'stats/charts.html', context)
+
+
+@permission_required('base.p1')
+def dump(request):
+    data = {}
+    data['chart_data'] = Stat().test_get_chart()
+    return HttpResponse(json.dumps(data), content_type='application/json')
