@@ -95,11 +95,25 @@ def make_playlist_names():
     del playlist_names[:]
     playlist_names.append(('0', ''))
     if check_cnx():
-        plists = settings.MPD_CLIENT.listplaylists()
-        j = 1
-        for i in plists:
-            playlist_names.append((j, i['playlist']))
-            j = j + 1
+        try:
+            nowpl = settings.MPD_CLIENT.playlist()
+            plists = settings.MPD_CLIENT.listplaylists()
+            j = 1
+            nowplfound = False
+            for i in plists:
+                if not nowplfound:
+                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(i['playlist'])
+                    if not is_same_pl(nowpl, rqplfull):
+                        playlist_names.append((j, i['playlist']))
+                        j = j + 1
+                    else:
+                        playlist_names[0]=('0', i['playlist'])
+                        nowplfound = True
+                else:
+                    playlist_names.append((j, i['playlist']))
+                    j = j + 1
+        except:
+            LOGGER.debug("error retrieving playlists names")
     playlist_names.append(('-1', _("Stop")))
 
 
@@ -109,13 +123,13 @@ def musicplayerd(request):
     :return rtype: HttpResponse
     '''
     if check_cnx():
-        make_playlist_names()
+        if 'pl' in request.GET:
+            change_pl(request.GET['pl'])
         pl_form = PlaylistsForm()
+        make_playlist_names()
         pl_form.fields['pl'].choices = playlist_names
         context = {'pl_form': pl_form,
                    'need_auto_refresh': 120, }
-        if 'pl' in request.GET:
-            change_pl(request.GET['pl'])
         # append infos on current playback to the context
         context = dict(context.items() + getinfos().items())
         return render_to_response('jukebox/musicplayerd.html', context)
@@ -152,32 +166,31 @@ def change_pl(plid):
     :param Integer plid: the generated id of the playlist
     '''
     if plid:
-        # 0 is the empty line of playlist_names so no action
-        if plid != '0':
-            if check_cnx():
-                # -1 is the Stop line of playlist_names
-                if plid != '-1':
-                    nowpl = settings.MPD_CLIENT.playlist()
-                    rqplname = playlist_names[int(plid)][1]
-                    rqplfull = settings.MPD_CLIENT.listplaylistinfo(rqplname)
-                    if not is_same_pl(nowpl, rqplfull):
-                        results = "error changing playlist : "
-                        try:
-                            settings.MPD_CLIENT.clearerror()
-                            # Prevents errors when multiple commands in a row
-                            settings.MPD_CLIENT.command_list_ok_begin()
-                            settings.MPD_CLIENT.stop()
-                            settings.MPD_CLIENT.clear()
-                            settings.MPD_CLIENT.load(rqplname)
-                            settings.MPD_CLIENT.play()
-                            results += settings.MPD_CLIENT.command_list_end()
-                        except:
-                            LOGGER.debug(results)
-                else:
-                    settings.MPD_CLIENT.stop()
+        if check_cnx():
+            # -1 is the Stop line of playlist_names
+            if plid != '-1':
+                nowpl = settings.MPD_CLIENT.playlist()
+                rqplname = playlist_names[int(plid)][1]
+                rqplfull = settings.MPD_CLIENT.listplaylistinfo(rqplname)
+                if not is_same_pl(nowpl, rqplfull):
+                    results = "error changing playlist : "
+                    try:
+                        settings.MPD_CLIENT.clearerror()
+                        # Prevents errors when multiple commands in a row
+                        settings.MPD_CLIENT.command_list_ok_begin()
+                        settings.MPD_CLIENT.stop()
+                        settings.MPD_CLIENT.clear()
+                        settings.MPD_CLIENT.load(rqplname)
+                        settings.MPD_CLIENT.play()
+                        # Tell server to execute commands and get feedback
+                        results += settings.MPD_CLIENT.command_list_end()
+                    except:
+                        LOGGER.debug(results)
+            else:
+                settings.MPD_CLIENT.stop()
 
 
-def ajax_play(request):
+def ajax_playpl(request):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
@@ -187,23 +200,26 @@ def ajax_play(request):
         try:
             if 'pl' in request.GET:
                 change_pl(request.GET['pl'])
-            else:
-                settings.MPD_CLIENT.play()
         except:
-            LOGGER.debug("error while pressing play")
+            LOGGER.debug("error while changing playlist")
     return HttpResponse(HTML_to_return)
 
 
-def ajax_pause(request):
+def ajax_playpause(request):
     '''
     :param HttpRequest request:
     '''
     HTML_to_return = ''
     if check_cnx():
         try:
-            settings.MPD_CLIENT.pause(1)
+            status = settings.MPD_CLIENT.status()
+            if (status['state'] == 'play'):
+                settings.MPD_CLIENT.pause(1)
+                return HttpResponse('paused')
+            else:
+                settings.MPD_CLIENT.play()
         except:
-            LOGGER.debug("error while pressing pause")
+            LOGGER.debug("error while pressing play/pause")
     return HttpResponse(HTML_to_return)
 
 
@@ -253,7 +269,14 @@ def ajax_remove(request):
     HTML_to_return = ''
     if check_cnx():
         try:
-            settings.MPD_CLIENT.delete()
+            status = settings.MPD_CLIENT.status()
+            n = int(status['song'])
+            settings.MPD_CLIENT.delete(n)
+            if 'pl' in request.GET:
+                plpos = int(request.GET['pl'])
+                settings.MPD_CLIENT.playlistdelete(playlist_names[plpos][1],n)
+            else:
+                LOGGER.debug("error pressing remove : doesn't receive pl id")
         except:
-            LOGGER.debug("error while pressing remove")
+            LOGGER.debug("error pressing remove")
     return HttpResponse(HTML_to_return)
