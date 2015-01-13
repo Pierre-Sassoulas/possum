@@ -18,17 +18,17 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from os.path import abspath, dirname, join, normpath
 import os
+from os.path import abspath, dirname, join, normpath
 import random
 import sys
 
 from django.utils.translation import ugettext_lazy as _
-
 from mpd import MPDClient
 
 from version import POSSUM_VERSION
-
+# Max number of added product in a bill
+MAX_NUMBER = 14
 
 # from django.utils.translation import ugettext as _
 # PATH CONFIGURATION
@@ -65,6 +65,7 @@ MPD_HOST = ""
 MPD_PORT = 6600
 MPD_PWD = ""
 MPD_CLIENT = MPDClient()
+
 
 def create_secret_key():
     ''' Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then
@@ -282,3 +283,4 @@ LOGGING = {
         }
     }
 }
+
