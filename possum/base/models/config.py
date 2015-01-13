@@ -47,7 +47,7 @@ class Config(models.Model):
         app_label = 'base'
         ordering = ['key']
 
-    def is_carte_changed(self, date):
+    def carte_changed(self, date):
         ''' Check if carte has changed since 'date' (Str)
 
         True: carte has changed
@@ -59,7 +59,7 @@ class Config(models.Model):
         :return etype: Boolean
         '''
         if not isinstance(date, datetime):
-            msg = "An unvalid date was passed to Config.is_carte_changed"
+            msg = "An unvalid date was passed to Config.carte_changed"
             msg += "(We have date='{0}')".format(date)
             LOGGER.error(msg)
             return False

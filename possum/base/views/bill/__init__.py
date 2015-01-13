@@ -196,7 +196,8 @@ def categories(request, bill_id, category_id=None):
     if not set_edition_status(request, bill):
         return redirect('bill_view', bill.id)
     lcc = request.session.get('last_carte_changed')
-    if lcc is not None and Config().is_carte_changed(lcc):
+    if lcc is None or Config().carte_changed(lcc):
+        # If they are no categorie or if the carte changed
         lcc = Config().get_carte_changed().value
         request.session['last_carte_changed'] = lcc
         categories = []
@@ -210,11 +211,11 @@ def categories(request, bill_id, category_id=None):
         LOGGER.debug("Updating session categories : '{0}'".format(categories))
         request.session['categories'] = categories
     else:
+        # request.session['categories'] is not None
         LOGGER.debug('Use categories in cache')
     context = {'menu_bills': True,
                'categories': request.session['categories'],
                'bill': bill,
-               'last_carte_changed': request.session['last_carte_changed'],
                'max_number': settings.MAX_NUMBER + 1,
                'number_possible_to_add': range(1, settings.MAX_NUMBER + 1),
                'products_sold': bill.reduced_sold_list(bill.produits.all()),
