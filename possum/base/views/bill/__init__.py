@@ -212,7 +212,9 @@ def categories(request, bill_id, category_id=None):
     else:
         LOGGER.debug('Use categories in cache')
     context = {'menu_bills': True,
+               'categories': request.session['categories'],
                'bill': bill,
+               'last_carte_changed': request.session['last_carte_changed'],
                'max_number': settings.MAX_NUMBER + 1,
                'number_possible_to_add': range(1, settings.MAX_NUMBER + 1),
                'products_sold': bill.reduced_sold_list(bill.produits.all()),
