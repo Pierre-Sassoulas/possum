@@ -15,7 +15,7 @@ List of commands:
     fastcoverage       :  make only the unit tests and display the coverage in your browser
     utests             :  make only the unit tests
     help               :  this help
-    init_demo          :  erase database with data of demonstration
+    init_demo          :  erase database with data of demonstration (Warning it can be very long in particular after 'Running migrations')
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
     model              :  generate doc/images/models-base.png
