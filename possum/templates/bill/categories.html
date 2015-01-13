@@ -10,7 +10,11 @@
 <h2><!-- number --></h2>
 <ul id="numbers">
     {% for number in number_possible_to_add %}
-    	<li id="number_{{number}}" {% if count == number %}class="enabled" {% endif %} onclick="update_number(this, {{number}})"> {{number}} </li>
+    	<li id="number_{{number}}" 
+	{% if count == number %}class="enabled" {% endif %}
+	onclick="update_number(this, {{number}})"> 
+		{{number}}
+	</li>
     {% endfor %}
 </ul>
 

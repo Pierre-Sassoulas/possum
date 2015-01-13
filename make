@@ -9,13 +9,17 @@ function my_help {
 Usage: ./make [a command]
 
 List of commands:
-    create_json_demo   :  create JSON fixtures in possum/base/fixtures/demo.json
+    create_json_demo   :  create JSON fixtures in 
+                          possum/base/fixtures/demo.json
     doc                :  make the documentation in html
     deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
-    fastcoverage       :  make only the unit tests and display the coverage in your browser
+    fastcoverage       :  make only the unit tests and display the coverage
+		          in your browser
     utests             :  make only the unit tests
     help               :  this help
-    init_demo          :  erase database with data of demonstration (Warning it can be very long in particular after 'Running migrations')
+    init_demo          :  erase database with data of demonstration (Warning 
+			  it can be very long in particular after 'Running
+                          migrations')
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
     model              :  generate doc/images/models-base.png
@@ -23,7 +27,8 @@ List of commands:
     migrates           :  Apply the migrations
     models_changed     :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
-    run                :  run ./manage.py runserver in virtualenv with the file settings.py
+    run                :  run ./manage.py runserver in virtualenv with the 
+                          file settings.py
     translation        :  create/update translations
     tests              :  make tests and coverage
     update             :  install/update Possum environnement
