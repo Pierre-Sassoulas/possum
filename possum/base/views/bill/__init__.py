@@ -172,8 +172,13 @@ def set_number(request, bill_id, count):
 
 
 def update_session_number_of_product(request, bill_id, count):
-    '''
+    ''' This function update the value for the number of product we want to
+    add in bill/categories.
+
     :param HttpRequest request:
+    :param int bill_id: Useless parameter in order to use the same URL as the
+    mother page.
+    :param count: The value we want to update.
     '''
     request.session['count'] = int(count)
     return HttpResponse('OK')

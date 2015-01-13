@@ -3,8 +3,9 @@
 {% block content %}
 {% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "bill_view" bill.id %}'"
-        >{% trans "Back" %}</li>
+    <li onclick="window.location='{% url "bill_view" bill.id %}'">
+	{% trans "Back" %}
+    </li>
 </ul>
 
 <h2><!-- number --></h2>
