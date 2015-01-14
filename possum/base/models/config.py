@@ -48,13 +48,12 @@ class Config(models.Model):
         ordering = ['key']
 
     def carte_changed(self, date):
-        ''' Check if carte has changed since 'date' (Str)
+        ''' Check if carte has changed since 'date'
 
         True: carte has changed
         False: no change
 
-        :param date:
-        :type date:
+        :param datetime date: The last modification for this carte.
 
         :return etype: Boolean
         '''
