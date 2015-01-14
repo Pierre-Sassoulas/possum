@@ -59,8 +59,7 @@ class Config(models.Model):
         :return etype: Boolean
         '''
         if not isinstance(date, datetime):
-            msg = "An unvalid date was passed to Config.carte_changed"
-            msg += "(We have date='{0}')".format(date)
+            msg = "Unvalid date (date='{0}')".format(date)
             LOGGER.error(msg)
             return False
         record = self.get_carte_changed()
