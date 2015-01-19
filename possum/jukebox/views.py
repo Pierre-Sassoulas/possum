@@ -114,7 +114,6 @@ def make_playlist_names():
                     j = j + 1
         except:
             LOGGER.debug("error retrieving playlists names")
-    playlist_names.append(('-1', _("Stop")))
 
 
 def musicplayerd(request):
@@ -167,27 +166,23 @@ def change_pl(plid):
     '''
     if plid:
         if check_cnx():
-            # -1 is the Stop line of playlist_names
-            if plid != '-1':
-                nowpl = settings.MPD_CLIENT.playlist()
-                rqplname = playlist_names[int(plid)][1]
-                rqplfull = settings.MPD_CLIENT.listplaylistinfo(rqplname)
-                if not is_same_pl(nowpl, rqplfull):
-                    results = "error changing playlist : "
-                    try:
-                        settings.MPD_CLIENT.clearerror()
-                        # Prevents errors when multiple commands in a row
-                        settings.MPD_CLIENT.command_list_ok_begin()
-                        settings.MPD_CLIENT.stop()
-                        settings.MPD_CLIENT.clear()
-                        settings.MPD_CLIENT.load(rqplname)
-                        settings.MPD_CLIENT.play()
-                        # Tell server to execute commands and get feedback
-                        results += settings.MPD_CLIENT.command_list_end()
-                    except:
-                        LOGGER.debug(results)
-            else:
-                settings.MPD_CLIENT.stop()
+            nowpl = settings.MPD_CLIENT.playlist()
+            rqplname = playlist_names[int(plid)][1]
+            rqplfull = settings.MPD_CLIENT.listplaylistinfo(rqplname)
+            if not is_same_pl(nowpl, rqplfull):
+                results = "error changing playlist : "
+                try:
+                    settings.MPD_CLIENT.clearerror()
+                    # Prevents errors when multiple commands in a row
+                    settings.MPD_CLIENT.command_list_ok_begin()
+                    settings.MPD_CLIENT.stop()
+                    settings.MPD_CLIENT.clear()
+                    settings.MPD_CLIENT.load(rqplname)
+                    settings.MPD_CLIENT.play()
+                    # Tell server to execute commands and get feedback
+                    results += settings.MPD_CLIENT.command_list_end()
+                except:
+                    LOGGER.debug(results)
 
 
 def ajax_playpl(request):
