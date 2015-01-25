@@ -86,7 +86,6 @@ function tests {
     then
         exit 1
     fi
-    csslint possum/base/static/possum --format=lint-xml > reports/csslint.report
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
     clonedigger --cpd-output -o reports/clonedigger.xml $(find possum -name "*.py" | fgrep -v '/migrations/' | fgrep -v '/tests/' | xargs echo )
     sloccount --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
@@ -271,14 +270,7 @@ function migrate {
 
 function clear_db {
     enter_virtualenv
-    if [ -e possum.db ]
-    then
-        if [ ! -d backup ]
-        then
-            mkdir backup
-        fi
-        mv possum.db backup/possum.db.$(date +%Y%m%d%H%M)
-    fi
+    ./manage.py reset_db
     ./manage.py syncdb --noinput
     ./manage.py migrate
 #    ./manage.py flush --noinput

@@ -19,7 +19,7 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User
 
 import datetime
 import random
@@ -35,20 +35,20 @@ class Command(BaseCommand):
     help = "Initialize a demo database"
 
     def handle(self, *args, **options):
-        # ajout des utilisateurs
+        # managers
         for username in ['demo', 'demo1', 'demo2']:
-            if User.objects.filter(username=username).count() == 0:
-                user = User(username=username, first_name=username,
-                            email="%s@possum-software.org" % username)
-                user.set_password(username)
-                user.save()
-                # on ajoute les droits d'admin
-                for i in xrange(1, 10):
-                    user.user_permissions.add(
-                        Permission.objects.get(
-                            codename="p%d" %
-                            i))
-                user.save()
+            user = User(username=username, first_name=username,
+                        email="%s@possum-software.org" % username)
+            user.set_password(username)
+            user.is_superuser = True
+            user.save()
+
+        # staff members
+        for username in ['staff', 'staff1', 'staff2']:
+            user = User(username=username, first_name=username,
+                        email="%s@possum-software.org" % username)
+            user.set_password(username)
+            user.save()
 
         # Type de paiements
         PaiementType(nom='AMEX', fixed_value=False).save()

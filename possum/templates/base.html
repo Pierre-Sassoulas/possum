@@ -54,6 +54,8 @@
                     <a href="{% url 'bill_home' %}">{% trans "Orders" %}</a></li>
                 <li {% if menu_kitchen %}class="active"{% endif %}>
                     <a href="{% url 'kitchen' %}">{% trans "Kitchen" %}</a></li>
+                <li {% if menu_jukebox %}class="active"{% endif %}>
+                    <a href="{% url 'jukebox_home' %}">{% trans "Jukebox" %}</a></li>
                 <li {% if menu_manager %}class="active"{% endif %} class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">{% trans "Manager" %} <span class="caret"></span></a>
 

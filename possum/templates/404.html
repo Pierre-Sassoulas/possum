@@ -5,8 +5,10 @@
 <div class="jumbotron">
     <h1>404</h1>
     <p>{% trans "This page is currently unavailable" %}</p>
-    <p><a class="btn btn-primary btn-lg pull-right" href="{% url "home" %}"
-        >{% trans "Home" %}</a></p>
+    <p>
+        <a class="btn btn-lg btn-primary" href="{% url "home" %}"
+        >{% trans "Home" %} &raquo;</a>
+    </p>
 </div>
 {% endblock %}
 

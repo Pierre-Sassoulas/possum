@@ -23,14 +23,15 @@ import logging
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.models import Produit
 from possum.base.models import VAT
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def vats(request):
     '''
     :param HttpRequest request:
@@ -41,7 +42,7 @@ def vats(request):
     return render(request, 'base/manager/vats/home.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def vats_view(request, vat_id):
     '''
     :param HttpRequest request:
@@ -71,7 +72,7 @@ def check_name_and_tax(request, name, tax):
                              _("You must enter a percentage tax"))
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def vats_change(request, vat_id):
     '''
     :param HttpRequest request:
@@ -101,7 +102,7 @@ def vats_change(request, vat_id):
     return render(request, 'base/manager/vats/change.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def vat_new(request):
     '''
     :param HttpRequest request:

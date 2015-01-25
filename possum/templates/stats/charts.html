@@ -6,7 +6,7 @@
 <script src="{% static "highcharts/js/modules/exporting.js" %}"></script>
 {% endblock %}
 {% block content %}
-<h1>Graphique du ...</h1>
+<h1>{{title}}</h1>
 <div class="panel panel-default">
 <div id="chart_panel" class="panel-body" style="width:100%;height:314px"></div>
 </div>
@@ -21,14 +21,14 @@ $(document).ready(function() {
             type: 'line',
         },
         legend: {enabled: false},
-        title: {text: 'Average Glucose by Day'},
+        title: {text: '{{title}}'},
         subtitle: {text: 'Last 14 Days'},
         xAxis: {title: {text: null}, labels: {rotation: -45}},
         yAxis: {title: {text: null}},
         series: [{}],
     };
 
-    var chartDataUrl = "{% url 'stats_dump' %}";
+    var chartDataUrl = "{% url 'stats_dump' %}?choice={{choice}}";
     $.getJSON(chartDataUrl,
         function(data) {
             avgByDayOptions.xAxis.categories = data['chart_data']['dates'];

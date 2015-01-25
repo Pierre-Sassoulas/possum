@@ -25,18 +25,19 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.forms import OptionForm
 from possum.base.models import Categorie
 from possum.base.models import Option
 from possum.base.models import Produit
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def carte(request):
     ''' This is not used.
     :param HttpRequest request:
@@ -66,7 +67,7 @@ def is_valid_product(request, name, prize):
     return not erreur
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_view(request, product_id):
     '''
     TODO
@@ -86,7 +87,7 @@ def products_view(request, product_id):
     return render(request, 'base/carte/product.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_option(request, product_id, option_id):
     '''
     TODO
@@ -106,7 +107,7 @@ def products_option(request, product_id, option_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_new(request, category_id):
     '''
     TODO
@@ -133,7 +134,7 @@ def products_new(request, category_id):
     return render(request, 'base/carte/product_new.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_set_category(request, product_id, category_id):
     '''
     TODO
@@ -149,7 +150,7 @@ def products_set_category(request, product_id, category_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_category(request, product_id):
     '''
     TODO
@@ -163,7 +164,7 @@ def products_category(request, product_id):
     return render(request, 'base/carte/product_category.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_del_produits_ok(request, product_id, sub_id):
     '''
     TODO
@@ -180,7 +181,7 @@ def products_del_produits_ok(request, product_id, sub_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_select_produits_ok(request, product_id):
     '''
     TODO
@@ -199,7 +200,7 @@ def products_select_produits_ok(request, product_id):
                   context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_add_produits_ok(request, product_id, sub_id):
     '''
     TODO
@@ -216,7 +217,7 @@ def products_add_produits_ok(request, product_id, sub_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_del_categories_ok(request, product_id, category_id):
     '''
     TODO
@@ -233,7 +234,7 @@ def products_del_categories_ok(request, product_id, category_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_add_categories_ok(request, product_id, category_id):
     '''
     TODO
@@ -250,7 +251,7 @@ def products_add_categories_ok(request, product_id, category_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_select_categories_ok(request, product_id):
     '''
     TODO
@@ -269,7 +270,7 @@ def products_select_categories_ok(request, product_id):
                   context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_cooking(request, product_id):
     '''
     TODO
@@ -284,7 +285,7 @@ def products_cooking(request, product_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_enable(request, product_id):
     '''
     TODO
@@ -304,7 +305,7 @@ def products_enable(request, product_id):
     return redirect('products_view', product.id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_change(request, product_id):
     '''
     TODO

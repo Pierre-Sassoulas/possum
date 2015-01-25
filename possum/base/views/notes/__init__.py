@@ -23,35 +23,37 @@ import logging
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 from possum.base.forms import NoteForm
 from possum.base.models import Note
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
 LOGGER = logging.getLogger(__name__)
 
 
+@login_required
 def get_notes(request):
     context = {'menu_manager': True, }
     context['notes'] = Note.objects.all()
     return context
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def home(request):
     context = get_notes(request)
     return render(request, 'notes/home.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def delete(request, note_id):
     note = get_object_or_404(Note, pk=note_id)
     note.delete()
     return redirect('notes_home')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def view(request, note_id=None):
     context = get_notes(request)
     if request.method == 'POST':

@@ -25,12 +25,13 @@ from django.contrib import messages
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.models import Facture
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def credits(request):
     '''
     :param HttpRequest request:
@@ -40,7 +41,7 @@ def credits(request):
     return render(request, 'base/manager/credits.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def check_new_version(request):
     '''
     :param HttpRequest request:

@@ -29,18 +29,19 @@ from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.forms import DateForm
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 from possum.stats.models import Stat
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def update(request):
     """Update statistics
     """
@@ -53,6 +54,7 @@ def update(request):
     return redirect("sales_home")
 
 
+@user_passes_test(check_admin)
 def send(request, subject, message):
     """Send an email
     """
@@ -71,6 +73,7 @@ def send(request, subject, message):
                              u"Vous n'avez pas d'adresse mail")
 
 
+@user_passes_test(check_admin)
 def print_msg(request, msg):
     """Print a msg to a printer
     """
@@ -90,6 +93,7 @@ def print_msg(request, msg):
                              u"Aucune imprimante type 'manager' disponible")
 
 
+@user_passes_test(check_admin)
 def get_value(context, key):
     """Get value or give a default one
     """
@@ -99,6 +103,7 @@ def get_value(context, key):
         return "0.00\n"
 
 
+@user_passes_test(check_admin)
 def prepare_full_output(context):
     """Prepare full output
     """
@@ -139,6 +144,7 @@ Nb factures: """
     return msg
 
 
+@user_passes_test(check_admin)
 def prepare_vats_output(context):
     """Prepare VATS output
     """
@@ -150,6 +156,7 @@ def prepare_vats_output(context):
     return msg
 
 
+@user_passes_test(check_admin)
 def check_for_outputs(request, context):
     """Check if user wants some outputs
     """
@@ -172,7 +179,7 @@ def check_for_outputs(request, context):
             print_msg(request, msg)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def text(request):
     """Show stats
     """
@@ -301,6 +308,7 @@ def get_chart_year_products(year, category):
     return charts
 
 
+@user_passes_test(check_admin)
 def select_charts(request, context):
     """Select and construct graphics
     """
@@ -308,7 +316,9 @@ def select_charts(request, context):
     choice = context['choice']
     year = context['year']
     if choice == 'ttc':
-        chart = {'title': "Total TTC pour l'année %d" % year, }
+        title = "Total TTC pour l'année %d" % year
+        chart = {'title': title, }
+        context['title'] = title
         chart['keys'] = {"total_ttc": 'total ttc',
                          "guests_total_ttc": 'restauration',
                          "bar_total_ttc": 'bar'}
@@ -396,7 +406,7 @@ def select_charts(request, context):
     return context
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def charts(request):
     """
     chart1: pour un seul graphique
@@ -431,8 +441,13 @@ def charts(request):
     return render(request, 'stats/charts.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def dump(request):
     data = {}
-    data['chart_data'] = Stat().test_get_chart()
+    params = request.GET
+    choice = params.get('choice', '')
+    if choice == "truc":
+        data['chart_data'] = Stat().test_get_chart()
+    else:
+        data['chart_data'] = Stat().test_get_chart()
     return HttpResponse(json.dumps(data), content_type='application/json')
