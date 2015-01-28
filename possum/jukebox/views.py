@@ -53,9 +53,9 @@ def check_cnx():
             settings.MPD_CLIENT = MPDClient()
             # Timeout important to avoid freeze while using and testing
             settings.MPD_CLIENT.timeout = 2
+            settings.MPD_CLIENT.connect(settings.MPD_HOST, settings.MPD_PORT)
             if settings.MPD_PWD:
                 settings.MPD_CLIENT.password(settings.MPD_PWD)
-            settings.MPD_CLIENT.connect(settings.MPD_HOST, settings.MPD_PORT)
             LOGGER.debug("settings.MPD_CLIENT OK (new instance) !")
             return True
         except:
