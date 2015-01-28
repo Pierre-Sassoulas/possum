@@ -21,6 +21,7 @@
 from django.conf import settings
 from django.conf.urls import patterns, url, include
 
+NB_PRODUCT = r"ajax/number_of_product/(?P<count>\d+)"
 CAT_RGX = r'categorie/(?P<category_id>\d+)/'
 VAT_RGX = r'vat/(?P<vat_id>\d+)/'
 PRD_RGX = r'product/(?P<product_id>\d+)/'
@@ -167,6 +168,10 @@ urlpatterns += patterns('possum.base.views.bill',
                         url(r'^' + BIL_RGX + 'categories/$',
                             'categories',
                             name='bill_categories'),
+                        url(r'^' + BIL_RGX + 'categories/' + NB_PRODUCT + '$',
+                            'update_session_number_of_product',
+                            name='ajax_nb_product'),
+
                         url(r'^' + BIL_RGX + CAT_RGX + '$',
                             'categories',
                             name='bill_categories'),

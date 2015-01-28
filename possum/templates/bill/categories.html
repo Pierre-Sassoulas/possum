@@ -1,20 +1,33 @@
 {% extends "base.html" %}
+
 {% block content %}
 {% load i18n %}
 <ul id="back">
-    <li onclick="window.location='{% url "bill_view" bill.id %}'"
-        >{% trans "Back" %}</li>
+    <li onclick="window.location='{% url "bill_view" bill.id %}'">
+	{% trans "Back" %}
+    </li>
 </ul>
 
 <h2><!-- number --></h2>
 <ul id="numbers">
-    {% for number in range %}
-    <li onclick="window.location='{% url "bill_set_number" bill.id number %}'"
-        {% if count == number %}class="enabled"{% endif %}>
-        {{number}}
-    </li>
+    {% for number in number_possible_to_add %}
+    	<li id="number_{{number}}" 
+	{% if count == number %}class="enabled" {% endif %}
+	onclick="update_number(this, {{number}})"> 
+		{{number}}
+	</li>
     {% endfor %}
 </ul>
+
+<script>
+	function update_number(element, number) {
+		$.get('ajax/number_of_product/' + number);
+		for (i = 1; i < {{max_number}}; i++) {
+			document.getElementById("number_" + i).className="";
+		}
+		element.className="enabled";
+	}
+</script>
 
 <h1><!--categories--></h1>
 <ul id="categories">

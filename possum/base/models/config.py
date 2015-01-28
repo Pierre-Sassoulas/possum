@@ -47,17 +47,20 @@ class Config(models.Model):
         app_label = 'base'
         ordering = ['key']
 
-    def is_carte_changed(self, date):
-        ''' Check if carte has changed since 'date' (Str)
+    def carte_changed(self, date):
+        ''' Check if carte has changed since 'date'
 
         True: carte has changed
         False: no change
 
-        :param date:
-        :type date:
+        :param datetime date: The last modification for this carte.
 
         :return etype: Boolean
         '''
+        if not isinstance(date, datetime):
+            msg = "Unvalid date (date='{0}')".format(date)
+            LOGGER.error(msg)
+            return False
         record = self.get_carte_changed()
         if date == record.value:
             LOGGER.debug("[last_carte_changed] no change")
