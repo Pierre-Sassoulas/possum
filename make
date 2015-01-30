@@ -214,20 +214,12 @@ function graph_models {
 
 function makemigrations {
     enter_virtualenv
-    for app in $APPS
-    do
-        ./manage.py makemigrations
-        echo "[migrations created for ${app}]"
-    done
+    ./manage.py makemigrations
 }
 
 function migrate {
     enter_virtualenv
-    for app in $APPS
-    do
-        ./manage.py migrate
-        echo "[migrations applied for ${app}]"
-    done
+    ./manage.py migrate
 }
 
 function clear_db {
