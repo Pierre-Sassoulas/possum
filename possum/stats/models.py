@@ -495,9 +495,9 @@ class Stat(models.Model):
     def test_get_chart(self):
         """Test pour highcharts
         """
-        total_ttc = Stat.objects.filter(key="total_ttc", interval="m", year=2014)
-        bar_total_ttc = Stat.objects.filter(key="bar_total_ttc", interval="m", year=2014)
-        guests_total_ttc = Stat.objects.filter(key="guests_total_ttc", interval="m", year=2014)
+        total_ttc = Stat.objects.filter(key="total_ttc", interval="m", year=2015)
+        bar_total_ttc = Stat.objects.filter(key="bar_total_ttc", interval="m", year=2015)
+        guests_total_ttc = Stat.objects.filter(key="guests_total_ttc", interval="m", year=2015)
 
         data = {'dates': [], 'values': []}
         for stat in total_ttc:

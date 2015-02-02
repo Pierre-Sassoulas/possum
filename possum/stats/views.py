@@ -184,13 +184,8 @@ def text(request):
     """Show stats
     """
     context = {'menu_sales': True, 'date': datetime.datetime.now()}
-    # to limit datepicker choice
-    first_order = Facture.objects.first()
-    if first_order:
-        context['first_date'] = first_order.date_creation.strftime("%d/%m/%Y")
-    last_order = Facture.objects.last()
-    if last_order:
-        context['last_date'] = last_order.date_creation.strftime("%d/%m/%Y")
+    context = init_borders(context)
+    context['rapport'] = get_rapport_type(request)
     if request.method == 'POST':
         try:
             date = datetime.datetime.strptime(request.POST.get('date'),
@@ -201,13 +196,11 @@ def text(request):
                                  "La date saisie n'est pas valide.")
         else:
             context['date'] = date
-            if request.POST.get('rapport_type') == "month":
-                context['rapport'] = "month"
+            if context['rapport'] == "month":
                 context['title'] = "%s: %s" % (_("Report of the month"),
                                                date.strftime("%m/%Y"))
                 context = Stat().get_data_for_month(context)
-            elif request.POST.get('rapport_type') == "week":
-                context['rapport'] = "week"
+            elif context['rapport'] == "week":
                 context['title'] = "%s: %d %s" % (_("Report of the week"),
                                                   date.year,
                                                   date.isocalendar()[1])
@@ -314,7 +307,7 @@ def select_charts(request, context):
     """
     charts = []
     choice = context['choice']
-    year = context['year']
+    year = 2015
     if choice == 'ttc':
         title = "Total TTC pour l'année %d" % year
         chart = {'title': title, }
@@ -406,34 +399,61 @@ def select_charts(request, context):
     return context
 
 
-@user_passes_test(check_admin)
-def charts(request):
+def init_borders(context):
+    """Get date of first and last order to limit datepicker choice.
     """
-    chart1: pour un seul graphique
-    chart2: pour 2 graphiques
-    """
-    context = {'menu_sales': True, 'choice': 'ttc'}
-    context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
-    # available years
-    context['year'] = datetime.datetime.now().year
-    context['years'] = [context['year'], ]
     first_order = Facture.objects.first()
     if first_order:
-        first_year = first_order.date_creation.year
-        last_order = Facture.objects.last()
-        if last_order.date_creation.year > first_year:
-            # more recent year first
-            context['years'] = range(last_order.date_creation.year,
-                                     first_year-1, -1)
-        elif last_order.date_creation.year == first_year:
-            context['years'] = range(context['year'], first_year-1, -1)
+        context['first_date'] = first_order.date_creation.strftime("%d/%m/%Y")
+    else:
+        context['first_date'] = datetime.datetime.now().strftime("%d/%m/%Y")
+    last_order = Facture.objects.last()
+    if last_order:
+        context['last_date'] = last_order.date_creation.strftime("%d/%m/%Y")
+    else:
+        context['last_date'] = context['first_date']
+    LOGGER.warning("interval: %s > %s" % (context['first_date'],
+                                          context['last_date']))
+    return context
+
+
+def get_rapport_type(request):
+    """Extract and test rapport type from a form.
+    Default value is: day
+    """
     if request.method == 'POST':
+        rapport = request.POST.get('rapport_type')
+        if rapport == "month":
+            return "month"
+        elif rapport == "week":
+            return "week"
+        elif rapport == "year":
+            return "year"
+    # default value
+    return "day"
+
+
+@user_passes_test(check_admin)
+def charts(request):
+    """Show graphics
+    """
+    context = {'menu_sales': True, 'choice': 'ttc'}
+    context = init_borders(context)
+    context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
+    context['rapport'] = get_rapport_type(request)
+    context['date_begin'] = context['first_date']
+    context['date_end'] = context['last_date']
+    if request.method == 'POST':
+        strptime = datetime.datetime.strptime
         try:
-            context['year'] = int(request.POST.get('year'))
+            context['date_begin'] = strptime(request.POST.get('date_begin'),
+                                             "%d/%m/%Y")
+            context['date_end'] = strptime(request.POST.get('date_end'),
+                                           "%d/%m/%Y")
             choice = request.POST.get('choice')
         except:
             messages.add_message(request, messages.ERROR,
-                                 "La date saisie n'est pas valide.")
+                                 _("Dates are not correct"))
         else:
             if choice:
                 context['choice'] = choice
@@ -443,11 +463,13 @@ def charts(request):
 
 @user_passes_test(check_admin)
 def dump(request):
+    """Get stats for graphics
+    """
     data = {}
     params = request.GET
     choice = params.get('choice', '')
-    if choice == "truc":
-        data['chart_data'] = Stat().test_get_chart()
-    else:
-        data['chart_data'] = Stat().test_get_chart()
+    start = params.get('date_begin', '')
+    end = params.get('date_end', '')
+    interval = params.get('rapport_type', '')
+    data['chart_data'] = Stat().test_get_chart()
     return HttpResponse(json.dumps(data), content_type='application/json')

@@ -41,18 +41,45 @@ $(document).ready(function() {
 </script>
 {% endblock %}
 {% block side %}
-<h2>{% trans "Date" %}</h2>
 <form method='post' action='{% url "stats_charts" %}'>
 {% csrf_token %}
-<div class="form-group form-inline">
-    <select name="year" class="form-control">
-        {% for a_choice in years %}
-        <option {% ifequal a_choice year %}selected{% endifequal %}
-                >{{a_choice}}</option>
-        {% endfor %}
-    </select>
-    <button type="submit" class="btn btn-primary form-control">{% trans "View" %}</button>
+<h2>{% trans "Type" %}</h2>
+<label class="radio-inline">
+    <input type="radio" name="rapport_type" id="rad1" value="day"
+        {% if rapport == "day" %}checked{% endif %}>{% trans "day" %}
+</label>
+<label class="radio-inline">
+    <input type="radio" name="rapport_type" id="rad2" value="week"
+        {% if rapport == "week" %}checked{% endif %}>{% trans "week" %}
+</label></br>
+<label class="radio-inline">
+    <input type="radio" name="rapport_type" id="rad3" value="month"
+        {% if rapport == "month" %}checked{% endif %}>{% trans "month" %}
+</label>
+<label class="radio-inline">
+    <input type="radio" name="rapport_type" id="rad4" value="year"
+        {% if rapport == "year" %}checked{% endif %}>{% trans "year" %}
+</label>
+<button type="submit" class="btn btn-primary pull-right">{% trans "View" %}</button>
+
+<h2>{% trans "Date" %}</h2>
+{% trans "From" %}
+<div id="datepicker-container">
+    <div class="input-group date">
+        <input type='text' class="form-control" name="date_begin"
+               value="{{date|date:'d/m/Y'}}"/>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    </div>
 </div>
+{% trans "To" %}
+<div id="datepicker-container">
+    <div class="input-group date">
+        <input type='text' class="form-control" name="date_end"
+               value="{{date|date:'d/m/Y'}}"/>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    </div>
+</div>
+
 <div class="radio-group-vertical form-group">
     <label class="radio">
         <input type="radio" name="choice" id="rad1" value="ttc"
@@ -87,5 +114,18 @@ $(document).ready(function() {
 </div>
 </form>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker-container .input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: "{{first_date}}",
+            endDate: "{{last_date}}",
+            keyboardNavigation: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
 {% endblock %}
 
