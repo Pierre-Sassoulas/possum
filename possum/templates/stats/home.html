@@ -119,22 +119,25 @@
 <div id="datepicker-container">
     <div class="input-group date">
         <input type='text' class="form-control" name="date"
-               value="{{date|date:'d/m/Y'}}"/>
+               value="{{date}}"/>
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
 </div>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad1" value="day"
-        {% if rapport != "week" and rapport != "month" %}checked{% endif %}>
-        {% trans "day" %}
+    <input type="radio" name="interval" id="rad1" value="d"
+        {% if interval == "d" %}checked{% endif %}>{% trans "day" %}
 </label>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad2" value="week"
-        {% if rapport == "week" %}checked{% endif %}>{% trans "week" %}
+    <input type="radio" name="interval" id="rad2" value="w"
+        {% if interval == "w" %}checked{% endif %}>{% trans "week" %}
+</label></br>
+<label class="radio-inline">
+    <input type="radio" name="interval" id="rad3" value="m"
+        {% if interval == "m" %}checked{% endif %}>{% trans "month" %}
 </label>
 <label class="radio-inline">
-    <input type="radio" name="rapport_type" id="rad3" value="month"
-        {% if rapport == "month" %}checked{% endif %}>{% trans "month" %}
+    <input type="radio" name="interval" id="rad4" value="y"
+        {% if interval == "y" %}checked{% endif %}>{% trans "year" %}
 </label>
 <button type="submit" class="btn btn-primary pull-right">{% trans "View" %}</button>
 
@@ -160,7 +163,7 @@
     // When the document is ready
     $(document).ready(function () {
         $('#datepicker-container .input-group.date').datepicker({
-            format: "dd/mm/yyyy",
+            format: "dd-mm-yyyy",
             startDate: "{{first_date}}",
             endDate: "{{last_date}}",
             keyboardNavigation: false,

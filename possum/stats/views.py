@@ -21,7 +21,6 @@ import datetime
 import logging
 import json
 
-from chartit import PivotDataPool, PivotChart
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -35,7 +34,7 @@ from possum.base.forms import DateForm
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import check_admin
-from possum.stats.models import Stat
+from possum.stats.models import Stat, STATS, RAPPORTS
 
 
 LOGGER = logging.getLogger(__name__)
@@ -140,7 +139,7 @@ Nb factures: """
     if 'products' in context:
         for product in context['products']:
             msg += "%s: %s\n" % (product.nom, product.nb)
-    msg += "\nFait le %s" % datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    msg += "\nFait le %s" % datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
     return msg
 
 
@@ -185,28 +184,28 @@ def text(request):
     """
     context = {'menu_sales': True, 'date': datetime.datetime.now()}
     context = init_borders(context)
-    context['rapport'] = get_rapport_type(request)
+    context['interval'] = get_rapport_type(request)
     if request.method == 'POST':
         try:
             date = datetime.datetime.strptime(request.POST.get('date'),
-                                              "%d/%m/%Y")
+                                              "%d-%m-%Y")
         except:
             messages.add_message(request,
                                  messages.ERROR,
                                  "La date saisie n'est pas valide.")
         else:
             context['date'] = date
-            if context['rapport'] == "month":
+            if context['interval'] == "m":
                 context['title'] = "%s: %s" % (_("Report of the month"),
                                                date.strftime("%m/%Y"))
                 context = Stat().get_data_for_month(context)
-            elif context['rapport'] == "week":
+            elif context['interval'] == "w":
                 context['title'] = "%s: %d %s" % (_("Report of the week"),
                                                   date.year,
                                                   date.isocalendar()[1])
                 context = Stat().get_data_for_week(context)
             else:
-                context['rapport'] = "day"
+                context['interval'] = "d"
                 context['title'] = "%s: %s" % (_("Report of the day"),
                                                date.strftime("%d/%m/%Y"))
                 context = Stat().get_data_for_day(context)
@@ -228,50 +227,6 @@ def month_sort(*x):
     """x example: ((('Fev',), ('2',)),)
     """
     return (int(x[0][1][0]),)
-
-
-def get_datapool_year(year, keys):
-    LOGGER.debug(keys)
-    series = []
-    objects = Stat.objects.filter(interval="m", year=year)
-    for key in keys.keys():
-        series.append({'options': {
-            'source': objects.filter(key=key),
-            'categories': 'month'},
-            'terms': {keys[key]: Avg('value')}
-        })
-    return PivotDataPool(
-        series=series,
-        sortf_mapf_mts=(month_sort, month_name, True))
-
-
-def get_chart(datasource, graph, keys, title, xaxis):
-    """
-    graph: line / pie
-    """
-    terms = [keys[x] for x in keys.keys()]
-    return PivotChart(
-        datasource=datasource,
-        series_options=[{
-                        'options': {
-                            'type': graph,
-                            'stacking': False
-                        },
-                        'terms': terms
-                        }],
-        chart_options={
-            'title': {
-                'text': title},
-            'credits': {
-                'enabled': False
-            },
-            'xAxis': {
-                'title': {
-                    'text': xaxis}},
-            'yAxis': {
-                'title': {
-                    'text': ''}},
-        })
 
 
 def get_chart_year_products(year, category):
@@ -404,12 +359,12 @@ def init_borders(context):
     """
     first_order = Facture.objects.first()
     if first_order:
-        context['first_date'] = first_order.date_creation.strftime("%d/%m/%Y")
+        context['first_date'] = first_order.date_creation.strftime("%d-%m-%Y")
     else:
-        context['first_date'] = datetime.datetime.now().strftime("%d/%m/%Y")
+        context['first_date'] = datetime.datetime.now().strftime("%d-%m-%Y")
     last_order = Facture.objects.last()
     if last_order:
-        context['last_date'] = last_order.date_creation.strftime("%d/%m/%Y")
+        context['last_date'] = last_order.date_creation.strftime("%d-%m-%Y")
     else:
         context['last_date'] = context['first_date']
     LOGGER.warning("interval: %s > %s" % (context['first_date'],
@@ -422,54 +377,44 @@ def get_rapport_type(request):
     Default value is: day
     """
     if request.method == 'POST':
-        rapport = request.POST.get('rapport_type')
-        if rapport == "month":
-            return "month"
-        elif rapport == "week":
-            return "week"
-        elif rapport == "year":
-            return "year"
+        rapport = request.POST.get('interval')
+        if rapport == "m":
+            return "m"
+        elif rapport == "w":
+            return "w"
+        elif rapport == "y":
+            return "y"
     # default value
-    return "day"
+    return "d"
 
 
 @user_passes_test(check_admin)
 def charts(request):
     """Show graphics
     """
-    context = {'menu_sales': True, 'choice': 'ttc'}
+    context = {'menu_sales': True, 'rapport': '1'}
     context = init_borders(context)
     context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
-    context['rapport'] = get_rapport_type(request)
+    context['interval'] = get_rapport_type(request)
     context['date_begin'] = context['first_date']
     context['date_end'] = context['last_date']
+    context['rapports'] = RAPPORTS
     if request.method == 'POST':
-        strptime = datetime.datetime.strptime
-        try:
-            context['date_begin'] = strptime(request.POST.get('date_begin'),
-                                             "%d/%m/%Y")
-            context['date_end'] = strptime(request.POST.get('date_end'),
-                                           "%d/%m/%Y")
-            choice = request.POST.get('choice')
-        except:
-            messages.add_message(request, messages.ERROR,
-                                 _("Dates are not correct"))
-        else:
-            if choice:
-                context['choice'] = choice
-    context = select_charts(request, context)
+        if 'date_begin' in request.POST:
+            context['date_begin'] = request.POST.get('date_begin')
+        if 'date_end' in request.POST:
+            context['date_end'] = request.POST.get('date_end')
+        context['rapport'] = request.POST.get('rapport')
+    context['title'] = RAPPORTS[context['rapport']]['title']
+#    context = select_charts(request, context)
     return render(request, 'stats/charts.html', context)
 
 
 @user_passes_test(check_admin)
-def dump(request):
+def dump(request, rapport, interval, date_begin, date_end):
     """Get stats for graphics
+    All tests on data are made in Stat()
     """
     data = {}
-    params = request.GET
-    choice = params.get('choice', '')
-    start = params.get('date_begin', '')
-    end = params.get('date_end', '')
-    interval = params.get('rapport_type', '')
-    data['chart_data'] = Stat().test_get_chart()
+    data['chart_data'] = Stat().test_get_chart(rapport, interval, date_begin, date_end)
     return HttpResponse(json.dumps(data), content_type='application/json')

@@ -27,6 +27,7 @@ import os
 from django.conf import settings
 from django.db import models
 from django.db.models import Max, Avg
+from django.utils.translation import ugettext as _
 
 from possum.base.models import Categorie
 from possum.base.models import Facture
@@ -36,8 +37,31 @@ from possum.base.models import VAT
 
 
 LOGGER = logging.getLogger(__name__)
-COMMON = ["total_ttc", "nb_bills", "guests_total_ttc", "guests_nb",
-          "guests_average", "bar_total_ttc", "bar_nb", "bar_average"]
+# availables stats and keys
+STATS = {"total_ttc": _("Total TTC"), "nb_bills": _("Orders count"),
+         "guests_total_ttc": _("Guests total TTC"),
+         "guests_nb": _("Guests count"), "guests_average": _("Avg per guest"),
+         "bar_total_ttc": _("Bar total TTC"), "bar_nb": _("Bar orders count"),
+         "bar_average": _("Avg per order")}
+# available rapports
+RAPPORTS = {'1': {'title': _("Total TTC"),
+                'name': _("Sales"), 'keys': ["total_ttc", "guests_total_ttc",
+                                             "bar_total_ttc"]},
+            '2': {'title': _("Bar"),
+                'name': _("Bar"), 'keys': ["bar_average", "bar_nb"]},
+            '3': {'title': _("Guest"),
+                'name': _("Guest"), 'keys': ["guests_average", "guests_nb"]},
+            '4': {'title': _("VAT"),
+                'name': _("VAT"), 'keys': ["_vat", ]},
+            '5': {'title': _("Payments count by type"),
+                'name': _("Payments count"), 'keys': ["_payment_nb", ]},
+            '6': {'title': _("Payments values by type"),
+                'name': _("Payments values"), 'keys': ["_payment_value", ]},
+            '7': {'title': _("Sales amounts by category"),
+                'name': _("Amounts/category"), 'keys': ["_category_value", ]},
+            '8': {'title': _("Number of sales by category"),
+                'name': _("Number/category"), 'keys': ["_category_nb"]},
+            }
 
 
 def nb_sorted(a, b):
@@ -136,7 +160,7 @@ def compute_all_time():
     """Update all time stats (average and max) for main keys
     """
     LOGGER.debug("update all time stats")
-    for key in COMMON:
+    for key in STATS.keys():
         # for days
         stats = Stat.objects.filter(interval="d", key=key)
         avg, created = Stat.objects.get_or_create(interval="a",
@@ -279,7 +303,6 @@ def update_day(date):
 
 
 class Stat(models.Model):
-
     """Statistics, full list of keys:
     Common:
     nb_bills      : number of invoices
@@ -316,6 +339,9 @@ class Stat(models.Model):
                 ('m', 'Month'),
                 ('d', 'Day'))
     interval = models.CharField(max_length=1, choices=INTERVAL, default="d")
+    date = models.DateField(default="1978-03-03")
+    # Todo: version 0.7: year, month, week and day deprecated,
+    # must be removed
     year = models.PositiveIntegerField(default=0)
     month = models.PositiveIntegerField(default=0)
     day = models.PositiveIntegerField(default=0)
@@ -324,19 +350,11 @@ class Stat(models.Model):
     value = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
     class Meta:
-        ordering = ['interval', 'year', 'month', 'day', 'key']
+        ordering = ['interval', 'date', 'key']
 
     def __unicode__(self):
-        tmp = "[%s]" % self.interval
-        if self.interval == 'y':
-            tmp += "[%d]" % self.year
-        elif self.interval == 'w':
-            tmp += "[%d-w%d]" % (self.year, self.week)
-        elif self.interval == 'm':
-            tmp += "[%d-%d]" % (self.year, self.month)
-        elif self.interval == 'd':
-            tmp += "[%d-%d-%d]" % (self.year, self.month, self.day)
-        return "%s %s" % (tmp, self.key)
+        date = self.date.strftime("%Y-%m-%d")
+        return "%s %s" % (self.interval, date)
 
     def update(self):
         """Update statistics with new bills
@@ -439,7 +457,7 @@ class Stat(models.Model):
         # current stats
         tmp = {}
         for stat in current:
-            if stat.key in COMMON:
+            if stat.key in STATS.keys():
                 context[stat.key] = "%.2f" % stat.value
                 # if current better than average, we add a flag
                 key = 'avg_%s' % stat.key
@@ -492,15 +510,40 @@ class Stat(models.Model):
         LOGGER.debug(context)
         return context
 
-    def test_get_chart(self):
+    def test_get_chart(self, rapport, interval, begin, end):
         """Test pour highcharts
+        rapport: id
+        interval: m, d, w, y
+        begin: dd-mm-yyyy
+        end: dd-mm-yyyy
         """
-        total_ttc = Stat.objects.filter(key="total_ttc", interval="m", year=2015)
-        bar_total_ttc = Stat.objects.filter(key="bar_total_ttc", interval="m", year=2015)
-        guests_total_ttc = Stat.objects.filter(key="guests_total_ttc", interval="m", year=2015)
-
-        data = {'dates': [], 'values': []}
-        for stat in total_ttc:
-            data['dates'].append(stat.month)
-            data['values'].append(int(stat.value))
-        return data
+        try:
+            b_day, b_mon, b_year = begin.split('-')
+            LOGGER.warning("START: %s-%s-%s" % (b_day, b_mon, b_year))
+        except:
+            LOGGER.warning("invalid date_begin")
+            return {}
+        try:
+            e_day, e_mon, e_year = end.split('-')
+            LOGGER.warning("END: %s-%s-%s" % (e_day, e_mon, e_year))
+        except:
+            LOGGER.warning("invalid date_end")
+            return {}
+        if rapport not in RAPPORTS:
+            return {}
+        LOGGER.warning("INTERVAL: %s" % interval)
+        output = []
+        for key in RAPPORTS[rapport]['keys']:
+            LOGGER.warning(key)
+            serie = {'name': STATS[key], 'data': []}
+            for stat in Stat.objects.filter(key=key, interval=interval,
+#                                            day__gte=b_day, day__lt=e_day,
+#                                            month__gte=b_mon, month__lt=e_mon,
+#                                            year__gte=b_year, year__lt=e_year):
+                                            day__gte=b_day,
+                                            month__gte=b_mon,
+                                            year__gte=b_year):
+                date = "%s/%s/%s" % (stat.day, stat.month, stat.year)
+                serie['data'].append([date, int(stat.value)])
+            output.append(serie)
+        return output

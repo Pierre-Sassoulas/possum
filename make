@@ -22,8 +22,6 @@ List of commands:
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
     model              :  generate doc/images/models-base.png
-    makemigrations     :  Generate the migrations file.
-    migrates           :  Apply the migrations
     models_changed     :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
     run                :  run ./manage.py runserver in virtualenv with the file settings.py
@@ -195,10 +193,6 @@ function update {
     # before all, we must have last release of Django
     pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
     pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
-    # Hack waiting new release of django-chartit
-    #  https://github.com/pgollakota/django-chartit
-    #  http://stackoverflow.com/questions/23564529/chartit-is-not-a-valid-tag-librarydjango
-    find env -name chartit.py -exec sed -ie 's/from django.utils import simplejson/import simplejson/' {} \;
     # cleanup all .pyc files in possum
     find possum -name "*.pyc" -exec rm -f {} \;
     if [ ! -e possum/settings.py ]
@@ -218,10 +212,6 @@ Example:
   ./make init_mine
 -------------------------------------------------------
 EOF
-    fi
-    if [ ! -e possum.db ]
-    then
-        ./manage.py syncdb --noinput
     fi
     ./manage.py migrate
     ./manage.py update_css
@@ -247,24 +237,6 @@ function graph_models {
     do
         ./manage.py graph_models --output=docs/images/models-${app}.png -g ${app}
         echo "[docs/images/models-${app}.png] updated"
-    done
-}
-
-function makemigrations {
-    enter_virtualenv
-    for app in $APPS
-    do
-        ./manage.py makemigrations
-        echo "[migrations created for ${app}]"
-    done
-}
-
-function migrate {
-    enter_virtualenv
-    for app in $APPS
-    do
-        ./manage.py migrate
-        echo "[migrations applied for ${app}]"
     done
 }
 
@@ -317,20 +289,13 @@ doc)
 model)
     graph_models
     ;;
-makemigrations)
-    makemigrations
-    ;;
-migrate)
-    migrate
-    ;;
 update)
     update
     ;;
 models_changed)
     enter_virtualenv
-    ./manage.py syncdb --noinput --migrate
-    ./manage.py schemamigration base --auto
-    ./manage.py schemamigration stats --auto
+    ./manage.py syncdb --noinput
+    ./manage.py makemigrations
     ./manage.py migrate
     clear_db
     ./manage.py init_demo
