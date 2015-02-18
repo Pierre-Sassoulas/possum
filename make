@@ -15,13 +15,10 @@ List of commands:
     create_json_demo   :  create JSON fixtures in possum/base/fixtures/demo.json
     doc                :  make the documentation in html
     deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
-    fastcoverage       :  make only the unit tests and display the coverage in your browser
-    utests             :  make only the unit tests
     help               :  this help
     init_demo          :  erase database with data of demonstration
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
-    model              :  generate doc/images/models-base.png
     models_changed     :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
     run                :  run ./manage.py runserver in virtualenv with the file settings.py
@@ -97,13 +94,6 @@ function utests {
     then
         exit 1
     fi
-}
-
-function fastcoverage {
-    enter_virtualenv
-    coverage run --source=possum manage.py test --settings=possum.settings_tests --verbosity=2 --traceback
-    coverage html
-    x-www-browser htmlcov/index.html
 }
 
 function update_js {
@@ -193,13 +183,18 @@ function update {
     # before all, we must have last release of Django
     pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
     pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    if [ $? != 0 ]
+    then
+        echo "ERROR: pip failed !"
+        exit 2
+    fi
     # cleanup all .pyc files in possum
     find possum -name "*.pyc" -exec rm -f {} \;
     if [ ! -e possum/settings.py ]
     then
         # default conf is production
         cp possum/settings_production.py possum/settings.py
-        ./manage.py syncdb --noinput
+        ./manage.py migrate --noinput
         ./manage.py init_db
         cat << 'EOF'
 -------------------------------------------------------
@@ -215,6 +210,7 @@ EOF
     fi
     ./manage.py migrate
     ./manage.py update_css
+    ./manage.py update_stats_to_0_6
     update_js
 }
 
@@ -243,8 +239,7 @@ function graph_models {
 function clear_db {
     enter_virtualenv
     ./manage.py reset_db
-    ./manage.py syncdb --noinput
-    ./manage.py migrate
+    ./manage.py migrate --noinput
 #    ./manage.py flush --noinput
 }
 
@@ -270,15 +265,8 @@ init_demo)
 load_demo)
     enter_virtualenv
     clear_db
-    ./manage.py syncdb --noinput
-    ./manage.py migrate
+    ./manage.py migrate --noinput
     ./manage.py loaddata demo
-    ;;
-utests)
-    utests
-    ;;
-fastcoverage)
-    fastcoverage
     ;;
 deb_install_nginx)
     deb_install_nginx
@@ -286,15 +274,11 @@ deb_install_nginx)
 doc)
     doc
     ;;
-model)
-    graph_models
-    ;;
 update)
     update
     ;;
 models_changed)
     enter_virtualenv
-    ./manage.py syncdb --noinput
     ./manage.py makemigrations
     ./manage.py migrate
     clear_db
@@ -303,11 +287,6 @@ models_changed)
     graph_models
     ;;
 tests)
-# TODO: diff sur le settings.py et backup de securite
-#    if [ ! -e possum/settings.py ]
-#    then
-#    cp possum/settings_tests.py possum/settings.py
-#    fi
     tests
     ;;
 sh)

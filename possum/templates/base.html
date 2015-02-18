@@ -13,14 +13,6 @@
     <link rel="stylesheet" href="{% static "categories.css" %}"/>
     <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.png" %}" />
     <meta name=author content="S. Bonnegent">
-    {% if chart1 or chart2 %}
-        {% load chartit %}
-        {% if chart1 %}
-            {{ chart1|load_charts:"chart_view_1" }}
-        {% elif chart2 %}
-            {{ chart2|load_charts:"chart_view_1,chart_view_2" }}
-        {% endif %}
-    {% endif %}
     {% if need_auto_refresh %}
     <meta http-equiv="refresh" content="{{need_auto_refresh}}">
     {% endif %}

@@ -63,13 +63,13 @@ def send(request, subject, message):
                       [request.user.email], fail_silently=False)
         except:
             messages.add_message(request, messages.ERROR,
-                                 u"Le mail n'a pu être envoyé")
+                                 _("Mail could not be sent"))
         else:
             messages.add_message(request, messages.SUCCESS,
-                                 u"Mail envoyé à %s" % request.user.email)
+                                 _("Mail sent to %s") % request.user.email)
     else:
         messages.add_message(request, messages.ERROR,
-                             u"Vous n'avez pas d'adresse mail")
+                             _("You have no email address"))
 
 
 @user_passes_test(check_admin)
@@ -184,7 +184,7 @@ def text(request):
     """
     context = {'menu_sales': True, 'date': datetime.datetime.now()}
     context = init_borders(context)
-    context['interval'] = get_rapport_type(request)
+    context['interval'] = get_interval(request)
     if request.method == 'POST':
         try:
             date = datetime.datetime.strptime(request.POST.get('date'),
@@ -211,22 +211,6 @@ def text(request):
                 context = Stat().get_data_for_day(context)
             check_for_outputs(request, context)
     return render(request, 'stats/home.html', context)
-
-
-def month_name(*t):
-    """ Sert à trier les mois."""
-    names = {1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Avr', 5: 'Mai', 6: 'Jui',
-             7: 'Jui', 8: 'Aou', 9: 'Sep', 10: 'Oct', 11: 'Nov',
-             12: 'Dec'}
-    month_num = int(t[0][0])
-    LOGGER.debug("names[%d] > [%s]" % (month_num, names[month_num]))
-    return (names[month_num],)
-
-
-def month_sort(*x):
-    """x example: ((('Fev',), ('2',)),)
-    """
-    return (int(x[0][1][0]),)
 
 
 def get_chart_year_products(year, category):
@@ -359,12 +343,12 @@ def init_borders(context):
     """
     first_order = Facture.objects.first()
     if first_order:
-        context['first_date'] = first_order.date_creation.strftime("%d-%m-%Y")
+        context['first_date'] = first_order.date_creation.date().isoformat()
     else:
-        context['first_date'] = datetime.datetime.now().strftime("%d-%m-%Y")
+        context['first_date'] = datetime.date.today().isoformat()
     last_order = Facture.objects.last()
     if last_order:
-        context['last_date'] = last_order.date_creation.strftime("%d-%m-%Y")
+        context['last_date'] = last_order.date_creation.date().isoformat()
     else:
         context['last_date'] = context['first_date']
     LOGGER.warning("interval: %s > %s" % (context['first_date'],
@@ -372,8 +356,8 @@ def init_borders(context):
     return context
 
 
-def get_rapport_type(request):
-    """Extract and test rapport type from a form.
+def get_interval(request):
+    """Extract and test interval from a form.
     Default value is: day
     """
     if request.method == 'POST':
@@ -395,7 +379,7 @@ def charts(request):
     context = {'menu_sales': True, 'rapport': '1'}
     context = init_borders(context)
     context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
-    context['interval'] = get_rapport_type(request)
+    context['interval'] = get_interval(request)
     context['date_begin'] = context['first_date']
     context['date_end'] = context['last_date']
     context['rapports'] = RAPPORTS
@@ -416,5 +400,17 @@ def dump(request, rapport, interval, date_begin, date_end):
     All tests on data are made in Stat()
     """
     data = {}
-    data['chart_data'] = Stat().test_get_chart(rapport, interval, date_begin, date_end)
+    try:
+        begin = datetime.datetime.strptime(date_begin, "%Y-%m-%d").date()
+    except:
+        begin = None
+    try:
+        end = datetime.datetime.strptime(date_end, "%Y-%m-%d").date()
+    except:
+        end = None
+    if begin and end:
+        data['chart_data'] = Stat().test_get_chart(rapport, interval, begin, 
+                                                   end)
+    else:
+        data['chart_data'] = {}
     return HttpResponse(json.dumps(data), content_type='application/json')
