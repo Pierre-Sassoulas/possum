@@ -43,25 +43,6 @@ STATS = {"total_ttc": _("Total TTC"), "nb_bills": _("Orders count"),
          "guests_nb": _("Guests count"), "guests_average": _("Avg per guest"),
          "bar_total_ttc": _("Bar total TTC"), "bar_nb": _("Bar orders count"),
          "bar_average": _("Avg per order")}
-# available rapports
-RAPPORTS = {'1': {'title': _("Total TTC"),
-                'name': _("Sales"), 'keys': ["total_ttc", "guests_total_ttc",
-                                             "bar_total_ttc"]},
-            '2': {'title': _("Bar"),
-                'name': _("Bar"), 'keys': ["bar_average", "bar_nb"]},
-            '3': {'title': _("Guest"),
-                'name': _("Guest"), 'keys': ["guests_average", "guests_nb"]},
-            '4': {'title': _("VAT"),
-                'name': _("VAT"), 'keys': ["_vat", ]},
-            '5': {'title': _("Payments count by type"),
-                'name': _("Payments count"), 'keys': ["_payment_nb", ]},
-            '6': {'title': _("Payments values by type"),
-                'name': _("Payments values"), 'keys': ["_payment_value", ]},
-            '7': {'title': _("Sales amounts by category"),
-                'name': _("Amounts/category"), 'keys': ["_category_value", ]},
-            '8': {'title': _("Number of sales by category"),
-                'name': _("Number/category"), 'keys': ["_category_nb"]},
-            }
 
 
 def get_month(date):
@@ -95,7 +76,26 @@ def get_week(date):
         return date
 
 
-def get_data_on(bill, data):
+def find_right_date(date, interval):
+    """Select rhe right date,
+    If interval is month, it is first day of month
+    if intervak is year, it is first day of year
+    if interval is week, it is monday
+    :param date: datetime.date()
+    :param interval: 'm'
+    :return: dateteime.date()
+    """
+    if interval == "m":
+        return get_month(date)
+    elif interval == "y":
+        return get_year(date)
+    elif interval == "w":
+        return get_week(date)
+    else:
+        return date
+
+
+def get_data_from(bill, data):
     """Extract data on a bill to add it to the stats
 
     bill: Facture()
@@ -146,6 +146,37 @@ def get_data_on(bill, data):
         add_value("%s_payment_nb" % p_id, 1)
         add_value("%s_payment_value" % p_id, payment.montant)
     return data
+
+
+def _nb_sorted(a, b):
+    """We sort objects a and b (Categorie(), Produit(), ...)
+    to have, for example, best selling first."""
+    if b.nb < a.nb:
+        return -1
+    elif b.nb > a.nb:
+        return 1
+    else:
+        return 0
+
+
+def _search_sub_key(stats, key, a_class):
+    """
+    :param stats: Stat.object.filter()
+    :param key: string (subkey to search
+    :param a_class: a class of object to find
+    :return: []
+    """
+    tmp = []
+    for stat in stats.filter(key__contains=key):
+        pk = stat.key.split("_")[0]
+        try:
+            elt = a_class.objects.get(pk=pk)
+        except:
+            LOGGER.critical("[%s] pk=%s not here" % (key, pk))
+        else:
+            elt.nb = stat.value
+            tmp.append(elt)
+    return sorted(tmp, cmp=_nb_sorted)
 
 
 def compute_avg_max(stats, stat_avg, stat_max):
@@ -210,7 +241,7 @@ def record_day(date, data):
         stat, created = Stat.objects.get_or_create(date=get_week(date),
                                                    key=key, interval="w")
         stat.add_value(data[key])
-        stat, created = Stat.objects.get_or_create(year=get_year(date),
+        stat, created = Stat.objects.get_or_create(date=get_year(date),
                                                    key=key, interval="y")
         stat.add_value(data[key])
 
@@ -277,7 +308,7 @@ def update_day(date):
     for bill in bills:
         if bill.est_soldee():
             count += 1
-            data = get_data_on(bill, data)
+            data = get_data_from(bill, data)
             bill.saved_in_stats = True
             bill.save()
     if data:
@@ -378,23 +409,31 @@ class Stat(models.Model):
             LOG.critical("can't convert [%s]" % value)
         self.save()
 
-    def test_get_chart(self, rapport, interval, begin, end):
-        """Test pour highcharts
-        rapport: id
-        interval: m, d, w, y
-        begin: datetime.date
-        end: datetime.date
-        return:
+    def get_a_date(self, context):
+        """Get Stats for a date
+        :param context: {'date': datetime.date(), 'interval': 'm'}
+        :return: context with stats for context['date']
+        This function will not test with context['date'] is a datetime.date()
         """
-        if rapport not in RAPPORTS:
-            return {}
-        LOG.warning("INTERVAL: %s" % interval)
-        output = []
-        for key in RAPPORTS[rapport]['keys']:
-            LOG.warning(key)
-            serie = {'name': STATS[key], 'data': []}
-            for stat in Stat.objects.filter(key=key, interval=interval,
-                                            date__gte=begin, date__lt=end):
-                serie['data'].append([stat.date.isoformat(), int(stat.value)])
-            output.append(serie)
-        return output
+        if 'date' not in context or 'interval' not in context:
+            LOG.warning("No date or no interval in context")
+            return context
+        context['date'] = find_right_date(context['date'], context['interval'])
+        stats = Stat.objects.filter(interval=context['interval'],
+                                    date=context['date'])
+        for key in STATS.keys():
+            try:
+                value = "%.2f" % stats.get(key=key).value
+            except:
+                LOG.info("[%s][%s] key (%s) absent" % (context['date'],
+                         context['interval'], key))
+                value = "0.00"
+
+        context['products'] = _search_sub_key(stats, "_product_nb", Produit)
+        context['categories'] = _search_sub_key(stats, "_category_nb",
+                                                Categorie)
+        context['vats'] = _search_sub_key(stats, "_vat", VAT)
+        context['payments'] = _search_sub_key(stats, "_payment_value",
+                                              PaiementType)
+        LOG.debug(context)
+        return context

@@ -7,7 +7,7 @@
         "is_active": true,
         "is_superuser": true,
         "is_staff": false,
-        "last_login": "2015-02-19T00:05:39.714",
+        "last_login": "2015-02-22T11:34:08.505",
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$ftBPhaU9GncB$9G9YJfpLA0yc6NQp9fkOQz19Sz8p9UcBt0CB91g9CLU=",
@@ -106,6 +106,22 @@
     },
     "model": "auth.user",
     "pk": 6
+},
+{
+    "fields": {
+        "expire_date": "2015-03-08T11:34:08.510",
+        "session_data": "MmQwMWY4MTMyMDA3ZTQwYWE4NDkxNTRkMTVhMWI1NjMwYzFiNDNkODqAAn1xAShVD19hdXRoX3VzZXJfaGFzaHECVShjODcyY2Y1ZmRlNTIwNmIzOTZhNmJmNGUyNjM5Zjk0ZDQ5MDZiMTdjVRJfYXV0aF91c2VyX2JhY2tlbmRxA1UpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmRxBFUNX2F1dGhfdXNlcl9pZHEFSwF1Lg=="
+    },
+    "model": "sessions.session",
+    "pk": "p6q6403tu5nwu2i7xs255mf4h1v67pgi"
+},
+{
+    "fields": {
+        "expire_date": "2015-03-05T00:07:11.962",
+        "session_data": "MmQwMWY4MTMyMDA3ZTQwYWE4NDkxNTRkMTVhMWI1NjMwYzFiNDNkODqAAn1xAShVD19hdXRoX3VzZXJfaGFzaHECVShjODcyY2Y1ZmRlNTIwNmIzOTZhNmJmNGUyNjM5Zjk0ZDQ5MDZiMTdjVRJfYXV0aF91c2VyX2JhY2tlbmRxA1UpZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmRxBFUNX2F1dGhfdXNlcl9pZHEFSwF1Lg=="
+    },
+    "model": "sessions.session",
+    "pk": "yf3hlwntz0dq8nnxtnocrkcwhtqh7zkv"
 },
 {
     "fields": {
@@ -16819,7 +16835,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-21T00:00:00",
         "surcharge": false
     },
@@ -16846,7 +16862,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-20T00:00:00",
         "surcharge": true
     },
@@ -16878,7 +16894,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-02T00:00:00",
         "surcharge": true
     },
@@ -16909,7 +16925,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-10T00:00:00",
         "surcharge": true
     },
@@ -16938,7 +16954,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-21T00:00:00",
         "surcharge": true
     },
@@ -16965,7 +16981,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-18T00:00:00",
         "surcharge": true
     },
@@ -16991,7 +17007,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-20T00:00:00",
         "surcharge": true
     },
@@ -17023,7 +17039,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-11T00:00:00",
         "surcharge": true
     },
@@ -17052,7 +17068,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-02T00:00:00",
         "surcharge": true
     },
@@ -17080,7 +17096,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-19T00:00:00",
         "surcharge": true
     },
@@ -17108,7 +17124,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-04T00:00:00",
         "surcharge": false
     },
@@ -17137,7 +17153,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-20T00:00:00",
         "surcharge": true
     },
@@ -17167,7 +17183,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-11T00:00:00",
         "surcharge": true
     },
@@ -17194,7 +17210,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-23T00:00:00",
         "surcharge": true
     },
@@ -17225,7 +17241,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-08T00:00:00",
         "surcharge": true
     },
@@ -17252,7 +17268,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-02T00:00:00",
         "surcharge": true
     },
@@ -17279,7 +17295,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-09T00:00:00",
         "surcharge": true
     },
@@ -17307,7 +17323,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-17T00:00:00",
         "surcharge": true
     },
@@ -17336,7 +17352,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-26T00:00:00",
         "surcharge": false
     },
@@ -17366,7 +17382,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-01-13T00:00:00",
         "surcharge": false
     },
@@ -17397,7 +17413,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-17T00:00:00",
         "surcharge": true
     },
@@ -17428,7 +17444,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-26T00:00:00",
         "surcharge": false
     },
@@ -17459,7 +17475,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-10T00:00:00",
         "surcharge": true
     },
@@ -17487,7 +17503,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-16T00:00:00",
         "surcharge": false
     },
@@ -17519,7 +17535,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-18T00:00:00",
         "surcharge": false
     },
@@ -17551,7 +17567,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-18T00:00:00",
         "surcharge": true
     },
@@ -17580,7 +17596,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-14T00:00:00",
         "surcharge": true
     },
@@ -17610,7 +17626,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-10T00:00:00",
         "surcharge": false
     },
@@ -17639,7 +17655,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-27T00:00:00",
         "surcharge": true
     },
@@ -17670,7 +17686,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-23T00:00:00",
         "surcharge": true
     },
@@ -17697,7 +17713,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-15T00:00:00",
         "surcharge": false
     },
@@ -17725,7 +17741,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-07T00:00:00",
         "surcharge": true
     },
@@ -17752,7 +17768,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-22T00:00:00",
         "surcharge": true
     },
@@ -17784,7 +17800,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-16T00:00:00",
         "surcharge": true
     },
@@ -17814,7 +17830,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-03T00:00:00",
         "surcharge": true
     },
@@ -17845,7 +17861,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-20T00:00:00",
         "surcharge": true
     },
@@ -17873,7 +17889,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-13T00:00:00",
         "surcharge": true
     },
@@ -17902,7 +17918,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-28T00:00:00",
         "surcharge": true
     },
@@ -17933,7 +17949,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-13T00:00:00",
         "surcharge": false
     },
@@ -17964,7 +17980,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-02-09T00:00:00",
         "surcharge": true
     },
@@ -17995,7 +18011,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-03T00:00:00",
         "surcharge": false
     },
@@ -18023,7 +18039,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-26T00:00:00",
         "surcharge": false
     },
@@ -18054,7 +18070,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-24T00:00:00",
         "surcharge": false
     },
@@ -18084,7 +18100,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-01T00:00:00",
         "surcharge": false
     },
@@ -18111,7 +18127,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-08T00:00:00",
         "surcharge": true
     },
@@ -18140,7 +18156,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-17T00:00:00",
         "surcharge": false
     },
@@ -18168,7 +18184,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-03T00:00:00",
         "surcharge": true
     },
@@ -18196,7 +18212,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-12T00:00:00",
         "surcharge": true
     },
@@ -18227,7 +18243,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-23T00:00:00",
         "surcharge": true
     },
@@ -18253,7 +18269,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-13T00:00:00",
         "surcharge": true
     },
@@ -18279,7 +18295,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-11T00:00:00",
         "surcharge": true
     },
@@ -18307,7 +18323,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-22T00:00:00",
         "surcharge": true
     },
@@ -18334,7 +18350,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-11T00:00:00",
         "surcharge": false
     },
@@ -18362,7 +18378,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-13T00:00:00",
         "surcharge": true
     },
@@ -18394,7 +18410,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-10T00:00:00",
         "surcharge": true
     },
@@ -18423,7 +18439,7 @@
         "couverts": 2,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-22T00:00:00",
         "surcharge": false
     },
@@ -18452,7 +18468,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-26T00:00:00",
         "surcharge": true
     },
@@ -18481,7 +18497,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-22T00:00:00",
         "surcharge": false
     },
@@ -18509,7 +18525,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-18T00:00:00",
         "surcharge": true
     },
@@ -18536,7 +18552,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-03-28T00:00:00",
         "surcharge": true
     },
@@ -18567,7 +18583,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-24T00:00:00",
         "surcharge": true
     },
@@ -18593,7 +18609,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-26T00:00:00",
         "surcharge": false
     },
@@ -18624,7 +18640,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-07T00:00:00",
         "surcharge": true
     },
@@ -18652,7 +18668,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-15T00:00:00",
         "surcharge": true
     },
@@ -18678,7 +18694,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-15T00:00:00",
         "surcharge": false
     },
@@ -18705,7 +18721,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-11T00:00:00",
         "surcharge": true
     },
@@ -18735,7 +18751,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-11T00:00:00",
         "surcharge": true
     },
@@ -18762,7 +18778,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-02T00:00:00",
         "surcharge": true
     },
@@ -18792,7 +18808,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-03T00:00:00",
         "surcharge": false
     },
@@ -18820,7 +18836,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-28T00:00:00",
         "surcharge": true
     },
@@ -18850,7 +18866,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-12T00:00:00",
         "surcharge": true
     },
@@ -18878,7 +18894,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-16T00:00:00",
         "surcharge": true
     },
@@ -18909,7 +18925,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-10T00:00:00",
         "surcharge": true
     },
@@ -18940,7 +18956,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-10T00:00:00",
         "surcharge": false
     },
@@ -18969,7 +18985,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-11T00:00:00",
         "surcharge": true
     },
@@ -19001,7 +19017,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-26T00:00:00",
         "surcharge": false
     },
@@ -19027,7 +19043,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-27T00:00:00",
         "surcharge": false
     },
@@ -19054,7 +19070,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-11T00:00:00",
         "surcharge": true
     },
@@ -19083,7 +19099,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-02T00:00:00",
         "surcharge": true
     },
@@ -19115,7 +19131,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-04-03T00:00:00",
         "surcharge": true
     },
@@ -19146,7 +19162,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-12T00:00:00",
         "surcharge": true
     },
@@ -19176,7 +19192,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-02T00:00:00",
         "surcharge": true
     },
@@ -19206,7 +19222,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-19T00:00:00",
         "surcharge": false
     },
@@ -19235,7 +19251,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-05T00:00:00",
         "surcharge": true
     },
@@ -19264,7 +19280,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-09T00:00:00",
         "surcharge": true
     },
@@ -19293,7 +19309,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-23T00:00:00",
         "surcharge": true
     },
@@ -19324,7 +19340,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-02T00:00:00",
         "surcharge": false
     },
@@ -19356,7 +19372,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-26T00:00:00",
         "surcharge": true
     },
@@ -19385,7 +19401,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-03T00:00:00",
         "surcharge": true
     },
@@ -19414,7 +19430,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-26T00:00:00",
         "surcharge": true
     },
@@ -19442,7 +19458,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-12T00:00:00",
         "surcharge": true
     },
@@ -19471,7 +19487,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-22T00:00:00",
         "surcharge": false
     },
@@ -19498,7 +19514,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-10T00:00:00",
         "surcharge": true
     },
@@ -19524,7 +19540,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-07T00:00:00",
         "surcharge": true
     },
@@ -19550,7 +19566,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-02T00:00:00",
         "surcharge": false
     },
@@ -19579,7 +19595,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-10T00:00:00",
         "surcharge": true
     },
@@ -19608,7 +19624,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-26T00:00:00",
         "surcharge": true
     },
@@ -19635,7 +19651,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-09T00:00:00",
         "surcharge": true
     },
@@ -19663,7 +19679,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-09T00:00:00",
         "surcharge": false
     },
@@ -19691,7 +19707,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-05-01T00:00:00",
         "surcharge": true
     },
@@ -19718,7 +19734,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-09T00:00:00",
         "surcharge": false
     },
@@ -19747,7 +19763,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-28T00:00:00",
         "surcharge": true
     },
@@ -19777,7 +19793,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-08T00:00:00",
         "surcharge": true
     },
@@ -19804,7 +19820,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-24T00:00:00",
         "surcharge": true
     },
@@ -19832,7 +19848,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-17T00:00:00",
         "surcharge": true
     },
@@ -19858,7 +19874,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-24T00:00:00",
         "surcharge": false
     },
@@ -19889,7 +19905,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-24T00:00:00",
         "surcharge": true
     },
@@ -19919,7 +19935,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-17T00:00:00",
         "surcharge": true
     },
@@ -19950,7 +19966,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-15T00:00:00",
         "surcharge": true
     },
@@ -19980,7 +19996,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-11T00:00:00",
         "surcharge": false
     },
@@ -20010,7 +20026,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-08T00:00:00",
         "surcharge": false
     },
@@ -20041,7 +20057,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-21T00:00:00",
         "surcharge": false
     },
@@ -20072,7 +20088,7 @@
         "couverts": 7,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-20T00:00:00",
         "surcharge": false
     },
@@ -20103,7 +20119,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-27T00:00:00",
         "surcharge": false
     },
@@ -20134,7 +20150,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-21T00:00:00",
         "surcharge": true
     },
@@ -20166,7 +20182,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-04T00:00:00",
         "surcharge": true
     },
@@ -20192,7 +20208,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-23T00:00:00",
         "surcharge": false
     },
@@ -20223,7 +20239,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-25T00:00:00",
         "surcharge": true
     },
@@ -20250,7 +20266,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-25T00:00:00",
         "surcharge": true
     },
@@ -20280,7 +20296,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-06-05T00:00:00",
         "surcharge": true
     },
@@ -20310,7 +20326,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-20T00:00:00",
         "surcharge": false
     },
@@ -20342,7 +20358,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-03T00:00:00",
         "surcharge": true
     },
@@ -20371,7 +20387,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-28T00:00:00",
         "surcharge": true
     },
@@ -20400,7 +20416,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-12T00:00:00",
         "surcharge": true
     },
@@ -20426,7 +20442,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-06T00:00:00",
         "surcharge": true
     },
@@ -20453,7 +20469,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-27T00:00:00",
         "surcharge": true
     },
@@ -20479,7 +20495,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-26T00:00:00",
         "surcharge": false
     },
@@ -20509,7 +20525,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-28T00:00:00",
         "surcharge": true
     },
@@ -20539,7 +20555,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-04T00:00:00",
         "surcharge": true
     },
@@ -20567,7 +20583,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-15T00:00:00",
         "surcharge": true
     },
@@ -20593,7 +20609,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-11T00:00:00",
         "surcharge": true
     },
@@ -20622,7 +20638,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-27T00:00:00",
         "surcharge": false
     },
@@ -20650,7 +20666,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-14T00:00:00",
         "surcharge": true
     },
@@ -20678,7 +20694,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-23T00:00:00",
         "surcharge": false
     },
@@ -20706,7 +20722,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-08T00:00:00",
         "surcharge": true
     },
@@ -20732,7 +20748,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-20T00:00:00",
         "surcharge": false
     },
@@ -20759,7 +20775,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-12T00:00:00",
         "surcharge": true
     },
@@ -20786,7 +20802,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-09T00:00:00",
         "surcharge": true
     },
@@ -20816,7 +20832,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-12T00:00:00",
         "surcharge": false
     },
@@ -20845,7 +20861,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-07-08T00:00:00",
         "surcharge": false
     },
@@ -20876,7 +20892,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-19T00:00:00",
         "surcharge": false
     },
@@ -20904,7 +20920,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-14T00:00:00",
         "surcharge": false
     },
@@ -20931,7 +20947,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-10T00:00:00",
         "surcharge": true
     },
@@ -20963,7 +20979,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-28T00:00:00",
         "surcharge": true
     },
@@ -20992,7 +21008,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-06T00:00:00",
         "surcharge": false
     },
@@ -21024,7 +21040,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-26T00:00:00",
         "surcharge": false
     },
@@ -21050,7 +21066,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-04T00:00:00",
         "surcharge": true
     },
@@ -21080,7 +21096,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-04T00:00:00",
         "surcharge": false
     },
@@ -21111,7 +21127,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-24T00:00:00",
         "surcharge": false
     },
@@ -21141,7 +21157,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-11T00:00:00",
         "surcharge": true
     },
@@ -21167,7 +21183,7 @@
         "couverts": 2,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-10T00:00:00",
         "surcharge": true
     },
@@ -21198,7 +21214,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-20T00:00:00",
         "surcharge": true
     },
@@ -21229,7 +21245,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-14T00:00:00",
         "surcharge": true
     },
@@ -21256,7 +21272,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-13T00:00:00",
         "surcharge": true
     },
@@ -21285,7 +21301,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-27T00:00:00",
         "surcharge": true
     },
@@ -21315,7 +21331,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-03T00:00:00",
         "surcharge": true
     },
@@ -21343,7 +21359,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-25T00:00:00",
         "surcharge": true
     },
@@ -21372,7 +21388,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-12T00:00:00",
         "surcharge": true
     },
@@ -21398,7 +21414,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-18T00:00:00",
         "surcharge": false
     },
@@ -21427,7 +21443,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-08-09T00:00:00",
         "surcharge": true
     },
@@ -21456,7 +21472,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-23T00:00:00",
         "surcharge": false
     },
@@ -21482,7 +21498,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-02T00:00:00",
         "surcharge": true
     },
@@ -21513,7 +21529,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-28T00:00:00",
         "surcharge": true
     },
@@ -21539,7 +21555,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-17T00:00:00",
         "surcharge": true
     },
@@ -21565,7 +21581,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-20T00:00:00",
         "surcharge": true
     },
@@ -21592,7 +21608,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-19T00:00:00",
         "surcharge": false
     },
@@ -21621,7 +21637,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-09T00:00:00",
         "surcharge": true
     },
@@ -21653,7 +21669,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-17T00:00:00",
         "surcharge": false
     },
@@ -21682,7 +21698,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-28T00:00:00",
         "surcharge": true
     },
@@ -21713,7 +21729,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-10T00:00:00",
         "surcharge": true
     },
@@ -21739,7 +21755,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-23T00:00:00",
         "surcharge": true
     },
@@ -21766,7 +21782,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-03T00:00:00",
         "surcharge": true
     },
@@ -21794,7 +21810,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-22T00:00:00",
         "surcharge": true
     },
@@ -21820,7 +21836,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-08T00:00:00",
         "surcharge": false
     },
@@ -21850,7 +21866,7 @@
         "couverts": 1,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-07T00:00:00",
         "surcharge": true
     },
@@ -21876,7 +21892,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-23T00:00:00",
         "surcharge": false
     },
@@ -21906,7 +21922,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-13T00:00:00",
         "surcharge": true
     },
@@ -21937,7 +21953,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-02T00:00:00",
         "surcharge": true
     },
@@ -21968,7 +21984,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-18T00:00:00",
         "surcharge": true
     },
@@ -21996,7 +22012,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-09-06T00:00:00",
         "surcharge": true
     },
@@ -22027,7 +22043,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-25T00:00:00",
         "surcharge": true
     },
@@ -22056,7 +22072,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-12T00:00:00",
         "surcharge": true
     },
@@ -22086,7 +22102,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-23T00:00:00",
         "surcharge": true
     },
@@ -22112,7 +22128,7 @@
         "couverts": 2,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-27T00:00:00",
         "surcharge": false
     },
@@ -22140,7 +22156,7 @@
         "couverts": 7,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-20T00:00:00",
         "surcharge": true
     },
@@ -22168,7 +22184,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-21T00:00:00",
         "surcharge": true
     },
@@ -22199,7 +22215,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-09T00:00:00",
         "surcharge": false
     },
@@ -22231,7 +22247,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 18,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-10T00:00:00",
         "surcharge": true
     },
@@ -22257,7 +22273,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-27T00:00:00",
         "surcharge": true
     },
@@ -22283,7 +22299,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-19T00:00:00",
         "surcharge": true
     },
@@ -22314,7 +22330,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-24T00:00:00",
         "surcharge": true
     },
@@ -22344,7 +22360,7 @@
         "couverts": 2,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-01T00:00:00",
         "surcharge": true
     },
@@ -22375,7 +22391,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 25,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-14T00:00:00",
         "surcharge": true
     },
@@ -22403,7 +22419,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 20,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-02T00:00:00",
         "surcharge": true
     },
@@ -22429,7 +22445,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-26T00:00:00",
         "surcharge": false
     },
@@ -22459,7 +22475,7 @@
         "couverts": 11,
         "restant_a_payer": "0",
         "table": 15,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-11T00:00:00",
         "surcharge": false
     },
@@ -22490,7 +22506,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-26T00:00:00",
         "surcharge": true
     },
@@ -22520,7 +22536,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-08T00:00:00",
         "surcharge": true
     },
@@ -22547,7 +22563,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-09T00:00:00",
         "surcharge": true
     },
@@ -22579,7 +22595,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-10-09T00:00:00",
         "surcharge": true
     },
@@ -22609,7 +22625,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-13T00:00:00",
         "surcharge": false
     },
@@ -22640,7 +22656,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-27T00:00:00",
         "surcharge": true
     },
@@ -22667,7 +22683,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-02T00:00:00",
         "surcharge": false
     },
@@ -22697,7 +22713,7 @@
         "couverts": 4,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-16T00:00:00",
         "surcharge": true
     },
@@ -22723,7 +22739,7 @@
         "couverts": 7,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-24T00:00:00",
         "surcharge": true
     },
@@ -22753,7 +22769,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-24T00:00:00",
         "surcharge": true
     },
@@ -22781,7 +22797,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 22,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-06T00:00:00",
         "surcharge": true
     },
@@ -22811,7 +22827,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-12T00:00:00",
         "surcharge": true
     },
@@ -22842,7 +22858,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-15T00:00:00",
         "surcharge": true
     },
@@ -22871,7 +22887,7 @@
         "couverts": 8,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-20T00:00:00",
         "surcharge": false
     },
@@ -22899,7 +22915,7 @@
         "couverts": 5,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-15T00:00:00",
         "surcharge": true
     },
@@ -22927,7 +22943,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-04T00:00:00",
         "surcharge": true
     },
@@ -22959,7 +22975,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 11,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-28T00:00:00",
         "surcharge": false
     },
@@ -22987,7 +23003,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-23T00:00:00",
         "surcharge": true
     },
@@ -23013,7 +23029,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-21T00:00:00",
         "surcharge": true
     },
@@ -23042,7 +23058,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-07T00:00:00",
         "surcharge": false
     },
@@ -23070,7 +23086,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-22T00:00:00",
         "surcharge": true
     },
@@ -23102,7 +23118,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 17,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-28T00:00:00",
         "surcharge": true
     },
@@ -23129,7 +23145,7 @@
         "couverts": 10,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-24T00:00:00",
         "surcharge": true
     },
@@ -23158,7 +23174,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-11-24T00:00:00",
         "surcharge": true
     },
@@ -23184,7 +23200,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-23T00:00:00",
         "surcharge": true
     },
@@ -23210,7 +23226,7 @@
         "couverts": 3,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-10T00:00:00",
         "surcharge": false
     },
@@ -23239,7 +23255,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-20T00:00:00",
         "surcharge": false
     },
@@ -23269,7 +23285,7 @@
         "couverts": 15,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-08T00:00:00",
         "surcharge": true
     },
@@ -23301,7 +23317,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-01T00:00:00",
         "surcharge": true
     },
@@ -23327,7 +23343,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 19,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-21T00:00:00",
         "surcharge": true
     },
@@ -23354,7 +23370,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-07T00:00:00",
         "surcharge": false
     },
@@ -23380,7 +23396,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-25T00:00:00",
         "surcharge": true
     },
@@ -23406,7 +23422,7 @@
         "couverts": 7,
         "restant_a_payer": "0",
         "table": 26,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-20T00:00:00",
         "surcharge": true
     },
@@ -23437,7 +23453,7 @@
         "couverts": 12,
         "restant_a_payer": "0",
         "table": 14,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-25T00:00:00",
         "surcharge": false
     },
@@ -23467,7 +23483,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 24,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-22T00:00:00",
         "surcharge": true
     },
@@ -23497,7 +23513,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-12T00:00:00",
         "surcharge": false
     },
@@ -23523,7 +23539,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-06T00:00:00",
         "surcharge": true
     },
@@ -23552,7 +23568,7 @@
         "couverts": 13,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-22T00:00:00",
         "surcharge": false
     },
@@ -23579,7 +23595,7 @@
         "couverts": 14,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-12T00:00:00",
         "surcharge": false
     },
@@ -23605,7 +23621,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 21,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-21T00:00:00",
         "surcharge": true
     },
@@ -23632,7 +23648,7 @@
         "couverts": 9,
         "restant_a_payer": "0",
         "table": 13,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-14T00:00:00",
         "surcharge": false
     },
@@ -23659,7 +23675,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 23,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-11T00:00:00",
         "surcharge": true
     },
@@ -23686,7 +23702,7 @@
         "couverts": 6,
         "restant_a_payer": "0",
         "table": 12,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-16T00:00:00",
         "surcharge": false
     },
@@ -23718,7 +23734,7 @@
         "couverts": 0,
         "restant_a_payer": "0",
         "table": 16,
-        "saved_in_stats": false,
+        "saved_in_stats": true,
         "date_creation": "2015-12-13T00:00:00",
         "surcharge": true
     },
@@ -24020,2932 +24036,4 @@
     },
     "model": "base.facture",
     "pk": 251
-},
-{
-    "fields": {
-        "onsite": true,
-        "vats": [
-            319
-        ],
-        "paiements": [],
-        "total_ttc": "25.6",
-        "category_to_follow": 4,
-        "produits": [
-            899,
-            901,
-            900,
-            898
-        ],
-        "following": [
-            3
-        ],
-        "in_use_by": null,
-        "couverts": 5,
-        "restant_a_payer": "25.6",
-        "table": 21,
-        "saved_in_stats": false,
-        "date_creation": "2015-02-19T00:06:34.457",
-        "surcharge": true
-    },
-    "model": "base.facture",
-    "pk": 252
-},
-{
-    "fields": {
-        "onsite": true,
-        "vats": [
-            320,
-            321
-        ],
-        "paiements": [],
-        "total_ttc": "14",
-        "category_to_follow": null,
-        "produits": [
-            902,
-            904,
-            906,
-            905,
-            903
-        ],
-        "following": [],
-        "in_use_by": null,
-        "couverts": 0,
-        "restant_a_payer": "14",
-        "table": 21,
-        "saved_in_stats": false,
-        "date_creation": "2015-02-19T00:06:34.756",
-        "surcharge": true
-    },
-    "model": "base.facture",
-    "pk": 253
-},
-{
-    "fields": {
-        "onsite": true,
-        "vats": [
-            322
-        ],
-        "paiements": [],
-        "total_ttc": "24.6",
-        "category_to_follow": 4,
-        "produits": [
-            909,
-            910,
-            907,
-            908
-        ],
-        "following": [
-            4
-        ],
-        "in_use_by": null,
-        "couverts": 9,
-        "restant_a_payer": "24.6",
-        "table": 12,
-        "saved_in_stats": false,
-        "date_creation": "2015-02-19T00:06:35.017",
-        "surcharge": false
-    },
-    "model": "base.facture",
-    "pk": 254
-},
-{
-    "fields": {
-        "onsite": true,
-        "vats": [
-            323
-        ],
-        "paiements": [],
-        "total_ttc": "2.8",
-        "category_to_follow": null,
-        "produits": [
-            911
-        ],
-        "following": [],
-        "in_use_by": null,
-        "couverts": 0,
-        "restant_a_payer": "2.8",
-        "table": 12,
-        "saved_in_stats": false,
-        "date_creation": "2015-02-19T00:06:35.306",
-        "surcharge": false
-    },
-    "model": "base.facture",
-    "pk": 255
-},
-{
-    "fields": {
-        "nom": "Bar",
-        "surtaxe": false
-    },
-    "model": "base.zone",
-    "pk": 1
-},
-{
-    "fields": {
-        "nom": "Rez de chaussee",
-        "surtaxe": false
-    },
-    "model": "base.zone",
-    "pk": 2
-},
-{
-    "fields": {
-        "nom": "Terrasse",
-        "surtaxe": true
-    },
-    "model": "base.zone",
-    "pk": 3
-},
-{
-    "fields": {
-        "nom": "T--",
-        "zone": 1
-    },
-    "model": "base.table",
-    "pk": 1
-},
-{
-    "fields": {
-        "nom": "T01",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 2
-},
-{
-    "fields": {
-        "nom": "T02",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 3
-},
-{
-    "fields": {
-        "nom": "T03",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 4
-},
-{
-    "fields": {
-        "nom": "T04",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 5
-},
-{
-    "fields": {
-        "nom": "T05",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 6
-},
-{
-    "fields": {
-        "nom": "T06",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 7
-},
-{
-    "fields": {
-        "nom": "T07",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 8
-},
-{
-    "fields": {
-        "nom": "T08",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 9
-},
-{
-    "fields": {
-        "nom": "T09",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 10
-},
-{
-    "fields": {
-        "nom": "T10",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 11
-},
-{
-    "fields": {
-        "nom": "T11",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 12
-},
-{
-    "fields": {
-        "nom": "T12",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 13
-},
-{
-    "fields": {
-        "nom": "T13",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 14
-},
-{
-    "fields": {
-        "nom": "T14",
-        "zone": 2
-    },
-    "model": "base.table",
-    "pk": 15
-},
-{
-    "fields": {
-        "nom": "T15",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 16
-},
-{
-    "fields": {
-        "nom": "T16",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 17
-},
-{
-    "fields": {
-        "nom": "T17",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 18
-},
-{
-    "fields": {
-        "nom": "T18",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 19
-},
-{
-    "fields": {
-        "nom": "T19",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 20
-},
-{
-    "fields": {
-        "nom": "T20",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 21
-},
-{
-    "fields": {
-        "nom": "T21",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 22
-},
-{
-    "fields": {
-        "nom": "T22",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 23
-},
-{
-    "fields": {
-        "nom": "T23",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 24
-},
-{
-    "fields": {
-        "nom": "T24",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 25
-},
-{
-    "fields": {
-        "nom": "T25",
-        "zone": 3
-    },
-    "model": "base.table",
-    "pk": 26
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 1
-},
-{
-    "fields": {
-        "total": "1.7",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 2
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 3
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 4
-},
-{
-    "fields": {
-        "total": "3.93",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 5
-},
-{
-    "fields": {
-        "total": "2.32",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 6
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 7
-},
-{
-    "fields": {
-        "total": "0.85",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 8
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 9
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 10
-},
-{
-    "fields": {
-        "total": "2.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 11
-},
-{
-    "fields": {
-        "total": "1.47",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 12
-},
-{
-    "fields": {
-        "total": "2.01",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 13
-},
-{
-    "fields": {
-        "total": "3.13",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 14
-},
-{
-    "fields": {
-        "total": "3.08",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 15
-},
-{
-    "fields": {
-        "total": "0.62",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 16
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 17
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 18
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 19
-},
-{
-    "fields": {
-        "total": "1.43",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 20
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 21
-},
-{
-    "fields": {
-        "total": "1.96",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 22
-},
-{
-    "fields": {
-        "total": "3.17",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 23
-},
-{
-    "fields": {
-        "total": "2.4",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 24
-},
-{
-    "fields": {
-        "total": "4.29",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 25
-},
-{
-    "fields": {
-        "total": "4.29",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 26
-},
-{
-    "fields": {
-        "total": "1.47",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 27
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 28
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 29
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 30
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 31
-},
-{
-    "fields": {
-        "total": "2.23",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 32
-},
-{
-    "fields": {
-        "total": "2.81",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 33
-},
-{
-    "fields": {
-        "total": "3.04",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 34
-},
-{
-    "fields": {
-        "total": "3.66",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 35
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 36
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 37
-},
-{
-    "fields": {
-        "total": "1.43",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 38
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 39
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 40
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 41
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 42
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 43
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 44
-},
-{
-    "fields": {
-        "total": "1.92",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 45
-},
-{
-    "fields": {
-        "total": "1.96",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 46
-},
-{
-    "fields": {
-        "total": "3.57",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 47
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 48
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 49
-},
-{
-    "fields": {
-        "total": "3.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 50
-},
-{
-    "fields": {
-        "total": "2.01",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 51
-},
-{
-    "fields": {
-        "total": "1.88",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 52
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 53
-},
-{
-    "fields": {
-        "total": "3.53",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 54
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 55
-},
-{
-    "fields": {
-        "total": "2.23",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 56
-},
-{
-    "fields": {
-        "total": "1.92",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 57
-},
-{
-    "fields": {
-        "total": "2.19",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 58
-},
-{
-    "fields": {
-        "total": "4.47",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 59
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 60
-},
-{
-    "fields": {
-        "total": "0.58",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 61
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 62
-},
-{
-    "fields": {
-        "total": "1.16",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 63
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 64
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 65
-},
-{
-    "fields": {
-        "total": "1.88",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 66
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 67
-},
-{
-    "fields": {
-        "total": "2.95",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 68
-},
-{
-    "fields": {
-        "total": "2.59",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 69
-},
-{
-    "fields": {
-        "total": "1.96",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 70
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 71
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 72
-},
-{
-    "fields": {
-        "total": "2.94",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 73
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 74
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 75
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 76
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 77
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 78
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 79
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 80
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 81
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 82
-},
-{
-    "fields": {
-        "total": "1.43",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 83
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 84
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 85
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 86
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 87
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 88
-},
-{
-    "fields": {
-        "total": "4.02",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 89
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 90
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 91
-},
-{
-    "fields": {
-        "total": "3.22",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 92
-},
-{
-    "fields": {
-        "total": "1.88",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 93
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 94
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 95
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 96
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 97
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 98
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 99
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 100
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 101
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 102
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 103
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 104
-},
-{
-    "fields": {
-        "total": "2.9",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 105
-},
-{
-    "fields": {
-        "total": "2.05",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 106
-},
-{
-    "fields": {
-        "total": "2.68",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 107
-},
-{
-    "fields": {
-        "total": "2.86",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 108
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 109
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 110
-},
-{
-    "fields": {
-        "total": "1.88",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 111
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 112
-},
-{
-    "fields": {
-        "total": "2.23",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 113
-},
-{
-    "fields": {
-        "total": "3.04",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 114
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 115
-},
-{
-    "fields": {
-        "total": "2.41",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 116
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 117
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 118
-},
-{
-    "fields": {
-        "total": "0.76",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 119
-},
-{
-    "fields": {
-        "total": "3.04",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 120
-},
-{
-    "fields": {
-        "total": "2.68",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 121
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 122
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 123
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 124
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 125
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 126
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 127
-},
-{
-    "fields": {
-        "total": "3.17",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 128
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 129
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 130
-},
-{
-    "fields": {
-        "total": "0.58",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 131
-},
-{
-    "fields": {
-        "total": "4.38",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 132
-},
-{
-    "fields": {
-        "total": "2.99",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 133
-},
-{
-    "fields": {
-        "total": "3.93",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 134
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 135
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 136
-},
-{
-    "fields": {
-        "total": "2.99",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 137
-},
-{
-    "fields": {
-        "total": "4.11",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 138
-},
-{
-    "fields": {
-        "total": "3.84",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 139
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 140
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 141
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 142
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 143
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 144
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 145
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 146
-},
-{
-    "fields": {
-        "total": "3.93",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 147
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 148
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 149
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 150
-},
-{
-    "fields": {
-        "total": "3.44",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 151
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 152
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 153
-},
-{
-    "fields": {
-        "total": "2.77",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 154
-},
-{
-    "fields": {
-        "total": "2.41",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 155
-},
-{
-    "fields": {
-        "total": "0.85",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 156
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 157
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 158
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 159
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 160
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 161
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 162
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 163
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 164
-},
-{
-    "fields": {
-        "total": "1.96",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 165
-},
-{
-    "fields": {
-        "total": "1.83",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 166
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 167
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 168
-},
-{
-    "fields": {
-        "total": "1.2",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 169
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 170
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 171
-},
-{
-    "fields": {
-        "total": "1.52",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 172
-},
-{
-    "fields": {
-        "total": "2.81",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 173
-},
-{
-    "fields": {
-        "total": "3.13",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 174
-},
-{
-    "fields": {
-        "total": "3.21",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 175
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 176
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 177
-},
-{
-    "fields": {
-        "total": "0.89",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 178
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 179
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 180
-},
-{
-    "fields": {
-        "total": "2.32",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 181
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 182
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 183
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 184
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 185
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 186
-},
-{
-    "fields": {
-        "total": "3.84",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 187
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 188
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 189
-},
-{
-    "fields": {
-        "total": "0.31",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 190
-},
-{
-    "fields": {
-        "total": "3.66",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 191
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 192
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 193
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 194
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 195
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 196
-},
-{
-    "fields": {
-        "total": "3.8",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 197
-},
-{
-    "fields": {
-        "total": "2.19",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 198
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 199
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 200
-},
-{
-    "fields": {
-        "total": "0.76",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 201
-},
-{
-    "fields": {
-        "total": "2.59",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 202
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 203
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 204
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 205
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 206
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 207
-},
-{
-    "fields": {
-        "total": "0.58",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 208
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 209
-},
-{
-    "fields": {
-        "total": "1.34",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 210
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 211
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 212
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 213
-},
-{
-    "fields": {
-        "total": "2.77",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 214
-},
-{
-    "fields": {
-        "total": "3.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 215
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 216
-},
-{
-    "fields": {
-        "total": "1.61",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 217
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 218
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 219
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 220
-},
-{
-    "fields": {
-        "total": "3.35",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 221
-},
-{
-    "fields": {
-        "total": "0.58",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 222
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 223
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 224
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 225
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 226
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 227
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 228
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 229
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 230
-},
-{
-    "fields": {
-        "total": "3.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 231
-},
-{
-    "fields": {
-        "total": "2.77",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 232
-},
-{
-    "fields": {
-        "total": "3.62",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 233
-},
-{
-    "fields": {
-        "total": "0.76",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 234
-},
-{
-    "fields": {
-        "total": "1.47",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 235
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 236
-},
-{
-    "fields": {
-        "total": "3.84",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 237
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 238
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 239
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 240
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 241
-},
-{
-    "fields": {
-        "total": "4.2",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 242
-},
-{
-    "fields": {
-        "total": "3.53",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 243
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 244
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 245
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 246
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 247
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 248
-},
-{
-    "fields": {
-        "total": "3.53",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 249
-},
-{
-    "fields": {
-        "total": "3.39",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 250
-},
-{
-    "fields": {
-        "total": "3.17",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 251
-},
-{
-    "fields": {
-        "total": "1.61",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 252
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 253
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 254
-},
-{
-    "fields": {
-        "total": "3.08",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 255
-},
-{
-    "fields": {
-        "total": "3.12",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 256
-},
-{
-    "fields": {
-        "total": "1.61",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 257
-},
-{
-    "fields": {
-        "total": "3.26",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 258
-},
-{
-    "fields": {
-        "total": "0.58",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 259
-},
-{
-    "fields": {
-        "total": "3.26",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 260
-},
-{
-    "fields": {
-        "total": "2.28",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 261
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 262
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 263
-},
-{
-    "fields": {
-        "total": "3.21",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 264
-},
-{
-    "fields": {
-        "total": "2.41",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 265
-},
-{
-    "fields": {
-        "total": "1.38",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 266
-},
-{
-    "fields": {
-        "total": "1.83",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 267
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 268
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 269
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 270
-},
-{
-    "fields": {
-        "total": "0.31",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 271
-},
-{
-    "fields": {
-        "total": "2.68",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 272
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 273
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 274
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 275
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 276
-},
-{
-    "fields": {
-        "total": "1.61",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 277
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 278
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 279
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 280
-},
-{
-    "fields": {
-        "total": "0.31",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 281
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 282
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 283
-},
-{
-    "fields": {
-        "total": "2.9",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 284
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 285
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 286
-},
-{
-    "fields": {
-        "total": "0.85",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 287
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 288
-},
-{
-    "fields": {
-        "total": "0.76",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 289
-},
-{
-    "fields": {
-        "total": "0.31",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 290
-},
-{
-    "fields": {
-        "total": "3.93",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 291
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 292
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 293
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 294
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 295
-},
-{
-    "fields": {
-        "total": "2.68",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 296
-},
-{
-    "fields": {
-        "total": "0.89",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 297
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 298
-},
-{
-    "fields": {
-        "total": "1.61",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 299
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 300
-},
-{
-    "fields": {
-        "total": "1.07",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 301
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 302
-},
-{
-    "fields": {
-        "total": "1",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 303
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 304
-},
-{
-    "fields": {
-        "total": "0.75",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 305
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 306
-},
-{
-    "fields": {
-        "total": "0.94",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 307
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 308
-},
-{
-    "fields": {
-        "total": "2.28",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 309
-},
-{
-    "fields": {
-        "total": "2.23",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 310
-},
-{
-    "fields": {
-        "total": "2.81",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 311
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 312
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 313
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 314
-},
-{
-    "fields": {
-        "total": "0.31",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 315
-},
-{
-    "fields": {
-        "total": "0.47",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 316
-},
-{
-    "fields": {
-        "total": "1.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 317
-},
-{
-    "fields": {
-        "total": "1.38",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 318
-},
-{
-    "fields": {
-        "total": "2.32",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 319
-},
-{
-    "fields": {
-        "total": "1.41",
-        "vat": 1
-    },
-    "model": "base.vatonbill",
-    "pk": 320
-},
-{
-    "fields": {
-        "total": "0.5",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 321
-},
-{
-    "fields": {
-        "total": "2.23",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 322
-},
-{
-    "fields": {
-        "total": "0.25",
-        "vat": 2
-    },
-    "model": "base.vatonbill",
-    "pk": 323
 }
-]

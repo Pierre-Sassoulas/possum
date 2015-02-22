@@ -34,10 +34,52 @@ from possum.base.forms import DateForm
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import check_admin
-from possum.stats.models import Stat, STATS, RAPPORTS
+from possum.stats.models import Stat, STATS
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
+
+# available rapports
+RAPPORTS = {'1': {'title': _("Total TTC"),
+                'name': _("Sales"), 'keys': ["total_ttc", "guests_total_ttc",
+                                             "bar_total_ttc"]},
+            '2': {'title': _("Bar"),
+                'name': _("Bar"), 'keys': ["bar_average", "bar_nb"]},
+            '3': {'title': _("Guest"),
+                'name': _("Guest"), 'keys': ["guests_average", "guests_nb"]},
+            '4': {'title': _("VAT"),
+                'name': _("VAT"), 'keys': ["_vat", ]},
+            '5': {'title': _("Payments count by type"),
+                'name': _("Payments count"), 'keys': ["_payment_nb", ]},
+            '6': {'title': _("Payments values by type"),
+                'name': _("Payments values"), 'keys': ["_payment_value", ]},
+            '7': {'title': _("Sales amounts by category"),
+                'name': _("Amounts/category"), 'keys': ["_category_value", ]},
+            '8': {'title': _("Number of sales by category"),
+                'name': _("Number/category"), 'keys': ["_category_nb"]},
+            }
+
+
+def get_series(rapport, interval, begin, end):
+    """Test pour highcharts
+    rapport: id
+    interval: m, d, w, y
+    begin: datetime.date
+    end: datetime.date
+    return: []
+    """
+    if rapport not in RAPPORTS:
+        return {}
+    LOG.warning("INTERVAL: %s" % interval)
+    series = []
+    for key in RAPPORTS[rapport]['keys']:
+        LOG.warning(key)
+        serie = {'name': STATS[key], 'data': []}
+        for stat in Stat.objects.filter(key=key, interval=interval,
+                                        date__gte=begin, date__lt=end):
+            serie['data'].append([stat.date.isoformat(), int(stat.value)])
+        series.append(serie)
+    return series
 
 
 @user_passes_test(check_admin)
@@ -106,7 +148,7 @@ def get_value(context, key):
 def prepare_full_output(context):
     """Prepare full output
     """
-    LOGGER.debug(context)
+    LOG.debug(context)
     msg = """
 Nb factures: """
     msg += get_value(context, 'nb_bills')
@@ -178,37 +220,46 @@ def check_for_outputs(request, context):
             print_msg(request, msg)
 
 
+def get_a_date():
+    """
+    date: datetime.date
+    interval: day, week, month, year
+    alltime: a, c, b
+    """
+    all_time = Stat.objects.filter(interval="b")
+    last = int(date.year) - 1
+    objects = Stat.objects.filter(interval=interval, date=date)
+    last_year = objects.filter(year=last)
+    current = objects.filter(year=year)
+    #TODO: à finir !
+
+
 @user_passes_test(check_admin)
 def text(request):
     """Show stats
     """
-    context = {'menu_sales': True, 'date': datetime.datetime.now()}
+    context = {'menu_sales': True, 'date': datetime.date.today().isoformat()}
     context = init_borders(context)
     context['interval'] = get_interval(request)
     if request.method == 'POST':
         try:
             date = datetime.datetime.strptime(request.POST.get('date'),
-                                              "%d-%m-%Y")
+                                              "%Y-%m-%d").date()
         except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
+            messages.add_message(request, messages.ERROR,
+                                 _("Date is not valid"))
         else:
             context['date'] = date
+            context = Stat().get_a_date(context)
             if context['interval'] == "m":
                 context['title'] = "%s: %s" % (_("Report of the month"),
-                                               date.strftime("%m/%Y"))
-                context = Stat().get_data_for_month(context)
+                                               date.isoformat())
             elif context['interval'] == "w":
-                context['title'] = "%s: %d %s" % (_("Report of the week"),
-                                                  date.year,
-                                                  date.isocalendar()[1])
-                context = Stat().get_data_for_week(context)
+                context['title'] = "%s: %s" % (_("Report of the week"),
+                                               date.isoformat())
             else:
-                context['interval'] = "d"
                 context['title'] = "%s: %s" % (_("Report of the day"),
-                                               date.strftime("%d/%m/%Y"))
-                context = Stat().get_data_for_day(context)
+                                               date.isoformat())
             check_for_outputs(request, context)
     return render(request, 'stats/home.html', context)
 
@@ -329,7 +380,7 @@ def select_charts(request, context):
         try:
             datasource = get_datapool_year(year, chart['keys'])
         except:
-            LOGGER.warning("datasource error with %s" % chart['title'])
+            LOG.warning("datasource error with %s" % chart['title'])
         else:
             context[key].append(get_chart(datasource, 'line',
                                           chart['keys'],
@@ -351,8 +402,8 @@ def init_borders(context):
         context['last_date'] = last_order.date_creation.date().isoformat()
     else:
         context['last_date'] = context['first_date']
-    LOGGER.warning("interval: %s > %s" % (context['first_date'],
-                                          context['last_date']))
+    LOG.warning("interval: %s > %s" % (context['first_date'],
+                                       context['last_date']))
     return context
 
 
@@ -409,8 +460,7 @@ def dump(request, rapport, interval, date_begin, date_end):
     except:
         end = None
     if begin and end:
-        data['chart_data'] = Stat().test_get_chart(rapport, interval, begin, 
-                                                   end)
+        data['chart_data'] = get_series(rapport, interval, begin, end)
     else:
         data['chart_data'] = {}
     return HttpResponse(json.dumps(data), content_type='application/json')

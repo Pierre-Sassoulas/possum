@@ -279,7 +279,10 @@ update)
     ;;
 models_changed)
     enter_virtualenv
-    ./manage.py makemigrations
+    for app in $APPS
+    do
+        ./manage.py makemigrations ${app}
+    done
     ./manage.py migrate
     clear_db
     ./manage.py init_demo
