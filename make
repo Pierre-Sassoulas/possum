@@ -82,7 +82,6 @@ function tests {
         exit 1
     fi
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
-    clonedigger --cpd-output -o reports/clonedigger.xml $(find possum -name "*.py" | fgrep -v '/migrations/' | fgrep -v '/tests/' | xargs echo )
     sloccount --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
     utests
 }
