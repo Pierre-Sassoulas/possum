@@ -4,16 +4,14 @@ clonedigger==1.0.11-beta
 coverage==3.7.1
 django-extensions==1.4.6
 django-jenkins==0.16.3
-Django==1.7.4
+Django==1.7.7
 docutils==0.12
 flake8-todo==0.3
 flake8==2.2.5
 ipython==2.3.1
-Jinja2==2.7.3
 logilab-common==0.63.0
 MarkupSafe==0.23
 mccabe==0.2.1
-pep8==1.5.7
 pip-tools==0.3.5
 pycups==1.9.68
 pyflakes==0.8.1

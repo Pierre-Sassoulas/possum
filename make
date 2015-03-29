@@ -1,9 +1,12 @@
 #!/bin/bash
-JQUERY="jquery-2.0.3.min.js"
+JQUERY="jquery-2.1.3.min.js"
 HIGHCHARTS="Highcharts-3.0.6.zip"
-BOOTSTRAP_VERSION="3.3.1"
+HIGHDIR=${HIGHCHARTS/.zip/}
+BOOTSTRAP_VERSION="3.3.4"
 BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
+BOOTDIR=${BOOTSTRAP/.zip/}
 DATEPICKER_VERSION="1.3.1"
+STATIC="possum/base/static/"
 APPS="base stats"
 
 function my_help {
@@ -98,68 +101,65 @@ function utests {
 function update_js {
     # update javascript part
     # JQuery
-    if [ ! -e possum/base/static/jquery.min.js ]
+    if [ ! -e ${STATIC}${JQUERY} ]
     then
         echo "Download and install JQuery..."
-        wget http://code.jquery.com/${JQUERY} -O possum/base/static/jquery.min.js
+        wget http://code.jquery.com/${JQUERY} -O ${STATIC}${JQUERY}
     fi
-    # Init
-    for lib in highcharts bootstrap bootstrap-datepicker
-    do
-        if [ ! -d possum/base/static/${lib} ]
-        then
-            mkdir -v possum/base/static/${lib}
-        fi
-    done
     # Highcharts
-    if [ ! -e possum/base/static/highcharts/${HIGHCHARTS} ]
+    if [ ! -e ${STATIC}${HIGHCHARTS} ]
     then
         echo "Download HighCharts..."
-        wget http://code.highcharts.com/zips/${HIGHCHARTS} -O possum/base/static/highcharts/${HIGHCHARTS}
+        wget http://code.highcharts.com/zips/${HIGHCHARTS} -O ${STATIC}${HIGHCHARTS}
     fi
-    if [ ! -e possum/base/static/highcharts/js/highcharts.js ]
+    if [ ! -e ${STATIC}${HIGHDIR} ]
     then
+        mkdir ${STATIC}${HIGHDIR}
         echo "Unzip HighCharts..."
-        pushd possum/base/static/highcharts/ >/dev/null
-        unzip ${HIGHCHARTS}
+        pushd ${STATIC}${HIGHDIR} >/dev/null
+        unzip ../${HIGHCHARTS}
         popd >/dev/null
     fi
     # BootStrap
-    if [ ! -e possum/base/static/bootstrap/${BOOTSTRAP} ]
+    if [ ! -e ${STATIC}${BOOTSTRAP} ]
     then
         echo "Download BootStrap..."
         wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
-            -O possum/base/static/bootstrap/${BOOTSTRAP}
+            -O ${STATIC}${BOOTSTRAP}
     fi
-    if [ ! -e possum/base/static/bootstrap/dist/js/bootstrap.min.js ]
+    if [ ! -e ${STATIC}${BOOTDIR} ]
     then
         echo "Unzip BootStrap..."
-        pushd possum/base/static/bootstrap/ >/dev/null
+        pushd ${STATIC} >/dev/null
         unzip ${BOOTSTRAP}
-        cp -f dist/fonts/glyphicons-halflings-regular.* ../fonts/
+        if [ ! -e ${STATIC}fonts ]
+        then
+            mkdir ${STATIC}fonts
+        fi
+        cp -f ${BOOTDIR}/fonts/* fonts/
         popd >/dev/null
     fi
     # BootStrap Date-Picker
-    if [ ! -e possum/base/static/bootstrap-datepicker/${DATEPICKER_VERSION}.zip ]
+    if [ ! -e ${STATIC}${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
         wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
-            -O possum/base/static/bootstrap-datepicker/${DATEPICKER_VERSION}.zip
+            -O ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip
     fi
-    if [ ! -e possum/base/static/bootstrap-datepicker/bootstrap-datepicker-${DATEPICKER_VERSION} ]
+    if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION} ]
     then
         echo "Unzip BootStrap Date-Picker..."
-        pushd possum/base/static/bootstrap-datepicker/ >/dev/null
-        unzip ${DATEPICKER_VERSION}.zip
-        for dir in js css
-        do
-            if [ -e ${dir} ]
-            then
-                # old version
-                rm -rf ${dir}
-            fi
-            cp -a bootstrap-datepicker-${DATEPICKER_VERSION}/${dir} ${dir}
-        done
+        pushd $STATIC >/dev/null
+        unzip bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+#        for dir in js css
+#        do
+#            if [ -e ${dir} ]
+#            then
+#                # old version
+#                rm -rf ${dir}
+#            fi
+#            cp -a bootstrap-datepicker-${DATEPICKER_VERSION}/${dir} ${dir}
+#        done
         popd >/dev/null
     fi
     enter_virtualenv

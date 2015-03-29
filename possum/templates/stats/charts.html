@@ -2,8 +2,8 @@
 {% load i18n %}
 {% load staticfiles %}
 {% block extrajs %}
-<script src="{% static "highcharts/js/highcharts.js" %}"></script>
-<script src="{% static "highcharts/js/modules/exporting.js" %}"></script>
+<script src="{% static "Highcharts-3.0.6/js/highcharts.js" %}"></script>
+<script src="{% static "Highcharts-3.0.6/js/modules/exporting.js" %}"></script>
 {% endblock %}
 {% block content %}
 <div class="panel panel-default">
@@ -35,7 +35,7 @@ $(document).ready(function() {
     $.getJSON(chartDataUrl,
         function(data) {
         avgByDayOptions.series = data['chart_data'];
-//        avgByDayOptions.series = [{name: 'Avg Glucose (mg/dL)', 
+//        avgByDayOptions.series = [{name: 'Avg Glucose (mg/dL)',
 //                                   data: [
 //                            [Date.UTC(2010, 0, 1), 29.9],
 //                            [Date.UTC(2010, 2, 1), 71.5],

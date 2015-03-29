@@ -1,7 +1,7 @@
 {% extends "base_with_aside.html" %}
 {% load i18n %}
 {% block content %}
-<h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1> 
+<h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1>
 <p><ul class="list-inline">
     {% for facture in factures %}
         <li class="possum-base alert alert-info" onclick="window.location='{% url "bill_view" facture.id %}'">

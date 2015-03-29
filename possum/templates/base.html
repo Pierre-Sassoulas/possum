@@ -6,9 +6,9 @@
     <title>Possum</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}"/>
-    <link rel="stylesheet" href="{% static "bootstrap/bootstrap-theme.min.css" %}"/>
-    <link rel="stylesheet" href="{% static "bootstrap-datepicker/css/datepicker3.css" %}"/>
+    <link rel="stylesheet" href="{% static "bootstrap-3.3.4-dist/css/bootstrap.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "bootstrap-theme.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "bootstrap-datepicker-1.3.1/css/datepicker3.css" %}"/>
     <link rel="stylesheet" href="{% static "possum/base.css" %}"/>
     <link rel="stylesheet" href="{% static "categories.css" %}"/>
     <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon.png" %}" />
@@ -16,10 +16,10 @@
     {% if need_auto_refresh %}
     <meta http-equiv="refresh" content="{{need_auto_refresh}}">
     {% endif %}
-    <script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
-    <script src="{% static 'bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js' %}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{% static 'jquery-2.1.3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-3.3.4-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-datepicker-1.3.1/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'bootstrap-datepicker-1.3.1/js/locales/bootstrap-datepicker.fr.js' %}" charset="UTF-8"></script>
     <script type="text/javascript" src="{% static "possum/base.js" %}"></script>
     {% block extrajs %}{% endblock %}
 </head>
