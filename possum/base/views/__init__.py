@@ -76,9 +76,10 @@ def remove_edition(request):
 
 @login_required
 def home(request):
-    request = remove_edition(request)
-    context = {'menu_home': True, }
-    return render(request, 'home.html', context)
+    return redirect('bill_home')
+    # request = remove_edition(request)
+    # context = {'menu_home': True, }
+    # return render(request, 'home.html', context)
 
 
 @login_required
@@ -100,4 +101,3 @@ def shutdown(request):
                                  _("Server shutting down"))
             return redirect('home')
     return render(request, 'shutdown.html', context)
-
