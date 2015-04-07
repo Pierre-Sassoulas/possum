@@ -25,19 +25,20 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.models import Categorie
 from possum.base.models import Printer
 from possum.base.models import Produit
 from possum.base.models import VAT
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 from possum.stats.models import Stat
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_send(request):
     '''
     :param HttpRequest request:
@@ -65,7 +66,7 @@ def categories_send(request):
     return redirect('categories')
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_print(request):
     '''
     :param HttpRequest request:
@@ -92,7 +93,7 @@ def categories_print(request):
     return redirect('categories')
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories(request):
     '''
     :param HttpRequest request:
@@ -103,7 +104,7 @@ def categories(request):
     return render(request, 'base/carte/categories.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_delete(request, category_id):
     '''
     :param HttpRequest request:
@@ -169,7 +170,7 @@ def categories_delete(request, category_id):
     return render(request, 'base/categories_delete.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_view(request, category_id):
     '''
     :param request:
@@ -185,7 +186,7 @@ def categories_view(request, category_id):
     return render(request, 'base/carte/category.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_add(request):
     '''
     :param HttpRequest request:
@@ -195,7 +196,7 @@ def categories_add(request):
     return render(request, 'base/carte/categories_add.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_new(request):
     '''
     :param HttpRequest request:
@@ -223,7 +224,7 @@ def categories_new(request):
     return redirect('categories')
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_name(request, category_id):
     '''
     :param HttpRequest request:
@@ -236,7 +237,7 @@ def categories_name(request, category_id):
     return render(request, 'base/carte/name.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_color(request, category_id):
     '''
     :param HttpRequest request:
@@ -250,7 +251,7 @@ def categories_color(request, category_id):
     return render(request, 'base/carte/color.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_less_priority(request, category_id, nb=1):
     '''
     :param HttpRequest request:
@@ -267,7 +268,7 @@ def categories_less_priority(request, category_id, nb=1):
     return redirect('categories_view', category_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_more_priority(request, category_id, nb=1):
     '''
     :param HttpRequest request:
@@ -284,7 +285,7 @@ def categories_more_priority(request, category_id, nb=1):
     return redirect('categories_view', category_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_surtaxable(request, category_id):
     '''
     :param HttpRequest request:
@@ -305,7 +306,7 @@ def categories_surtaxable(request, category_id):
     return redirect('categories_view', category_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_vat_takeaway(request, category_id):
     '''
     :param HttpRequest request:
@@ -321,7 +322,7 @@ def categories_vat_takeaway(request, category_id):
     return render(request, 'base/carte/categories/select_vat.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_vat_onsite(request, category_id):
     '''
     :param HttpRequest request:
@@ -336,7 +337,7 @@ def categories_vat_onsite(request, category_id):
     return render(request, 'base/carte/categories/select_vat.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_set_vat(request, category_id, vat_id):
     '''
     :param HttpRequest request:
@@ -382,7 +383,7 @@ def update_colors():
         LOGGER.info("CSS for categories colors updated")
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_set_color(request, category_id):
     '''
     :param HttpRequest request:
@@ -406,7 +407,7 @@ def categories_set_color(request, category_id):
     return redirect('categories_view', category_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_set_name(request, category_id):
     '''
     :param HttpRequest request:
@@ -430,7 +431,7 @@ def categories_set_name(request, category_id):
     return redirect('categories_view', category_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_set_kitchen(request, category_id):
     '''
     :param HttpRequest request:
@@ -445,7 +446,7 @@ def categories_set_kitchen(request, category_id):
     return redirect('categories_view', category_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def categories_disable_surtaxe(request, category_id):
     '''
     :param HttpRequest request:

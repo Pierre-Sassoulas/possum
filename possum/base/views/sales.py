@@ -32,38 +32,20 @@ from possum.base.views import check_admin
 
 
 @user_passes_test(check_admin)
-def credits(request):
+def home(request):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
     '''
-    context = {'menu_manager': True, 'version': settings.POSSUM_VERSION}
-    return render(request, 'base/manager/credits.html', context)
-
-
-@user_passes_test(check_admin)
-def check_new_version(request):
-    '''
-    :param HttpRequest request:
-    :return rtype: HttpResponse
-    '''
-    context = {'menu_manager': True, }
-    try:
-        req = urllib2.Request('http://last.possum-software.org/', headers={
-                              'User-Agent': 'Possum/' + settings.POSSUM_VERSION
-                              })
-        response = urllib2.urlopen(req)
-        version = response.read().split('\n')[0]
-    except:
-        messages.add_message(request, messages.ERROR,
-                             _("Impossible to get an answer"))
+    context = {'menu_sales': True, }
+    if os.path.isfile(settings.LOCK_STATS):
+        context['working_on_update'] = True
     else:
-        if version != settings.POSSUM_VERSION:
-            messages.add_message(request, messages.WARNING,
-                                 "%s: %s" % (_("New release available"),
-                                             version))
-        else:
-            messages.add_message(request, messages.SUCCESS,
-                                 _("You have last release"))
+        bills_to_update = Facture.objects.filter(saved_in_stats=False,
+                                                 restant_a_payer=0)
+        count = bills_to_update.exclude(produits__isnull=True).count()
+        if count:
+            context['bills_to_update'] = count
+    return render(request, 'base/sales/home.html', context)
 
-    return redirect('credits')
+

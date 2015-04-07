@@ -1,25 +1,25 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base_with_aside.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% block content %}
 <h1>{% trans "Credits" %}</h1>
 
-<p><a href="http://www.possum-software.org">
-    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/></a></br>
-    {% trans "Software under GPLv3 license created by S. Bonnegent." %}
-    {% trans "You are currently using version" %}
-    <b>{{version}}</b>
-    (<a href="{% url "check_new_version" %}">{% trans "new release" %} ?</a>).
+<p>{% trans "Software under GPLv3 license created by S. Bonnegent." %}
+   {% trans "You are currently using version" %} <b>{{version}}</b>.
 </p>
+<form action="{% url 'check_new_version' %}" method="get">
+    <button type="button" class="btn btn-success">{% trans "new release" %} ?
+    </button></form>
 
-<h2>{% trans "A big thank you to" %} ...</h2>
+<h2>{% trans "A big thank you to" %}</h2>
 <ul id="credits">
     <li>R. BONNEGENT {% trans "for the original idea and the need" %}</li>
     <li>Y. BENOIST {% trans "acronym for software" %}</li>
     <li>H. ROMON {% trans "for the logo, icons and patience" %} :)</li>
-    <li>YellowIcon {% trans "icon to stop" %}</li>
-    <li>New Mooon {% trans "icon to logout" %}</li>
 <ul>
-
 {% endblock %}
+{% block side %}
+    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/>
+{% endblock %}
+
 

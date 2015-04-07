@@ -21,15 +21,16 @@
 import logging
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.models import Facture
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def editions_home(request):
     '''
     :param HttpRequest request:
@@ -39,7 +40,7 @@ def editions_home(request):
     return render(request, 'editions/home.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def editions_view(request, bill_id):
     '''
     :param HttpRequest request:

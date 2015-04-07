@@ -1,6 +1,12 @@
 #!/bin/bash
-JQUERY="jquery-2.0.3.min.js"
+JQUERY="jquery-2.1.3.min.js"
 HIGHCHARTS="Highcharts-3.0.6.zip"
+HIGHDIR=${HIGHCHARTS/.zip/}
+BOOTSTRAP_VERSION="3.3.4"
+BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
+BOOTDIR=${BOOTSTRAP/.zip/}
+DATEPICKER_VERSION="1.3.1"
+STATIC="possum/base/static/"
 APPS="base stats"
 
 function my_help {
@@ -13,18 +19,12 @@ List of commands:
                           possum/base/fixtures/demo.json
     doc                :  make the documentation in html
     deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
-    fastcoverage       :  make only the unit tests and display the coverage
-		          in your browser
-    utests             :  make only the unit tests
     help               :  this help
     init_demo          :  erase database with data of demonstration (Warning 
 			  it can be very long in particular after 'Running
                           migrations')
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
-    model              :  generate doc/images/models-base.png
-    makemigrations     :  Generate the migrations file.
-    migrates           :  Apply the migrations
     models_changed     :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
     run                :  run ./manage.py runserver in virtualenv with the 
@@ -90,9 +90,7 @@ function tests {
     then
         exit 1
     fi
-    csslint possum/base/static/possum --format=lint-xml > reports/csslint.report
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
-    clonedigger --cpd-output -o reports/clonedigger.xml $(find possum -name "*.py" | fgrep -v '/migrations/' | fgrep -v '/tests/' | xargs echo )
     sloccount --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
     utests
 }
@@ -106,35 +104,68 @@ function utests {
     fi
 }
 
-function fastcoverage {
-    enter_virtualenv
-    coverage run --source=possum manage.py test --settings=possum.settings_tests --verbosity=2 --traceback
-    coverage html
-    x-www-browser htmlcov/index.html
-}
-
 function update_js {
     # update javascript part
-    if [ ! -e possum/base/static/jquery.min.js ]
+    # JQuery
+    if [ ! -e ${STATIC}${JQUERY} ]
     then
         echo "Download and install JQuery..."
-        wget http://code.jquery.com/${JQUERY} -O possum/base/static/jquery.min.js
+        wget http://code.jquery.com/${JQUERY} -O ${STATIC}${JQUERY}
     fi
-
-    if [ ! -d possum/base/static/highcharts ]
-    then
-        mkdir -v possum/base/static/highcharts
-    fi
-    if [ ! -e possum/base/static/highcharts/${HIGHCHARTS} ]
+    # Highcharts
+    if [ ! -e ${STATIC}${HIGHCHARTS} ]
     then
         echo "Download HighCharts..."
-        wget http://code.highcharts.com/zips/${HIGHCHARTS} -O possum/base/static/highcharts/${HIGHCHARTS}
+        wget http://code.highcharts.com/zips/${HIGHCHARTS} -O ${STATIC}${HIGHCHARTS}
     fi
-    if [ ! -e possum/base/static/highcharts/js/highcharts.js ]
+    if [ ! -e ${STATIC}${HIGHDIR} ]
     then
+        mkdir ${STATIC}${HIGHDIR}
         echo "Unzip HighCharts..."
-        pushd possum/base/static/highcharts/ >/dev/null
-        unzip Highcharts-3.0.6.zip
+        pushd ${STATIC}${HIGHDIR} >/dev/null
+        unzip ../${HIGHCHARTS}
+        popd >/dev/null
+    fi
+    # BootStrap
+    if [ ! -e ${STATIC}${BOOTSTRAP} ]
+    then
+        echo "Download BootStrap..."
+        wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
+            -O ${STATIC}${BOOTSTRAP}
+    fi
+    if [ ! -e ${STATIC}${BOOTDIR} ]
+    then
+        echo "Unzip BootStrap..."
+        pushd ${STATIC} >/dev/null
+        unzip ${BOOTSTRAP}
+        if [ ! -e ${STATIC}fonts ]
+        then
+            mkdir ${STATIC}fonts
+        fi
+        cp -f ${BOOTDIR}/fonts/* fonts/
+        popd >/dev/null
+    fi
+    # BootStrap Date-Picker
+    if [ ! -e ${STATIC}${DATEPICKER_VERSION}.zip ]
+    then
+        echo "Download BootStrap Date-Picker..."
+        wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
+            -O ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+    fi
+    if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION} ]
+    then
+        echo "Unzip BootStrap Date-Picker..."
+        pushd $STATIC >/dev/null
+        unzip bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+#        for dir in js css
+#        do
+#            if [ -e ${dir} ]
+#            then
+#                # old version
+#                rm -rf ${dir}
+#            fi
+#            cp -a bootstrap-datepicker-${DATEPICKER_VERSION}/${dir} ${dir}
+#        done
         popd >/dev/null
     fi
     enter_virtualenv
@@ -155,19 +186,20 @@ function update {
     fi
     enter_virtualenv
     # before all, we must have last release of Django
-    pip install --upgrade $(grep -i django requirements.txt)
-    pip install --requirement requirements.txt --upgrade
-    # Hack waiting new release of django-chartit
-    #  https://github.com/pgollakota/django-chartit
-    #  http://stackoverflow.com/questions/23564529/chartit-is-not-a-valid-tag-librarydjango
-    find env -name chartit.py -exec sed -ie 's/from django.utils import simplejson/import simplejson/' {} \;
+    pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
+    pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    if [ $? != 0 ]
+    then
+        echo "ERROR: pip failed !"
+        exit 2
+    fi
     # cleanup all .pyc files in possum
     find possum -name "*.pyc" -exec rm -f {} \;
     if [ ! -e possum/settings.py ]
     then
         # default conf is production
         cp possum/settings_production.py possum/settings.py
-        ./manage.py syncdb --noinput
+        ./manage.py migrate --noinput
         ./manage.py init_db
         cat << 'EOF'
 -------------------------------------------------------
@@ -181,12 +213,9 @@ Example:
 -------------------------------------------------------
 EOF
     fi
-    if [ ! -e possum.db ]
-    then
-        ./manage.py syncdb --noinput
-    fi
     ./manage.py migrate
     ./manage.py update_css
+    ./manage.py update_stats_to_0_6
     update_js
 }
 
@@ -212,28 +241,11 @@ function graph_models {
     done
 }
 
-function makemigrations {
-    enter_virtualenv
-    ./manage.py makemigrations
-}
-
-function migrate {
-    enter_virtualenv
-    ./manage.py migrate
-}
-
 function clear_db {
     enter_virtualenv
-    if [ -e possum.db ]
-    then
-        if [ ! -d backup ]
-        then
-            mkdir backup
-        fi
-        mv possum.db backup/possum.db.$(date +%Y%m%d%H%M)
-    fi
-    ./manage.py syncdb --noinput
-    ./manage.py migrate
+    ./manage.py reset_db
+    ./manage.py migrate --noinput
+#    ./manage.py flush --noinput
 }
 
 if [ ! $# -eq 1 ]
@@ -258,15 +270,8 @@ init_demo)
 load_demo)
     enter_virtualenv
     clear_db
-    ./manage.py syncdb --noinput
-    ./manage.py migrate
+    ./manage.py migrate --noinput
     ./manage.py loaddata demo
-    ;;
-utests)
-    utests
-    ;;
-fastcoverage)
-    fastcoverage
     ;;
 deb_install_nginx)
     deb_install_nginx
@@ -274,24 +279,15 @@ deb_install_nginx)
 doc)
     doc
     ;;
-model)
-    graph_models
-    ;;
-makemigrations)
-    makemigrations
-    ;;
-migrate)
-    migrate
-    ;;
 update)
     update
     ;;
 models_changed)
     enter_virtualenv
-    ./manage.py syncdb --noinput
-    ./manage.py migrate
-    ./manage.py schemamigration base --auto
-    ./manage.py schemamigration stats --auto
+    for app in $APPS
+    do
+        ./manage.py makemigrations ${app}
+    done
     ./manage.py migrate
     clear_db
     ./manage.py init_demo
@@ -299,11 +295,6 @@ models_changed)
     graph_models
     ;;
 tests)
-# TODO: diff sur le settings.py et backup de securite
-#    if [ ! -e possum/settings.py ]
-#    then
-#    cp possum/settings_tests.py possum/settings.py
-#    fi
     tests
     ;;
 sh)

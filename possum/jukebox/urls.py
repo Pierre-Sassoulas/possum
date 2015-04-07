@@ -1,8 +1,8 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns('possum.jukebox.views',
-                       ('^$', 'musicplayerd'),
+                       url('^$', 'musicplayerd', name='jukebox_home'),
                        ('^playpl$', 'ajax_playpl'),
                        ('^playpause$', 'ajax_playpause'),
                        ('^next$', 'ajax_next'),

@@ -22,12 +22,12 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, UserManager, Permission
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test, login_required
 
-from possum.base.views import permission_required, remove_edition
+from possum.base.views import check_admin, remove_edition
 
 
 LOGGER = logging.getLogger(__name__)
@@ -65,7 +65,7 @@ def profile(request):
     return render(request, 'base/profile.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def users(request):
     '''
     :param HttpRequest request:
@@ -79,7 +79,7 @@ def users(request):
     return render(request, 'base/manager/users.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def users_new(request):
     '''
     :param HttpRequest request:
@@ -107,7 +107,7 @@ def users_new(request):
     return redirect('users')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def users_change(request, user_id):
     '''
     :param HttpRequest request:
@@ -149,7 +149,7 @@ def users_change(request, user_id):
     return redirect('users')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def users_active(request, user_id):
     '''
     :param HttpRequest request:
@@ -177,7 +177,7 @@ def users_active(request, user_id):
     return redirect('users')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def users_passwd(request, user_id):
     ''' Set a new random password for a user.
     :param HttpRequest request:
@@ -196,7 +196,7 @@ def users_passwd(request, user_id):
     return redirect('users')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def users_change_perm(request, user_id, codename):
     '''
     :param HttpRequest request:

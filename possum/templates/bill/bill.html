@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block content %}
 {% load i18n %}
+{% block content %}
 <h1>{% trans "Order" %} [{{facture}}]</h1>
 <ul id="bill_info">
     {% if facture.category_to_follow %}

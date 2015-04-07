@@ -19,26 +19,70 @@
 #
 import datetime
 import logging
+import json
 
-from chartit import PivotDataPool, PivotChart
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Avg
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
-from possum.base.forms import DateForm, WeekForm, MonthForm, YearForm
-from possum.base.models import Categorie, VAT, PaiementType, Produit
+from possum.base.forms import DateForm
+from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
-from possum.base.views import permission_required
-from possum.stats.models import Stat
+from possum.base.views import check_admin
+from possum.stats.models import Stat, STATS
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
+
+# available rapports
+RAPPORTS = {'1': {'title': _("Total TTC"),
+                'name': _("Sales"), 'keys': ["total_ttc", "guests_total_ttc",
+                                             "bar_total_ttc"]},
+            '2': {'title': _("Bar"),
+                'name': _("Bar"), 'keys': ["bar_average", "bar_nb"]},
+            '3': {'title': _("Guest"),
+                'name': _("Guest"), 'keys': ["guests_average", "guests_nb"]},
+            '4': {'title': _("VAT"),
+                'name': _("VAT"), 'keys': ["_vat", ]},
+            '5': {'title': _("Payments count by type"),
+                'name': _("Payments count"), 'keys': ["_payment_nb", ]},
+            '6': {'title': _("Payments values by type"),
+                'name': _("Payments values"), 'keys': ["_payment_value", ]},
+            '7': {'title': _("Sales amounts by category"),
+                'name': _("Amounts/category"), 'keys': ["_category_value", ]},
+            '8': {'title': _("Number of sales by category"),
+                'name': _("Number/category"), 'keys': ["_category_nb"]},
+            }
 
 
-@permission_required('base.p1')
+def get_series(rapport, interval, begin, end):
+    """Test pour highcharts
+    rapport: id
+    interval: m, d, w, y
+    begin: datetime.date
+    end: datetime.date
+    return: []
+    """
+    if rapport not in RAPPORTS:
+        return {}
+    LOG.warning("INTERVAL: %s" % interval)
+    series = []
+    for key in RAPPORTS[rapport]['keys']:
+        LOG.warning(key)
+        serie = {'name': STATS[key], 'data': []}
+        for stat in Stat.objects.filter(key=key, interval=interval,
+                                        date__gte=begin, date__lt=end):
+            serie['data'].append([stat.date.isoformat(), int(stat.value)])
+        series.append(serie)
+    return series
+
+
+@user_passes_test(check_admin)
 def update(request):
     """Update statistics
     """
@@ -48,9 +92,10 @@ def update(request):
     else:
         messages.add_message(request, messages.ERROR,
                              "Les données ne peuvent être mis à jour")
-    return redirect("manager")
+    return redirect("sales_home")
 
 
+@user_passes_test(check_admin)
 def send(request, subject, message):
     """Send an email
     """
@@ -60,15 +105,16 @@ def send(request, subject, message):
                       [request.user.email], fail_silently=False)
         except:
             messages.add_message(request, messages.ERROR,
-                                 u"Le mail n'a pu être envoyé")
+                                 _("Mail could not be sent"))
         else:
             messages.add_message(request, messages.SUCCESS,
-                                 u"Mail envoyé à %s" % request.user.email)
+                                 _("Mail sent to %s") % request.user.email)
     else:
         messages.add_message(request, messages.ERROR,
-                             u"Vous n'avez pas d'adresse mail")
+                             _("You have no email address"))
 
 
+@user_passes_test(check_admin)
 def print_msg(request, msg):
     """Print a msg to a printer
     """
@@ -88,6 +134,7 @@ def print_msg(request, msg):
                              u"Aucune imprimante type 'manager' disponible")
 
 
+@user_passes_test(check_admin)
 def get_value(context, key):
     """Get value or give a default one
     """
@@ -97,17 +144,15 @@ def get_value(context, key):
         return "0.00\n"
 
 
+@user_passes_test(check_admin)
 def prepare_full_output(context):
     """Prepare full output
     """
-    LOGGER.debug(context)
+    LOG.debug(context)
     msg = """
 Nb factures: """
     msg += get_value(context, 'nb_bills')
-    msg += "Total TTC: "
-    msg += get_value(context, 'total_ttc')
-    for vat in context['vats']:
-        msg += "TTC %s: %.2f\n" % (vat, vat.nb)
+    msg += prepare_vats_output(context)
     msg += """
 Restauration:
 Nb couverts: """
@@ -125,195 +170,98 @@ Nb factures: """
     msg += "TM/facture: "
     msg += get_value(context, 'bar_average')
     msg += "\n"
-    for payment in context['payments']:
-        msg += "%s: %.2f\n" % (payment, payment.nb)
+    if 'payments' in context:
+        for payment in context['payments']:
+            msg += "%s: %.2f\n" % (payment, payment.nb)
     msg += "\n"
-    for category in context['categories']:
-        msg += "%s: %s\n" % (category.nom, category.nb)
+    if 'categories' in context:
+        for category in context['categories']:
+            msg += "%s: %s\n" % (category.nom, category.nb)
     msg += "\n"
-    for product in context['products']:
-        msg += "%s: %s\n" % (product.nom, product.nb)
-    msg += "\nFait le %s" % datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    if 'products' in context:
+        for product in context['products']:
+            msg += "%s: %s\n" % (product.nom, product.nb)
+    msg += "\nFait le %s" % datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
     return msg
 
 
+@user_passes_test(check_admin)
 def prepare_vats_output(context):
     """Prepare VATS output
     """
     msg = "Total TTC: "
     msg += get_value(context, 'total_ttc')
-    for vat in context['vats']:
-        msg += "TTC %s: %.2f\n" % (vat, vat.nb)
+    if 'vats' in context:
+        for vat in context['vats']:
+            msg += "TTC %s: %.2f\n" % (vat, vat.nb)
     return msg
 
 
-def get_subject(request):
-    """Get subject for email
-    """
-    week = request.POST.get('week')
-    month = request.POST.get('month')
-    year = request.POST.get('year')
-    date = request.POST.get('date')
-    if week:
-        subject = "Rapport semaine %s/%s" % (week, year)
-    elif month:
-        subject = "Rapport mensuel %s/%s" % (month, year)
-    else:
-        subject = "Rapport du %s" % date.strftime("%d/%m/%Y")
-    return subject
-
-
+@user_passes_test(check_admin)
 def check_for_outputs(request, context):
     """Check if user wants some outputs
     """
     if context and request.method == 'POST':
         if "full_mail" in request.POST:
-            subject = get_subject(request)
+            subject = context['title']
             msg = prepare_full_output(context)
             send(request, subject, msg)
         if "full_print" in request.POST:
-            msg = get_subject(request)
+            msg = context['title']
             msg += prepare_full_output(context)
             print_msg(request, msg)
         if "vats_mail" in request.POST:
-            subject = get_subject(request)
+            subject = context['title']
             msg = prepare_vats_output(context)
             send(request, subject, msg)
         if "vats_print" in request.POST:
-            msg = get_subject(request)
+            msg = context['title']
             msg += prepare_vats_output(context)
             print_msg(request, msg)
 
 
-@permission_required('base.p1')
-def daily(request):
-    """Show stats for a day
+def get_a_date():
     """
-    context = {'menu_manager': True, }
-    date = datetime.datetime.now()
+    date: datetime.date
+    interval: day, week, month, year
+    alltime: a, c, b
+    """
+    all_time = Stat.objects.filter(interval="b")
+    last = int(date.year) - 1
+    objects = Stat.objects.filter(interval=interval, date=date)
+    last_year = objects.filter(year=last)
+    current = objects.filter(year=year)
+    #TODO: à finir !
+
+
+@user_passes_test(check_admin)
+def text(request):
+    """Show stats
+    """
+    context = {'menu_sales': True, 'date': datetime.date.today().isoformat()}
+    context = init_borders(context)
+    context['interval'] = get_interval(request)
     if request.method == 'POST':
         try:
-            year = int(request.POST.get('date_year'))
-            month = int(request.POST.get('date_month'))
-            day = int(request.POST.get('date_day'))
-            date = datetime.datetime(year, month, day)
+            date = datetime.datetime.strptime(request.POST.get('date'),
+                                              "%Y-%m-%d").date()
         except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context['date_form'] = DateForm({'date': date, })
-    context['date'] = date
-    context = Stat().get_data_for_day(context)
-    check_for_outputs(request, context)
+            messages.add_message(request, messages.ERROR,
+                                 _("Date is not valid"))
+        else:
+            context['date'] = date
+            context = Stat().get_a_date(context)
+            if context['interval'] == "m":
+                context['title'] = "%s: %s" % (_("Report of the month"),
+                                               date.isoformat())
+            elif context['interval'] == "w":
+                context['title'] = "%s: %s" % (_("Report of the week"),
+                                               date.isoformat())
+            else:
+                context['title'] = "%s: %s" % (_("Report of the day"),
+                                               date.isoformat())
+            check_for_outputs(request, context)
     return render(request, 'stats/home.html', context)
-
-
-@permission_required('base.p1')
-def weekly(request):
-    """Show stats for a week
-    """
-    context = {'menu_manager': True, }
-    date = datetime.datetime.now()
-    year = date.year
-    week = date.isocalendar()[1]
-    if request.method == 'POST':
-        try:
-            year = int(request.POST.get('year'))
-            week = int(request.POST.get('week'))
-        except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context['week_form'] = WeekForm({'year': year, 'week': week})
-    context['week'] = week
-    context['year'] = year
-    context = Stat().get_data_for_week(context)
-    check_for_outputs(request, context)
-    return render(request, 'stats/home.html', context)
-
-
-@permission_required('base.p1')
-def monthly(request):
-    """Show stats for a month
-    """
-    context = {'menu_manager': True, }
-    date = datetime.datetime.now()
-    year = date.year
-    month = date.month
-    if request.method == 'POST':
-        try:
-            year = int(request.POST.get('year'))
-            month = int(request.POST.get('month'))
-        except:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context['month_form'] = MonthForm({'year': year, 'month': month})
-    context['month'] = month
-    context['year'] = year
-    context = Stat().get_data_for_month(context)
-    check_for_outputs(request, context)
-    return render(request, 'stats/home.html', context)
-
-
-def month_name(*t):
-    """ Sert à trier les mois."""
-    names = {1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Avr', 5: 'Mai', 6: 'Jui',
-             7: 'Jui', 8: 'Aou', 9: 'Sep', 10: 'Oct', 11: 'Nov',
-             12: 'Dec'}
-    month_num = int(t[0][0])
-    LOGGER.debug("names[%d] > [%s]" % (month_num, names[month_num]))
-    return (names[month_num],)
-
-
-def month_sort(*x):
-    """x example: ((('Fev',), ('2',)),)
-    """
-    return (int(x[0][1][0]),)
-
-
-def get_datapool_year(year, keys):
-    LOGGER.debug(keys)
-    series = []
-    objects = Stat.objects.filter(interval="m", year=year)
-    for key in keys.keys():
-        series.append({'options': {
-            'source': objects.filter(key=key),
-            'categories': 'month'},
-            'terms': {keys[key]: Avg('value')}
-        })
-    return PivotDataPool(
-        series=series,
-        sortf_mapf_mts=(month_sort, month_name, True))
-
-
-def get_chart(datasource, graph, keys, title, xaxis):
-    """
-    graph: line / pie
-    """
-    terms = [keys[x] for x in keys.keys()]
-    return PivotChart(
-        datasource=datasource,
-        series_options=[{
-                        'options': {
-                            'type': graph,
-                            'stacking': False
-                        },
-                        'terms': terms
-                        }],
-        chart_options={
-            'title': {
-                'text': title},
-            'credits': {
-                'enabled': False
-            },
-            'xAxis': {
-                'title': {
-                    'text': xaxis}},
-            'yAxis': {
-                'title': {
-                    'text': ''}},
-        })
 
 
 def get_chart_year_products(year, category):
@@ -343,38 +291,43 @@ def get_chart_year_products(year, category):
     return charts
 
 
-def select_charts(request, context, choice, year):
+@user_passes_test(check_admin)
+def select_charts(request, context):
     """Select and construct graphics
     """
     charts = []
+    choice = context['choice']
+    year = 2015
     if choice == 'ttc':
-        chart = {'title': "Total TTC pour l'année %s" % year, }
+        title = "Total TTC pour l'année %d" % year
+        chart = {'title': title, }
+        context['title'] = title
         chart['keys'] = {"total_ttc": 'total ttc',
                          "guests_total_ttc": 'restauration',
                          "bar_total_ttc": 'bar'}
         charts.append(chart)
     elif choice == 'bar':
-        chart = {'title': "Activité bar pour l'année %s" % year, }
+        chart = {'title': "Activité bar pour l'année %d" % year, }
         chart['keys'] = {"bar_average": 'TM/facture',
                          "bar_nb": 'nb factures'}
         charts.append(chart)
     elif choice == 'guests':
-        chart = {'title': "Activité restaurant pour l'année %s" % year, }
+        chart = {'title': "Activité restaurant pour l'année %d" % year, }
         chart['keys'] = {"guests_average": 'TM/couvert',
                          "guests_nb": 'nb couverts'}
         charts.append(chart)
     elif choice == 'vats':
-        chart = {'title': "TTC des TVA pour l'année %s" % year, }
+        chart = {'title': "TTC des TVA pour l'année %d" % year, }
         chart['keys'] = {}
         for vat in VAT.objects.iterator():
             key = "%s_vat" % vat.id
             chart['keys'][key] = "%s" % vat
         charts.append(chart)
     elif choice == 'payments':
-        chart1 = {'title': "Nombre de paiements par type pour l'année %s" %
+        chart1 = {'title': "Nombre de paiements par type pour l'année %d" %
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des paiements par type pour l'année %s" %
+        chart2 = {'title': "Valeur des paiements par type pour l'année %d" %
                   year, }
         chart2['keys'] = {}
         for payment in PaiementType.objects.iterator():
@@ -385,10 +338,10 @@ def select_charts(request, context, choice, year):
         charts.append(chart1)
         charts.append(chart2)
     elif choice == 'categories':
-        chart1 = {'title': "Nombre de vente par catégorie pour l'année %s" %
+        chart1 = {'title': "Nombre de vente par catégorie pour l'année %d" %
                   year, }
         chart1['keys'] = {}
-        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %s" %
+        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %d" %
                   year, }
         chart2['keys'] = {}
         for cat in Categorie.objects.iterator():
@@ -405,11 +358,11 @@ def select_charts(request, context, choice, year):
             messages.add_message(request, messages.ERROR,
                                  "Ce type de graphique n'existe pas.")
         else:
-            chart1 = {'title': u"Nombre de vente pour la catégorie [%s] en %s"
+            chart1 = {'title': u"Nombre de vente pour la catégorie [%s] en %d"
                       % (category.nom, year), }
             chart1['keys'] = {}
             chart2 = {'title': u"Valeur des ventes pour la catégorie [%s] en "
-                      "%s" % (category.nom, year), }
+                      "%d" % (category.nom, year), }
             chart2['keys'] = {}
             for product in Produit.objects.filter(categorie=category):
                 name = "%s #%s" % (product.nom, product.id)
@@ -427,7 +380,7 @@ def select_charts(request, context, choice, year):
         try:
             datasource = get_datapool_year(year, chart['keys'])
         except:
-            LOGGER.warning("datasource error with %s" % chart['title'])
+            LOG.warning("datasource error with %s" % chart['title'])
         else:
             context[key].append(get_chart(datasource, 'line',
                                           chart['keys'],
@@ -436,24 +389,78 @@ def select_charts(request, context, choice, year):
     return context
 
 
-@permission_required('base.p1')
-def charts(request, choice='ttc'):
+def init_borders(context):
+    """Get date of first and last order to limit datepicker choice.
     """
-    chart1: pour un seul graphique
-    chart2: pour 2 graphiques
+    first_order = Facture.objects.first()
+    if first_order:
+        context['first_date'] = first_order.date_creation.date().isoformat()
+    else:
+        context['first_date'] = datetime.date.today().isoformat()
+    last_order = Facture.objects.last()
+    if last_order:
+        context['last_date'] = last_order.date_creation.date().isoformat()
+    else:
+        context['last_date'] = context['first_date']
+    LOG.warning("interval: %s > %s" % (context['first_date'],
+                                       context['last_date']))
+    return context
+
+
+def get_interval(request):
+    """Extract and test interval from a form.
+    Default value is: day
     """
-    context = {'menu_manager': True, }
-    context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
-    year = datetime.datetime.now().year
     if request.method == 'POST':
-        try:
-            year = int(request.POST.get('year'))
-        except:
-            messages.add_message(request, messages.ERROR,
-                                 "La date saisie n'est pas valide.")
-    context = select_charts(request, context, choice, year)
-    context[choice] = True
-    context['choice'] = choice
-    context['year_form'] = YearForm({'year': year})
-    context['year'] = year
+        rapport = request.POST.get('interval')
+        if rapport == "m":
+            return "m"
+        elif rapport == "w":
+            return "w"
+        elif rapport == "y":
+            return "y"
+    # default value
+    return "d"
+
+
+@user_passes_test(check_admin)
+def charts(request):
+    """Show graphics
+    """
+    context = {'menu_sales': True, 'rapport': '1'}
+    context = init_borders(context)
+    context['cat_list'] = Categorie.objects.order_by('priorite', 'nom')
+    context['interval'] = get_interval(request)
+    context['date_begin'] = context['first_date']
+    context['date_end'] = context['last_date']
+    context['rapports'] = RAPPORTS
+    if request.method == 'POST':
+        if 'date_begin' in request.POST:
+            context['date_begin'] = request.POST.get('date_begin')
+        if 'date_end' in request.POST:
+            context['date_end'] = request.POST.get('date_end')
+        context['rapport'] = request.POST.get('rapport')
+    context['title'] = RAPPORTS[context['rapport']]['title']
+#    context = select_charts(request, context)
     return render(request, 'stats/charts.html', context)
+
+
+@user_passes_test(check_admin)
+def dump(request, rapport, interval, date_begin, date_end):
+    """Get stats for graphics
+    All tests on data are made in Stat()
+    """
+    data = {}
+    try:
+        begin = datetime.datetime.strptime(date_begin, "%Y-%m-%d").date()
+    except:
+        begin = None
+    try:
+        end = datetime.datetime.strptime(date_end, "%Y-%m-%d").date()
+    except:
+        end = None
+    if begin and end:
+        data['chart_data'] = get_series(rapport, interval, begin, end)
+    else:
+        data['chart_data'] = {}
+    return HttpResponse(json.dumps(data), content_type='application/json')

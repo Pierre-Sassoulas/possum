@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block main %}<main class="col-md-9">{% endblock %}
+{% block __internal_side %}
+<aside class="col-md-3 well">
+    {% block side %}{% endblock %}
+</aside>
+{% endblock %}
