@@ -22,15 +22,16 @@ import logging
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.models import Printer
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def home(request):
     '''
     :param HttpRequest request:
@@ -41,7 +42,7 @@ def home(request):
     return render(request, 'printers/home.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_add(request):
     '''
     :param HttpRequest request:
@@ -52,7 +53,7 @@ def printer_add(request):
     return render(request, 'printers/add.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_added(request, name):
     ''' Save new printer
     :param HttpRequest request:
@@ -65,7 +66,7 @@ def printer_added(request, name):
     return redirect('printer_home')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_view(request, printer_id):
     '''
 
@@ -91,7 +92,7 @@ def printer_view(request, printer_id):
     return render(request, 'printers/view.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_select_width(request, printer_id):
     '''
     :param HttpRequest request:
@@ -106,7 +107,7 @@ def printer_select_width(request, printer_id):
                   context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_set_width(request, printer_id, number):
     '''
     :param HttpRequest request:
@@ -122,7 +123,7 @@ def printer_set_width(request, printer_id, number):
     return redirect('printer_view', printer_id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_test_print(request, printer_id):
     '''
     :param HttpRequest request:
@@ -140,7 +141,7 @@ def printer_test_print(request, printer_id):
     return redirect('printer_view', printer_id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_change_kitchen(request, printer_id):
     '''
     :param HttpRequest request:
@@ -155,7 +156,7 @@ def printer_change_kitchen(request, printer_id):
     return redirect('printer_view', printer_id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_change_billing(request, printer_id):
     '''
     :param HttpRequest request:
@@ -170,7 +171,7 @@ def printer_change_billing(request, printer_id):
     return redirect('printer_view', printer_id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def printer_change_manager(request, printer_id):
     '''
     :param HttpRequest request:
@@ -185,7 +186,7 @@ def printer_change_manager(request, printer_id):
     return redirect('printer_view', printer_id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def kitchen_header(request, printer_id, number=-1):
     ''' Show and set numbers of lines on ticket header for kitchen
     :param HttpRequest request:

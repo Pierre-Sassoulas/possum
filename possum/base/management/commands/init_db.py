@@ -18,7 +18,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
 from possum.base.models import (Categorie, Cuisson, Paiement, PaiementType,
@@ -59,21 +59,13 @@ class Command(BaseCommand):
                     last_name="last name",
                     email="demo@possum-software.org")
         user.set_password("demo")
-        user.save()
-
         self.stdout.write("Setup permissions for manager")
-        for i in xrange(1, 10):
-            user.user_permissions.add(
-                Permission.objects.get(codename="p%d" % i))
+        user.is_superuser = True
         user.save()
 
         self.stdout.write("Add a pos user")
         user = User(username="pos", first_name="", last_name="", email="")
         user.set_password("pos")
-        user.save()
-
-        self.stdout.write("Setup permissions for user")
-        user.user_permissions.add(Permission.objects.get(codename="p3"))
         user.save()
 
         self.stdout.write("Setup type of payments")

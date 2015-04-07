@@ -1,22 +1,23 @@
 {% extends "base.html" %}
-{% block content %}
 {% load i18n %}
-<p>{% blocktrans %}This page will automatically refresh every
-    {{need_auto_refresh}} seconds{% endblocktrans %}</p>
-<ul id="bills">
-    <li onclick="window.location='{% url "bill_new" %}'">
-        {% trans "New order" %}</li>
-    {% if factures %}
-        {% for facture in factures %}
-        <li onclick="window.location='{% url "bill_view" facture.id %}'">
+{% block content %}
+<h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1>
+<ul class="list-inline">
+    {% for facture in factures %}
+        <li class="possum-base alert alert-info" onclick="window.location='{% url "bill_view" facture.id %}'">
         {{facture}}</br>
         {% trans "Table" %}: {% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</br>
         {% trans "Guests" %}: {{facture.couverts}}</br>
         {% trans "Amount" %}: {{facture.total_ttc}}{% trans "$" %}</br>
         </li>
-        {% endfor %}
-    {% endif %}
+    {% empty %}
+        <li class="possum-base possum-bg">{% trans "No bill" %}</li>
+    {% endfor %}
+    <li class="possum-base alert alert-info" onclick="window.location='{% url "bill_new" %}'">
+        </br>
+        {% trans "New order" %}</br>
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></br>
+        </br>
+    </li>
 </ul>
-
 {% endblock %}
-

@@ -25,7 +25,7 @@ templates_path = [os.path.join('..', '_templates')]
 source_suffix = '.rst'
 source_encoding = 'utf-8'
 master_doc = 'index'
-project = u'POSSUM'
+project = u'Possum'
 copyright = u'2008-%d, Possum Software' % datetime.now().year
 
 version = POSSUM_VERSION
@@ -60,12 +60,12 @@ html_theme_options = {
         ("Home", "http://www.possum-software.org", True),
     ],
     'navbar_sidebarrel': True,
-    'navbar_pagenav': True,
+    'navbar_pagenav': False,
     'navbar_pagenav_name': "Page",
     'globaltoc_depth': 2,
     'globaltoc_includehidden': "true",
     #'navbar_class': "navbar navbar-inverse",
-    'navbar_fixed_top': "true",
+    'navbar_fixed_top': "false",
     'source_link_position': "nav",
     # Bootswatch (http://bootswatch.com/) theme.
     'bootswatch_theme': "sandstone",

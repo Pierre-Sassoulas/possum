@@ -26,6 +26,7 @@ from django.http.response import HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import login_required
 
 from possum.base.forms import NoteForm
 from possum.base.models import Categorie
@@ -38,12 +39,13 @@ from possum.base.models import PaiementType, Paiement
 from possum.base.models import Printer
 from possum.base.models import Produit, ProduitVendu
 from possum.base.models import Zone, Table
-from possum.base.views import permission_required, remove_edition, \
-    cleanup_payment
+from possum.base.views import remove_edition, cleanup_payment
+
+
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_new(request):
     ''' Create a new bill.
     :param HttpRequest request:
@@ -73,7 +75,7 @@ def set_option(sold_id, option_id):
     sold.save()
 
 
-@permission_required('base.p3')
+@login_required
 def bill_send_kitchen(request, bill_id):
     ''' Send in the kitchen
     :param HttpRequest request: TODO
@@ -100,7 +102,7 @@ def bill_send_kitchen(request, bill_id):
     return redirect('bill_view', bill.id)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_print(request, bill_id):
     '''
     Print the bill.
@@ -126,7 +128,7 @@ def bill_print(request, bill_id):
     return redirect('bill_view', bill.id)
 
 
-@permission_required('base.p3')
+@login_required
 def table_select(request, bill_id):
     ''' Select/modify table of a bill
     :param HttpRequest request:
@@ -139,7 +141,7 @@ def table_select(request, bill_id):
     return render(request, 'bill/select_a_table.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def table_set(request, bill_id, table_id):
     ''' Select/modify table of a bill
 
@@ -157,7 +159,7 @@ def table_set(request, bill_id, table_id):
     return redirect("bill_view", bill.id)
 
 
-@permission_required('base.p3')
+@login_required
 def set_number(request, bill_id, count):
     ''' Set number of products to add
 
@@ -184,7 +186,7 @@ def update_session_number_of_product(request, bill_id, count):
     return HttpResponse('OK')
 
 
-@permission_required('base.p3')
+@login_required
 def categories(request, bill_id, category_id=None):
     ''' Select a product to add on a bill.
 
@@ -226,7 +228,7 @@ def categories(request, bill_id, category_id=None):
     return render(request, 'bill/categories.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def product_select_made_with(request, bill_id, product_id):
     '''
     TODO
@@ -243,7 +245,7 @@ def product_select_made_with(request, bill_id, product_id):
     return render(request, 'bill/product_select_made_with.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def product_set_made_with(request, bill_id, product_id, category_id):
     '''
     TODO
@@ -264,7 +266,7 @@ def product_set_made_with(request, bill_id, product_id, category_id):
     return redirect('sold_view', bill_id, product.id)
 
 
-@permission_required('base.p3')
+@login_required
 def product_select(request, bill_id, category_id):
     ''' Select a product to add on a bill.
     TODO
@@ -288,7 +290,7 @@ def product_select(request, bill_id, category_id):
     return render(request, 'bill/products.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def subproduct_select(request, bill_id, sold_id, category_id):
     ''' Select a subproduct to a product.
     TODO
@@ -309,7 +311,7 @@ def subproduct_select(request, bill_id, sold_id, category_id):
     return render(request, 'bill/subproducts.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_view(request, bill_id, sold_id):
     '''
     TODO
@@ -333,7 +335,7 @@ def sold_view(request, bill_id, sold_id):
     return render(request, 'bill/sold.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_option(request, bill_id, sold_id, option_id):
     '''
     TODO
@@ -349,7 +351,7 @@ def sold_option(request, bill_id, sold_id, option_id):
     return redirect('sold_view', bill_id, sold_id)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_note(request, bill_id, sold_id, note_id):
     '''
     TODO
@@ -371,7 +373,7 @@ def sold_note(request, bill_id, sold_id, note_id):
     return redirect('sold_view', bill_id, sold_id)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_delete(request, bill_id, sold_id):
     ''' We remove a ProduitVendu on a Facture
     TODO
@@ -401,7 +403,7 @@ def sold_delete(request, bill_id, sold_id):
     return redirect('bill_categories', bill_id)
 
 
-@permission_required('base.p3')
+@login_required
 def subproduct_add(request, bill_id, sold_id, product_id):
     ''' Add a product to a bill. If this product contains others products,
     we have to add them too.
@@ -424,7 +426,7 @@ def subproduct_add(request, bill_id, sold_id, product_id):
     return redirect('bill_sold_working', bill_id, sold.id)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_options(request, bill_id, sold_id, option_id=None):
     ''' Choix des options à l'ajout d'un produit
     si sold.produit.options_ok
@@ -451,7 +453,7 @@ def sold_options(request, bill_id, sold_id, option_id=None):
     return render(request, 'bill/options.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_working(request, bill_id, sold_id):
     ''' Va gérer les différents paramètres qui doivent être saisie
     sur un nouveau produit.
@@ -501,7 +503,7 @@ def sold_working(request, bill_id, sold_id):
     return redirect('bill_categories', bill_id, sold.produit.categorie.id)
 
 
-@permission_required('base.p3')
+@login_required
 def product_add(request, bill_id, product_id):
     ''' Add a product to a bill. If this product contains others products,
     we have to add them too.
@@ -531,7 +533,7 @@ def product_add(request, bill_id, product_id):
     return redirect('bill_sold_working', bill_id, sold.id)
 
 
-@permission_required('base.p3')
+@login_required
 def sold_cooking(request, bill_id, sold_id, cooking_id=None):
     '''
     TODO
@@ -564,7 +566,7 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
     return render(request, 'bill/cooking.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def couverts_select(request, bill_id):
     '''
     TODO
@@ -579,7 +581,7 @@ def couverts_select(request, bill_id):
     return render(request, 'bill/couverts.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def couverts_set(request, bill_id, number):
     ''' Set couverts of a bill
     TODO
@@ -596,7 +598,7 @@ def couverts_set(request, bill_id, number):
     return redirect("bill_view", bill_id)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_home(request):
     '''
     TODO
@@ -606,10 +608,11 @@ def bill_home(request):
     context = {'menu_bills': True, }
     context['need_auto_refresh'] = 30
     context['factures'] = Facture().non_soldees()
+    context['count'] = len(context['factures'])
     return render(request, 'bill/home.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_view(request, bill_id):
     ''' Get a bill.
     TODO
@@ -629,7 +632,7 @@ def bill_view(request, bill_id):
     return render(request, 'bill/bill.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_delete(request, bill_id):
     '''
     TODO
@@ -647,7 +650,7 @@ def bill_delete(request, bill_id):
         return redirect('bill_home')
 
 
-@permission_required('base.p3')
+@login_required
 def bill_onsite(request, bill_id):
     '''
     TODO
@@ -661,7 +664,7 @@ def bill_onsite(request, bill_id):
     return redirect('bill_view', bill_id)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_payment_delete(request, bill_id, payment_id):
     '''
     TODO
@@ -677,7 +680,7 @@ def bill_payment_delete(request, bill_id, payment_id):
     return redirect('prepare_payment', bill_id)
 
 
-@permission_required('base.p3')
+@login_required
 def bill_payment_view(request, bill_id, payment_id):
     '''
     TODO
@@ -693,7 +696,7 @@ def bill_payment_view(request, bill_id, payment_id):
     return render(request, 'payments/view.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def amount_payment(request):
     ''' Permet de définir le montant d'un paiement
     bill_id doit etre dans request.session
@@ -712,7 +715,7 @@ def amount_payment(request):
     return render(request, 'payments/amount.html', context)
 
 
-@permission_required('base.p3')
+@login_required
 def amount_count(request):
     ''' Le nombre de tickets pour un paiement
     :param HttpRequest request:
@@ -738,7 +741,7 @@ def amount_payment_zero(request):
     request.session['is_left'] = True
 
 
-@permission_required('base.p3')
+@login_required
 def amount_payment_del(request):
     """Permet d'effacer la partie gauche et droite
     :param HttpRequest request:
@@ -747,7 +750,7 @@ def amount_payment_del(request):
     return redirect("amount_payment")
 
 
-@permission_required('base.p3')
+@login_required
 def amount_payment_right(request):
     """Permet de passer à la partie droite
     :param HttpRequest request:
@@ -756,7 +759,7 @@ def amount_payment_right(request):
     return redirect("amount_payment")
 
 
-@permission_required('base.p3')
+@login_required
 def amount_payment_add(request, number):
     """Permet d'ajouter un chiffre au montant
     :param HttpRequest request:
@@ -788,7 +791,7 @@ def amount_payment_add(request, number):
     return redirect("amount_payment")
 
 
-@permission_required('base.p3')
+@login_required
 def type_payment(request, bill_id, type_id):
     '''
     TODO
@@ -803,7 +806,7 @@ def type_payment(request, bill_id, type_id):
     return redirect('prepare_payment', bill_id)
 
 
-@permission_required('base.p3')
+@login_required
 def payment_count(request, bill_id, number):
     '''
     TODO
@@ -822,7 +825,7 @@ def payment_count(request, bill_id, number):
         return redirect('prepare_payment', bill_id)
 
 
-@permission_required('base.p3')
+@login_required
 def save_payment(request, bill_id):
     """Enregistre le paiement
     :param HttpRequest request:
@@ -913,7 +916,7 @@ def set_edition_status(request, bill):
     return True
 
 
-@permission_required('base.p3')
+@login_required
 def prepare_payment(request, bill_id):
     ''' Page d'accueil pour la gestion des paiements.
     TODO

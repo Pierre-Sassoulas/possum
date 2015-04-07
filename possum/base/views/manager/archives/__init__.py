@@ -23,17 +23,18 @@ import logging
 
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import user_passes_test
 from django.utils.translation import ugettext as _
 
 from possum.base.forms import DateForm
 from possum.base.models import Facture
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def archives(request):
     '''
     :param HttpRequest request:
@@ -58,7 +59,7 @@ def archives(request):
     return render(request, 'base/manager/archives/home.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def archives_bill(request, bill_id):
     '''
     :param HttpRequest request:

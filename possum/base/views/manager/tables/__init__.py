@@ -23,15 +23,17 @@ import logging
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
+
 
 from possum.base.models import Zone, Table
-from possum.base.views import permission_required
+from possum.base.views import check_admin
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def tables_zone_delete(request, zone_id):
     '''
     :param HttpRequest request:
@@ -45,7 +47,7 @@ def tables_zone_delete(request, zone_id):
     return redirect('tables')
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def tables_table_new(request, zone_id):
     '''
     :param HttpRequest request:
@@ -59,7 +61,7 @@ def tables_table_new(request, zone_id):
     return redirect('tables_table', zone.id, table.id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def tables_zone_new(request):
     '''
     :param HttpRequest request:
@@ -70,7 +72,7 @@ def tables_zone_new(request):
     return redirect('tables_zone', zone.id)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def tables_table(request, zone_id, table_id):
     '''
     :param HttpRequest request:
@@ -95,7 +97,7 @@ def tables_table(request, zone_id, table_id):
     return render(request, 'base/manager/tables/table.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def tables_zone(request, zone_id):
     '''
     :param HttpRequest request:
@@ -118,7 +120,7 @@ def tables_zone(request, zone_id):
     return render(request, 'base/manager/tables/zone.html', context)
 
 
-@permission_required('base.p1')
+@user_passes_test(check_admin)
 def tables(request):
     '''
     :param HttpRequest request:

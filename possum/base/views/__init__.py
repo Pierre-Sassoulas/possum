@@ -23,8 +23,7 @@ import os
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.context_processors import PermWrapper
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render, redirect
 from django.utils.functional import wraps
 from django.utils.translation import ugettext as _
@@ -35,6 +34,13 @@ from possum.base.models import Config, Facture
 LOGGER = logging.getLogger(__name__)
 
 
+def check_admin(user):
+    """User is an admin ?
+    """
+    return user.is_superuser
+
+
+@login_required
 def cleanup_payment(request):
     """Remove all variables used for a new payment
     """
@@ -45,6 +51,7 @@ def cleanup_payment(request):
             del request.session[key]
 
 
+@login_required
 def remove_edition(request):
     """Remove 'bill_in_use' and update bill if found.
        This is use to reserve access to a bill.
@@ -69,29 +76,13 @@ def remove_edition(request):
 
 @login_required
 def home(request):
-    request = remove_edition(request)
-    context = {'menu_home': True, }
-    return render(request, 'home.html', context)
+    return redirect('bill_home')
+    # request = remove_edition(request)
+    # context = {'menu_home': True, }
+    # return render(request, 'home.html', context)
 
 
-def permission_required(perm, **kwargs):
-    """This decorator redirect the user to '/'
-    if he hasn't the permission.
-    """
-    def decorator(view_func):
-        def _wrapped_view(request, *args, **kwargs):
-            if request.user.has_perm(perm):
-                return view_func(request, *args, **kwargs)
-            else:
-                messages.add_message(request, messages.ERROR, "%s (%s)" % (
-                                     _("You do not have permission"),
-                                     perm.split('.')[1]))
-                return redirect('home')
-        return wraps(view_func)(_wrapped_view)
-    return decorator
-
-
-@permission_required('base.p3')
+@login_required
 def shutdown(request):
     context = {'menu_home': True, }
     config = Config.objects.filter(key="default_shutdown")
