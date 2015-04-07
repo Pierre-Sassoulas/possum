@@ -1,9 +1,9 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "panel.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% block panel %}
 <div class="jumbotron">
-    <h1>404</h1>
+    <h1>Erreur 404</h1>
     <p>{% trans "This page is currently unavailable" %}</p>
     <p>
         <a class="btn btn-lg btn-primary" href="{% url "home" %}"
