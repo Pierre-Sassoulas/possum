@@ -357,12 +357,13 @@ class Stat(models.Model):
                 ('d', 'Day'))
     interval = models.CharField(max_length=1, choices=INTERVAL, default="d")
     date = models.DateField(default="1978-03-03")
-    # Todo: since version 0.6: year, month, week and day deprecated,
+    # TODO: since version 0.6: year, month, week and day deprecated,
     # must be removed in version 0.7
     year = models.PositiveIntegerField(default=0)
     month = models.PositiveIntegerField(default=0)
     day = models.PositiveIntegerField(default=0)
     week = models.PositiveIntegerField(default=0)
+    # END TODO
     key = models.CharField(max_length=32)
     value = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 

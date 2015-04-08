@@ -159,8 +159,14 @@ class TestsUrls(TestCase):
     def test_manager(self):
         ''' Test that the manager urls work. '''
         urls = [
-            reverse('manager'),
+            reverse('categories'),
             reverse('credits'),
+            reverse('editions_home'),
+            reverse('notes_home'),
+            reverse('tables'),
+            reverse('users'),
+            reverse('vats'),
+            reverse('shutdown'),
         ]
         self.assert_http_status(urls, 302)
         # self.assert_http_status_after_login(urls, 200)
@@ -177,7 +183,7 @@ class TestsUrls(TestCase):
     def test_printer(self):
         ''' Test that the carte urls work. '''
         urls = [
-            reverse('home'),
+            reverse('printer_home'),
             # reverse('printer_add'),
             # reverse('printer_added', args=('42',)),
             # reverse('printer_view', args=('42',)),

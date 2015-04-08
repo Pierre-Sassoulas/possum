@@ -17,7 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 import datetime
 from decimal import Decimal
 
@@ -26,7 +25,7 @@ from django.test import TestCase
 from django.test import Client
 
 from possum.base.models import Facture
-from possum.stats.models import Stat
+from .models import Stat, get_month
 
 
 class StatTests(TestCase):
@@ -75,12 +74,11 @@ class StatTests(TestCase):
         """Test stats for a month
         """
         first = Facture.objects.first()
-        end = first.date_creation + datetime.timedelta(days=31)
-        year = first.date_creation.year
+        end = "%s-31" % first.date_creation.strftime("%Y-%m")
         bills = Facture.objects.filter(saved_in_stats=True,
-                                       date_creation__gte=first.date_creation,
-                                       date_creation__lt=end)
-        objects = Stat.objects.filter(interval="m", year=year, month=4)
+                                       date_creation__lte=end)
+        month = get_month(first.date_creation)
+        objects = Stat.objects.filter(interval="m", date=month)
         # nb_bills
         stat_nb_bills = objects.filter(key="nb_bills")
         self.assertEqual(len(stat_nb_bills), 1)

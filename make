@@ -41,7 +41,7 @@ For developpers:
                           file settings.py
     sh                 :  run ./manage.py shell_plus in virtualenv
     tests              :  execute all tests
-    utests             :  execute only unit tests
+    utests             :  execute only unit tests and coverage
 
     If models changed:
     ------------------
@@ -105,7 +105,7 @@ function tests {
     fi
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
     sloccount --details possum > reports/soccount.sc
-    coverage run --source='.' ./manage.py test --settings=possum.settings_tests
+    coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
     RETOUR=$?
     coverage xml -o reports/coverage.xml
     exit $RETOUR
@@ -113,9 +113,10 @@ function tests {
 
 function utests {
     enter_virtualenv
-    coverage run --source='.' ./manage.py test --settings=possum.settings_tests
-    coverage html -o reports/coverage.html
-    echo "Coverage report in reports/coverage.html"
+    coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
+    coverage html -d reports/coverage/
+    echo "--------------------------------------------------------------------"
+    echo "Coverage report created in $(pwd)/reports/coverage/index.html"
 }
 
 function update_js {
@@ -279,7 +280,10 @@ init_mine)
 init_demo)
     enter_virtualenv
     clear_db
+    echo "Init demonstration data"
     ./manage.py init_demo
+    echo "Update stats"
+    ./manage.py update_stats
     ;;
 load_demo)
     enter_virtualenv
