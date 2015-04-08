@@ -6,6 +6,8 @@ BOOTSTRAP_VERSION="3.3.4"
 BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
 BOOTDIR=${BOOTSTRAP/.zip/}
 DATEPICKER_VERSION="1.3.1"
+DATEPICKERDIR=bootstrap-datepicker-${DATEPICKER_VERSION}
+DATEPICKER=${DATEPICKER_DIR}.zip
 STATIC="possum/base/static/"
 APPS="base stats"
 
@@ -32,6 +34,8 @@ For administrators:
 
 For developpers:
 ----------------
+    big_clean          :  !! WARNING !! erase possum.db, virtualenv,
+                          settings.py and all downloaded librairies
     load_demo          :  load database with data of demonstration
     run                :  run ./manage.py runserver in virtualenv with the
                           file settings.py
@@ -42,9 +46,8 @@ For developpers:
     If models changed:
     ------------------
     migrations         :  prepare files after modified models
-    init_demo          :  erase database with data of demonstration (Warning
-                          it can be very long in particular after 'Running
-                          migrations')
+    init_demo          :  erase database with data of demonstration
+                          !! WARNING !! can be very long after migrations
     create_json_demo   :  create JSON fixtures in
                           possum/base/fixtures/demo.json
 
@@ -157,17 +160,17 @@ function update_js {
         popd >/dev/null
     fi
     # BootStrap Date-Picker
-    if [ ! -e ${STATIC}${DATEPICKER_VERSION}.zip ]
+    if [ ! -e ${STATIC}${DATEPICKER} ]
     then
         echo "Download BootStrap Date-Picker..."
         wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
-            -O ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+            -O ${STATIC}${DATEPICKER}
     fi
-    if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION} ]
+    if [ ! -e ${STATIC}${DATEPICKERDIR} ]
     then
         echo "Unzip BootStrap Date-Picker..."
         pushd $STATIC >/dev/null
-        unzip bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+        unzip ${DATEPICKER}
 #        for dir in js css
 #        do
 #            if [ -e ${dir} ]
@@ -308,6 +311,21 @@ migrations)
 utests)
     utests
     ;;
+big_clean)
+    echo "Erase virtualenv"
+    rm -rf env
+    for FILE in possum/settings.py possum.db ${STATIC}${JQUERY} \
+            ${STATIC}${HIGHCHARTS} ${STATIC}${HIGHDIR} ${STATIC}${BOOTSTRAP} \
+            ${STATIC}${BOOTDIR} ${STATIC}fonts ${STATIC}${DATEPICKERDIR} \
+            ${STATIC}${DATEPICKER}
+    do
+        if [ -e ${FILE} ]
+        then
+            echo "Erase ${FILE}"
+            rm -f ${FILE}
+        fi
+    done
+    ;;
 tests)
     tests
     ;;
@@ -328,4 +346,3 @@ translation)
     my_help
     ;;
 esac
-
