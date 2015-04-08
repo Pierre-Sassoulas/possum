@@ -66,7 +66,7 @@ html_theme_options = {
     'source_link_position': "nav",
     # Bootswatch (http://bootswatch.com/) theme.
     #'bootswatch_theme': "darkly",
-    'bootswatch_theme': "sandstone",
+    #'bootswatch_theme': "sandstone",
     'bootstrap_version': "3",
 }
 # If true, SmartyPants will be used to convert quotes and dashes to

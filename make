@@ -85,9 +85,11 @@ function doc {
     enter_virtualenv
     for translation in en fr
     do
-        pushd docs/$translation
+        pushd docs/$translation >/dev/null
         make html
-        popd
+        echo "---------------------------------------------------------------"
+        echo "DOC $translation: $(pwd)/_build/html/index.html"
+        popd >/dev/null
     done
 }
 
