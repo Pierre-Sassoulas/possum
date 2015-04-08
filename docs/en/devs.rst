@@ -117,7 +117,7 @@ will do it for us:
 
 ::
 
-  ./make models_changed
+  ./make migrations
 
 
 Remenber to add new migration file on git.

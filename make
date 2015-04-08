@@ -15,19 +15,19 @@ function my_help {
 Usage: ./make [a command]
 
 List of commands:
-    create_json_demo   :  create JSON fixtures in 
+    create_json_demo   :  create JSON fixtures in
                           possum/base/fixtures/demo.json
     doc                :  make the documentation in html
     deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
     help               :  this help
-    init_demo          :  erase database with data of demonstration (Warning 
-			  it can be very long in particular after 'Running
+    init_demo          :  erase database with data of demonstration (Warning
+                          it can be very long in particular after 'Running
                           migrations')
     init_mine          :  run possum/utils/init_mine.py in virtualenv
     load_demo          :  load database with data of demonstration
-    models_changed     :  prepare files after modified models
+    migrations         :  prepare files after modified models
     sh                 :  run ./manage.py shell_plus in virtualenv
-    run                :  run ./manage.py runserver in virtualenv with the 
+    run                :  run ./manage.py runserver in virtualenv with the
                           file settings.py
     translation        :  create/update translations
     tests              :  make tests and coverage
@@ -81,27 +81,16 @@ function tests {
         mkdir reports
     fi
     ./manage.py validate_templates --settings=possum.settings_tests
-    if [ "$?" != "0" ]
+    if [ ! $? == 0 ]
     then
-        exit 1
-    fi
-    ./manage.py jenkins --settings=possum.settings_tests
-    if [ "$?" != "0" ]
-    then
-        exit 1
+        exit $?
     fi
     flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
-    sloccount --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
-    utests
-}
-
-function utests {
-    enter_virtualenv
-    ./manage.py test --settings=possum.settings_tests
-    if [ "$?" != "0" ]
-    then
-        exit 1
-    fi
+    sloccount --details possum > reports/soccount.sc
+    coverage run --source='.' ./manage.py test --settings=possum.settings_tests
+    RETOUR=$?
+    coverage xml -o reports/coverage.xml
+    exit $RETOUR
 }
 
 function update_js {
@@ -282,7 +271,7 @@ doc)
 update)
     update
     ;;
-models_changed)
+migrations)
     enter_virtualenv
     for app in $APPS
     do

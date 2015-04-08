@@ -34,7 +34,7 @@ from possum.base.forms import DateForm
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import check_admin
-from possum.stats.models import Stat, STATS
+from .models import Stat, STATS
 
 
 LOG = logging.getLogger(__name__)
