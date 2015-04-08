@@ -95,7 +95,8 @@ function doc {
 
 function create_json_demo {
     enter_virtualenv
-    ./manage.py dumpdata --format=json --indent=4 --exclude=contenttypes --exclude=auth.Permission > possum/base/fixtures/demo.json
+    ./manage.py dumpdata --format=json --indent=4 --exclude=contenttypes \
+        --exclude=auth.Permission > possum/base/fixtures/demo.json
 }
 
 function tests {
@@ -105,7 +106,9 @@ function tests {
     then
         exit $?
     fi
-    flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
+    flake8 --exclude=migrations --exclude=possum/static \
+        --exclude=possum/{base,stats}/static --max-complexity 12 possum \
+        > reports/flake8.report
     sloccount --details possum > reports/soccount.sc
     coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
     RETOUR=$?
