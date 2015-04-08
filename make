@@ -9,36 +9,55 @@ DATEPICKER_VERSION="1.3.1"
 STATIC="possum/base/static/"
 APPS="base stats"
 
+if [ ! -d reports ]
+then
+    mkdir reports
+fi
+
 function my_help {
     cat << 'EOF'
 
 Usage: ./make [a command]
 
-List of commands:
-    create_json_demo   :  create JSON fixtures in
-                          possum/base/fixtures/demo.json
+For all:
+--------
     doc                :  make the documentation in html
-    deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
     help               :  this help
+
+For administrators:
+-------------------
+    deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
+    init_mine          :  run possum/utils/init_mine.py in virtualenv
+    update             :  install/update Possum environnement
+
+For developpers:
+----------------
+    load_demo          :  load database with data of demonstration
+    run                :  run ./manage.py runserver in virtualenv with the
+                          file settings.py
+    sh                 :  run ./manage.py shell_plus in virtualenv
+    tests              :  execute all tests
+    utests             :  execute only unit tests
+
+    If models changed:
+    ------------------
+    migrations         :  prepare files after modified models
     init_demo          :  erase database with data of demonstration (Warning
                           it can be very long in particular after 'Running
                           migrations')
-    init_mine          :  run possum/utils/init_mine.py in virtualenv
-    load_demo          :  load database with data of demonstration
-    migrations         :  prepare files after modified models
-    sh                 :  run ./manage.py shell_plus in virtualenv
-    run                :  run ./manage.py runserver in virtualenv with the
-                          file settings.py
-    translation        :  create/update translations
-    tests              :  make tests and coverage
-    update             :  install/update Possum environnement
+    create_json_demo   :  create JSON fixtures in
+                          possum/base/fixtures/demo.json
 
-Note: If you need to define a proxy, set $http_proxy.
+For traductors:
+---------------
+    translation        :  create/update translations
+
+If you need to define a proxy, set $http_proxy
 Example:
     export http_proxy="http://proxy.possum-software.org:8080/"
     export https_proxy="https://proxy.possum-software.org:8080/"
 
-Note2: (*) must be root to do it
+Note: (*) must be root to do it
 
 EOF
     exit 1
@@ -76,10 +95,6 @@ function create_json_demo {
 
 function tests {
     enter_virtualenv
-    if [ ! -d reports ]
-    then
-        mkdir reports
-    fi
     ./manage.py validate_templates --settings=possum.settings_tests
     if [ ! $? == 0 ]
     then
@@ -91,6 +106,13 @@ function tests {
     RETOUR=$?
     coverage xml -o reports/coverage.xml
     exit $RETOUR
+}
+
+function utests {
+    enter_virtualenv
+    coverage run --source='.' ./manage.py test --settings=possum.settings_tests
+    coverage html -o reports/coverage.html
+    echo "Coverage report in reports/coverage.html"
 }
 
 function update_js {
@@ -282,6 +304,9 @@ migrations)
     ./manage.py init_demo
     create_json_demo
     graph_models
+    ;;
+utests)
+    utests
     ;;
 tests)
     tests
