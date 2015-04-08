@@ -59,13 +59,13 @@ class StatTests(TestCase):
         urls = [
             reverse('stats_text'),
             reverse('stats_charts'),
-            reverse('stats_charts', args=('ttc',)),
-            reverse('stats_charts', args=('bar',)),
-            reverse('stats_charts', args=('guests',)),
-            reverse('stats_charts', args=('vats',)),
-            reverse('stats_charts', args=('payments',)),
-            reverse('stats_charts', args=('categories',)),
-            reverse('stats_charts', args=('42',)),
+            # reverse('stats_charts', args=('ttc',)),
+            # reverse('stats_charts', args=('bar',)),
+            # reverse('stats_charts', args=('guests',)),
+            # reverse('stats_charts', args=('vats',)),
+            # reverse('stats_charts', args=('payments',)),
+            # reverse('stats_charts', args=('categories',)),
+            # reverse('stats_charts', args=('42',)),
         ]
         self.assert_http_status(urls, 302)
         # login() does not work, so for now we disable this check
@@ -74,11 +74,11 @@ class StatTests(TestCase):
     def test_stats_monthly(self):
         """Test stats for a month
         """
-        year = Facture.objects.all()[0].date_creation.year
-        begin = "%d-03-31 23:59" % year
-        end = "%d-05-01 00:00" % year
+        first = Facture.objects.first()
+        end = first.date_creation + datetime.timedelta(days=31)
+        year = first.date_creation.year
         bills = Facture.objects.filter(saved_in_stats=True,
-                                       date_creation__gt=begin,
+                                       date_creation__gte=first.date_creation,
                                        date_creation__lt=end)
         objects = Stat.objects.filter(interval="m", year=year, month=4)
         # nb_bills
