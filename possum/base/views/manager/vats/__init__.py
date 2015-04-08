@@ -86,13 +86,14 @@ def vats_change(request, vat_id):
         name = request.POST.get('name', '').strip()
         tax = request.POST.get('tax', '').strip().replace(',', '.')
         check_name_and_tax(request, name, tax)
+        p_filter = Produit.objects.filter
         try:
             context['vat'].name = name
             context['vat'].save()
             context['vat'].set_tax(tax)
-            for product in Produit.objects.filter(categorie__vat_onsite=context['vat']):
+            for product in p_filter(categorie__vat_onsite=context['vat']):
                 product.update_vats()
-            for product in Produit.objects.filter(categorie__vat_takeaway=context['vat']):
+            for product in p_filter(categorie__vat_takeaway=context['vat']):
                 product.update_vats()
         except:
             messages.add_message(request, messages.ERROR,

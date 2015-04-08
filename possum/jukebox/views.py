@@ -107,7 +107,7 @@ def make_playlist_names():
                         playlist_names.append((j, i['playlist']))
                         j = j + 1
                     else:
-                        playlist_names[0]=('0', i['playlist'])
+                        playlist_names[0] = ('0', i['playlist'])
                         nowplfound = True
                 else:
                     playlist_names.append((j, i['playlist']))
@@ -269,7 +269,7 @@ def ajax_remove(request):
             settings.MPD_CLIENT.delete(n)
             if 'pl' in request.GET:
                 plpos = int(request.GET['pl'])
-                settings.MPD_CLIENT.playlistdelete(playlist_names[plpos][1],n)
+                settings.MPD_CLIENT.playlistdelete(playlist_names[plpos][1], n)
             else:
                 LOGGER.debug("error pressing remove : doesn't receive pl id")
         except:

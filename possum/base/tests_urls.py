@@ -252,9 +252,9 @@ class TestsUrls(TestCase):
             resp = self.client.get(url)
             self.assertEqual(resp.status_code, status,
                              "For '{0}' {1}, the http response".format(
-                                 url, msg)
-                             + ' status is {0} '.format(resp.status_code)
-                             + 'but it should be {0}'.format(status))
+                                 url, msg) +
+                             ' status is {0} '.format(resp.status_code) +
+                             'but it should be {0}'.format(status))
 
     def login(self):
         self.client.post('/users/login/',

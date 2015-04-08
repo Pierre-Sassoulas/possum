@@ -18,7 +18,7 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import admin
+# from django.contrib import admin
 
 
 # Register your models here.

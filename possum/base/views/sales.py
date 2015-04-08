@@ -19,12 +19,9 @@
 #
 
 import os
-import urllib2
 
-from django.contrib import messages
 from django.conf import settings
-from django.shortcuts import render, redirect
-from django.utils.translation import ugettext as _
+from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 
 from possum.base.models import Facture
@@ -47,5 +44,3 @@ def home(request):
         if count:
             context['bills_to_update'] = count
     return render(request, 'base/sales/home.html', context)
-
-

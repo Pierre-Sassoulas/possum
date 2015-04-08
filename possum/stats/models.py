@@ -171,7 +171,7 @@ def _search_sub_key(stats, key, a_class):
         try:
             elt = a_class.objects.get(pk=pk)
         except:
-            LOGGER.critical("[%s] pk=%s not here" % (key, pk))
+            LOG.critical("[%s] pk=%s not here" % (key, pk))
         else:
             elt.nb = stat.value
             tmp.append(elt)
@@ -379,7 +379,7 @@ class Stat(models.Model):
     def update(self):
         """Update statistics with new bills
         """
-        #TODO: knee knee knee
+        # TODO: knee knee knee
         if os.path.isfile(settings.LOCK_STATS):
             LOG.info("lock [%s] already here" % settings.LOCK_STATS)
             return False

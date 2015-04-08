@@ -24,9 +24,8 @@ from django.contrib.auth.models import User
 import datetime
 import random
 
-from possum.base.models import Categorie, Cuisson, Option, \
-    Facture, Paiement, PaiementType, Produit, ProduitVendu, Follow, Table, \
-    Zone, VAT, Printer, VATOnBill, Config
+from possum.base.models import Categorie, Zone, VAT, Config, Table
+from possum.base.models import Facture, PaiementType, Produit, ProduitVendu
 from possum.stats.models import Stat
 
 

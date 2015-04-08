@@ -24,13 +24,11 @@ import json
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test
 
-from possum.base.forms import DateForm
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import check_admin
@@ -41,22 +39,23 @@ LOG = logging.getLogger(__name__)
 
 # available rapports
 RAPPORTS = {'1': {'title': _("Total TTC"),
-                'name': _("Sales"), 'keys': ["total_ttc", "guests_total_ttc",
-                                             "bar_total_ttc"]},
+                  'name': _("Sales"), 'keys': ["total_ttc", "guests_total_ttc",
+                                               "bar_total_ttc"]},
             '2': {'title': _("Bar"),
-                'name': _("Bar"), 'keys': ["bar_average", "bar_nb"]},
+                  'name': _("Bar"), 'keys': ["bar_average", "bar_nb"]},
             '3': {'title': _("Guest"),
-                'name': _("Guest"), 'keys': ["guests_average", "guests_nb"]},
+                  'name': _("Guest"), 'keys': ["guests_average", "guests_nb"]},
             '4': {'title': _("VAT"),
-                'name': _("VAT"), 'keys': ["_vat", ]},
+                  'name': _("VAT"), 'keys': ["_vat", ]},
             '5': {'title': _("Payments count by type"),
-                'name': _("Payments count"), 'keys': ["_payment_nb", ]},
+                  'name': _("Payments count"), 'keys': ["_payment_nb", ]},
             '6': {'title': _("Payments values by type"),
-                'name': _("Payments values"), 'keys': ["_payment_value", ]},
+                  'name': _("Payments values"), 'keys': ["_payment_value", ]},
             '7': {'title': _("Sales amounts by category"),
-                'name': _("Amounts/category"), 'keys': ["_category_value", ]},
+                  'name': _("Amounts/category"),
+                  'keys': ["_category_value", ]},
             '8': {'title': _("Number of sales by category"),
-                'name': _("Number/category"), 'keys': ["_category_nb"]},
+                  'name': _("Number/category"), 'keys': ["_category_nb"]},
             }
 
 

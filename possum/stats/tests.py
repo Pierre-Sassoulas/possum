@@ -17,7 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-import datetime
 from decimal import Decimal
 
 from django.core.urlresolvers import reverse
@@ -41,9 +40,9 @@ class StatTests(TestCase):
             response = self.client.get(url)
             self.assertEqual(response.status_code, status,
                              "For '{0}' {1}, the http response".format(
-                                 url, msg)
-                             + ' status is {0} '.format(response.status_code)
-                             + 'but it should be {0}'.format(status))
+                                 url, msg) +
+                             ' status is {0} '.format(response.status_code) +
+                             'but it should be {0}'.format(status))
 
     def assert_http_status_after_login(self, urls):
         login = self.client.login(username='demo', password='demo')

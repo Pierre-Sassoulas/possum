@@ -18,7 +18,6 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os
 import urllib2
 
 from django.contrib import messages
@@ -27,7 +26,6 @@ from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test
 
-from possum.base.models import Facture
 from possum.base.views import check_admin
 
 
@@ -47,7 +45,6 @@ def check_new_version(request):
     :param HttpRequest request:
     :return rtype: HttpResponse
     '''
-    context = {'menu_manager': True, }
     try:
         req = urllib2.Request('http://last.possum-software.org/', headers={
                               'User-Agent': 'Possum/' + settings.POSSUM_VERSION
