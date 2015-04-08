@@ -314,10 +314,17 @@ utests)
 big_clean)
     echo "Erase virtualenv"
     rm -rf env
-    for FILE in possum/settings.py possum.db ${STATIC}${JQUERY} \
-            ${STATIC}${HIGHCHARTS} ${STATIC}${HIGHDIR} ${STATIC}${BOOTSTRAP} \
-            ${STATIC}${BOOTDIR} ${STATIC}fonts ${STATIC}${DATEPICKERDIR} \
-            ${STATIC}${DATEPICKER}
+    for FILE in possum/settings.py possum.db
+    do
+        if [ -e ${FILE} ]
+        then
+            echo "Move ${FILE} in ${FILE}.old"
+            mv ${FILE} ${FILE}.old
+        fi
+    done
+    for FILE in ${STATIC}${JQUERY} ${STATIC}${HIGHCHARTS} ${STATIC}${HIGHDIR}\
+            ${STATIC}${BOOTSTRAP} ${STATIC}${BOOTDIR} ${STATIC}fonts \
+            ${STATIC}${DATEPICKERDIR} ${STATIC}${DATEPICKER}
     do
         if [ -e ${FILE} ]
         then
