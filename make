@@ -106,8 +106,7 @@ function tests {
     then
         exit $?
     fi
-    flake8 --exclude=migrations --exclude=possum/static \
-        --exclude=possum/{base,stats}/static --max-complexity 12 possum \
+    flake8 --exclude=migrations,static --max-complexity 12 possum \
         > reports/flake8.report
     sloccount --details possum > reports/soccount.sc
     coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
