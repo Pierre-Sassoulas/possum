@@ -10,4 +10,15 @@ possum/secret_key
 possum.db
 possum/base/static/highcharts/
 possum/base/static/jquery.min.js
+docs/en/_build/
+docs/fr/_build/
+possum/base/static/.zip
+possum/base/static/Highcharts-3.0.6.zip
+possum/base/static/Highcharts-3.0.6/
+possum/base/static/bootstrap-3.3.4-dist.zip
+possum/base/static/bootstrap-3.3.4-dist/
+possum/base/static/bootstrap-datepicker-1.3.1/
+possum/base/static/jquery-2.1.3.min.js
+possum/static/
+
 
