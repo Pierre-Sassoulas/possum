@@ -42,10 +42,10 @@ class ProduitVendu(models.Model):
     cuisson = models.ForeignKey(Cuisson, null=True, blank=True,
                                 related_name="produitvendu-cuisson")
     prix = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    options = models.ManyToManyField(Option, null=True, blank=True)
+    options = models.ManyToManyField(Option, blank=True)
     # dans le cas d'un menu, peut contenir d'autres produits
     contient = models.ManyToManyField('self')
-    notes = models.ManyToManyField(Note, null=True, blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
     # faut-il préparer ce plat avec les entrées ?
     made_with = models.ForeignKey(Categorie, related_name="produit-kitchen",
                                   null=True)

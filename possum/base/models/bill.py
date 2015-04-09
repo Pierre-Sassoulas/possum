@@ -17,8 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from decimal import Decimal
 import datetime
+from decimal import Decimal
 import logging
 
 from django.contrib.auth.models import User
@@ -78,7 +78,6 @@ class Facture(models.Model):
     onsite = models.BooleanField(default=True)
     surcharge = models.BooleanField(default=False)
     following = models.ManyToManyField('Follow',
-                                       null=True,
                                        blank=True)
     category_to_follow = models.ForeignKey('Categorie', null=True, blank=True)
 
