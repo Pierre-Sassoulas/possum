@@ -43,7 +43,7 @@ class Produit(Nom):
     categories_ok: les catégories autorisées
     produits_ok: les produits autorisés
     """
-    categorie = models.ForeignKey(Categorie, related_name="produit-categorie")
+    categorie = models.ForeignKey(Categorie, related_name="product_category")
     choix_cuisson = models.BooleanField(default=False)
     options_ok = models.ManyToManyField(Option, blank=True)
     categories_ok = models.ManyToManyField(Categorie)

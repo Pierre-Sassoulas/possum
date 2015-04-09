@@ -31,7 +31,7 @@ class Follow(models.Model):
     category = models.ForeignKey(Categorie)
     date = models.DateTimeField('depuis le', auto_now_add=True)
     produits = models.ManyToManyField(ProduitVendu,
-                                      related_name="les produits envoyes")
+                                      related_name="sent_product")
     done = models.BooleanField(default=False)
 
     class Meta:

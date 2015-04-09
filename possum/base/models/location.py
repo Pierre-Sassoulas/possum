@@ -53,7 +53,7 @@ class Table(Nom):
 
     """ A table must be linked to a Zone """
 
-    zone = models.ForeignKey(Zone, related_name="table-zone")
+    zone = models.ForeignKey(Zone, related_name="table_area")
 
     class Meta:
         app_label = 'base'

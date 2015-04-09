@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
 from django.conf import settings
+from django.db import models, migrations
 
 
 class Migration(migrations.Migration):
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Categorie',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('nom', models.CharField(max_length=60)),
                 ('priorite', models.PositiveIntegerField(default=0)),
                 ('surtaxable', models.BooleanField(
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             name='Config',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('key', models.CharField(max_length=32)),
                 ('value', models.CharField(default=b'', max_length=64)),
             ],
@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
             name='Cuisson',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('nom', models.CharField(max_length=60)),
                 ('nom_facture', models.CharField(default=b'', max_length=35)),
                 ('priorite', models.PositiveIntegerField(default=0)),
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
             name='Facture',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('date_creation', models.DateTimeField(
                     auto_now_add=True, verbose_name=b'creer le')),
                 ('couverts', models.PositiveIntegerField(
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
             name='Follow',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(
                     auto_now_add=True, verbose_name=b'depuis le')),
                 ('done', models.BooleanField(default=False)),
@@ -103,7 +103,7 @@ class Migration(migrations.Migration):
             name='Note',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('message', models.CharField(default=b'', max_length=35)),
             ],
             options={
@@ -115,7 +115,7 @@ class Migration(migrations.Migration):
             name='Option',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(default=b'', max_length=16)),
             ],
             options={
@@ -127,7 +127,7 @@ class Migration(migrations.Migration):
             name='Paiement',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('montant', models.DecimalField(
                     default=0, max_digits=9, decimal_places=2)),
                 ('valeur_unitaire', models.DecimalField(
@@ -145,7 +145,7 @@ class Migration(migrations.Migration):
             name='PaiementType',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('nom', models.CharField(max_length=60)),
                 ('fixed_value', models.BooleanField(
                     default=False, verbose_name=b'ticket ?')),
@@ -159,7 +159,7 @@ class Migration(migrations.Migration):
             name='Printer',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=40)),
                 ('options', models.CharField(max_length=120)),
                 ('header', models.TextField(default=b'')),
@@ -178,7 +178,7 @@ class Migration(migrations.Migration):
             name='Produit',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('nom', models.CharField(max_length=60)),
                 ('choix_cuisson', models.BooleanField(default=False)),
                 ('actif', models.BooleanField(default=True)),
@@ -209,7 +209,7 @@ class Migration(migrations.Migration):
             name='ProduitVendu',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('prix', models.DecimalField(
                     default=0, max_digits=7, decimal_places=2)),
@@ -236,7 +236,7 @@ class Migration(migrations.Migration):
             name='Table',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('nom', models.CharField(max_length=60)),
             ],
             options={
@@ -247,7 +247,7 @@ class Migration(migrations.Migration):
             name='VAT',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=32)),
                 ('tax', models.DecimalField(
                     default=0, max_digits=4, decimal_places=2)),
@@ -263,11 +263,11 @@ class Migration(migrations.Migration):
             name='VATOnBill',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('total', models.DecimalField(
                     default=0, max_digits=9, decimal_places=2)),
                 ('vat', models.ForeignKey(
-                    related_name='bill-vat', to='base.VAT')),
+                    related_name='bill_vat', to='base.VAT')),
             ],
             options={
             },
@@ -277,7 +277,7 @@ class Migration(migrations.Migration):
             name='Zone',
             fields=[
                 ('id', models.AutoField(verbose_name='ID',
-                 serialize=False, auto_created=True, primary_key=True)),
+                                        serialize=False, auto_created=True, primary_key=True)),
                 ('nom', models.CharField(max_length=60)),
                 ('surtaxe', models.BooleanField(
                     default=False, verbose_name=b'zone surtax\xc3\xa9e ?')),
