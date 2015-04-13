@@ -337,7 +337,7 @@ big_clean)
         if [ -e ${FILE} ]
         then
             echo "Erase ${FILE}"
-            rm -f ${FILE}
+            rm -rf ${FILE}
         fi
     done
     ;;

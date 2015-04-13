@@ -56,7 +56,7 @@ class LoginForm(forms.Form):
     '''
     username = forms.CharField(max_length=100,
                                widget=forms.TextInput(
-                               attrs={'placeholder': 'identifiant:'}))
+                                   attrs={'placeholder': 'identifiant:'}))
     password = forms.CharField(widget=forms.PasswordInput(
                                attrs={'placeholder': 'mot de passe:'}))
 
@@ -68,6 +68,7 @@ class NoteForm(forms.ModelForm):
     '''
     class Meta:
         model = Note
+        fields = "__all__"
 
 
 class OptionForm(forms.ModelForm):
@@ -77,3 +78,4 @@ class OptionForm(forms.ModelForm):
     '''
     class Meta:
         model = Option
+        fields = "__all__"

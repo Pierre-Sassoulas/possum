@@ -17,8 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from decimal import Decimal
 import datetime
+from decimal import Decimal
 import logging
 
 from django.contrib.auth.models import User
@@ -58,18 +58,15 @@ class Facture(models.Model):
     table = models.ForeignKey('Table',
                               null=True,
                               blank=True,
-                              related_name="facture-table")
+                              related_name="table_bill")
     couverts = models.PositiveIntegerField("nombre de couverts", default=0)
     produits = models.ManyToManyField(ProduitVendu,
-                                      related_name="les produits vendus")
+                                      related_name="sold_product")
     total_ttc = models.DecimalField(max_digits=9,
                                     decimal_places=2,
                                     default=0)
-    paiements = models.ManyToManyField('Paiement',
-                                       related_name="les paiements")
-    vats = models.ManyToManyField('VATOnBill',
-                                  related_name="vat total for each vat on "
-                                  "a bill")
+    paiements = models.ManyToManyField('Paiement', related_name="payments")
+    vats = models.ManyToManyField('VATOnBill', related_name="total_vat")
     restant_a_payer = models.DecimalField(max_digits=9,
                                           decimal_places=2,
                                           default=0)
@@ -77,9 +74,7 @@ class Facture(models.Model):
     in_use_by = models.ForeignKey(User, null=True, blank=True)
     onsite = models.BooleanField(default=True)
     surcharge = models.BooleanField(default=False)
-    following = models.ManyToManyField('Follow',
-                                       null=True,
-                                       blank=True)
+    following = models.ManyToManyField('Follow', blank=True)
     category_to_follow = models.ForeignKey('Categorie', null=True, blank=True)
 
     class Meta:
