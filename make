@@ -6,7 +6,7 @@ BOOTSTRAP_VERSION="3.3.4"
 BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
 BOOTDIR=${BOOTSTRAP/.zip/}
 DATEPICKER_VERSION="1.3.1"
-DATEPICKERDIR=bootstrap-datepicker-${DATEPICKER_VERSION}
+DATEPICKER_DIR=bootstrap-datepicker-${DATEPICKER_VERSION}
 DATEPICKER=${DATEPICKER_DIR}.zip
 STATIC="possum/base/static/"
 APPS="base stats"
@@ -171,7 +171,7 @@ function update_js {
         wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
             -O ${STATIC}${DATEPICKER}
     fi
-    if [ ! -e ${STATIC}${DATEPICKERDIR} ]
+    if [ ! -e ${STATIC}${DATEPICKER_DIR} ]
     then
         echo "Unzip BootStrap Date-Picker..."
         pushd $STATIC >/dev/null
@@ -332,7 +332,7 @@ big_clean)
     done
     for FILE in ${STATIC}${JQUERY} ${STATIC}${HIGHCHARTS} ${STATIC}${HIGHDIR}\
             ${STATIC}${BOOTSTRAP} ${STATIC}${BOOTDIR} ${STATIC}fonts \
-            ${STATIC}${DATEPICKERDIR} ${STATIC}${DATEPICKER}
+            ${STATIC}${DATEPICKER_DIR} ${STATIC}${DATEPICKER}
     do
         if [ -e ${FILE} ]
         then
