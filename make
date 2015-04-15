@@ -43,8 +43,8 @@ For developpers:
     tests              :  execute all tests
     utests             :  execute only unit tests and coverage
 
-    If models changed:
-    ------------------
+    In case of change in models, execute these three operations in the order:
+    -------------------------------------------------------------------------
     migrations         :  prepare files after modified models
     init_demo          :  erase database with data of demonstration
                           !! WARNING !! can be very long after migrations
@@ -316,9 +316,6 @@ migrations)
         must_succeed ./manage.py makemigrations ${app}
     done
     must_succeed ./manage.py migrate
-    clear_db
-    must_succeed ./manage.py init_demo
-    create_json_demo
     graph_models
     ;;
 utests)
