@@ -30,7 +30,7 @@ from possum.base.models import Zone, Table
 from possum.base.views import check_admin
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @user_passes_test(check_admin)
@@ -41,10 +41,24 @@ def tables_zone_delete(request, zone_id):
     :param zone_id:
     :type zone_id:
     '''
+    context = {'menu_manager': True, }
     zone = get_object_or_404(Zone, pk=zone_id)
-    Table.objects.filter(zone=zone).delete()
-    zone.delete()
-    return redirect('tables')
+    if request.method == 'POST':
+        # we are in post
+        try:
+            valid = request.POST['valid']
+        except KeyError:
+            LOG.warning("strange request from %s" % request.user)
+        else:
+            if valid == "ok":
+                LOG.info("delete zone: %d" % zone.id)
+                Table.objects.filter(zone=zone).delete()
+                zone.delete()
+                messages.add_message(request, messages.SUCCESS, _("Zone removed"))
+            return redirect('tables')
+    # first request
+    context['zone'] = zone
+    return render(request, 'base/manager/zone_remove.html', context)
 
 
 @user_passes_test(check_admin)
