@@ -2,14 +2,9 @@
 {% block content %}
 {% load i18n %}
 <h1>{% trans "How many guests ?" %}</h1>
-
-<ul id="couverts">
+<ul class="list-inline">
     {% for number in nb_couverts %}
-    <li onclick="window.location='{% url "couverts_set" bill_id number %}'">
-        {{number}}
-        </li>
+    <li class="well"><a href='{% url "couverts_set" bill_id number %}'>{{number}}</li></a>
     {% endfor %}
 </ul>
-
 {% endblock %}
-

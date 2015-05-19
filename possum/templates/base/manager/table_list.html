@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{% trans "Tables" %}</h1>
+
+<nav>
+    <ul class="nav nav-tabs nav-justified">
+        {% for z in zones %}
+        <li {% if z.pk == zone.pk %}class="active"{% endif %}><a href="{% url 'tables' z.pk %}">{{z.nom}}
+            {% if z.surtaxe %}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+            {% endif %}</a></li>
+        {% endfor %}
+        <li><a href='{% url "tables_zone_new" %}'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></li>
+    </ul>
+</nav>
+
+{% if zone %}
+<a href='{% url "tables_zone" zone.id %}'><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+<a href='{% url "tables_zone_delete" zone.id %}'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+{% if zone.surtaxe %}
+<div class="alert alert-warning" role="alert">{% trans "This area is subject to a surcharge." %}</div>
+{% endif %}
+<ul class="list-inline">
+    {% for table in tables %}
+    <li class="possum-base well"><a href='{% url "tables_table" zone.pk table.id %}'>
+        {{table.nom}}</a></li>
+    {% endfor %}
+    <li class="possum-base well"><a href='{% url "tables_table_new" zone.pk %}'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></li>
+</ul>
+{% else %}
+<p>{% trans "You must create a room." %}</p>
+{% endif %}
+
+{% endblock %}

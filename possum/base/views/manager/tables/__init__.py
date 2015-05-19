@@ -94,7 +94,7 @@ def tables_table(request, zone_id, table_id):
                                  _("Changes could not be saved"))
         else:
             return redirect('tables')
-    return render(request, 'base/manager/tables/table.html', context)
+    return render(request, 'base/manager/table_detail.html', context)
 
 
 @user_passes_test(check_admin)
@@ -117,15 +117,23 @@ def tables_zone(request, zone_id):
                                  _("Changes could not be saved"))
         else:
             return redirect('tables')
-    return render(request, 'base/manager/tables/zone.html', context)
+    return render(request, 'base/manager/zone_detail.html', context)
 
 
 @user_passes_test(check_admin)
-def tables(request):
+def tables(request, zone_pk=0):
     '''
     :param HttpRequest request:
     :return rtype: HttpResponse
     '''
     context = {'menu_manager': True, }
     context['zones'] = Zone.objects.all()
-    return render(request, 'base/manager/tables/home.html', context)
+
+    if zone_pk == 0:
+        if len(context['zones']) > 0 :
+            context['zone'] = context['zones'][0]
+            zone_pk = context['zone'].pk
+    else:
+        context['zone'] = get_object_or_404(Zone, pk=zone_pk)
+    context['tables'] = Table.objects.filter(zone__pk=zone_pk)
+    return render(request, 'base/manager/table_list.html', context)

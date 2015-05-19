@@ -78,6 +78,10 @@ li.surtaxe {
     width:250px;
     height:80px;
 }
+/* navbar selected */
+.gris {
+    background-color: #e7e7e7;
+}
 /* Cooking colors */
 .cooking_1 {background:#8CC6D7;}
 .cooking_2 {background:#DB0B32;}

@@ -3,6 +3,15 @@
 {% load i18n %}
 <h1>{% trans "What is the table ?" %}</h1>
 
+<nav>
+    <ul class="nav nav-tabs nav-justified">
+{% for zone in zones %}
+        <li><a href="">{{zone.nom}}</a></li>
+{% empty %}
+<li>{% trans "No room" %}</li>
+{% endfor %}
+</ul>
+
 {% for zone in zones %}
     <h2>{{zone.nom}}</h2>
 

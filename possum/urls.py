@@ -348,6 +348,8 @@ urlpatterns += patterns('possum.base.views.manager.vats',
 
 urlpatterns += patterns('possum.base.views.manager.tables',
                         url(r'^manager/tables/$', 'tables', name='tables'),
+                        url(r'^manager/tables/(?P<zone_pk>\d+)/$', 'tables',
+                            name='tables'),
                         url(r'^manager/tables/new/$',
                             'tables_zone_new', name='tables_zone_new'),
                         url(r'^manager/' + ZON_RGX + '$',
