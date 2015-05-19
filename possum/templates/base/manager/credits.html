@@ -1,11 +1,16 @@
-{% extends "base_with_aside.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% load i18n %}
 {% block content %}
+<div class="pull-right">
+    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/>
+</div>
 <h1>{% trans "About" %}</h1>
 
 <p>{% trans "Software under GPLv3 license created by S. Bonnegent." %}
    {% trans "You are currently using version" %} <b>{{version}}</b>.
+   {% trans "You can find homepage of Possum here:" %}
+   <a href="http://www.possum-software.org">www.possum-software.org</a>
 </p>
 <form action="{% url 'check_new_version' %}" method="get">
     <button type="button" class="btn btn-success">{% trans "new release" %} ?
@@ -18,8 +23,3 @@
     <li>H. ROMON {% trans "for the logo, icons and patience" %} :)</li>
 <ul>
 {% endblock %}
-{% block side %}
-    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/>
-{% endblock %}
-
-
