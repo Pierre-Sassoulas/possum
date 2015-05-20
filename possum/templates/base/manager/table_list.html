@@ -8,7 +8,8 @@
         {% for z in zones %}
         <li {% if z.pk == zone.pk %}class="active"{% endif %}><a href="{% url 'tables' z.pk %}">{{z.nom}}
             {% if z.surtaxe %}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
-            {% endif %}</a></li>
+            {% endif %}</a>
+        </li>
         {% endfor %}
         <li><a href='{% url "tables_zone_new" %}'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></li>
     </ul>
