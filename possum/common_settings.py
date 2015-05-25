@@ -217,16 +217,12 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-        'verbose': {
-            'format': '[%(asctime)s %(module)s:%(lineno)d %(funcName)s] '
-                      '%(levelname)-8s %(message)s',
-            'datefmt': '%H:%M:%S'
-        },
         'simple': {
             'format': '%(levelname)s %(message)s'
         },
-        'syslog': {
-            'format': 'POSSUM: %(levelname)s %(message)s'
+        'file': {
+            'format': '[%(asctime)s %(module)s:%(lineno)d %(funcName)s] '
+                      '%(levelname)-8s %(message)s',
         },
     },
     'filters': {
@@ -248,11 +244,11 @@ LOGGING = {
             'formatter': 'simple',
             'filters': ['require_debug_true'],
         },
-        'syslog': {
+        'file': {
             'level': 'INFO',
-            'class': 'logging.handlers.SysLogHandler',
-            'address': '/dev/log',
-            'formatter': 'syslog',
+            'class': 'logging.FileHandler',
+            'filename': normpath(join(DJANGO_ROOT, 'possum.log')),
+            'formatter': 'file',
             'filters': ['require_debug_false'],
         },
         'mail_admins': {
@@ -282,7 +278,7 @@ LOGGING = {
             'propagate': False,
         },
         'possum': {
-            'handlers': ['mail_admins', 'syslog', 'mail_bugwatch', 'console'],
+            'handlers': ['mail_admins', 'file', 'mail_bugwatch', 'console'],
             'level': 'WARNING',
         }
     }
