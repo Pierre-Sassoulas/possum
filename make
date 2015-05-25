@@ -176,7 +176,7 @@ function update {
         echo "You must read documentation :)"
         echo
         # For the moment, we stay with python2.
-        virtualenv --python=python2 env
+        virtualenv --no-site-packages --python=python2 env
     fi
     enter_virtualenv
     # before all, we must have last release of Django
