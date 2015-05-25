@@ -140,7 +140,7 @@ function update_js {
         popd >/dev/null
     fi
     # BootStrap Date-Picker
-    if [ ! -e ${STATIC}${DATEPICKER_VERSION}.zip ]
+    if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
         wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
