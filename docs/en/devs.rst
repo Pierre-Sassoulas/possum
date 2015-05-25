@@ -58,8 +58,8 @@ Now, you will use your fork. This is an example with my username
 
 In short::
 
-  $ git clone git@github.com:sbonnegent/possum.git possum-software
-  $ cd possum-software
+  $ git clone git@github.com:sbonnegent/possum.git possum-sbonnegent
+  $ cd possum-sbonnegent
   $ git remote add -t dev upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
 
