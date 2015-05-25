@@ -4,7 +4,7 @@ clonedigger==1.0.11-beta
 coverage==3.7.1
 django-extensions==1.4.6
 django-jenkins==0.16.3
-Django==1.7.7
+Django==1.7.8
 docutils==0.12
 flake8-todo==0.3
 flake8==2.2.5
