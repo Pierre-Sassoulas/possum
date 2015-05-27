@@ -63,9 +63,6 @@ class Printer(models.Model):
     billing = models.BooleanField(default=False)
     manager = models.BooleanField(default=False)
 
-    class Meta:
-        app_label = 'base'
-
     def __unicode__(self):
         return self.name
 

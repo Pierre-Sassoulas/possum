@@ -53,7 +53,6 @@ class ProduitVendu(models.Model):
     sent = models.BooleanField(default=False)
 
     class Meta:
-        app_label = 'base'
         ordering = ['produit', ]
 
     def __unicode__(self):

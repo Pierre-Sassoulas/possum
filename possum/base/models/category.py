@@ -88,5 +88,4 @@ class Categorie(Nom, Priorite):
         super(Categorie, self).save(force_insert=force_insert, using=using)
 
     class Meta:
-        app_label = 'base'
         ordering = ['priorite', 'nom']

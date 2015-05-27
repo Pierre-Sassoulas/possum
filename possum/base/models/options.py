@@ -27,9 +27,6 @@ class Cuisson(NomDouble, Priorite):
 
     """Cuisson d'un produit"""
 
-    class Meta:
-        app_label = 'base'
-
     def __cmp__(self, other):
         return cmp(self.priorite, other.priorite)
 
@@ -43,7 +40,6 @@ class Option(models.Model):
     name = models.CharField(max_length=16, default="")
 
     class Meta:
-        app_label = 'base'
         ordering = ['name']
 
     def __cmp__(self, other):

@@ -44,7 +44,6 @@ class Config(models.Model):
         return cmp(self.key, other.key)
 
     class Meta:
-        app_label = 'base'
         ordering = ['key']
 
     def is_carte_changed(self, date):

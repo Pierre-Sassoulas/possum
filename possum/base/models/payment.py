@@ -30,7 +30,6 @@ class PaiementType(Nom):
     fixed_value = models.BooleanField("ticket ?", default=False)
 
     class Meta:
-        app_label = 'base'
         ordering = ['nom']
 
     def get_default(self):
@@ -62,7 +61,6 @@ class Paiement(models.Model):
     nb_tickets = models.PositiveIntegerField(default=0)
 
     class Meta:
-        app_label = 'base'
         get_latest_by = 'date'
 
     def __unicode__(self):

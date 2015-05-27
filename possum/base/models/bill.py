@@ -84,7 +84,6 @@ class Facture(models.Model):
 
     class Meta:
         get_latest_by = 'id'
-        app_label = 'base'
         permissions = (
             ("p1", "can use manager part"),
             ("p2", "can use carte part"),

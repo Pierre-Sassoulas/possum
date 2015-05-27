@@ -77,7 +77,6 @@ class Produit(Nom):
             return cmp(self.categorie, other.categorie)
 
     class Meta:
-        app_label = 'base'
         ordering = ['categorie', 'nom']
 
     def __unicode__(self):
