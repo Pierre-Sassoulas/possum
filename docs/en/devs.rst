@@ -99,9 +99,10 @@ if the number of violations is up, your request will not be accepted.
 
 You can fetch any new changes from the original repository and resync your fork with::
 
-  $ git checkout master
+  $ git pull
   $ git pull git@github.com:possum-software/possum.git dev
   $ git commit -a -m "resync"
+  $ git push
 
 Change in class
 ===============
