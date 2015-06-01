@@ -60,7 +60,6 @@ In short::
 
   $ git clone git@github.com:sbonnegent/possum.git possum-sbonnegent
   $ cd possum-sbonnegent
-  $ git remote add -t dev upstream git@github.com:possum-software/possum.git
   $ git fetch upstream
 
 Launching a development server
@@ -89,7 +88,6 @@ Preparing your pull request
 
   $ echo "make changes and commit"
   $ git commit -a -m "cool stuff"
-  $ git rebase -i 
   $ git push
 
 Your changes are clean in your fork, now you can create a pull request directly on Github.
@@ -99,14 +97,11 @@ After that, you must check state of your request on
 `Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
 if the number of violations is up, your request will not be accepted.
 
-You can fetch any new changes from the original repository and rebase your fork with::
+You can fetch any new changes from the original repository and resync your fork with::
 
-  $ git fetch upstream
-  $ git rebase upstream/dev
-
-Or view differences with::
-
-  $ git diff upstream/dev
+  $ git checkout master
+  $ git pull git@github.com:possum-software/possum.git dev
+  $ git commit -a -m "resync"
 
 Change in class
 ===============
@@ -117,7 +112,7 @@ will do it for us:
 
 ::
 
-  ./make models_changed
+  ./make migrations
 
 
 Remenber to add new migration file on git.

@@ -20,7 +20,9 @@
 
 import logging
 
+from django.conf import settings
 from django.contrib import messages
+from django.http.response import HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
@@ -171,65 +173,58 @@ def set_number(request, bill_id, count):
     return redirect('bill_categories', bill_id)
 
 
-def update_categories(request):
-    ''' Update categories in request.session
+def update_session_number_of_product(request, bill_id, count):
+    ''' This function update the value for the number of product we want to
+    add in bill/categories.
+
     :param HttpRequest request:
+    :param int bill_id: Useless parameter in order to use the same URL as the
+    mother page.
+    :param count: The value we want to update.
     '''
-    LOGGER.debug('update categories in cache')
-    last_carte_changed = Config().get_carte_changed().value
-    request.session['last_carte_changed'] = last_carte_changed
-    categories = []
-    for category in Categorie.objects.all():
-        products = Produit.objects.filter(categorie=category, actif=True)
-        if products:
-            category.products = products
-            categories.append(category)
-        else:
-            LOGGER.debug("[%s] category without products" % category)
-    LOGGER.debug(categories)
-    request.session['categories'] = categories
+    request.session['count'] = int(count)
+    return HttpResponse('OK')
 
 
 @login_required
 def categories(request, bill_id, category_id=None):
     ''' Select a product to add on a bill.
 
-    session[count]: default is 1, number of products to add
     :param HttpRequest request:
-    :param bill_id: TODO
-    :type bill_id:
-    :param category_id:
-    :type category_id:
+    :param int bill_id: The id of the bill
+    :param int category_id: The id of the category
     '''
     bill = get_object_or_404(Facture, pk=bill_id)
     if not set_edition_status(request, bill):
         return redirect('bill_view', bill.id)
-    context = {'menu_bills': True, }
-    context['bill'] = bill
-    context['range'] = range(1, 15)
-    if request.session.get('count', False):
-        context['count'] = request.session['count']
-    else:
-        request.session['count'] = 1
-        context['count'] = 1
-    if request.session.get('categories', False):
-        if request.session.get('last_carte_changed', False):
-            last_carte_changed = request.session['last_carte_changed']
-            if Config().is_carte_changed(last_carte_changed):
-                # we need to update
-                update_categories(request)
+    lcc = request.session.get('last_carte_changed')
+    if lcc is None or Config().carte_changed(lcc):
+        # If they are no categorie or if the carte changed
+        lcc = Config().get_carte_changed().value
+        request.session['last_carte_changed'] = lcc
+        categories = []
+        for category in Categorie.objects.all():
+            products = Produit.objects.filter(categorie=category, actif=True)
+            if products:
+                category.products = products
+                categories.append(category)
             else:
-                LOGGER.debug('use categories in cache')
-        else:
-            LOGGER.debug('Not possible ! last_carte_changed not set ?')
-            update_categories(request)
+                LOGGER.debug("[%s] category without products" % category)
+        LOGGER.debug("Updating session categories : '{0}'".format(categories))
+        request.session['categories'] = categories
     else:
-        update_categories(request)
-    context['categories'] = request.session['categories']
-    context['products_sold'] = bill.reduced_sold_list(bill.produits.all())
-    # we preload a category
-    if category_id:
-        context['current_cat'] = int(category_id)
+        # request.session['categories'] is not None
+        LOGGER.debug('Use categories in cache')
+    context = {'menu_bills': True,
+               'categories': request.session['categories'],
+               'bill': bill,
+               'max_number': settings.MAX_NUMBER + 1,
+               'number_possible_to_add': range(1, settings.MAX_NUMBER + 1),
+               'products_sold': bill.reduced_sold_list(bill.produits.all()),
+               # By default we add one product only
+               'count': request.session.get('count', 1),
+               'current_cat': category_id}
+    LOGGER.debug("Context for categories : {0}".format(context))
     return render(request, 'bill/categories.html', context)
 
 
@@ -243,10 +238,10 @@ def product_select_made_with(request, bill_id, product_id):
     :param product_id:
     :type product_id:
     '''
-    context = {'menu_bills': True, }
-    context['bill'] = get_object_or_404(Facture, pk=bill_id)
-    context['product'] = get_object_or_404(ProduitVendu, pk=product_id)
-    context['categories'] = Categorie.objects.filter(made_in_kitchen=True)
+    context = {'menu_bills': True,
+               'bill': get_object_or_404(Facture, pk=bill_id),
+               'product': get_object_or_404(ProduitVendu, pk=product_id),
+               'categories': Categorie.objects.filter(made_in_kitchen=True)}
     return render(request, 'bill/product_select_made_with.html', context)
 
 

@@ -38,16 +38,16 @@ class ProduitVendu(models.Model):
     options1 et options2 sont les options sélectionnées.
     """
     date = models.DateTimeField(auto_now_add=True)
-    produit = models.ForeignKey(Produit, related_name="produitvendu-produit")
+    produit = models.ForeignKey(Produit, related_name="produit_vendu_produit")
     cuisson = models.ForeignKey(Cuisson, null=True, blank=True,
-                                related_name="produitvendu-cuisson")
+                                related_name="produit_vendu_cuisson")
     prix = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    options = models.ManyToManyField(Option, null=True, blank=True)
+    options = models.ManyToManyField(Option, blank=True)
     # dans le cas d'un menu, peut contenir d'autres produits
     contient = models.ManyToManyField('self')
-    notes = models.ManyToManyField(Note, null=True, blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
     # faut-il préparer ce plat avec les entrées ?
-    made_with = models.ForeignKey(Categorie, related_name="produit-kitchen",
+    made_with = models.ForeignKey(Categorie, related_name="produit_kitchen",
                                   null=True)
     # a-t-il été envoyé en cuisine
     sent = models.BooleanField(default=False)

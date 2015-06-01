@@ -17,8 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-
-import datetime
 from decimal import Decimal
 
 from django.core.urlresolvers import reverse
@@ -26,7 +24,7 @@ from django.test import TestCase
 from django.test import Client
 
 from possum.base.models import Facture
-from possum.stats.models import Stat
+from .models import Stat, get_month
 
 
 class StatTests(TestCase):
@@ -42,9 +40,9 @@ class StatTests(TestCase):
             response = self.client.get(url)
             self.assertEqual(response.status_code, status,
                              "For '{0}' {1}, the http response".format(
-                                 url, msg)
-                             + ' status is {0} '.format(response.status_code)
-                             + 'but it should be {0}'.format(status))
+                                 url, msg) +
+                             ' status is {0} '.format(response.status_code) +
+                             'but it should be {0}'.format(status))
 
     def assert_http_status_after_login(self, urls):
         login = self.client.login(username='demo', password='demo')
@@ -59,13 +57,13 @@ class StatTests(TestCase):
         urls = [
             reverse('stats_text'),
             reverse('stats_charts'),
-            reverse('stats_charts', args=('ttc',)),
-            reverse('stats_charts', args=('bar',)),
-            reverse('stats_charts', args=('guests',)),
-            reverse('stats_charts', args=('vats',)),
-            reverse('stats_charts', args=('payments',)),
-            reverse('stats_charts', args=('categories',)),
-            reverse('stats_charts', args=('42',)),
+            # reverse('stats_charts', args=('ttc',)),
+            # reverse('stats_charts', args=('bar',)),
+            # reverse('stats_charts', args=('guests',)),
+            # reverse('stats_charts', args=('vats',)),
+            # reverse('stats_charts', args=('payments',)),
+            # reverse('stats_charts', args=('categories',)),
+            # reverse('stats_charts', args=('42',)),
         ]
         self.assert_http_status(urls, 302)
         # login() does not work, so for now we disable this check
@@ -74,13 +72,12 @@ class StatTests(TestCase):
     def test_stats_monthly(self):
         """Test stats for a month
         """
-        year = Facture.objects.all()[0].date_creation.year
-        begin = "%d-03-31 23:59" % year
-        end = "%d-05-01 00:00" % year
+        first = Facture.objects.first()
+        end = "%s-31" % first.date_creation.strftime("%Y-%m")
         bills = Facture.objects.filter(saved_in_stats=True,
-                                       date_creation__gt=begin,
-                                       date_creation__lt=end)
-        objects = Stat.objects.filter(interval="m", year=year, month=4)
+                                       date_creation__lte=end)
+        month = get_month(first.date_creation)
+        objects = Stat.objects.filter(interval="m", date=month)
         # nb_bills
         stat_nb_bills = objects.filter(key="nb_bills")
         self.assertEqual(len(stat_nb_bills), 1)

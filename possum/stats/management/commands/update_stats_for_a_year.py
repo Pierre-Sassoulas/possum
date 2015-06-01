@@ -38,10 +38,10 @@ class Command(BaseCommand):
             self.stdout.write(
                 "[%s] change status for bills" %
                 datetime.datetime.now().strftime("%H:%M"))
-            bills = Facture.objects.filter(date_creation__gte=
-                                           "%d-01-01 00:00:00" % year,
-                                           date_creation__lt="%d-12-31 23:59:"
-                                           "59" % year)
+            begin = "%d-01-01 00:00:00" % year
+            end = "%d-12-31 23:59:59" % year
+            bills = Facture.objects.filter(date_creation__gte=begin,
+                                           date_creation__lt=end)
             for bill in bills.iterator():
                 bill.saved_in_stats = False
                 bill.save()

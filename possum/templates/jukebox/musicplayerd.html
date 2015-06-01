@@ -18,16 +18,15 @@
     <div>
     	<pre id="song">{{song}}</pre>
     	<pre id="artist">{{artist}}</pre>
-    	<pre id="time">{{time}}</pre>
+    	<pre id="time">{{elapsed}} s. / {{time}} s.</pre>
     </div>
 
     <progress id="progressbar" value="{{percent}}" max="100"></progress>
 
     <p id="commands">
-      <button id="play">{% trans "Play" %}</button>
-      <button id="pause">{% trans "Pause" %}</button>
-      <button id="next">{% trans "Next" %}</button>
       <button id="previous">{% trans "Previous" %}</button>
+      <button id="playpause">{% trans "Play/Pause" %}</button>
+      <button id="next">{% trans "Next" %}</button>
       <button id="remove">{% trans "Remove" %}</button>
     </p>
 

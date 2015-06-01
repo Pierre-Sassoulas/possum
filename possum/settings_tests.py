@@ -36,21 +36,3 @@ DATABASES = {
         'PORT': '',
     }
 }
-
-INSTALLED_APPS += (
-    'django_jenkins',
-)
-
-JENKINS_TASKS = (
-    #    'django_jenkins.tasks.run_pylint',
-    #    'django_jenkins.tasks.run_pep8',
-    'django_jenkins.tasks.with_coverage',
-    #    'django_jenkins.tasks.dir_tests',
-    #    'django_jenkins.tasks.run_csslint',
-    #    'django_jenkins.tasks.run_pyflakes',
-)
-
-COVERAGE_EXCLUDES_FOLDERS = ['possum/base/migrations/*',
-                             'possum/stats/migrations/*', 'env/*']
-
-# COVERAGE_REPORT_HTML_OUTPUT_DIR = 'reports/coverage.html/'

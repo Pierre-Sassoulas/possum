@@ -68,7 +68,7 @@ html_theme_options = {
     'navbar_fixed_top': "false",
     'source_link_position': "nav",
     # Bootswatch (http://bootswatch.com/) theme.
-    'bootswatch_theme': "sandstone",
+    # 'bootswatch_theme': "sandstone",
     'bootstrap_version': "3",
 }
 

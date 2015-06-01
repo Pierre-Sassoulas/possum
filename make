@@ -6,33 +6,61 @@ BOOTSTRAP_VERSION="3.3.4"
 BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
 BOOTDIR=${BOOTSTRAP/.zip/}
 DATEPICKER_VERSION="1.3.1"
+DATEPICKER_DIR=bootstrap-datepicker-${DATEPICKER_VERSION}
+DATEPICKER=${DATEPICKER_DIR}.zip
 STATIC="possum/base/static/"
 APPS="base stats"
+
+if [ ! -d reports ]
+then
+    mkdir reports
+fi
 
 function my_help {
     cat << 'EOF'
 
 Usage: ./make [a command]
 
-List of commands:
-    create_json_demo   :  create JSON fixtures in possum/base/fixtures/demo.json
+For all:
+--------
     doc                :  make the documentation in html
-    deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
     help               :  this help
-    init_demo          :  erase database with data of demonstration
+
+For administrators:
+-------------------
+    deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
     init_mine          :  run possum/utils/init_mine.py in virtualenv
-    load_demo          :  load database with data of demonstration
-    models_changed     :  prepare files after modified models
-    sh                 :  run ./manage.py shell_plus in virtualenv
-    run                :  run ./manage.py runserver in virtualenv with the file settings.py
-    translation        :  create/update translations
-    tests              :  make tests and coverage
     update             :  install/update Possum environnement
 
-Note: If you need to define a proxy, set $http_proxy.
-Example: export http_proxy="http://proxy.possum-software.org:8080/"
+For developpers:
+----------------
+    big_clean          :  !! WARNING !! erase possum.db, virtualenv,
+                          settings.py and all downloaded librairies
+    load_demo          :  load database with data of demonstration
+    run                :  run ./manage.py runserver in virtualenv with the
+                          file settings.py
+    sh                 :  run ./manage.py shell_plus in virtualenv
+    tests              :  execute all tests
+    utests             :  execute only unit tests and coverage
 
-Note2: (*) must be root to do it
+    In case of change in models, execute these three operations in the order:
+    -------------------------------------------------------------------------
+    migrations         :  prepare files after modified models
+    init_demo          :  erase database with data of demonstration
+                          !! WARNING !! can be very long after migrations
+    create_json_demo   :  create JSON fixtures in
+                          possum/base/fixtures/demo.json
+
+For traductors:
+---------------
+    translation        :  create/update translations
+
+If you need to define a proxy, set $http_proxy
+Example:
+    export http_proxy="http://proxy.possum-software.org:8080/"
+    export https_proxy="https://proxy.possum-software.org:8080/"
+
+Note: (*) must be root to do it
 
 EOF
     exit 1
@@ -57,45 +85,46 @@ function doc {
     enter_virtualenv
     for translation in en fr
     do
-        pushd docs/$translation
+        pushd docs/$translation >/dev/null
         make html
-        popd
+        echo "---------------------------------------------------------------"
+        echo "DOC $translation: $(pwd)/_build/html/index.html"
+        popd >/dev/null
     done
 }
 
 function create_json_demo {
     enter_virtualenv
-    ./manage.py dumpdata --format=json --indent=4 --exclude=contenttypes --exclude=auth.Permission > possum/base/fixtures/demo.json
+    ./manage.py dumpdata --format=json --indent=4 --exclude=contenttypes \
+        --exclude=auth.Permission > possum/base/fixtures/demo.json
+}
+
+function must_succeed {
+    # exec a command and return value
+    $*
+    if [ ! $? == 0 ]
+    then
+        exit 2
+    fi
 }
 
 function tests {
     enter_virtualenv
-    if [ ! -d reports ]
-    then
-        mkdir reports
-    fi
-    ./manage.py validate_templates --settings=possum.settings_tests
-    if [ "$?" != "0" ]
-    then
-        exit 1
-    fi
-    ./manage.py jenkins --settings=possum.settings_tests
-    if [ "$?" != "0" ]
-    then
-        exit 1
-    fi
-    flake8 --exclude=migrations --max-complexity 12 possum > reports/flake8.report
-    sloccount --details possum | fgrep -v '/highcharts/' > reports/soccount.sc
-    utests
+    must_succeed ./manage.py validate_templates --settings=possum.settings_tests
+    flake8 --exclude=migrations,static --max-complexity 12 possum \
+        > reports/flake8.report
+    sloccount --details possum > reports/soccount.sc
+    must_succeed coverage run --source='possum' ./manage.py test \
+        --settings=possum.settings_tests
+    must_succeed coverage xml -o reports/coverage.xml
 }
 
 function utests {
     enter_virtualenv
-    ./manage.py test --settings=possum.settings_tests
-    if [ "$?" != "0" ]
-    then
-        exit 1
-    fi
+    coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
+    coverage html -d reports/coverage/
+    echo "--------------------------------------------------------------------"
+    echo "Coverage report created in $(pwd)/reports/coverage/index.html"
 }
 
 function update_js {
@@ -104,13 +133,14 @@ function update_js {
     if [ ! -e ${STATIC}${JQUERY} ]
     then
         echo "Download and install JQuery..."
-        wget http://code.jquery.com/${JQUERY} -O ${STATIC}${JQUERY}
+        must_succeed wget http://code.jquery.com/${JQUERY} -O ${STATIC}${JQUERY}
     fi
     # Highcharts
     if [ ! -e ${STATIC}${HIGHCHARTS} ]
     then
         echo "Download HighCharts..."
-        wget http://code.highcharts.com/zips/${HIGHCHARTS} -O ${STATIC}${HIGHCHARTS}
+        must_succeed wget http://code.highcharts.com/zips/${HIGHCHARTS} -O \
+            ${STATIC}${HIGHCHARTS}
     fi
     if [ ! -e ${STATIC}${HIGHDIR} ]
     then
@@ -124,7 +154,7 @@ function update_js {
     if [ ! -e ${STATIC}${BOOTSTRAP} ]
     then
         echo "Download BootStrap..."
-        wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
+        must_succeed wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
             -O ${STATIC}${BOOTSTRAP}
     fi
     if [ ! -e ${STATIC}${BOOTDIR} ]
@@ -143,14 +173,14 @@ function update_js {
     if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
-        wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
-            -O ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+        must_succeed wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
+            -O ${STATIC}${DATEPICKER}
     fi
-    if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION} ]
+    if [ ! -e ${STATIC}${DATEPICKER_DIR} ]
     then
         echo "Unzip BootStrap Date-Picker..."
         pushd $STATIC >/dev/null
-        unzip bootstrap-datepicker-${DATEPICKER_VERSION}.zip
+        unzip ${DATEPICKER}
 #        for dir in js css
 #        do
 #            if [ -e ${dir} ]
@@ -163,7 +193,7 @@ function update_js {
         popd >/dev/null
     fi
     enter_virtualenv
-    ./manage.py collectstatic --noinput --no-post-process
+    must_succeed ./manage.py collectstatic --noinput --no-post-process
 }
 
 function update {
@@ -180,8 +210,8 @@ function update {
     fi
     enter_virtualenv
     # before all, we must have last release of Django
-    pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
-    pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    must_succeed pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
+    must_succeed pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
     if [ $? != 0 ]
     then
         echo "ERROR: pip failed !"
@@ -193,8 +223,8 @@ function update {
     then
         # default conf is production
         cp possum/settings_production.py possum/settings.py
-        ./manage.py migrate --noinput
-        ./manage.py init_db
+        must_succeed ./manage.py migrate --noinput
+        must_succeed ./manage.py init_db
         cat << 'EOF'
 -------------------------------------------------------
 To use Possum, copy and adapt possum/base/management/commands/init_db.py.
@@ -207,9 +237,9 @@ Example:
 -------------------------------------------------------
 EOF
     fi
-    ./manage.py migrate
-    ./manage.py update_css
-    ./manage.py update_stats_to_0_6
+    must_succeed ./manage.py migrate
+    must_succeed ./manage.py update_css
+    must_succeed ./manage.py update_stats_to_0_6
     update_js
 }
 
@@ -238,7 +268,7 @@ function graph_models {
 function clear_db {
     enter_virtualenv
     ./manage.py reset_db
-    ./manage.py migrate --noinput
+    must_succeed ./manage.py migrate --noinput
 #    ./manage.py flush --noinput
 }
 
@@ -259,13 +289,16 @@ init_mine)
 init_demo)
     enter_virtualenv
     clear_db
-    ./manage.py init_demo
+    echo "Init demonstration data"
+    must_succeed ./manage.py init_demo
+    echo "Update stats"
+    must_succeed ./manage.py update_stats
     ;;
 load_demo)
     enter_virtualenv
     clear_db
-    ./manage.py migrate --noinput
-    ./manage.py loaddata demo
+    must_succeed ./manage.py migrate --noinput
+    must_succeed ./manage.py loaddata demo
     ;;
 deb_install_nginx)
     deb_install_nginx
@@ -276,17 +309,39 @@ doc)
 update)
     update
     ;;
-models_changed)
+migrations)
     enter_virtualenv
     for app in $APPS
     do
-        ./manage.py makemigrations ${app}
+        must_succeed ./manage.py makemigrations ${app}
     done
-    ./manage.py migrate
-    clear_db
-    ./manage.py init_demo
-    create_json_demo
+    must_succeed ./manage.py migrate
     graph_models
+    ;;
+utests)
+    utests
+    ;;
+big_clean)
+    echo "Erase virtualenv"
+    rm -rf env
+    for FILE in possum/settings.py possum.db
+    do
+        if [ -e ${FILE} ]
+        then
+            echo "Move ${FILE} in ${FILE}.old"
+            mv ${FILE} ${FILE}.old
+        fi
+    done
+    for FILE in ${STATIC}${JQUERY} ${STATIC}${HIGHCHARTS} ${STATIC}${HIGHDIR}\
+            ${STATIC}${BOOTSTRAP} ${STATIC}${BOOTDIR} ${STATIC}fonts \
+            ${STATIC}${DATEPICKER_DIR} ${STATIC}${DATEPICKER}
+    do
+        if [ -e ${FILE} ]
+        then
+            echo "Erase ${FILE}"
+            rm -rf ${FILE}
+        fi
+    done
     ;;
 tests)
     tests
@@ -301,11 +356,10 @@ run)
     ;;
 translation)
     enter_virtualenv
-    ./manage.py makemessages -i env --no-obsolete -l fr -l en -l ru
-    ./manage.py compilemessages
+    must_succeed ./manage.py makemessages -i env --no-obsolete -l fr -l en -l ru
+    must_succeed ./manage.py compilemessages
     ;;
 *)
     my_help
     ;;
 esac
-

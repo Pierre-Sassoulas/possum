@@ -26,7 +26,7 @@ class VATOnBill(models.Model):
     """
     VAT for a bill
     """
-    vat = models.ForeignKey('VAT', related_name="bill-vat")
+    vat = models.ForeignKey('VAT', related_name="bill_vat")
     total = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
     def __cmp__(self, other):

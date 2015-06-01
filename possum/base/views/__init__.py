@@ -23,9 +23,8 @@ import os
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.utils.functional import wraps
 from django.utils.translation import ugettext as _
 
 from possum.base.models import Config, Facture

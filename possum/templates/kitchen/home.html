@@ -36,9 +36,10 @@
                     {% if not forloop.last %} / {% endif %}
                 {% endfor %}</td>
             {% if forloop.first %}
-            <td align="center"><form action="{% url 'follow_done' facture.follow.id %}" 
-                method="get"><button type="button" class="btn btn-success"
-                >{% trans "Done" %} ?</button></form></td>
+            <td align="center">
+                <a href="{% url 'follow_done' facture.follow.id %}">
+                    <button type="button" class="btn btn-success">
+                        {% trans "Done" %} ?</button></td>
             {% endif %}
             </tr>
             {% endfor %}

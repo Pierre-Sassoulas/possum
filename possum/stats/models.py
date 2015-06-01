@@ -17,7 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 import datetime
 from decimal import Decimal
 import itertools
@@ -172,7 +171,7 @@ def _search_sub_key(stats, key, a_class):
         try:
             elt = a_class.objects.get(pk=pk)
         except:
-            LOGGER.critical("[%s] pk=%s not here" % (key, pk))
+            LOG.critical("[%s] pk=%s not here" % (key, pk))
         else:
             elt.nb = stat.value
             tmp.append(elt)
@@ -358,12 +357,13 @@ class Stat(models.Model):
                 ('d', 'Day'))
     interval = models.CharField(max_length=1, choices=INTERVAL, default="d")
     date = models.DateField(default="1978-03-03")
-    # Todo: since version 0.6: year, month, week and day deprecated,
+    # TODO: since version 0.6: year, month, week and day deprecated,
     # must be removed in version 0.7
     year = models.PositiveIntegerField(default=0)
     month = models.PositiveIntegerField(default=0)
     day = models.PositiveIntegerField(default=0)
     week = models.PositiveIntegerField(default=0)
+    # END TODO
     key = models.CharField(max_length=32)
     value = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
@@ -379,7 +379,7 @@ class Stat(models.Model):
     def update(self):
         """Update statistics with new bills
         """
-        #TODO: knee knee knee
+        # TODO: knee knee knee
         if os.path.isfile(settings.LOCK_STATS):
             LOG.info("lock [%s] already here" % settings.LOCK_STATS)
             return False

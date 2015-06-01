@@ -53,11 +53,11 @@ class PaiementType(Nom):
 class Paiement(models.Model):
 
     """valeur_unitaire: pour gérer les montants des tickets restos"""
-    type = models.ForeignKey(PaiementType, related_name="paiement-type")
+    type = models.ForeignKey(PaiementType, related_name="payment_type")
     montant = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     valeur_unitaire = models.DecimalField(max_digits=9, decimal_places=2,
                                           default=1)
-    date = models.DateTimeField('encaisser le', auto_now_add=True)
+    date = models.DateTimeField('cashed on', auto_now_add=True)
     nb_tickets = models.PositiveIntegerField(default=0)
 
     class Meta:

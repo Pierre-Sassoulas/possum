@@ -50,7 +50,7 @@ class Table(Nom):
 
     """ A table must be linked to a Zone """
 
-    zone = models.ForeignKey(Zone, related_name="table-zone")
+    zone = models.ForeignKey(Zone, related_name="table_area")
 
     def is_surcharged(self):
         ''' By default there is no surcharge.

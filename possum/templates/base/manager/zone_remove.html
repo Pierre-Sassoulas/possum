@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+
+<h1>{% trans "Remove zone" %}: {{zone.nom}}</h1>
+
+<p>{% trans "Tables in this area will be removed too." %}</p>
+
+<form method='post' action='{% url "tables_zone_delete" zone.id %}'>{% csrf_token %}
+    <input type="hidden" name="valid" value="ok">
+    <a class="btn btn-default" href="{% url 'tables' %}">{% trans "Cancel" %}</a>
+    <input class="btn btn-success" type='submit' value='{% trans "Remove" %}'>
+</form>
+{% endblock %}

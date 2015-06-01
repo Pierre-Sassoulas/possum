@@ -8,9 +8,9 @@ Your login information is personal, you do not need to
 communicate{% endblocktrans %}
 </p>
 
-<table>
+<table class="table table-striped">
 <tr>
-    <td><b>{% trans "Name" %}</b></td>
+    <th>{% trans "Name" %}</th>
     <td>{{user.last_name}}</td>
 </tr><tr>
     <td><b>{% trans "First name" %}</b></td>
@@ -25,22 +25,24 @@ communicate{% endblocktrans %}
 </table>
 
 <h2>{% trans "Change password" %}</h2>
-<form method='post' action='/profile/'>{% csrf_token %}
-<table>
-<tr>
-    <td><b>{% trans "Current password" %}</b></td>
-    <td><input type='password' name='old' size='30'></td>
-</tr>
-<tr>
-    <td><b>{% trans "New password" %} (1)</b></td>
-    <td><input type='password' name='new1' size='30'></td>
-</tr>
-<tr>
-    <td><b>{% trans "New password" %} (2)</b></td>
-    <td><input type='password' name='new2' size='30'></td>
-</tr>
-</table>
-<input type='submit' value='{% trans "Change" %}'>
+<form class="form-horizontal" role="form" method='post' action='/profile/'>{% csrf_token %}
+    <div style="margin-bottom: 25px" class="input-group">
+        {% trans "Current password" %}
+        <input type='password' name='old' size='30'>
+    </div>
+    <div style="margin-bottom: 25px" class="input-group">
+        {% trans "New password" %} (1)
+        <input type='password' name='new1' size='30'>
+    </div>
+    <div style="margin-bottom: 25px" class="input-group">
+        {% trans "New password" %} (2)
+        <input type='password' name='new2' size='30'>
+    </div>
+    <div style="margin-top:10px" class="form-group">
+        <div class="col-sm-12 controls">
+            <input class="btn btn-success pull-right"
+                    type="submit" value='{% trans "Change" %}'/>
+        </div>
+    </div>
 </form>
 {% endblock %}
-
