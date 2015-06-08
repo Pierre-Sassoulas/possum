@@ -18,8 +18,7 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from .common_settings import *
-
+from .settings_common import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
