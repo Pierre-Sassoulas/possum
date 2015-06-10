@@ -23,6 +23,7 @@ import logging
 
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
+from django.utils.translation import ugettext as _
 
 from possum.base.models import Facture, Note, Option
 
@@ -42,18 +43,14 @@ years_list = [i for i in range(first_year, last_year)]
 
 
 class DateForm(forms.Form):
-
-    '''
-    Form permitting to choose a date.
-    '''
+    """Form permitting to choose a date.
+    """
     date = forms.DateField(widget=SelectDateWidget(years=years_list))
 
 
 class LoginForm(forms.Form):
-
-    '''
-    Class LoginForm representing a form to log an User in.
-    '''
+    """Class LoginForm representing a form to log an User in.
+    """
     username = forms.CharField(max_length=100,
                                widget=forms.TextInput(
                                    attrs={'placeholder': 'identifiant:'}))
@@ -62,20 +59,19 @@ class LoginForm(forms.Form):
 
 
 class NoteForm(forms.ModelForm):
-
-    '''
-    TODO
-    '''
+    """Form to edit a note
+    """
     class Meta:
         model = Note
         fields = "__all__"
+        widgets = {'message': forms.TextInput(attrs={
+                                                'placeholder': _('New note'),
+                                                'class': "form-control"})}
 
 
 class OptionForm(forms.ModelForm):
-
-    '''
-    TODO
-    '''
+    """Form to edit an option
+    """
     class Meta:
         model = Option
         fields = "__all__"

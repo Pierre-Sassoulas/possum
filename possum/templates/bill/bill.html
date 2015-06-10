@@ -9,7 +9,6 @@
                 <h3 class="panel-title">{% trans "Products" %}</h3>
             </div>
             <div class="panel-body">
-               <!--ul class="list-inline"-->
                <ul class="list-unstyled">
     {% for sold in products_sold %}
         {% if sold.count > 1 %}
@@ -44,31 +43,35 @@
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans "Infos" %}</h3>
             </div>
-            <div class="panel-body">
-                <ul class="list-unstyled">
-                    <a href="{% url 'bill_delete' facture.id %}">
-                        <li class="possum-base alert-danger">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href="{% url 'bill_delete' facture.id %}">
+                    <li class="possum-base alert-danger">
                         {% trans "Remove" %}</li></a>
-                    <li class="possum-base well">{% trans "Creation" %}: {{facture}}</li>
-                    <li class="possum-base">
-                        <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                            <a href="{% url 'table_select' facture.id %}"
-                                class="btn btn-default {% if facture.surcharge %}alert-warning{% endif %}" role="button">{% trans "Table" %}: {{facture.table.nom}}</a>
-                            <a href="{% url 'couverts_select' facture.id %}" class="btn btn-default" role="button">{% trans "Guests" %}: {{facture.couverts}}</a>
-                            <a href="{% url 'bill_onsite' facture.id %}" class="btn btn-default {% if facture.onsite %}alert-success{% else %}alert-danger{% endif %}" role="button">{% if facture.onsite %}{% trans "on site" %}{% else %}{% trans "take away" %}{% endif %}</a>
-                        </div>
-                    </li>
-                    <li class="possum-base well">{% trans "TTC" %}:
-                        {{facture.total_ttc}} {% trans "$" %}</li>
-                    <a href='{% url "bill_print" facture.id %}'>
-                        <li class="possum-base alert-info">
-                            {% trans "Print bill" %}</li></a>
-                </ul>
-
-    <div class="input-group">
+                <li class="possum-base well">{% trans "Creation" %}: {{facture}}</li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Justified button group">
+                        <a href="{% url 'table_select' facture.id %}"
+                            class="btn btn-default {% if facture.surcharge %}alert-warning{% endif %}"
+                            role="button">{% trans "Table" %}: {{facture.table.nom}}</a>
+                        <a href="{% url 'couverts_select' facture.id %}"
+                            class="btn btn-default" role="button">{% trans "Guests" %}: {{facture.couverts}}</a>
+                        <a href="{% url 'bill_onsite' facture.id %}"
+                            class="btn btn-default {% if facture.onsite %}alert-success{% else %}alert-danger{% endif %}"
+                            role="button">{% if facture.onsite %}{% trans "on site" %}{% else %}{% trans "take away" %}{% endif %}</a>
+                    </div>
+                </li>
+                <li class="possum-base well">{% trans "TTC" %}:
+                    {{facture.total_ttc}} {% trans "$" %}</li>
+                <a href='{% url "bill_print" facture.id %}'>
+                    <li class="possum-base alert-info">
+                        {% trans "Print bill" %}</li></a>
+            </ul>
+            <div class="input-group">
+            </div>
         </div>
     </div>
-</div>
 <!-- Infos end -->
 <!-- Kitchen begin -->
         <div class="panel panel-default">

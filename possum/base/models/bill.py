@@ -97,7 +97,7 @@ class Facture(models.Model):
         '''
         if self.date_creation:
             # TODO strftime copy pasted =~ 20 time (Date class ?)
-            date = self.date_creation.strftime("%H:%M %d/%m")
+            date = self.date_creation.strftime("%d/%m/%Y %H:%M")
         else:
             date = "--:-- --/--"
         return u"%s" % date
