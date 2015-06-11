@@ -28,7 +28,7 @@ from mpd import MPDClient
 
 from version import POSSUM_VERSION
 # Max number of added product in a bill
-MAX_NUMBER = 14
+MAX_NUMBER = 12
 
 # from django.utils.translation import ugettext as _
 # PATH CONFIGURATION

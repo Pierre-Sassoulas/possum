@@ -4,16 +4,22 @@
 <h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1>
 <ul class="list-inline">
     {% for facture in factures %}
-    <li class="possum-base alert alert-info"><a href='{% url "bill_view" facture.id %}'>
+    <div class="col-sm-2">
+    <a href='{% url "bill_view" facture.id %}'>
+        <li class="possum-base alert alert-info">
         {{facture}}</br>
         {% trans "Table" %}: {% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</br>
         {% trans "Guests" %}: {{facture.couverts}}</br>
-        {% trans "Amount" %}: {{facture.total_ttc}}{% trans "$" %}</br></a></li>
+        {% trans "Amount" %}: {{facture.total_ttc}}{% trans "$" %}</br></li></a></div>
     {% empty %}
-        <li class="possum-base possum-bg">{% trans "No bill" %}</li>
+        <div class="col-sm-2">
+            <li class="possum-base possum-bg">{% trans "No bill" %}</li>
+        </div>
     {% endfor %}
-    <li class="possum-base alert alert-info"><a href='{% url "bill_new" %}'></br>
-        {% trans "New order" %}</br>
-        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></br>
-        </br></a></li></ul>
+    <div class="col-sm-2">
+        <a href='{% url "bill_new" %}'>
+            <li class="possum-base alert alert-info"></br>
+                {% trans "New order" %}</br>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></br>
+        </br></li></a></div></ul>
 {% endblock %}
