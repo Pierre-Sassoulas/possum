@@ -4,12 +4,14 @@
 <h1>{% trans "Choice of cooking for" %}: {{sold.produit.nom}}</h1>
 <ul class="list-unstyled">
     {% for cooking in cookings %}
+    <div class="col-sm-6">
     <a href='{% url "sold_cooking" bill_id sold.id cooking.id %}'>
     <li class="cooking_{{cooking.id}} possum-base">
         {{cooking}}
-    </li></a>
+    </li></a></div>
     {% empty %}
-    <li class="possum-base">{% trans "No cooking" %}</li>
+    <div class="col-sm-6">
+    <li class="possum-base">{% trans "No cooking" %}</li></div>
     {% endfor %}
 </ul>
 {% endblock %}
