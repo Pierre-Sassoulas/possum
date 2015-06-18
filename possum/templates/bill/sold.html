@@ -14,9 +14,6 @@
                         {{sold.prix}}{% trans "$" %}</li>
                     <li class="possum-base cat_{{sold.produit.categorie_id}}">
                         {{sold.produit.categorie}}</li>
-                    <a href='{% url "bill_view" bill_id %}'>
-                        <li class="possum-base alert-info">
-                            {% trans "Back" %}</li></a>
 {% if sold.produit.categorie.made_in_kitchen %}
                     <a href='{% url "product_select_made_with" bill_id sold.id %}'>
                         <li class="possum-base cat_{{sold.made_with_id}}">
@@ -28,6 +25,9 @@
                         <li class="possum-base cooking_{{sold.cuisson_id}}">
                             {% trans "Cooking" %}: {{sold.cuisson}}</li></a>
 {% endif %}
+                    <a href='{% url "bill_view" bill_id %}'>
+                        <li class="possum-base alert-info">
+                            {% trans "Back" %}</li></a>
                 </ul>
             </div>
         </div>

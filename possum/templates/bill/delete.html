@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Do you want to delete order" %} {{facture.id}} ?</h1>
+
+<form action="{% url 'bill_delete' facture.id %}" method="post">
+    {% csrf_token %}
+    <div class="col-sm-6">
+        <button type="submit" name="choice" class="btn btn-default">{% trans "Cancel" %}</button>
+    </div>
+    <div class="col-sm-6">
+        <button type="submit" name="choice" value="ok" class="btn btn-danger">{% trans "Delete" %}</button>
+    </div>
+</form>
+{% endblock %}

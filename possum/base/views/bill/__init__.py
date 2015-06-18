@@ -42,7 +42,7 @@ from possum.base.models import Zone, Table
 from possum.base.views import remove_edition, cleanup_payment
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @login_required
@@ -209,12 +209,12 @@ def categories(request, bill_id, category_id=None):
                 category.products = products
                 categories.append(category)
             else:
-                LOGGER.debug("[%s] category without products" % category)
-        LOGGER.debug("Updating session categories : '{0}'".format(categories))
+                LOG.debug("[%s] category without products" % category)
+        LOG.debug("Updating session categories : '{0}'".format(categories))
         request.session['categories'] = categories
     else:
         # request.session['categories'] is not None
-        LOGGER.debug('Use categories in cache')
+        LOG.debug('Use categories in cache')
     context = {'menu_bills': True,
                'categories': request.session['categories'],
                'bill': bill,
@@ -224,7 +224,7 @@ def categories(request, bill_id, category_id=None):
                # By default we add one product only
                'count': request.session.get('count', 1),
                'current_cat': category_id}
-    LOGGER.debug("Context for categories : {0}".format(context))
+    LOG.debug("Context for categories : {0}".format(context))
     return render(request, 'bill/categories.html', context)
 
 
@@ -387,14 +387,14 @@ def sold_delete(request, bill_id, sold_id):
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     request.session["products_modified"] = bill_id
     if sold in bill.produits.all():
-        LOGGER.debug("[%s] remove ProduitVendu(%s)" % (bill_id, sold))
+        LOG.debug("[%s] remove ProduitVendu(%s)" % (bill_id, sold))
         bill.produits.remove(sold)
         sold.delete()
     else:
         menus = bill.produits.filter(contient=sold)
         if menus:
-            LOGGER.debug("[%s] remove ProduitVendu(%s) from a menu" % (
-                         bill_id, sold))
+            LOG.debug("[%s] remove ProduitVendu(%s) from a menu" % (
+                      bill_id, sold))
             menu = menus[0]
             menu.contient.remove(sold)
             menu.save()
@@ -450,6 +450,7 @@ def sold_options(request, bill_id, sold_id, option_id=None):
     context['options'] = sold.produit.options_ok.all()
     if option_id:
         set_option(sold_id, option_id)
+        return redirect('sold_view', bill_id, sold_id)
     return render(request, 'bill/options.html', context)
 
 
@@ -554,14 +555,14 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
         old = context['sold'].cuisson
         context['sold'].cuisson = cooking
         context['sold'].save()
-        LOGGER.debug("[S%s] cooking saved" % sold_id)
+        LOG.debug("[S%s] cooking saved" % sold_id)
         if old is None:
-            LOGGER.debug("[%s] no cooking present" % bill_id)
+            LOG.debug("[%s] no cooking present" % bill_id)
             # certainement un nouveau produit donc on veut retourner
             # sur le panneau de saisie des produits
             return redirect('bill_sold_working', bill_id, context['sold'].id)
         else:
-            LOGGER.debug("[%s] cooking replacement" % bill_id)
+            LOG.debug("[%s] cooking replacement" % bill_id)
             return redirect('bill_view', bill_id)
     return render(request, 'bill/cooking.html', context)
 
@@ -635,18 +636,32 @@ def bill_view(request, bill_id):
 @login_required
 def bill_delete(request, bill_id):
     '''
-    TODO
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
+    :param bill_id: a bill
+    :type bill_id: Facture
     '''
     order = get_object_or_404(Facture, pk=bill_id)
+    context = {'menu_bills': True, 'facture': order}
     if order.paiements.count() > 0:
         messages.add_message(request, messages.ERROR,
                              _("The bill contains payments"))
         return redirect('bill_view', bill_id)
     else:
-        order.delete()
+        try:
+            choice = request.POST['choice']
+        except KeyError:
+            LOG.debug("deletion must be confirmed")
+            return render(request, 'bill/delete.html', context)
+        else:
+            if choice == "ok":
+                LOG.info("[%s] invoice deleted by %s" % (bill_id,
+                                                         request.user))
+                order.delete()
+                messages.add_message(request, messages.SUCCESS,
+                                     _("Invoice deleted"))
+                return redirect('bill_home')
+            else:
+                return redirect('bill_view', bill_id)
         return redirect('bill_home')
 
 

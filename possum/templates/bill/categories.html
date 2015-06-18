@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{% trans "Add products" %}</h1>
 <div class="col-sm-6">
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-danger">
         <div class="panel-heading">
             <h3 class="panel-title">{% trans "Products on order" %}</h3>
         </div>
@@ -20,14 +20,14 @@
                         {% for member in sold.members %}
                     <a href='{% url "sold_delete" bill.id member.id %}'>
                         <li class="possum-base cat_{{sold.produit.categorie_id}}">
-                        {{member}}
+                        {{member}} <span class="glyphicon glyphicon-remove"></span>
                     </li></a>
                         {% endfor %}
                 </div>
                     {% else %}
                 <a href='{% url "sold_delete" bill.id sold.id %}'>
                     <li class="possum-base cat_{{sold.produit.categorie_id}}">
-                    {{sold}}
+                    {{sold}} <span class="glyphicon glyphicon-remove"></span>
                 </li></a>
                     {% endif %}
                 {% empty %}

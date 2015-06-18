@@ -24,8 +24,9 @@ from django.contrib.auth.models import User
 import datetime
 import random
 
-from possum.base.models import Categorie, Zone, VAT, Config, Table
-from possum.base.models import Facture, PaiementType, Produit, ProduitVendu
+from possum.base.models import (Categorie, Zone, VAT, Config, Table, Facture,
+                                PaiementType, Produit, ProduitVendu, Option,
+                                Note, Cuisson)
 from possum.stats.models import Stat
 
 
@@ -48,6 +49,12 @@ class Command(BaseCommand):
                         email="%s@possum-software.org" % username)
             user.set_password(username)
             user.save()
+
+        # Cuisson
+        Cuisson(priorite=10, nom_facture="B", nom="bleu").save()
+        Cuisson(priorite=15, nom_facture="S", nom="saignant").save()
+        Cuisson(priorite=20, nom_facture="AP", nom="a point").save()
+        Cuisson(priorite=25, nom_facture="BC", nom="bien cuit").save()
 
         # Type de paiements
         PaiementType(nom='AMEX', fixed_value=False).save()
@@ -92,6 +99,17 @@ class Command(BaseCommand):
         vat_takeaway = VAT(name=u"à emporter")
         vat_takeaway.set_tax("7")
         vat_takeaway.save()
+
+        # Options
+        Option(name="Frites").save()
+        Option(name="Salade").save()
+        Option(name="Creme").save()
+        Option(name="Haricots").save()
+        Option(name="Mayo").save()
+
+        # Notes
+        Note(message="Pas de sel").save()
+        Note(message="Sans champignon").save()
 
         #
         # Data example

@@ -12,7 +12,7 @@
                <ul class="list-unstyled">
     {% for sold in products_sold %}
         {% if sold.count > 1 %}
-    <li class="cat_{{sold.produit.categorie_id}} possum-base alert alert-info"
+    <li class="cat_{{sold.produit.categorie_id}} possum-base"
         id="{{sold.id}}" href="javascript:void(0)"
         onclick="javascript:myLinkButtonClick(this.id);">
         {{sold.count}}x {{sold.produit.nom}}</li>
@@ -81,7 +81,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     {% for follow in facture.following.iterator %}
-                        <a href='{% url "kitchen_for_bill" facture.id %}'>{{follow}}</a>
+                        <a href='{% url "kitchen_for_bill" facture.id %}'>
                     <li class="possum-base cat_{{follow.category_id}}">
                         {{follow}}
                     </li></a>

@@ -87,3 +87,5 @@ li.surtaxe {
 .cooking_2 {background:#DB0B32;}
 .cooking_3 {background:#C44C51;}
 .cooking_4 {background:#B78178;}
+/* no blue for link */
+a, a:visited, a:hover { color: black; }
