@@ -37,6 +37,28 @@
         </div>
     </div>
 </div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Saved payments" %}</h3>
+        </div>
+        <div class="panel-body">
+            <p>{% trans "You can delete a payment by selecting" %}</p>
+            <ul class="list-unstyled">
+                {% for payment in payments %}
+                    <a href='{% url "bill_payment_delete" bill_id payment.id %}'>
+                        <li class="possum-base well">{{payment.type.nom}}:
+                        {{payment.montant}}{% trans "$" %}
+                        <span class="glyphicon glyphicon-remove"></span></li>
+                    </a>
+                {% empty %}
+                    <li class="possum-base well">{% trans "No payment" %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 </br></br>
 </br></br>
@@ -86,17 +108,6 @@
     <li>{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
     <li>{% trans "Save" %}</li>
 {% endif %}
-</ul>
-
-<h2>{% trans "Saved payments" %}</h2>
-<p>{% trans "You can delete a payment by selecting" %}</p>
-<ul id="paiements">
-    {% for payment in payments %}
-        <li onclick="window.location='{% url "bill_payment_delete" bill_id payment.id %}'">
-        {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li>
-    {% empty %}
-        <li>{% trans "No payment" %}</li>
-    {% endfor %}
 </ul>
 
 {% endblock %}
