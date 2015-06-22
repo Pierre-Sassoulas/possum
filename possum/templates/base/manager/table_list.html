@@ -23,10 +23,19 @@
 {% endif %}
 <ul class="list-inline">
     {% for table in tables %}
-    <li class="possum-base well"><a href='{% url "tables_table" zone.pk table.id %}'>
-        {{table.nom}}</a></li>
+    <div class="col-sm-2">
+        <a href='{% url "tables_table" zone.pk table.id %}'>
+            <li class="possum-base well">{{table.nom}}</li>
+        </a>
+    </div>
     {% endfor %}
-    <li class="possum-base well"><a href='{% url "tables_table_new" zone.pk %}'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></li>
+    <div class="col-sm-2">
+        <a href='{% url "tables_table_new" zone.pk %}'>
+            <li class="possum-base well">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </li>
+        </a>
+    </div>
 </ul>
 {% else %}
 <p>{% trans "You must create a room." %}</p>

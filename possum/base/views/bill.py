@@ -129,7 +129,7 @@ def bill_print(request, bill_id):
 
 
 @login_required
-def table_select(request, bill_id):
+def table_select(request, bill_id, zone_pk=0):
     ''' Select/modify table of a bill
     :param HttpRequest request:
     :param bill_id: TODO
@@ -138,6 +138,14 @@ def table_select(request, bill_id):
     context = {'menu_bills': True, }
     context['zones'] = Zone.objects.all()
     context['bill_id'] = bill_id
+
+    if zone_pk == 0:
+        if len(context['zones']) > 0 :
+            context['zone'] = context['zones'][0]
+            zone_pk = context['zone'].pk
+    else:
+        context['zone'] = get_object_or_404(Zone, pk=zone_pk)
+    context['tables'] = Table.objects.filter(zone__pk=zone_pk)
     return render(request, 'bill/select_a_table.html', context)
 
 
