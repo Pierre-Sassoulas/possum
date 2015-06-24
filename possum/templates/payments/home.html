@@ -58,6 +58,17 @@
         </div>
     </div>
 </div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">2. {% trans "Amount" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+            </ul>
+        </div>
+    </div>
+</div>
 
 
 </br></br>
@@ -65,17 +76,6 @@
 </br></br>
 </br></br>
 </br></br>
-<h2>1. {% trans "Payment type" %}</h2>
-<ul id="type_payment">
-    {% for type in type_payments %}
-        <li {% if type == type_selected %}class="enabled"{% endif %}
-        onclick='window.location="{% url 'type_payment' bill_id type.id %}"' >
-        {{type.nom}}</li>
-    {% empty %}
-        <li>{% trans "No data" %}</li>
-    {% endfor %}
-</ul>
-
 <h2>2. {% trans "Amount" %}</h2>
 {% if type_selected %}
     {% if type_selected.fixed_value %}
