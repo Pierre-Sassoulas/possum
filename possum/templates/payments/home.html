@@ -64,50 +64,26 @@
             <h3 class="panel-title">2. {% trans "Amount" %}</h3>
         </div>
         <div class="panel-body">
-            <ul class="list-unstyled">
+        <ul class="list-unstyled">
+    {% if type_selected.fixed_value %}
+        <a href="{% url 'amount_payment' %}">
+            <li class="possum-base well">{% trans "Ticket value" %}: {{left}}.{{right}}{% trans "$" %}
+            </li>
+        </a>
+        <a href="{% url 'amount_count' %}">
+            <li class="possum-base well">{% trans "Number of tickets" %}: {{tickets_count}}</li>
+        </a>
+    {% else %}
+        <a href="{% url 'amount_payment' %}">
+            <li class="possum-base well">{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}
+            </li>
+        </a>
+    {% endif %}
+        <a href="{% url 'save_payment' bill_id %}">
+            <li class="possum-base alert-success">{% trans "Save" %}</li>
+        </a>
             </ul>
         </div>
     </div>
 </div>
-
-
-</br></br>
-</br></br>
-</br></br>
-</br></br>
-</br></br>
-<h2>2. {% trans "Amount" %}</h2>
-{% if type_selected %}
-    {% if type_selected.fixed_value %}
-    <h3>2.1 {% trans "Number of tickets" %}</h3>
-    <ul id="numbers">
-        {% for i in range %}
-        <li onclick='window.location="{% url 'payment_count' bill_id i %}"'
-            {% if i == tickets_count %}class=enabled{% endif %}
-        >{{i}}</li>
-        {% endfor %}
-        <li onclick='window.location="{% url 'amount_count' %}"'>+</li>
-    </ul>
-    <h3>2.2 {% trans "Total" %}</h3>
-    <ul id="payment_tickets">
-        <li onclick='window.location="{% url 'amount_payment' %}"'>
-            {% trans "Ticket value" %}: {{left}}.{{right}}{% trans "$" %}</li>
-        <li onclick='window.location="{% url 'amount_count' %}"'
-            >{% trans "Number of tickets" %}: {{tickets_count}}</li>
-        <li onclick='window.location="{% url 'save_payment' bill_id %}"'
-            >{% trans "Save" %}</li>
-    {% else %}
-    <ul id="payment_tickets">
-        <li onclick='window.location="{% url 'amount_payment' %}"'
-            >{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
-        <li onclick='window.location="{% url 'save_payment' bill_id %}"'
-            >{% trans "Save" %}</li>
-    {% endif %}
-{% else %}
-<ul id="payment_tickets">
-    <li>{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
-    <li>{% trans "Save" %}</li>
-{% endif %}
-</ul>
-
 {% endblock %}
