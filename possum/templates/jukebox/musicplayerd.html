@@ -2,18 +2,21 @@
 {% block content %}
 {% load i18n %}
 {% load staticfiles %}
+<h1>{% trans "Music Player" %}</h1>
 
-    <h1>{% trans "Music Player" %}</h1>
-
-    <form id="formpl" action="" method="GET">
-      <fieldset>
+{% if jukebox_disable %}
+<p class="alert alert-danger">
+{% trans "The music server is is not set properly, or unreachable" %}</p>
+{% else %}
+<form id="formpl" action="" method="GET">
+    <fieldset>
         <legend>{% trans "Change playlist" %} :</legend>
         {{ pl_form.as_p }}
       	<p>
       	<input id="subbtn" type="submit" value="Lancer" />
       	</p>
-      </fieldset>
-    </form>
+    </fieldset>
+</form>
 
     <div>
     	<pre id="song">{{song}}</pre>
@@ -30,9 +33,6 @@
       <button id="remove">{% trans "Remove" %}</button>
     </p>
 
-    <p>{% blocktrans %}This page will automatically refresh every
-    {{need_auto_refresh}} seconds{% endblocktrans %}</p>
-
 <script type="text/javascript" src="{% static "jukebox.js" %}"></script>
-
+{% endif %}
 {% endblock %}

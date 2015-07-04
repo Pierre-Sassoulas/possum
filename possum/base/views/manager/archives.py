@@ -29,9 +29,10 @@ from django.utils.translation import ugettext as _
 from possum.base.forms import DateForm
 from possum.base.models import Facture
 from possum.base.views import check_admin
+from possum.stats.views import init_borders
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @user_passes_test(check_admin)
@@ -41,22 +42,19 @@ def archives(request):
     :return rtype: HttpResponse
     '''
     context = {'menu_manager': True, }
+    context = init_borders(context)
+    date = datetime.datetime.today()
     if request.method == 'POST':
         try:
-            year = int(request.POST.get('date_year'))
-            month = int(request.POST.get('date_month'))
-            day = int(request.POST.get('date_day'))
-            date = datetime.datetime(year, month, day)
+            date = datetime.datetime.strptime(request.POST.get('date'),
+                                              "%Y-%m-%d").date()
         except:
             messages.add_message(request, messages.ERROR,
-                                 _("The date is not valid"))
-            date = datetime.datetime.today()
-    else:
-        date = datetime.datetime.today()
-    context['date_form'] = DateForm({'date': date, })
+                                 _("Date is not valid"))
+#    context['date_form'] = DateForm({'date': date, })
     context['factures'] = Facture().get_bills_for(date)
     context['date'] = date
-    return render(request, 'base/manager/archives/home.html', context)
+    return render(request, 'manager/archives/facture_list.html', context)
 
 
 @user_passes_test(check_admin)
@@ -73,6 +71,6 @@ def archives_bill(request, bill_id):
         messages.add_message(request, messages.ERROR,
                              _("This bill has not yet ended"))
         return redirect('archives')
-    context['bill'] = bill
+    context['facture'] = bill
     context['products_sold'] = bill.reduced_sold_list(bill.produits.all())
-    return render(request, 'base/manager/archives/invoice.html', context)
+    return render(request, 'manager/archives/facture_detail.html', context)

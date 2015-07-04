@@ -6,20 +6,17 @@
     {% for facture in factures %}
     <div class="col-sm-2">
     <a href='{% url "bill_view" facture.id %}'>
-        <li class="possum-base alert alert-info">
+        <li class="possum-base alert-info">
         {{facture}}</br>
         {% trans "Table" %}: {% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</br>
         {% trans "Guests" %}: {{facture.couverts}}</br>
         {% trans "Amount" %}: {{facture.total_ttc}}{% trans "$" %}</br></li></a></div>
-    {% empty %}
-        <div class="col-sm-2">
-            <li class="possum-base possum-bg">{% trans "No bill" %}</li>
-        </div>
     {% endfor %}
     <div class="col-sm-2">
         <a href='{% url "bill_new" %}'>
-            <li class="possum-base alert alert-info"></br>
+            <li class="possum-base alert-success"></br>
                 </br>
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></br>
-        </br></li></a></div></ul>
+        </br></li></a></div>
+</ul>
 {% endblock %}

@@ -34,20 +34,7 @@
             <a class="navbar-brand {% if menu_sales %}gris{% endif %}" href="{% url 'sales_home' %}"><span class="glyphicon glyphicon-shopping-cart"></span></a>
         </div>
         <div class="navbar-header pull-right">
-            <a class="navbar-brand {% if menu_manager %}gris{% endif %}" href="#" class="dropdown-toggle" data-toggle="dropdown"
-                        role="button"><span class="glyphicon glyphicon-cog"></span></a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="{% url 'credits' %}">{% trans "About" %}</a></li>
-                <li><a href="{% url 'archives' %}">{% trans "Archives" %}</a></li>
-                <li><a href="{% url 'categories' %}">{% trans "Carte" %}</a></li>
-                <li><a href="{% url 'editions_home' %}">{% trans "In use" %}</a></li>
-                <li><a href="{% url 'notes_home' %}">{% trans "Notes" %}</a></li>
-                <li><a href="{% url 'printer_home' %}">{% trans "Printers" %}</a></li>
-                <li><a href="{% url 'tables' %}">{% trans "Tables" %}</a></li>
-                <li><a href="{% url 'users' %}">{% trans "Users" %}</a></li>
-                <li><a href="{% url 'vats' %}">{% trans "VAT" %}</a></li>
-                <li><a href="{% url 'shutdown' %}">{% trans "Shutdown server" %}</a></li>
-            </ul>
+            <a class="navbar-brand {% if menu_manager %}gris{% endif %}" href="{% url 'manager_home' %}"><span class="glyphicon glyphicon-cog"></span></a>
             <a class="navbar-brand {% if menu_profile %}gris{% endif %}" href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span></a>
             <a class="navbar-brand" href="{% url 'logout' %}"><span class="glyphicon glyphicon-remove-circle"></span></a>
         </div>

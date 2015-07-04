@@ -897,8 +897,6 @@ def save_payment(request, bill_id):
         remove_edition(request)
         return redirect('bill_home')
     else:
-        messages.add_message(request, messages.SUCCESS,
-                             _("Payment saved"))
         return redirect('prepare_payment', bill_id)
 
 

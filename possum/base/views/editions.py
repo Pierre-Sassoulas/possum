@@ -27,7 +27,7 @@ from possum.base.models import Facture
 from possum.base.views import check_admin
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @user_passes_test(check_admin)
@@ -35,7 +35,7 @@ def editions_home(request):
     '''
     :param HttpRequest request:
     '''
-    context = {}
+    context = {'menu_manager': True, }
     context['bills'] = Facture.objects.exclude(in_use_by__isnull=True)
     return render(request, 'editions/home.html', context)
 

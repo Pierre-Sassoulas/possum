@@ -38,8 +38,12 @@ There are no pending bill, the data are up to date.
 {% block side %}
 <h2>{% trans "Rapports" %}</h2>
 <ul>
-    <li><a href="{% url "stats_text" %}">{% trans "textes" %}</a></li>
-    <li><a href="{% url "stats_charts" %}">{% trans "graphiques" %}</a></li>
+    <a href="{% url "stats_text" %}">
+        <li>{% trans "textes" %}</li>
+    </a>
+    <a href="{% url "stats_charts" %}">
+        <li>{% trans "graphiques" %}</li>
+    </a>
 </ul>
 
 {% endblock %}

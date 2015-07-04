@@ -30,6 +30,16 @@ from possum.base.views import check_admin
 
 
 @user_passes_test(check_admin)
+def manager_home(request):
+    """
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    """
+    context = {'menu_manager': True}
+    return render(request, 'manager/home.html', context)
+
+
+@user_passes_test(check_admin)
 def credits(request):
     '''
     :param HttpRequest request:
