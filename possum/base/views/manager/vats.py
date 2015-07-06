@@ -28,7 +28,9 @@ from django.contrib.auth.decorators import user_passes_test
 from possum.base.models import Produit
 from possum.base.models import VAT
 from possum.base.views import check_admin
-LOGGER = logging.getLogger(__name__)
+
+
+LOG = logging.getLogger(__name__)
 
 
 @user_passes_test(check_admin)
@@ -39,7 +41,7 @@ def vats(request):
     '''
     context = {'menu_manager': True, }
     context['vats'] = VAT.objects.order_by('name')
-    return render(request, 'base/manager/vats/home.html', context)
+    return render(request, 'manager/vats/vat_list.html', context)
 
 
 @user_passes_test(check_admin)
@@ -52,7 +54,7 @@ def vats_view(request, vat_id):
     '''
     context = {'menu_manager': True, }
     context['vat'] = get_object_or_404(VAT, pk=vat_id)
-    return render(request, 'base/manager/vats/view.html', context)
+    return render(request, 'manager/vats/view.html', context)
 
 
 def check_name_and_tax(request, name, tax):
@@ -100,7 +102,7 @@ def vats_change(request, vat_id):
                                  _("Changes could not be saved"))
         else:
             return redirect('vats')
-    return render(request, 'base/manager/vats/change.html', context)
+    return render(request, 'manager/vats/change.html', context)
 
 
 @user_passes_test(check_admin)
@@ -124,4 +126,4 @@ def vat_new(request):
                                  _("Changes could not be saved"))
         else:
             return redirect('vats')
-    return render(request, 'base/manager/vats/new.html', context)
+    return render(request, 'manager/vats/new.html', context)

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{{category.nom}}
+    <a href='{% url "categories_name" category.id %}'>
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></h1>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Active products" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                {% for product in products_enable %}
+                    <a href='{% url "products_view" product.id %}'>
+                        <li class="possum-base cat_{{category.id}}">{{product.nom}}</li>
+                    </a>
+                {% endfor %}
+                <a href='{% url "products_new" category.id %}'>
+                    <li class="possum-base alert-success">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Old products" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                {% for product in products_disable %}
+                    <a href='{% url "products_view" product.id %}'>
+                        <li class="possum-base cat_{{category.id}}">{{product.nom}}</li>
+                    </a>
+                {% empty %}
+                    <li class="possum-base well">{% trans "No product" %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "home_categories" %}'>
+                    <li class="possum-base alert-success">
+                        {% trans "Back" %}</li></a>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Display priority" %}</h3>
+        </div>
+        <div class="panel-body">
+            <p>{% blocktrans %}Lowers priorities are displayed first{% endblocktrans %}</p>
+            <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                <a href='{% url "categories_less_priority_10" category.id %}' class="btn btn-default"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
+                <a href='{% url "categories_less_priority" category.id %}' class="btn btn-default"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
+                <a href='#' class="btn btn-default">{{category.priorite}}</a>
+                <a href='{% url "categories_more_priority" category.id %}' class="btn btn-default"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>
+                <a href='{% url "categories_more_priority_10" category.id %}' class="btn btn-default"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Settings" %}</h3>
+        </div>
+        <div class="panel-body">
+<p>{% blocktrans %}
+A surcharge may be defined at a set of tables (called <b>Area</b>).
+This surcharge will be added to the price of each product contained
+surtaxables categories in the table when an overtaxed area
+is selected.
+{% endblocktrans %}</p>
+<p>{% blocktrans %}
+This surcharge is disabled if at least one product category
+can cancel the surcharge is added to the bill.
+{% endblocktrans %}</p>
+<p>{% blocktrans %}
+You must define the 2 VAT, even if such
+you do not do takeaway.
+{% endblocktrans %}</p>
+            <ul class="list-unstyled">
+                <a href='{% url "categories_color" category.id %}'>
+                    <li class="possum-base cat_{{category.id}}">{% trans "Color" %}: {{category.color}}</li>
+                </a>
+                <a href='{% url "categories_surtaxable" category.id %}'>
+                    <li class="possum-base
+                        {% if category.surtaxable %}alert-success">{% trans "Is surtaxable" %}
+                        {% else %}alert-danger">{% trans "Is not surtaxable" %}{% endif %}
+                    </li>
+                </a>
+                <a href='{% url "categories_disable_surtaxe" category.id %}'>
+                    <li class="possum-base
+                        {% if category.disable_surtaxe %}alert-success">{% trans "Can cancel the surcharge" %}
+                        {% else %}alert-danger">{% trans "Can not cancel the surcharge" %}{% endif %}
+                    </li>
+                </a>
+                <a href='{% url "categories_vat_onsite" category.id %}'>
+                    <li class="possum-base well">{% trans "VAT on site" %}:
+                    {% if category.vat_onsite %}{{category.vat_onsite.name}}
+                    {% else %}?{% endif %}
+                    </li>
+                </a>
+                <a href='{% url "categories_vat_takeaway" category.id %}'>
+                    <li class="possum-base well">{% trans "VAT take away" %}:
+                    {% if category.vat_takeaway %}{{category.vat_takeaway.name}}
+                    {% else %}?{% endif %}
+                    </li>
+                </a>
+                <a href='{% url "categories_set_kitchen" category.id %}'>
+                    <li class="possum-base
+                        {% if category.made_in_kitchen %}alert-success">{% trans "Is prepared in the kitchen" %}
+                        {% else %}alert-danger">{% trans "Is not prepared in the kitchen" %}{% endif %}
+                    </li>
+                </a>
+                <a href='{% url "categories_delete" category.id %}'>
+                    <li class="possum-base alert-danger">
+                        {% trans "Remove" %}
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

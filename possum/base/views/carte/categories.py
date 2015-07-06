@@ -101,7 +101,7 @@ def categories(request):
     '''
     context = {'menu_manager': True, }
     context['categories'] = Categorie.objects.order_by('priorite', 'nom')
-    return render(request, 'base/carte/categories.html', context)
+    return render(request, 'manager/carte/categorie_list.html', context)
 
 
 @user_passes_test(check_admin)
@@ -118,7 +118,7 @@ def categories_delete(request, category_id):
                                                        'nom').exclude(id=category_id)
     cat_report_id = request.POST.get('cat_report', '').strip()
     action = request.POST.get('valide', '').strip()
-    if action == "Supprimer":
+    if action == "remove":
         products_list = Produit.objects.filter(categorie__id=category_id)
         # we have to report stats and products ?
         if cat_report_id:
@@ -165,9 +165,9 @@ def categories_delete(request, category_id):
                                  _("Category contains products, "
                                    "deletion canceled"))
 
-    elif action == "Annuler":
+    elif action == "cancel":
         return redirect('categories')
-    return render(request, 'base/categories_delete.html', context)
+    return render(request, 'manager/carte/categorie_delete.html', context)
 
 
 @user_passes_test(check_admin)
@@ -183,7 +183,7 @@ def categories_view(request, category_id):
     products = Produit.objects.filter(categorie__id=category_id)
     context['products_enable'] = products.filter(actif=True)
     context['products_disable'] = products.filter(actif=False)
-    return render(request, 'base/carte/category.html', context)
+    return render(request, 'manager/carte/categorie_detail.html', context)
 
 
 @user_passes_test(check_admin)
@@ -234,7 +234,7 @@ def categories_name(request, category_id):
     '''
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=category_id)
-    return render(request, 'base/carte/name.html', context)
+    return render(request, 'manager/carte/categorie_name.html', context)
 
 
 @user_passes_test(check_admin)
@@ -248,7 +248,7 @@ def categories_color(request, category_id):
     context = {'menu_manager': True, }
     context['category'] = get_object_or_404(Categorie, pk=category_id)
     context['categories'] = Categorie.objects.order_by('priorite', 'nom')
-    return render(request, 'base/carte/color.html', context)
+    return render(request, 'manager/carte/categorie_color.html', context)
 
 
 @user_passes_test(check_admin)
@@ -319,7 +319,7 @@ def categories_vat_takeaway(request, category_id):
     context['type_vat'] = _("VAT take away")
     request.session['vat'] = 'vat_takeaway'
     context['vats'] = VAT.objects.order_by('name')
-    return render(request, 'base/carte/categories/select_vat.html', context)
+    return render(request, 'manager/carte/select_vat.html', context)
 
 
 @user_passes_test(check_admin)
@@ -334,7 +334,7 @@ def categories_vat_onsite(request, category_id):
     context['type_vat'] = _("VAT on site")
     request.session['vat'] = 'vat_onsite'
     context['vats'] = VAT.objects.order_by('name')
-    return render(request, 'base/carte/categories/select_vat.html', context)
+    return render(request, 'manager/carte/select_vat.html', context)
 
 
 @user_passes_test(check_admin)

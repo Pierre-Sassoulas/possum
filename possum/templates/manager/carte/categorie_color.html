@@ -6,18 +6,20 @@
 <form method='post' action='{% url "categories_set_color" category.id %}'>
     {% csrf_token %}
     <input name="color" value="{{ category.color }}">
-    <input type='submit' value='{% trans "Change" %}'>
+    <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
 </form>
 
 <h2>{% trans "Colors used" %}</h2>
-
-<ul id="categories">
+<ul class="list-inline">
     {% for category in categories %}
-        <li class="cat_{{category.id}}">{{category.nom}}</li>
+    <div class="col-sm-3">
+        <li class="well-sansbg cat_{{category.id}}">{{category.nom}}</li>
+    </div>
     {% empty %}
-        <li>{% trans "No category" %}</li>
+    <div class="col-sm-3">
+        <li class="well">{% trans "No category" %}</li>
+    </div>
     {% endfor %}
 </ul>
 
 {% endblock %}
-

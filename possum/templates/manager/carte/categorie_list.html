@@ -1,0 +1,35 @@
+{% extends "base_with_aside.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{% trans "Categories" %}</h1>
+
+<ul class="list-inline">
+    {% for category in categories %}
+    <div class="col-sm-3">
+        <a href='{% url "categories_view" category.id %}'>
+            <li class="well-sansbg cat_{{category.id}}">
+                [{{category.priorite}}] {{category.nom}}
+            </li>
+        </a>
+    </div>
+    {% endfor %}
+    <div class="col-sm-3">
+        <a href='{% url "categories_add" %}'>
+            <li class='well-sansbg alert-success'>
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </li>
+        </a>
+    </div>
+</ul>
+{% endblock %}
+{% block side %}
+<h2>{% trans "Carte" %}</h2>
+<ul>
+    <a href='{% url "categories_send" %}'>
+        <li>{% trans "Send by mail" %}</li>
+    </a>
+    <a href='{% url "categories_print" %}'>
+        <li>{% trans "Print" %}</li>
+    </a>
+</ul>
+{% endblock %}

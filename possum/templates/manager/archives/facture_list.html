@@ -13,7 +13,9 @@
         {% trans "Guests" %}: {{facture.couverts}}</br>
         {% trans "Amount" %}: {{facture.total_ttc}}{% trans "$" %}</br></li></a></div>
     {% empty %}
-        <li class="well">{% trans "No bill" %}</li>
+        <div class="col-sm-3">
+            <li class="well">{% trans "No bill" %}</li>
+        </div>
     {% endfor %}
 </ul>
 {% endblock %}

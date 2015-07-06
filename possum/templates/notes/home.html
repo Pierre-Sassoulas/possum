@@ -1,45 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
+<div class="col-sm-8">
 <h1>{% trans "Notes list" %}</h1>
 
 <p>{% blocktrans %}It is possible to add a note on a product
 at the time of order{% endblocktrans %}</p>
 
-<ul id="notes">
-    <li onclick='window.location="{% url 'notes_add' %}"'>{% trans "Add" %}</li>
+<ul class="list-inline">
     {% for note in notes %}
-    <li onclick='window.location="{% url 'notes_view' note.id %}"'>
-        {{note.message}}
-        </li>
+    <div class="col-sm-4">
+        <a href="{% url 'notes_view' note.id %}">
+            <li class="well">{{note.message}}</li>
+        </a>
+    </div>
     {% endfor %}
+    <div class="col-sm-4">
+        <a href="{% url 'notes_add' %}">
+            <li class='well-sansbg alert-success'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></li>
+        </a>
+    </div>
 </ul>
-
+</div>
+<div class="col-sm-4">
 {% if note %}
 {% if note.instance.id %}
 <h2>{% trans "Selected note" %}</h2>
 {% else %}
 <h2>{% trans "New note" %}</h2>
 {% endif %}
-{% if note.instance.id %}
-<form action="{% url 'notes_view' note.instance.id %}" method="post">
-{% else %}
-<form action="{% url 'notes_add' %}" method="post">
-{% endif %}
     {{ note.non_field_errors }}
     {% csrf_token %}
     <table>
         {{note.as_table}}
-        <tr><td colspan="2">
-            <input type="submit" value="{% trans "Create" %}" />
-</form>
+        <tr><td colspan="2" align="right">
     {% if note.instance.id %}
-        <form action="{% url 'notes_del' note.instance.id %}">
-            <input type="submit" value="{% trans "Remove" %}" />
-        </form>
+        <a href="{% url 'notes_del' note.instance.id %}">
+            <button type="button" class="btn btn-danger">{% trans "Remove" %}</button>
+        </a>
     {% endif %}
+{% if note.instance.id %}
+<a href="{% url 'notes_view' note.instance.id %}">
+{% else %}
+<a href="{% url 'notes_add' %}">
+{% endif %}
+            <button type="button" class="btn btn-success">{% trans "Save" %}</button>
+</a>
         </td></tr>
     </table>
 {% endif %}
+</div>
 {% endblock %}
-
