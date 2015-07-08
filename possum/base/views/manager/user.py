@@ -22,7 +22,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.models import User, UserManager, Permission
+from django.contrib.auth.models import User, UserManager
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -30,7 +30,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from possum.base.views import check_admin, remove_edition
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @login_required
@@ -46,22 +46,22 @@ def profile(request):
     new1 = request.POST.get('new1', '').strip()
     new2 = request.POST.get('new2', '').strip()
     if old:
+        username = request.user.username
         if request.user.check_password(old):
             if new1 and new1 == new2:
                 request.user.set_password(new1)
                 request.user.save()
                 messages.add_message(request, messages.SUCCESS,
                                      _("Password changed"))
-                LOGGER.info('[%s] password changed' % request.user.username)
+                LOG.info('[%s] password changed' % username)
             else:
                 messages.add_message(request, messages.ERROR,
                                      _("New password invalid"))
-                LOGGER.warning('[%s] new password invalid' %
-                               request.user.username)
+                LOG.warning('[%s] new password invalid' % username)
         else:
             messages.add_message(request, messages.ERROR,
                                  _("Invalid password"))
-            LOGGER.warning('[%s] chk password failed' % request.user.username)
+            LOG.warning('[%s] chk password failed' % username)
     return render(request, 'base/profile.html', context)
 
 
@@ -74,8 +74,6 @@ def users(request):
     context = {'menu_manager': True, }
     context['perms_list'] = settings.PERMS
     context['users'] = User.objects.all()
-    for user in context['users']:
-        user.permissions = [p.codename for p in user.user_permissions.all()]
     return render(request, 'base/manager/users.html', context)
 
 
@@ -97,11 +95,11 @@ def users_new(request):
         user.email = mail
         try:
             user.save()
-            LOGGER.info("[%s] new user [%s]" % (request.user.username, login))
+            LOG.info("[%s] new user [%s]" % (request.user.username, login))
         except:
-            LOGGER.warning("[%s] new user failed: [%s] [%s] [%s] [%s]" % (
-                           request.user.username, login, first_name,
-                           last_name, mail))
+            LOG.warning("[%s] new user failed: [%s] [%s] [%s] [%s]" % (
+                        request.user.username, login, first_name, last_name,
+                        mail))
             messages.add_message(request, messages.ERROR,
                                  _("User creation failed"))
     return redirect('users')
@@ -121,22 +119,22 @@ def users_change(request, user_id):
     mail = request.POST.get('mail', '').strip()
     user = get_object_or_404(User, pk=user_id)
     if login != user.username:
-        LOGGER.info("[%s] new login: [%s] > [%s]" % (
-                    request.user.username, user.username, login))
+        LOG.info("[%s] new login: [%s] > [%s]" % (request.user.username,
+                                                  user.username, login))
         user.username = login
     if first_name != user.first_name:
-        LOGGER.info("[%s] new first name for [%s]: [%s] > [%s]" % (
-                    request.user.username, user.username, user.first_name,
-                    first_name))
+        LOG.info("[%s] new first name for [%s]: [%s] > [%s]" % (
+                 request.user.username, user.username, user.first_name,
+                 first_name))
         user.first_name = first_name
     if last_name != user.last_name:
-        LOGGER.info("[%s] new last name for [%s]: [%s] > [%s]" % (
-                    request.user.username, user.username, user.last_name,
-                    last_name))
+        LOG.info("[%s] new last name for [%s]: [%s] > [%s]" % (
+                 request.user.username, user.username, user.last_name,
+                 last_name))
         user.last_name = last_name
     if mail != user.email:
-        LOGGER.info("[%s] new mail for [%s]: [%s] > [%s]" % (
-                    request.user.username, user.username, user.email, mail))
+        LOG.info("[%s] new mail for [%s]: [%s] > [%s]" % (
+                 request.user.username, user.username, user.email, mail))
         user.email = mail
 
     try:
@@ -144,36 +142,52 @@ def users_change(request, user_id):
     except:
         messages.add_message(request, messages.ERROR,
                              _("Changes could not be saved"))
-        LOGGER.warning("[%s] save failed for [%s]" % (request.user.username,
-                                                      user.username))
+        LOG.warning("[%s] save failed for [%s]" % (request.user.username,
+                                                   user.username))
     return redirect('users')
 
 
 @user_passes_test(check_admin)
 def users_active(request, user_id):
-    '''
-    :param HttpRequest request:
-    :return rtype: HttpResponse
-    :param user_id:
-    :type user_id:
+    '''Enable ou disable users, we must have one at least.
+
+    :param request: HttpRequest
+    :param user_id: User pk
     '''
     user = get_object_or_404(User, pk=user_id)
     new = not user.is_active
-    p1 = Permission.objects.get(codename="p1")
-    if not new and \
-            p1.user_set.count() == 1 and \
-            p1 in user.user_permissions.all():
+    if not new and User.objects.filter(is_active=True).count() == 1:
         messages.add_message(request, messages.ERROR,
-                             _("We must have at least one active user with "
-                               "P1 permission"))
-        LOGGER.warning("[%s] we must have at least one active user "
-                       "with P1 permission")
+                             _("We must have at least one active user"))
+        LOG.warning("[%s] we must have at least one active user")
     else:
         user.is_active = new
         user.save()
-        LOGGER.info("[%s] user [%s] active: %s" % (request.user.username,
-                                                   user.username,
-                                                   user.is_active))
+        LOG.info("[%s] user [%s] active: %s" % (request.user.username,
+                                                user.username, user.is_active))
+    return redirect('users')
+
+
+@user_passes_test(check_admin)
+def users_manager(request, user_id):
+    """Set or unset admin rule for a user. You must have at least one admin.
+
+    :param request: HttpResponse
+    :param users_id: User pk
+    """
+    user = get_object_or_404(User, pk=user_id)
+    new = not user.is_superuser
+    if not new and User.objects.filter(is_active=True,
+                                       is_superuser=True).count() == 1:
+        messages.add_message(request, messages.ERROR,
+                             _("We must have at least one active admin"))
+        LOG.warning("[%s] we must have at least one active admin")
+    else:
+        user.is_superuser = new
+        user.save()
+        LOG.info("[%s] user [%s] admin: %s" % (request.user.username,
+                                               user.username,
+                                               user.is_superuser))
     return redirect('users')
 
 
@@ -191,49 +205,6 @@ def users_passwd(request, user_id):
     user.save()
     messages.add_message(request, messages.SUCCESS,
                          "%s: %s" % (_("New password is"), passwd))
-    LOGGER.info("[%s] user [%s] new password" % (request.user.username,
-                                                 user.username))
-    return redirect('users')
-
-
-@user_passes_test(check_admin)
-def users_change_perm(request, user_id, codename):
-    '''
-    :param HttpRequest request:
-    :return rtype: HttpResponse
-    :param user_id:
-    :type user_id:
-    :param codename:
-    :type codename:
-    '''
-    user = get_object_or_404(User, pk=user_id)
-    # little test because because user can do ugly things :)
-    # now we are sure that it is a good permission
-    if codename in settings.PERMS:
-        perm = Permission.objects.get(codename=codename)
-        if perm in user.user_permissions.all():
-            if codename == 'p1' and perm.user_set.count() == 1:
-                # we must have at least one person with this permission
-                LOGGER.info("[%s] user [%s] perm [%s]: at least should have "
-                            "one person" % (request.user.username,
-                                            user.username,
-                                            codename))
-                messages.add_message(request, messages.ERROR,
-                                     _("We must have at least one active user "
-                                       "with P1 permission"))
-            else:
-                user.user_permissions.remove(perm)
-                LOGGER.info("[%s] user [%s] remove perm: %s" % (
-                            request.user.username,
-                            user.username,
-                            codename))
-        else:
-            user.user_permissions.add(perm)
-            LOGGER.info("[%s] user [%s] add perm: %s" % (
-                        request.user.username,
-                        user.username,
-                        codename))
-    else:
-        LOGGER.warning("[%s] wrong perm info: [%s]" % (request.user.username,
-                                                       codename))
+    LOG.info("[%s] user [%s] new password" % (request.user.username,
+                                              user.username))
     return redirect('users')

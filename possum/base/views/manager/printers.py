@@ -28,7 +28,7 @@ from possum.base.models import Printer
 from possum.base.views import check_admin
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @user_passes_test(check_admin)
@@ -39,7 +39,7 @@ def home(request):
     '''
     context = {'menu_manager': True, }
     context['printers'] = Printer.objects.all()
-    return render(request, 'printers/home.html', context)
+    return render(request, 'printers/printer_list.html', context)
 
 
 @user_passes_test(check_admin)
@@ -89,7 +89,7 @@ def printer_view(request, printer_id):
         except:
             messages.add_message(request, messages.ERROR,
                                  _("Changes could not be saved"))
-    return render(request, 'printers/view.html', context)
+    return render(request, 'printers/printer_detail.html', context)
 
 
 @user_passes_test(check_admin)
@@ -103,8 +103,7 @@ def printer_select_width(request, printer_id):
     context = {'menu_manager': True, }
     context['printer'] = get_object_or_404(Printer, pk=printer_id)
     context['max'] = range(14, 120)
-    return render(request, 'base/manager/printer_select_width.html',
-                  context)
+    return render(request, 'printers/select_width.html', context)
 
 
 @user_passes_test(check_admin)
@@ -204,5 +203,7 @@ def kitchen_header(request, printer_id, number=-1):
             context['printer'].kitchen_lines = int(number)
             context['printer'].save()
         except:
-            LOGGER.warning("number of lines incorrect")
+            LOG.warning("number of lines incorrect")
+        else:
+            return redirect('printer_view', printer_id)
     return render(request, 'printers/kitchen_header.html', context)

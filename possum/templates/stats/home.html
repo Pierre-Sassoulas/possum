@@ -76,41 +76,64 @@
 
 <h2>{% trans "VAT" %}</h2>
 <p>{% trans "VAT amounts are expressed inclusive of all taxes" %}</p>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for vat in vats %}
-    <li class="possum-base possum-bg">{{vat}}: {{vat.nb}}{% trans "$" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{{vat}}: {{vat.nb}}{% trans "$" %}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
+</ul>
+</div>
 
 <h2>{% trans "Payments" %}</h2>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for payment in payments %}
-    <li class="possum-base possum-bg">{{payment}}: {{payment.nb}}{% trans "$" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{{payment}}: {{payment.nb}}{% trans "$" %}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
+</ul>
+</div>
 
 <h2>{% trans "Categories" %}</h2>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for category in categories %}
-    <li class="possum-base cat_{{category.id}}">{{category.nom}} : {{category.nb}}</li>
+    <div class="col-sm-3">
+    <li class="well-sansbg cat_{{category.id}}">{{category.nom}} : {{category.nb}}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
+</ul>
+</div>
 
 <h2>{% trans "Products" %}</h2>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for product in products %}
-    <li class="possum-base cat_{{product.categorie_id}}">{{product.nom}} : {{product.nb}}</li>
+    <div class="col-sm-3">
+    <li class="well-sansbg cat_{{product.categorie_id}}">{{product.nom}} : {{product.nb}}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
-
+</ul>
+</div>
 {% endblock %}
 {% block side %}
 <h2>{% trans "Date" %}</h2>

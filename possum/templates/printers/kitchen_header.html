@@ -1,19 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<ul id="back">
-    <li onclick='window.location="{% url "printer_view" printer.id %}"'>
-        {% trans "Back printer" %}</li>
-</ul>
-
 <h1>{% trans "Number of header lines on ticket for kitchen" %}: {{printer.name}}</h1>
-<ul id="numbers">
-    {% for number in numbers %}
-    <li onclick='window.location="{% url "printer_kitchen_header" printer.id number %}"'
-        {% if printer.kitchen_lines == number %}class="enabled"{%endif%}>
-        {{number}}
-        </li>
-    {% endfor %}
-</ul>
+<div class="col-sm-6">
+    <ul class="list-inline">
+        {% for number in numbers %}
+            <div class="col-sm-2">
+                <a href="{% url "printer_kitchen_header" printer.id number %}">
+                    <li class="well-sansbg
+                        {% if printer.kitchen_lines == number %}alert-success
+                        {% else %}well{%endif%}">{{number}}</li>
+                </a>
+            </div>
+        {% endfor %}
+    </ul>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "printer_view" printer.id %}'>
+                    <li class="possum-base alert-success">{% trans "Back" %}</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

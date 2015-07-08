@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<p>{% trans "Warning, you shut down the server !" %}</p>
+<p class="alert alert-danger">{% trans "Warning, you shut down the server !" %}</p>
 
 <form action="{% url 'shutdown' %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="{% trans 'Shutdown' %}" />
+    <button type="button" class="btn btn-danger pull-right">{% trans "Shutdown" %}</button>
 </form>
 
 {% endblock %}

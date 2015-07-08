@@ -44,19 +44,6 @@ def vats(request):
     return render(request, 'manager/vats/vat_list.html', context)
 
 
-@user_passes_test(check_admin)
-def vats_view(request, vat_id):
-    '''
-    :param HttpRequest request:
-    :return rtype: HttpResponse
-    :param vat_id:
-    :type vat_id:
-    '''
-    context = {'menu_manager': True, }
-    context['vat'] = get_object_or_404(VAT, pk=vat_id)
-    return render(request, 'manager/vats/view.html', context)
-
-
 def check_name_and_tax(request, name, tax):
     '''
     :param HttpRequest request:
@@ -102,7 +89,7 @@ def vats_change(request, vat_id):
                                  _("Changes could not be saved"))
         else:
             return redirect('vats')
-    return render(request, 'manager/vats/change.html', context)
+    return render(request, 'manager/vats/vat_detail.html', context)
 
 
 @user_passes_test(check_admin)

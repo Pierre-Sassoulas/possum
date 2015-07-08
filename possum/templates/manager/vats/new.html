@@ -1,12 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<ul id="back">
-    <li onclick="window.location='{% url "vats" %}'">{% trans "Back VAT" %}</li>
-</ul>
-
 <h1>{% trans "New VAT" %}</h1>
-
+<div class="col-sm-6">
 <form method='post' action='{% url "vat_new" %}'>{% csrf_token %}
 <table>
 <tr>
@@ -22,18 +18,32 @@
 </tr>
 </table>
 </form>
-
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "vats" %}'>
+                    <li class="possum-base alert-success">{% trans "Back" %}</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
 <h2>{% trans "Existing VAT" %}</h2>
-<ul id="vats">
+<ul class="list-inline">
     {% for vat in vats %}
-    <li onclick="window.location='{% url "vats_view" vat.id %}'">
-        {{vat.name}}</br>
-        {{vat.tax}}
-        </li>
+        <div class="col-sm-4">
+            <a href='{% url "vats_change" vat.id %}'>
+                <li class="well">{{vat.name}} ({{vat.tax}})</li>
+            </a>
+        </div>
     {% empty %}
-    <li>{% trans "No VAT" %}</li>
+        <div class="col-sm-4">
+            <li class="well">{% trans "No VAT" %}</li>
+        </div>
     {% endfor %}
 </ul>
-
+</div>
 {% endblock %}
-

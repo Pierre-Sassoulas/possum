@@ -22,11 +22,15 @@ Last important note, you should <u>never</u> need use this possibility.
 
 <ul class="list-inline">
     {% for bill in bills %}
+    <div class="col-sm-4">
     <a href="{% url 'editions_view' bill.id %}">
         <li class='well'>{{bill}} {% trans "by" %} {{bill.in_use_by}}</li>
     </a>
+    </div>
     {% empty %}
+    <div class="col-sm-4">
     <li class="well">{% trans "No edition" %}</li>
+    </div>
     {% endfor %}
 </ul>
 

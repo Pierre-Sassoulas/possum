@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-{% load i18n %}
-<h1>{% trans "VAT" %}</h1>
+<h1>Gestion des imprimantes</h1>
 <ul class="list-inline">
-    {% for vat in vats %}
-        <div class="col-sm-3">
-            <a href='{% url "vats_change" vat.id %}'>
-                <li class="well">{{vat.name}} ({{vat.tax}})</li>
+    {% for printer in printers %}
+        <div class="col-sm-4">
+            <a href='{% url "printer_view" printer.id %}'>
+                <li class="well">{{printer.name}} {{printer.get_resume}}</li>
             </a>
         </div>
     {% endfor %}
-    <div class="col-sm-3">
-        <a href='{% url "vat_new" %}'>
+    <div class="col-sm-4">
+        <a href='{% url "printer_add" %}'>
             <li class="well-sansbg alert-success">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
             </li>

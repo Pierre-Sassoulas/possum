@@ -2,7 +2,6 @@
 {% block content %}
 {% load i18n %}
 <h1>{% trans "New payment" %}</h1>
-<div class="row">
 <div class="col-sm-6">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -25,23 +24,6 @@
             </ul>
         </div>
     </div>
-</div>
-<div class="col-sm-6">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <ul class="list-unstyled">
-                <a href="{% url 'bill_view' bill_id %}">
-                    <li class="possum-base alert-success">
-                        {% trans "Back" %}
-                    </li>
-                </a>
-            </ul>
-        </div>
-    </div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-6">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">2. {% trans "Amount" %}</h3>
@@ -70,6 +52,17 @@
     </div>
 </div>
 <div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href="{% url 'bill_view' bill_id %}">
+                    <li class="possum-base alert-success">
+                        {% trans "Back" %}
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
     <div class="panel panel-default panel-danger">
         <div class="panel-heading">
             <h3 class="panel-title">{% trans "Saved payments" %}</h3>
@@ -89,6 +82,5 @@
             </ul>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}
