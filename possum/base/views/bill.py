@@ -275,30 +275,6 @@ def product_set_made_with(request, bill_id, product_id, category_id):
 
 
 @login_required
-def product_select(request, bill_id, category_id):
-    ''' Select a product to add on a bill.
-    TODO
-    :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param category_id:
-    :type category_id:
-    '''
-    context = {'menu_bills': True, }
-    category = get_object_or_404(Categorie, pk=category_id)
-    if not category.vat_onsite:
-        messages.add_message(request, messages.ERROR,
-                             _("VAT on site is not defined"))
-    if not category.vat_takeaway:
-        messages.add_message(request, messages.ERROR,
-                             _("VAT take away is not defined"))
-    context['products'] = Produit.objects.filter(categorie=category,
-                                                 actif=True)
-    context['bill_id'] = bill_id
-    return render(request, 'bill/products.html', context)
-
-
-@login_required
 def subproduct_select(request, bill_id, sold_id, category_id):
     ''' Select a subproduct to a product.
     TODO
