@@ -47,9 +47,9 @@ LOG = logging.getLogger(__name__)
 
 @login_required
 def bill_new(request):
-    ''' Create a new bill.
+    """ Create a new bill.
     :param HttpRequest request:
-    '''
+    """
     context = {'menu_bills': True, }
     bill = Facture()
     bill.save()
@@ -57,13 +57,13 @@ def bill_new(request):
 
 
 def set_option(sold_id, option_id):
-    '''
+    """
     Enable/Disable an Option on a ProduitVendu.
     :param sold_id: TODO
     :type sold_id:
     :param option_id:
     :type option_id:
-    '''
+    """
     """
     """
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
@@ -77,11 +77,11 @@ def set_option(sold_id, option_id):
 
 @login_required
 def bill_send_kitchen(request, bill_id):
-    ''' Send in the kitchen
+    """ Send in the kitchen
     :param HttpRequest request: TODO
     :param bill_id:
     :type bill_id:
-    '''
+    """
     bill = get_object_or_404(Facture, pk=bill_id)
     erreur = False
     if not bill.table:
@@ -104,12 +104,12 @@ def bill_send_kitchen(request, bill_id):
 
 @login_required
 def bill_print(request, bill_id):
-    '''
+    """
     Print the bill.
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
-    '''
+    """
     bill = get_object_or_404(Facture, pk=bill_id)
     if bill.is_empty():
         messages.add_message(request, messages.ERROR, _("No product"))
@@ -130,11 +130,11 @@ def bill_print(request, bill_id):
 
 @login_required
 def table_select(request, bill_id, zone_pk=0):
-    ''' Select/modify table of a bill
+    """ Select/modify table of a bill
     :param HttpRequest request:
     :param bill_id: TODO
     :type bill_id:
-    '''
+    """
     context = {'menu_bills': True, }
     context['zones'] = Zone.objects.all()
     context['bill_id'] = bill_id
@@ -151,14 +151,14 @@ def table_select(request, bill_id, zone_pk=0):
 
 @login_required
 def table_set(request, bill_id, table_id):
-    ''' Select/modify table of a bill
+    """ Select/modify table of a bill
 
     :param HttpRequest request:
     :param bill_id: TODO
     :type bill_id:
     :param table_id:
     :type table_id:
-    '''
+    """
     context = {'menu_bills': True, }
     bill = get_object_or_404(Facture, pk=bill_id)
     table = get_object_or_404(Table, pk=table_id)
@@ -169,39 +169,39 @@ def table_set(request, bill_id, table_id):
 
 @login_required
 def set_number(request, bill_id, count):
-    ''' Set number of products to add
+    """ Set number of products to add
 
     :param HttpRequest request:
     :param bill_id: TODO
     :type bill_id:
     :param count:
     :type count:
-    '''
+    """
     request.session['count'] = int(count)
     return redirect('bill_categories', bill_id)
 
 
 def update_session_number_of_product(request, bill_id, count):
-    ''' This function update the value for the number of product we want to
+    """ This function update the value for the number of product we want to
     add in bill/categories.
 
     :param HttpRequest request:
     :param int bill_id: Useless parameter in order to use the same URL as the
     mother page.
     :param count: The value we want to update.
-    '''
+    """
     request.session['count'] = int(count)
     return HttpResponse('OK')
 
 
 @login_required
 def categories(request, bill_id, category_id=None):
-    ''' Select a product to add on a bill.
+    """ Select a product to add on a bill.
 
     :param HttpRequest request:
     :param int bill_id: The id of the bill
     :param int category_id: The id of the category
-    '''
+    """
     bill = get_object_or_404(Facture, pk=bill_id)
     if not set_edition_status(request, bill):
         return redirect('bill_view', bill.id)
@@ -238,14 +238,14 @@ def categories(request, bill_id, category_id=None):
 
 @login_required
 def product_select_made_with(request, bill_id, product_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param product_id:
     :type product_id:
-    '''
+    """
     context = {'menu_bills': True,
                'bill': get_object_or_404(Facture, pk=bill_id),
                'product': get_object_or_404(ProduitVendu, pk=product_id),
@@ -255,7 +255,7 @@ def product_select_made_with(request, bill_id, product_id):
 
 @login_required
 def product_set_made_with(request, bill_id, product_id, category_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
@@ -264,7 +264,7 @@ def product_set_made_with(request, bill_id, product_id, category_id):
     :type product_id:
     :param category_id:
     :type category_id:
-    '''
+    """
     product = get_object_or_404(ProduitVendu, pk=product_id)
     category = get_object_or_404(Categorie, pk=category_id)
     product.made_with = category
@@ -276,7 +276,7 @@ def product_set_made_with(request, bill_id, product_id, category_id):
 
 @login_required
 def subproduct_select(request, bill_id, sold_id, category_id):
-    ''' Select a subproduct to a product.
+    """ Select a subproduct to a product.
     TODO
     :param HttpRequest request:
     :param bill_id:
@@ -285,7 +285,7 @@ def subproduct_select(request, bill_id, sold_id, category_id):
     :type sold_id:
     :param category_id:
     :type category_id:
-    '''
+    """
     context = {'menu_bills': True, }
     category = get_object_or_404(Categorie, pk=category_id)
     context['products'] = Produit.objects.filter(categorie=category,
@@ -297,14 +297,14 @@ def subproduct_select(request, bill_id, sold_id, category_id):
 
 @login_required
 def sold_view(request, bill_id, sold_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param sold_id:
     :type sold_id:
-    '''
+    """
     context = {'menu_bills': True, }
     context['bill_id'] = bill_id
     context['sold'] = get_object_or_404(ProduitVendu, pk=sold_id)
@@ -321,7 +321,7 @@ def sold_view(request, bill_id, sold_id):
 
 @login_required
 def sold_option(request, bill_id, sold_id, option_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
@@ -330,14 +330,14 @@ def sold_option(request, bill_id, sold_id, option_id):
     :type sold_id:
     :param option_id:
     :type option_id:
-    '''
+    """
     set_option(sold_id, option_id)
     return redirect('sold_view', bill_id, sold_id)
 
 
 @login_required
 def sold_note(request, bill_id, sold_id, note_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
@@ -346,7 +346,7 @@ def sold_note(request, bill_id, sold_id, note_id):
     :type sold_id:
     :param note_id:
     :type note_id:
-    '''
+    """
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     note = get_object_or_404(Note, pk=note_id)
     if note in sold.notes.all():
@@ -359,14 +359,14 @@ def sold_note(request, bill_id, sold_id, note_id):
 
 @login_required
 def sold_delete(request, bill_id, sold_id):
-    ''' We remove a ProduitVendu on a Facture
+    """ We remove a ProduitVendu on a Facture
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param sold_id:
     :type sold_id:
-    '''
+    """
     bill = get_object_or_404(Facture, pk=bill_id)
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     request.session["products_modified"] = bill_id
@@ -389,7 +389,7 @@ def sold_delete(request, bill_id, sold_id):
 
 @login_required
 def subproduct_add(request, bill_id, sold_id, product_id):
-    ''' Add a product to a bill. If this product contains others products,
+    """ Add a product to a bill. If this product contains others products,
     we have to add them too.
     TODO
     :param HttpRequest request:
@@ -399,7 +399,7 @@ def subproduct_add(request, bill_id, sold_id, product_id):
     :type sold_id:
     :param product_id:
     :type product_id:
-    '''
+    """
     product = get_object_or_404(Produit, pk=product_id)
     sold = ProduitVendu(produit=product)
     sold.made_with = sold.produit.categorie
@@ -412,7 +412,7 @@ def subproduct_add(request, bill_id, sold_id, product_id):
 
 @login_required
 def sold_options(request, bill_id, sold_id, option_id=None):
-    ''' Choix des options à l'ajout d'un produit
+    """ Choix des options à l'ajout d'un produit
     si sold.produit.options_ok
 
     On aura accès à la liste complète des options
@@ -426,7 +426,7 @@ def sold_options(request, bill_id, sold_id, option_id=None):
     :type sold_id:
     :param option_id:
     :type option_id:
-    '''
+    """
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     context = {'menu_bills': True, }
     context['sold'] = sold
@@ -440,7 +440,7 @@ def sold_options(request, bill_id, sold_id, option_id=None):
 
 @login_required
 def sold_working(request, bill_id, sold_id):
-    ''' Va gérer les différents paramètres qui doivent être saisie
+    """ Va gérer les différents paramètres qui doivent être saisie
     sur un nouveau produit.
 
     request.session['menu_id'] : si présent, défini le menu
@@ -453,7 +453,7 @@ def sold_working(request, bill_id, sold_id):
     :type bill_id:
     :param sold_id:
     :type sold_id:
-    '''
+    """
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     if sold.produit.est_un_menu():
         category = sold.get_free_categorie()
@@ -490,22 +490,22 @@ def sold_working(request, bill_id, sold_id):
 
 @login_required
 def product_add(request, bill_id, product_id):
-    ''' Add a product to a bill. If this product contains others products,
+    """ Add a product to a bill. If this product contains others products,
     we have to add them too.
 
-    :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param product_id:
-    :type product_id:
-    '''
+    :param request: HttpRequest request
+    :param bill_id: Facture
+    :param product_id: Produit
+    """
     bill = get_object_or_404(Facture, pk=bill_id)
     if not set_edition_status(request, bill):
+        LOG.debug("[F%s] bill is already in edition mode" % bill_id)
         return redirect('bill_view', bill.id)
     product = get_object_or_404(Produit, pk=product_id)
 
     # how many products to add
     count = int(request.session.get('count', 1))
+    LOG.debug("[F%s] get %d X %s" % (bill_id, count, product))
     if count > 1:
         request.session['product_to_add'] = product_id
         request.session['product_count'] = count
@@ -513,6 +513,7 @@ def product_add(request, bill_id, product_id):
 
     sold = ProduitVendu(produit=product)
     sold.save()
+    LOG.debug("[F%s] ProduitVendu(%s) created" % (bill_id, product))
     bill.add_product(sold)
     request.session["products_modified"] = bill_id
     return redirect('bill_sold_working', bill_id, sold.id)
@@ -520,7 +521,7 @@ def product_add(request, bill_id, product_id):
 
 @login_required
 def sold_cooking(request, bill_id, sold_id, cooking_id=None):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
@@ -529,7 +530,7 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
     :type sold_id:
     :param cooking_id:
     :type cooking_id:
-    '''
+    """
     context = {'menu_bills': True, }
     context['sold'] = get_object_or_404(ProduitVendu, pk=sold_id)
     context['cookings'] = Cuisson.objects.order_by('priorite', 'nom')
@@ -553,12 +554,12 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
 
 @login_required
 def couverts_select(request, bill_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
-    '''
+    """
     """List of couverts for a bill"""
     context = {'menu_bills': True, }
     context['nb_couverts'] = range(43)
@@ -568,14 +569,14 @@ def couverts_select(request, bill_id):
 
 @login_required
 def couverts_set(request, bill_id, number):
-    ''' Set couverts of a bill
+    """ Set couverts of a bill
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param number:
     :type number:
-    '''
+    """
     context = {'menu_bills': True, }
     bill = get_object_or_404(Facture, pk=bill_id)
     bill.set_couverts(number)
@@ -585,10 +586,10 @@ def couverts_set(request, bill_id, number):
 
 @login_required
 def bill_home(request):
-    '''
+    """
     TODO
     :param HttpRequest request:
-    '''
+    """
     request = remove_edition(request)
     context = {'menu_bills': True, }
     context['need_auto_refresh'] = 30
@@ -599,12 +600,12 @@ def bill_home(request):
 
 @login_required
 def bill_view(request, bill_id):
-    ''' Get a bill.
+    """ Get a bill.
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
-    '''
+    """
     request = remove_edition(request)
     context = {'menu_bills': True, }
     bill = get_object_or_404(Facture, pk=bill_id)
@@ -619,11 +620,11 @@ def bill_view(request, bill_id):
 
 @login_required
 def bill_delete(request, bill_id):
-    '''
+    """
     :param HttpRequest request:
     :param bill_id: a bill
     :type bill_id: Facture
-    '''
+    """
     order = get_object_or_404(Facture, pk=bill_id)
     context = {'menu_bills': True, 'facture': order}
     if order.paiements.count() > 0:
@@ -651,12 +652,12 @@ def bill_delete(request, bill_id):
 
 @login_required
 def bill_onsite(request, bill_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
-    '''
+    """
     order = get_object_or_404(Facture, pk=bill_id)
     order.set_onsite(not order.onsite)
     order.save()
@@ -665,14 +666,14 @@ def bill_onsite(request, bill_id):
 
 @login_required
 def bill_payment_delete(request, bill_id, payment_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param payment_id:
     :type payment_id:
-    '''
+    """
     payment = get_object_or_404(Paiement, pk=payment_id)
     bill = get_object_or_404(Facture, pk=bill_id)
     bill.del_payment(payment)
@@ -681,14 +682,14 @@ def bill_payment_delete(request, bill_id, payment_id):
 
 @login_required
 def bill_payment_view(request, bill_id, payment_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param payment_id:
     :type payment_id:
-    '''
+    """
     context = {'menu_bills': True, }
     context['bill_id'] = bill_id
     context['payment'] = get_object_or_404(Paiement, pk=payment_id)
@@ -697,11 +698,11 @@ def bill_payment_view(request, bill_id, payment_id):
 
 @login_required
 def amount_payment(request):
-    ''' Permet de définir le montant d'un paiement
+    """ Permet de définir le montant d'un paiement
     bill_id doit etre dans request.session
 
     :param HttpRequest request:
-    '''
+    """
     bill_id = request.session.get('bill_id', False)
     if not bill_id:
         messages.add_message(request, messages.ERROR, _("Invalid bill"))
@@ -716,9 +717,9 @@ def amount_payment(request):
 
 @login_required
 def amount_count(request):
-    ''' Le nombre de tickets pour un paiement
+    """ Le nombre de tickets pour un paiement
     :param HttpRequest request:
-    '''
+    """
     bill_id = request.session.get('bill_id', False)
     if not bill_id:
         messages.add_message(request, messages.ERROR, _("Invalid bill"))
@@ -792,14 +793,14 @@ def amount_payment_add(request, number):
 
 @login_required
 def type_payment(request, bill_id, type_id):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param type_id:
     :type type_id:
-    '''
+    """
     type_payment = get_object_or_404(PaiementType, pk=type_id)
     request.session['type_selected'] = type_payment
     return redirect('prepare_payment', bill_id)
@@ -807,14 +808,14 @@ def type_payment(request, bill_id, type_id):
 
 @login_required
 def payment_count(request, bill_id, number):
-    '''
+    """
     TODO
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
     :param number:
     :type number:
-    '''
+    """
     try:
         request.session['tickets_count'] = int(number)
     except:
@@ -898,10 +899,11 @@ def set_edition_status(request, bill):
     :param Facture bill:
     """
     if not bill:
+        LOG.warning("We need a bill")
         return False
     if bill.in_use_by and bill.in_use_by != request.user:
-        messages.add_message(request,
-                             messages.ERROR,
+        LOG.warning("[F%s] Bill already in edition mode" % bill.pk)
+        messages.add_message(request, messages.ERROR,
                              "%s %s" % (_("Bill is being edited by"),
                                         request.user))
         return False
@@ -915,12 +917,10 @@ def set_edition_status(request, bill):
 
 @login_required
 def prepare_payment(request, bill_id):
-    ''' Page d'accueil pour la gestion des paiements.
-    TODO
-    :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    '''
+    """ Page d'accueil pour la gestion des paiements.
+    :param HttpRequest request: HttpRequest
+    :param bill_id: Pk of a Facture
+    """
     bill = get_object_or_404(Facture, pk=bill_id)
     if bill.est_soldee():
         messages.add_message(request, messages.ERROR, _("Nothing to pay"))

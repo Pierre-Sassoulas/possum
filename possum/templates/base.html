@@ -30,7 +30,7 @@
         <div class="navbar-header pull-left">
             <a class="navbar-brand {% if menu_bills %}gris{% endif %}" href="{% url 'bill_home' %}"><span class="glyphicon glyphicon-inbox"></span></a>
             <a class="navbar-brand {% if menu_kitchen %}gris{% endif %}" href="{% url 'kitchen' %}"><span class="glyphicon glyphicon-list-alt"></span></a>
-            <a class="navbar-brand {% if menu_jukebox %}gris{% endif %}" href="{% url 'jukebox_home' %}"><span class="glyphicon glyphicon-music"></span></a>
+            <a class="navbar-brand {% if menu_jukebox %}gris{% endif %}" href="{% url 'jukebox:home' %}"><span class="glyphicon glyphicon-music"></span></a>
             <a class="navbar-brand {% if menu_sales %}gris{% endif %}" href="{% url 'sales_home' %}"><span class="glyphicon glyphicon-shopping-cart"></span></a>
         </div>
         <div class="navbar-header pull-right">

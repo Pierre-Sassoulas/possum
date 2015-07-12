@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block content %}
+<h1>{% trans "Music Player" %}</h1>
+
+{% if jukebox_disable %}
+<p class="alert alert-danger">
+{% trans "The music server is is not set properly, or unreachable" %}</p>
+{% else %}
+<div class="col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Current status" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li class="pull-right">
+                    <a href='{% url "jukebox:previous" %}' class="btn btn-default">
+                        <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
+                    </a>
+                    <a href='{% url "jukebox:play" %}' class="btn btn-default">
+                        {% if play %}
+                        <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                        {% else %}
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        {% endif %}
+                    </a>
+                    <a href='{% url "jukebox:next" %}' class="btn btn-default">
+                        <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li class="well">{% trans "Artist" %}: {{artist}}</li>
+                <li class="well">{% trans "Title" %}: {{title}}</li>
+                <li>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: {{pourcent}}%">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Playlists" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                {% for pl in playlists %}
+                    <div class="col-sm-6">
+                        <a href="{% url 'jukebox:load' pl %}">
+                            <li class="well">{{pl}}</li>
+                        </a>
+                    </div>
+                {% empty %}
+                    <div class="col-sm-6">
+                        <li class="well">{% trans "No playlist available" %}</li>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

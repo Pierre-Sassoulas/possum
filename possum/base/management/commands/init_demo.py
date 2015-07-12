@@ -101,11 +101,11 @@ class Command(BaseCommand):
         vat_takeaway.save()
 
         # Options
-        Option(name="Frites").save()
-        Option(name="Salade").save()
-        Option(name="Creme").save()
-        Option(name="Haricots").save()
-        Option(name="Mayo").save()
+        Option(name="A_Frites").save()
+        Option(name="A_Salade").save()
+        Option(name="S_Creme").save()
+        Option(name="A_Haricots").save()
+        Option(name="S_Mayo").save()
 
         # Notes
         Note(message="Pas de sel").save()

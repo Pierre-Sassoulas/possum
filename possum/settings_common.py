@@ -28,7 +28,7 @@ from mpd import MPDClient
 
 from version import POSSUM_VERSION
 # Max number of added product in a bill
-MAX_NUMBER = 12
+MAX_NUMBER = 6
 
 # from django.utils.translation import ugettext as _
 # PATH CONFIGURATION
@@ -212,10 +212,7 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-        'file': {
+        'default': {
             'format': '[%(asctime)s %(module)s:%(lineno)d %(funcName)s] '
                       '%(levelname)-8s %(message)s',
         },
@@ -236,15 +233,14 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'default',
             'filters': ['require_debug_true'],
         },
         'file': {
-            'level': 'INFO',
+#            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': normpath(join(DJANGO_ROOT, 'possum.log')),
-            'formatter': 'file',
-            'filters': ['require_debug_false'],
+            'formatter': 'default',
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -273,8 +269,9 @@ LOGGING = {
             'propagate': False,
         },
         'possum': {
-            'handlers': ['mail_admins', 'file', 'mail_bugwatch', 'console'],
-            'level': 'WARNING',
+#            'handlers': ['mail_admins', 'file', 'mail_bugwatch', 'console'],
+            'handlers': ['mail_admins', 'file', 'mail_bugwatch'],
+            'level': 'DEBUG',
         }
     }
 }
