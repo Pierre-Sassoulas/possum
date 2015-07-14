@@ -11,11 +11,8 @@
 <div class="col-sm-8">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Current status" %}</h3>
-        </div>
-        <div class="panel-body">
-            <ul class="list-unstyled">
-                <li class="pull-right">
+            <h3 class="panel-title">{% trans "Current song" %}
+                <div class="pull-right">
                     <a href='{% url "jukebox:previous" %}' class="btn btn-default">
                         <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
                     </a>
@@ -29,12 +26,36 @@
                     <a href='{% url "jukebox:next" %}' class="btn btn-default">
                         <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
                     </a>
-                </li>
+                    <a href='{% url "jukebox:shuffle" %}' class="btn btn-default">
+                        <span class="glyphicon glyphicon-random" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
                 <li class="well">{% trans "Artist" %}: {{artist}}</li>
                 <li class="well">{% trans "Title" %}: {{title}}</li>
                 <li>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: {{pourcent}}%">
+                        <div class="progress-bar progress-bar-striped active"
+                            role="progressbar" style="width: {{pourcent}}%">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Volume" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning"
+                            role="progressbar" style="width: {{volume}}%">
                         </div>
                     </div>
                 </li>

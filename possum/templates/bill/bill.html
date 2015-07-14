@@ -42,10 +42,16 @@
                 <a href="{% url 'bill_home' %}">
                     <li class="possum-base alert-success">
                         {% trans "Back" %}</li></a>
-                <li class="possum-base well">{% trans "Creation" %}: {{facture}}</li>
-                <a href="{% url 'bill_delete' facture.id %}">
-                    <li class="possum-base alert-danger">
-                        {% trans "Remove" %}</li></a>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <p class="btn btn-default" role="button">
+                            {% trans "Creation" %}: {{facture}}</p>
+                        <a class="btn btn-default alert-danger"
+                            href="{% url 'bill_delete' facture.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </li>
                 <li class="possum-base">
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Justified button group">
@@ -59,11 +65,16 @@
                             role="button">{% if facture.onsite %}{% trans "on site" %}{% else %}{% trans "take away" %}{% endif %}</a>
                     </div>
                 </li>
-                <li class="possum-base well">{% trans "TTC" %}:
-                    {{facture.total_ttc}} {% trans "$" %}</li>
-                <a href='{% url "bill_print" facture.id %}'>
-                    <li class="possum-base alert-info">
-                        {% trans "Print bill" %}</li></a>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <p class="btn btn-default" role="button">
+                        {% trans "TTC" %}: {{facture.total_ttc}} {% trans "$" %}</p>
+                        <a href='{% url "bill_print" facture.id %}'
+                            class="alert-info btn btn-default" role="button">
+                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </li>
             </ul>
             <div class="input-group">
             </div>
@@ -73,7 +84,16 @@
 <!-- Kitchen begin -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Kitchen" %}</h3>
+                <h3 class="panel-title">{% trans "Kitchen" %}
+                    {% if facture.category_to_follow %}
+                    <div class="pull-right">
+                        <a href="{% url 'bill_send_kitchen' facture.id %}"
+                            class="btn btn-default cat_{{facture.category_to_follow_id}}" role="button">
+                                {% trans "Send" %} {{facture.category_to_follow.nom}} ?
+                        </a>
+                    </div>
+                    {% endif %}
+                </h3>
             </div>
             <div class="panel-body">
                 <ul class="list-unstyled">
@@ -82,14 +102,9 @@
                     <li class="possum-base cat_{{follow.category_id}}">
                         {{follow}}
                     </li></a>
-                    {% endfor %}
-                    {% if facture.category_to_follow %}
-                        <a href="{% url 'bill_send_kitchen' facture.id %}">
-                    <li class="possum-base cat_{{facture.category_to_follow_id}}">
-                    {% trans "Send" %} {{facture.category_to_follow.nom}} ?</li></a>
-                    {% else %}
+                    {% empty %}
                     <li class="possum-base well">{% trans "Nothing" %}</li>
-                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -97,7 +112,13 @@
 <!-- Payments begin -->
 <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Payments" %} ({% trans "remaining" %}: {{facture.restant_a_payer}} {% trans "$" %})</h3>
+                <h3 class="panel-title">{% trans "Payments" %}
+                    <div class="pull-right">
+                        <p class="btn btn-default" role="button">
+                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                        </p>
+                    </div>
+                </h3>
             </div>
             <div class="panel-body">
                 <ul class="list-unstyled">

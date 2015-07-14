@@ -67,15 +67,18 @@ def home(request):
     if check_cnx():
         listplaylists = settings.MPD_CLIENT.listplaylists()
         status = settings.MPD_CLIENT.status()
+        # status['time'] = '80:130'
+        #   80: time elapsed
+        #   130: total time
         # state == play, stop, pause, ...
         context[status['state']] = True
         try:
+            context["volume"] = status["volume"]
+            elapsed, time = status['time'].split(":")
+            context["pourcent"] = int(int(elapsed)*100 / int(time))
             infos = settings.MPD_CLIENT.currentsong()
             context["title"] = infos['title']
             context["artist"] = infos['artist']
-            elapsed = int(status['elapsed'].split(".")[0])
-            time = int(infos['time'])
-            context["pourcent"] = int(elapsed*100 / time)
         except:
             LOG.info("can't retrieve current song")
         context['playlists'] = [t['playlist'] for t in listplaylists]
@@ -136,6 +139,19 @@ def next_song(request):
         try:
             LOG.debug("next song")
             settings.MPD_CLIENT.next()
+        except:
+            messages.add_message(request, messages.ERROR, _("Error"))
+    return redirect("jukebox:home")
+
+
+def shuffle(request):
+    """Shuffle songs in playlist
+    :param request: HttpRequest
+    """
+    if check_cnx():
+        try:
+            LOG.debug("shuffle")
+            settings.MPD_CLIENT.shuffle()
         except:
             messages.add_message(request, messages.ERROR, _("Error"))
     return redirect("jukebox:home")

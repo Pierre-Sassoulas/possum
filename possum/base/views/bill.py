@@ -97,8 +97,7 @@ def bill_send_kitchen(request, bill_id):
         messages.add_message(request, messages.ERROR,
                              _("Error in printing (printer ok?)"))
     if not erreur:
-        messages.add_message(request, messages.SUCCESS, "%s %s" % (bill.table,
-                                                                   _("sent")))
+        LOG.info("[F%s] sent" % bill.id)
     return redirect('bill_view', bill.id)
 
 
