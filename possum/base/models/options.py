@@ -23,17 +23,6 @@ from django.db import models
 from possum.base.models.generic import Priorite, NomDouble
 
 
-class Cuisson(NomDouble, Priorite):
-
-    """Cuisson d'un produit"""
-
-    def __cmp__(self, other):
-        return cmp(self.priorite, other.priorite)
-
-    def __unicode__(self):
-        return self.nom
-
-
 class Option(models.Model):
 
     """Toutes les options possibles pour un produit. """

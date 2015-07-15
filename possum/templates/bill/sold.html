@@ -64,8 +64,8 @@
 {% endif %}
 {% if sold.produit.choix_cuisson %}
                     <a href='{% url "sold_cooking" bill_id sold.id %}'>
-                        <li class="possum-base cooking_{{sold.cuisson_id}}">
-                            {% trans "Cooking" %}: {{sold.cuisson}}</li></a>
+                        <li class="possum-base cooking_{{sold.cooking}}">
+                            {% trans "Cooking" %}: {{sold.get_cooking}}</li></a>
 {% endif %}
                 </ul>
             </div>

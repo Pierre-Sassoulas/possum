@@ -92,9 +92,9 @@ li.surtaxe {
     background-color: #e7e7e7;
 }
 /* Cooking colors */
-.cooking_1 {background:#8CC6D7;}
-.cooking_2 {background:#DB0B32;}
-.cooking_3 {background:#C44C51;}
-.cooking_4 {background:#B78178;}
+.cooking_0 {background:#8CC6D7;}
+.cooking_1 {background:#DB0B32;}
+.cooking_2 {background:#C44C51;}
+.cooking_3 {background:#B78178;}
 /* no blue for link */
 a, a:visited, a:hover { color: black; }

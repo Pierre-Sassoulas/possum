@@ -3,11 +3,11 @@
 {% load i18n %}
 <h1>{% trans "Choice of cooking for" %}: {{sold.produit.nom}}</h1>
 <ul class="list-unstyled">
-    {% for cooking in cookings %}
+    {% for c_id, cooking in sold.TYPE_COOKING %}
     <div class="col-sm-6">
-    <a href='{% url "sold_cooking" bill_id sold.id cooking.id %}'>
-    <li class="cooking_{{cooking.id}} possum-base">
-        {{cooking}}
+    <a href='{% url "sold_cooking" bill_id sold.id c_id %}'>
+    <li class="cooking_{{c_id}} possum-base">
+        {% trans cooking %}
     </li></a></div>
     {% empty %}
     <div class="col-sm-6">

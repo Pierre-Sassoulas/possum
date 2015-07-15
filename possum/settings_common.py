@@ -66,6 +66,15 @@ MPD_PORT = 6600
 MPD_PWD = ""
 MPD_CLIENT = MPDClient()
 
+# Bills color, time in seconds
+# 3600 = 1h
+# 2400 = 40m
+# 1800 = 30m
+# 1200 = 20m
+# 600 = 10m
+CRITICAL = 2400
+WARNING = 1200
+INFO = 600
 
 def create_secret_key():
     ''' Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then

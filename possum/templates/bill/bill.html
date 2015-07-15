@@ -1,10 +1,19 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<h2>{% trans "Order" %} #{{facture.id}}</h2>
 <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Order" %} #{{facture.id}}
+                    <div class="pull-right">
+                        <a href='{% url "bill_categories" facture.id %}'
+                            class="btn btn-default alert-success" role="button">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </h3>
+            </div>
             <div class="panel-body">
                <ul class="list-unstyled">
     {% for sold in products_sold %}
@@ -26,10 +35,6 @@
         {{sold}}</li></a>
     {% endif %}
     {% endfor %}
-    <a href='{% url "bill_categories" facture.id %}'>
-        <li class="possum-base alert-success">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-        </li></a>
                 </ul>
             </div>
         </div>

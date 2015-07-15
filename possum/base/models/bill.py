@@ -79,17 +79,6 @@ class Facture(models.Model):
 
     class Meta:
         get_latest_by = 'id'
-        permissions = (
-            ("p1", "can use manager part"),
-            ("p2", "can use carte part"),
-            ("p3", "can use POS"),
-            ("p4", "can ..."),
-            ("p5", "can ..."),
-            ("p6", "can ..."),
-            ("p7", "can ..."),
-            ("p8", "can ..."),
-            ("p9", "can ..."),
-        )
 
     def __unicode__(self):
         '''
@@ -173,8 +162,7 @@ class Facture(models.Model):
         output = []
         for product in self.reduced_sold_list(products, full=True):
             tmp = "%dx %s " % (product.count, product.produit.nom)
-            if product.cuisson:
-                tmp += "%s " % product.cuisson
+            tmp += "%s " % product.get_cooking(short=True)
             tmp += ",".join([option.name for option in product.options.all()])
             output.append(tmp)
             for note in product.notes.all():
@@ -538,3 +526,21 @@ class Facture(models.Model):
                 sold_dict[key].count = 1
                 sold_dict[key].members = [sold, ]
         return sorted(sold_dict.values())
+
+    def get_last_change(self):
+        """Used to detect bill with no change since a while
+
+        Last change is:
+        - creation date
+        - last follow
+
+        :return: number of seconds from last change on this bill
+        """
+        try:
+            date = self.following.last().date
+        except AttributeError:
+            date = self.date_creation
+        now = datetime.datetime.now()
+        sec = int((now - date).total_seconds())
+        LOG.debug("[F%s] sec: %d" % (self.id, sec))
+        return sec

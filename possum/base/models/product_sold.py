@@ -21,26 +21,29 @@
 import logging
 
 from django.db import models
+from django.utils.translation import ugettext as _
 
 from possum.base.models.category import Categorie
 from possum.base.models.note import Note
-from possum.base.models.options import Cuisson, Option
+from possum.base.models.options import Option
 from possum.base.models.product import Produit
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 class ProduitVendu(models.Model):
-
     """le prix sert a affiche correctement les prix pour les surtaxes
 
-    options1 et options2 sont les options sélectionnées.
+    :param options: options sélectionnées
+    :param cooking: cuissons
     """
+    TYPE_COOKING = ((0, "Bleu"), (1, "Saignant"), (2, "A point"),
+                    (3, "Bien cuit"))
+    SHORT = ["B", "S", "AP", "BC"]
     date = models.DateTimeField(auto_now_add=True)
     produit = models.ForeignKey(Produit, related_name="produit_vendu_produit")
-    cuisson = models.ForeignKey(Cuisson, null=True, blank=True,
-                                related_name="produit_vendu_cuisson")
+    cooking = models.SmallIntegerField(choices=TYPE_COOKING, default=42)
     prix = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     options = models.ManyToManyField(Option, blank=True)
     # dans le cas d'un menu, peut contenir d'autres produits
@@ -70,16 +73,59 @@ class ProduitVendu(models.Model):
             products = []
             for sold in self.contient.iterator():
                 name = sold.produit.nom[:6]
-                if sold.cuisson:
-                    name += sold.cuisson.nom_facture
+                name += sold.get_cooking()
                 products.append(name)
             tmp += " "
             tmp += "/".join(products)
         else:
             # cas d'un Produit simple
-            if self.cuisson:
-                tmp += " %s" % self.cuisson.nom_facture
+            tmp += " %s" % self.get_cooking()
         return tmp
+
+    def is_cooking_set(self):
+        """
+        :return: Boolean
+        """
+        if self.produit.choix_cuisson and self.cooking == 42:
+            return False
+        return True
+
+    def get_cooking(self, short=False):
+        """Give product cooking
+        If short, we give only one or two letter.
+
+        :param short: Boolean"""
+        if self.produit.choix_cuisson:
+            if short:
+                try:
+                    return _(self.SHORT[self.cooking])
+                except:
+                    return "ND"
+            else:
+                try:
+                    return _(self.TYPE_COOKING[self.cooking][1])
+                except:
+                    return "Not Defined"
+        else:
+            return ""
+
+    def set_cooking(self, cooking):
+        """Set cooking level
+        :param cooking: int cooking id
+        """
+        try:
+            new = int(cooking)
+        except:
+            LOG.warning("bad cooking id")
+            return False
+        if new > -1 and new < len(self.SHORT):
+            LOG.info("[%s] cooking = %d" % (self.id, new))
+            self.cooking = new
+            self.save()
+            return True
+        else:
+            LOG.warning("[%s] invalid cooking %d" % (self.id, new))
+            return False
 
     def is_full(self):
         """
@@ -90,15 +136,15 @@ class ProduitVendu(models.Model):
         nb_produits = self.contient.count()
         nb_categories = self.produit.categories_ok.count()
         if nb_produits == nb_categories:
-            LOGGER.debug("product is full")
+            LOG.debug("product is full")
             return True
         elif nb_produits > nb_categories:
             msg = "product id [%s] have more products" % self.id
             msg += " that categories authorized"
-            LOGGER.warning(msg)
+            LOG.warning(msg)
             return True
         else:
-            LOGGER.debug("product is not full")
+            LOG.debug("product is not full")
             return False
 
     def __cmp__(self, other):
@@ -131,7 +177,7 @@ class ProduitVendu(models.Model):
                     return categorie
         else:
             msg = "Product [%s] have no categories_ok, return None" % self.id
-            LOGGER.warning(msg)
+            LOG.warning(msg)
         return None
 
     def get_identifier(self):
@@ -146,21 +192,17 @@ class ProduitVendu(models.Model):
             options = "O".join([str(i.id) for i in self.options.all()])
         else:
             options = ""
-        if self.cuisson:
-            cuisson = "C%s" % self.cuisson.id
-        else:
-            cuisson = ""
         if self.produit:
             produit = str(self.produit.id)
         else:
             produit = ""
-        return "P%s_C%s_O%s_N%s" % (produit, cuisson, options, notes)
+        return "P%s_C%s_O%s_N%s" % (produit, self.cooking, options, notes)
 
     def set_prize(self, prize):
         ''' Set prize for the product sold
         :param Decimal prize:
         '''
         if self.prix != prize:
-            LOGGER.debug("[%s] prize: %s > %s" % (self.id, self.prix, prize))
+            LOG.debug("[%s] prize: %s > %s" % (self.id, self.prix, prize))
             self.prix = prize
             self.save()

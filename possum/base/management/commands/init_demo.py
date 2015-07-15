@@ -26,7 +26,7 @@ import random
 
 from possum.base.models import (Categorie, Zone, VAT, Config, Table, Facture,
                                 PaiementType, Produit, ProduitVendu, Option,
-                                Note, Cuisson)
+                                Note)
 from possum.stats.models import Stat
 
 
@@ -49,12 +49,6 @@ class Command(BaseCommand):
                         email="%s@possum-software.org" % username)
             user.set_password(username)
             user.save()
-
-        # Cuisson
-        Cuisson(priorite=10, nom_facture="B", nom="bleu").save()
-        Cuisson(priorite=15, nom_facture="S", nom="saignant").save()
-        Cuisson(priorite=20, nom_facture="AP", nom="a point").save()
-        Cuisson(priorite=25, nom_facture="BC", nom="bien cuit").save()
 
         # Type de paiements
         PaiementType(nom='AMEX', fixed_value=False).save()

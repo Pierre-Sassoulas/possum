@@ -29,16 +29,9 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 
 from possum.base.forms import NoteForm
-from possum.base.models import Categorie
-from possum.base.models import Config
-from possum.base.models import Cuisson
-from possum.base.models import Facture
-from possum.base.models import Note
-from possum.base.models import Option
-from possum.base.models import PaiementType, Paiement
-from possum.base.models import Printer
-from possum.base.models import Produit, ProduitVendu
-from possum.base.models import Zone, Table
+from possum.base.models import (Categorie, Config, Facture, Note, Option,
+                                PaiementType, Paiement, Printer, Produit,
+                                ProduitVendu, Zone, Table)
 from possum.base.views import remove_edition, cleanup_payment
 
 
@@ -459,7 +452,7 @@ def sold_working(request, bill_id, sold_id):
         if category:
             return redirect('subproduct_select', bill_id, sold.id,
                             category.id)
-    if sold.produit.choix_cuisson and not sold.cuisson:
+    if not sold.is_cooking_set():
         return redirect('sold_cooking', bill_id, sold.id)
     if sold.produit.options_ok.count() and not sold.options.count():
         return redirect('bill_sold_options', bill_id, sold.id)
@@ -532,15 +525,12 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
     """
     context = {'menu_bills': True, }
     context['sold'] = get_object_or_404(ProduitVendu, pk=sold_id)
-    context['cookings'] = Cuisson.objects.order_by('priorite', 'nom')
     context['bill_id'] = bill_id
     if cooking_id:
-        cooking = get_object_or_404(Cuisson, pk=cooking_id)
-        old = context['sold'].cuisson
-        context['sold'].cuisson = cooking
-        context['sold'].save()
-        LOG.debug("[S%s] cooking saved" % sold_id)
-        if old is None:
+        cooking_set = context['sold'].is_cooking_set()
+        context['sold'].set_cooking(cooking_id)
+        LOG.debug("[S%s] cooking saved: %s" % (sold_id, cooking_id))
+        if not cooking_set:
             LOG.debug("[%s] no cooking present" % bill_id)
             # certainement un nouveau produit donc on veut retourner
             # sur le panneau de saisie des produits
@@ -585,14 +575,28 @@ def couverts_set(request, bill_id, number):
 
 @login_required
 def bill_home(request):
-    """
-    TODO
+    """Get current list of bills, and set a parameter to indicate
+    long time bill without activities
+
     :param HttpRequest request:
     """
     request = remove_edition(request)
     context = {'menu_bills': True, }
-    context['need_auto_refresh'] = 30
+    context['need_auto_refresh'] = 45
     context['factures'] = Facture().non_soldees()
+    for bill in context['factures']:
+        sec = bill.get_last_change()
+        if sec > settings.CRITICAL:
+            bill.alert = "alert-danger"
+        elif sec > settings.WARNING:
+            bill.alert = "alert-warning"
+        elif sec > settings.INFO:
+            bill.alert = "alert-info"
+        else:
+            bill.alert = "alert-success"
+    context['critical'] = settings.CRITICAL
+    context['warning'] = settings.WARNING
+    context['info'] = settings.INFO
     context['count'] = len(context['factures'])
     return render(request, 'bill/home.html', context)
 

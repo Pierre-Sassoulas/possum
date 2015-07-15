@@ -21,7 +21,7 @@
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
-from possum.base.models import (Categorie, Cuisson, Paiement, PaiementType,
+from possum.base.models import (Categorie, Paiement, PaiementType,
                                 Facture, Produit, Follow, Table, Zone, VAT,
                                 Printer, VATOnBill, Config)
 from possum.stats.models import Stat
@@ -47,11 +47,6 @@ class Command(BaseCommand):
         PaiementType.objects.all().delete()
         Paiement.objects.all().delete()
         Config.objects.all().delete()
-
-        Cuisson(priorite=10, nom_facture="B", nom="bleu").save()
-        Cuisson(priorite=15, nom_facture="S", nom="saignant").save()
-        Cuisson(priorite=20, nom_facture="AP", nom="a point").save()
-        Cuisson(priorite=25, nom_facture="BC", nom="bien cuit").save()
 
         self.stdout.write("Add a manager")
         user = User(username="demo",

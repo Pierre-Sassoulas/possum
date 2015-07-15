@@ -32,7 +32,7 @@ from django.contrib.auth.decorators import user_passes_test
 from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
 from possum.base.models import Printer
 from possum.base.views import check_admin
-from .models import Stat, STATS
+from .models import Stat
 
 
 LOG = logging.getLogger(__name__)
@@ -73,7 +73,7 @@ def get_series(rapport, interval, begin, end):
     series = []
     for key in RAPPORTS[rapport]['keys']:
         LOG.warning(key)
-        serie = {'name': STATS[key], 'data': []}
+        serie = {'name': _(key), 'data': []}
         for stat in Stat.objects.filter(key=key, interval=interval,
                                         date__gte=begin, date__lt=end):
             serie['data'].append([stat.date.isoformat(), int(stat.value)])

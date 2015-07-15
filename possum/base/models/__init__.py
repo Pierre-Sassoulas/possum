@@ -24,7 +24,7 @@ from .follow import Follow
 from .generic import Nom, NomDouble, Priorite
 from .location import Table, Zone
 from .note import Note
-from .options import Cuisson, Option
+from .options import Option
 from .payment import Paiement, PaiementType
 from .printer import Printer
 from .product import Produit

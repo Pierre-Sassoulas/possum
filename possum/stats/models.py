@@ -37,11 +37,13 @@ from possum.base.models import VAT
 
 LOG = logging.getLogger(__name__)
 # availables stats and keys
-STATS = {"total_ttc": _("Total TTC"), "nb_bills": _("Orders count"),
-         "guests_total_ttc": _("Guests total TTC"),
-         "guests_nb": _("Guests count"), "guests_average": _("Avg per guest"),
-         "bar_total_ttc": _("Bar total TTC"), "bar_nb": _("Bar orders count"),
-         "bar_average": _("Avg per order")}
+#STATS = {"total_ttc": _("Total TTC"), "nb_bills": _("Orders count"),
+#         "guests_total_ttc": _("Guests total TTC"),
+#         "guests_nb": _("Guests count"), "guests_average": _("Avg per guest"),
+#         "bar_total_ttc": _("Bar total TTC"), "bar_nb": _("Bar orders count"),
+#         "bar_average": _("Avg per order")}
+STATS = ["total_ttc", "nb_bills", "guests_total_ttc", "guests_nb",
+         "guests_average", "bar_total_ttc", "bar_nb", "bar_average"]
 
 
 def get_month(date):
@@ -198,7 +200,7 @@ def compute_all_time():
     """Update all time stats (average and max) for main keys
     """
     LOG.debug("update all time stats")
-    for key in STATS.keys():
+    for key in STATS:
         # for days
         stats = Stat.objects.filter(interval="d", key=key)
         avg, created = Stat.objects.get_or_create(interval="a",
@@ -421,7 +423,7 @@ class Stat(models.Model):
         context['date'] = find_right_date(context['date'], context['interval'])
         stats = Stat.objects.filter(interval=context['interval'],
                                     date=context['date'])
-        for key in STATS.keys():
+        for key in STATS:
             try:
                 value = "%.2f" % stats.get(key=key).value
             except:
