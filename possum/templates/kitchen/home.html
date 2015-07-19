@@ -19,8 +19,8 @@
         {% if facture.following %}
     <tr>
         <td width="5em">{{facture.following.latest.time}}</td>
-        <td width="5em">{{facture.table}}</td>
-        <td width="5em">{{facture.couverts}}</td>
+        <td width="5em"><b>{{facture.table}}</b></td>
+        <td width="5em"><b>{{facture.couverts}}</b></td>
         <td class="cat_{{facture.follow.category_id}}">
             {{facture.follow.category}}</td>
             {% for product in facture.todo %}

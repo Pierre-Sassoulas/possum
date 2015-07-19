@@ -24,6 +24,7 @@ Usage: ./make [a command]
 For all:
 --------
     doc                :  make the documentation in html
+    log                :  display logs (Ctrl+C to exit)
     help               :  this help
 
 For administrators:
@@ -272,6 +273,18 @@ function clear_db {
 #    ./manage.py flush --noinput
 }
 
+function log {
+    # use multitail to display log when available
+    # else, we use tail
+    TAIL=$(which multitail 2>/dev/null)
+    if [ $? -eq 0 ]
+    then
+        $TAIL ./possum.log
+    else
+        tail -f ./possum.log
+    fi
+}
+
 if [ ! $# -eq 1 ]
 then
     my_help
@@ -342,6 +355,9 @@ big_clean)
             rm -rf ${FILE}
         fi
     done
+    ;;
+log)
+    log
     ;;
 tests)
     tests

@@ -190,6 +190,9 @@ def update_session_number_of_product(request, bill_id, count):
 def categories(request, bill_id, category_id=None):
     """ Select a product to add on a bill.
 
+    current_cat must be an integer, else template processor will not
+    accept, for example, "3" == 3
+
     :param HttpRequest request:
     :param int bill_id: The id of the bill
     :param int category_id: The id of the category
@@ -223,9 +226,9 @@ def categories(request, bill_id, category_id=None):
                'products_sold': bill.reduced_sold_list(bill.produits.all()),
                # By default we add one product only
                'count': request.session.get('count', 1),
-               'current_cat': category_id}
+               'current_cat': int(category_id)}
     LOG.debug("Context for categories : {0}".format(context))
-    return render(request, 'bill/categories.html', context)
+    return render(request, 'bill/modify.html', context)
 
 
 @login_required
@@ -598,7 +601,7 @@ def bill_home(request):
     context['warning'] = settings.WARNING
     context['info'] = settings.INFO
     context['count'] = len(context['factures'])
-    return render(request, 'bill/home.html', context)
+    return render(request, 'bill/facture_list.html', context)
 
 
 @login_required
@@ -618,7 +621,7 @@ def bill_view(request, bill_id):
         messages.add_message(request, messages.ERROR,
                              _("This invoice has already been ended"))
         return redirect('bill_home')
-    return render(request, 'bill/bill.html', context)
+    return render(request, 'bill/facture_detail.html', context)
 
 
 @login_required

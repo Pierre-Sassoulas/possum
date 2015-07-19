@@ -4,13 +4,16 @@ Release notes
 v0.6.0
 ------
 
-Release date: ??/??/2015
+Release date: 21/07/2015
 
 * MPD Client
 * optimization on bills workflow
 * check for new version for manager
 * django 1.7
 * South removed
+* Warning on tables without action since a while
+* Cooking rework
+* Permissions rework
 
 v0.5.1
 ------

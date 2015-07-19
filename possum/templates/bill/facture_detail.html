@@ -62,9 +62,9 @@
                         aria-label="Justified button group">
                         <a href="{% url 'table_select' facture.id %}"
                             class="btn btn-default {% if facture.surcharge %}alert-warning{% endif %}"
-                            role="button">{% trans "Table" %}: {{facture.table.nom}}</a>
+                            role="button">{% trans "Table" %}: <b>{{facture.table.nom}}</b></a>
                         <a href="{% url 'couverts_select' facture.id %}"
-                            class="btn btn-default" role="button">{% trans "Guests" %}: {{facture.couverts}}</a>
+                            class="btn btn-default" role="button">{% trans "Guests" %}: <b>{{facture.couverts}}</b></a>
                         <a href="{% url 'bill_onsite' facture.id %}"
                             class="btn btn-default {% if facture.onsite %}alert-success{% else %}alert-danger{% endif %}"
                             role="button">{% if facture.onsite %}{% trans "on site" %}{% else %}{% trans "take away" %}{% endif %}</a>
@@ -73,7 +73,7 @@
                 <li class="possum-base">
                     <div class="btn-group btn-group-justified" role="group">
                         <p class="btn btn-default" role="button">
-                        {% trans "TTC" %}: {{facture.total_ttc}} {% trans "$" %}</p>
+                        {% trans "TTC" %}: <b>{{facture.total_ttc}}</b> {% trans "$" %}</p>
                         <a href='{% url "bill_print" facture.id %}'
                             class="alert-info btn btn-default" role="button">
                             <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -86,6 +86,32 @@
         </div>
     </div>
 <!-- Infos end -->
+<!-- Payments begin -->
+<div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Payments" %}
+                    <div class="pull-right">
+                        <p class="btn btn-default" role="button">
+                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                        </p>
+                    </div>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+    {% for payment in facture.paiements.iterator %}
+    <a href='{% url "bill_payment_view" facture.id payment.id %}'>
+    <li class="possum-base well">
+    {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li></a>
+    {% endfor %}
+        <a href='{% url "prepare_payment" facture.id %}'>
+    <li class="possum-base alert-success">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </li></a>
+                </ul>
+            </div>
+        </div>
+<!-- Payments end -->
 <!-- Kitchen begin -->
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -114,32 +140,6 @@
             </div>
         </div>
 <!-- Kitchen end -->
-<!-- Payments begin -->
-<div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Payments" %}
-                    <div class="pull-right">
-                        <p class="btn btn-default" role="button">
-                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
-                        </p>
-                    </div>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-unstyled">
-    {% for payment in facture.paiements.iterator %}
-    <a href='{% url "bill_payment_view" facture.id payment.id %}'>
-    <li class="possum-base well">
-    {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li></a>
-    {% endfor %}
-        <a href='{% url "prepare_payment" facture.id %}'>
-    <li class="possum-base alert-success">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-        </li></a>
-                </ul>
-            </div>
-        </div>
-<!-- Payments end -->
     </div>
 </div>
 {% endblock %}

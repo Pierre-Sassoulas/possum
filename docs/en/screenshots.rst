@@ -3,7 +3,7 @@ Screenshots
 
 From version 0.5, the entire interface is used directly in a browser.
 You can test Possum easily using the login **demo** and password
-**demo** on the `demo site <http://demo.en.possum-software.org/>`_.
+**demo** on the `demo site <http://demo.0.6.en.possum-software.org/>`_.
 
 The demo site is reset every night.
 

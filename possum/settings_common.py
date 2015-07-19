@@ -64,7 +64,7 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 MPD_HOST = ""
 MPD_PORT = 6600
 MPD_PWD = ""
-MPD_CLIENT = MPDClient()
+#MPD_CLIENT = MPDClient()
 
 # Bills color, time in seconds
 # 3600 = 1h
