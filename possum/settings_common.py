@@ -27,8 +27,6 @@ from django.utils.translation import ugettext_lazy as _
 from mpd import MPDClient
 
 from version import POSSUM_VERSION
-# Max number of added product in a bill
-MAX_NUMBER = 6
 
 # from django.utils.translation import ugettext as _
 # PATH CONFIGURATION

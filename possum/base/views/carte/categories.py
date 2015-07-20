@@ -27,15 +27,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test
 
-from possum.base.models import Categorie
-from possum.base.models import Printer
-from possum.base.models import Produit
-from possum.base.models import VAT
+from possum.base.models import Categorie, Config, Printer, Produit, VAT
 from possum.base.views import check_admin
 from possum.stats.models import Stat
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 @user_passes_test(check_admin)
@@ -129,14 +126,14 @@ def categories_delete(request, category_id):
                     product.categorie = report
                     product.save()
             except Categorie.DoesNotExist:
-                LOGGER.warning("[%s] category [%s] doesn't exist" % (
-                               request.user.username, cat_report_id))
+                LOG.warning("[%s] category [%s] doesn't exist" % (
+                            request.user.username, cat_report_id))
                 messages.add_message(request, messages.ERROR,
                                      _("Category does not exist"))
                 return redirect('categories_delete', category_id)
             report_info = "from [%s] to [%s]" % (context['current_cat'],
                                                  report)
-            LOGGER.info("move stats %s" % report_info)
+            LOG.info("move stats %s" % report_info)
             for key in ["category_nb", "category_value"]:
                 new_key = "%s_%" % (cat_report_id, key)
                 for s in Stat.objects.filter(key="%s_%s" % (category_id, key)):
@@ -148,7 +145,7 @@ def categories_delete(request, category_id):
                                                               interval=s.interval)
                     new.add_value(s.value)
                     s.delete()
-            LOGGER.info("copy products %s" % report_info)
+            LOG.info("copy products %s" % report_info)
             for product in products_list:
                 new = product._clone_product()
                 new.categorie = report
@@ -156,9 +153,8 @@ def categories_delete(request, category_id):
                 new.save()
         if products_list.count() == 0:
             context['current_cat'].delete()
-            LOGGER.info("[%s] category [%s] deleted" % (
-                        request.user.username,
-                        context['current_cat'].nom))
+            LOG.info("[%s] category [%s] deleted" % (request.user.username,
+                     context['current_cat'].nom))
             return redirect('categories')
         else:
             messages.add_message(request, messages.ERROR,
@@ -211,11 +207,10 @@ def categories_new(request):
             cat.priorite = priority
         try:
             cat.save()
-            LOGGER.info("[%s] new categorie [%s]" % (request.user.username,
-                                                     name))
+            LOG.info("[%s] new categorie [%s]" % (request.user.username, name))
         except:
-            LOGGER.warning("[%s] new categorie failed: [%s] [%s]" % (
-                           request.user.username, cat.priorite, cat.nom))
+            LOG.warning("[%s] new categorie failed: [%s] [%s]" % (
+                        request.user.username, cat.priorite, cat.nom))
             messages.add_message(request, messages.ERROR,
                                  _("New category has not been created"))
     else:
@@ -263,8 +258,8 @@ def categories_less_priority(request, category_id, nb=1):
     '''
     cat = get_object_or_404(Categorie, pk=category_id)
     cat.set_less_priority(nb)
-    LOGGER.info("[%s] cat [%s] priority - %d" % (request.user.username,
-                                                 cat.nom, nb))
+    LOG.info("[%s] cat [%s] priority - %d" % (request.user.username, cat.nom,
+                                              nb))
     return redirect('categories_view', category_id)
 
 
@@ -280,8 +275,8 @@ def categories_more_priority(request, category_id, nb=1):
     '''
     cat = get_object_or_404(Categorie, pk=category_id)
     cat.set_more_priority(nb)
-    LOGGER.info("[%s] cat [%s] priority + %d" % (request.user.username,
-                                                 cat.nom, nb))
+    LOG.info("[%s] cat [%s] priority + %d" % (request.user.username, cat.nom,
+                                              nb))
     return redirect('categories_view', category_id)
 
 
@@ -301,8 +296,8 @@ def categories_surtaxable(request, category_id):
     cat.save()
     for product in Produit.objects.filter(categorie=cat).iterator():
         product.update_vats()
-    LOGGER.info("[%s] cat [%s] surtaxable: %s" % (request.user.username,
-                cat.nom, cat.surtaxable))
+    LOG.info("[%s] cat [%s] surtaxable: %s" % (request.user.username,
+                                               cat.nom, cat.surtaxable))
     return redirect('categories_view', category_id)
 
 
@@ -352,10 +347,10 @@ def categories_set_vat(request, category_id, vat_id):
     type_vat = request.session.get('vat', "")
     if type_vat:
         if type_vat == 'vat_onsite':
-            LOGGER.debug("[%s] new vat onsite" % category)
+            LOG.debug("[%s] new vat onsite" % category)
             category.set_vat_onsite(vat)
         else:
-            LOGGER.debug("[%s] new vat takeaway" % category)
+            LOG.debug("[%s] new vat takeaway" % category)
             category.set_vat_takeaway(vat)
         del request.session['vat']
         for product in Produit.objects.filter(categorie=category,
@@ -373,14 +368,14 @@ def update_colors():
     try:
         fd = open(settings.CAT_CSS, "w")
     except:
-        LOGGER.warning("Can't open file: %s" % settings.CAT_CSS)
+        LOG.warning("Can't open file: %s" % settings.CAT_CSS)
     else:
         fd.write("/* Auto generate file, do not update by hand */\n")
         for cat in Categorie.objects.iterator():
             if cat.color:
                 fd.write(".cat_%s {background:%s;}\n" % (cat.id, cat.color))
         fd.close()
-        LOGGER.info("CSS for categories colors updated")
+        LOG.info("CSS for categories colors updated")
 
 
 @user_passes_test(check_admin)
@@ -394,8 +389,8 @@ def categories_set_color(request, category_id):
     color = request.POST.get('color', '').strip()
     cat = get_object_or_404(Categorie, pk=category_id)
     if not cat.color or color != cat.color:
-        LOGGER.info("[%s] new categorie color [%s]" % (request.user.username,
-                                                       cat.nom))
+        LOG.info("[%s] new categorie color [%s]" % (request.user.username,
+                                                    cat.nom))
         cat.color = color
         try:
             cat.save()
@@ -418,7 +413,7 @@ def categories_set_name(request, category_id):
     name = request.POST.get('name', '').strip()
     cat = get_object_or_404(Categorie, pk=category_id)
     if name != cat.nom:
-        LOGGER.info("[%s] new categorie name: [%s] > [%s]" % (
+        LOG.info("[%s] new categorie name: [%s] > [%s]" % (
                     request.user.username, cat.nom, name))
         cat.nom = name
     try:
@@ -426,8 +421,18 @@ def categories_set_name(request, category_id):
     except:
         messages.add_message(request, messages.ERROR,
                              _("Changes could not be saved"))
-        LOGGER.warning("[%s] save failed for [%s]" % (
+        LOG.warning("[%s] save failed for [%s]" % (
                        request.user.username, cat.nom))
+    return redirect('categories_view', category_id)
+
+
+@user_passes_test(check_admin)
+def categories_set_default(request, category_id):
+    """Set a default category
+    """
+    config, created = Config.objects.get_or_create(key="category_default")
+    config.value = category_id
+    config.save()
     return redirect('categories_view', category_id)
 
 

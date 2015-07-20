@@ -47,21 +47,18 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <ul class="list-unstyled">
-                {% for number in number_possible_to_add %}
-                <div class="col-sm-2">
-                    <li id="number_{{number}}" class="possum-base
-                    {% if count == number %}alert-success{% else %}alert-info{% endif %}"
-                    onclick="update_number(this, {{number}})">
-                            {{number}}
-                    </li>
-                </div>
-                {% endfor %}
-            </ul>
+            <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+                <a href="{% url 'bill_set_number' bill.id 1 %}" class="btn btn-default {% if count == 1 %}alert-success{% endif %}">1</a>
+                <a href="{% url 'bill_set_number' bill.id 2 %}" class="btn btn-default {% if count == 2 %}alert-success{% endif %}">2</a>
+                <a href="{% url 'bill_set_number' bill.id 3 %}" class="btn btn-default {% if count == 3 %}alert-success{% endif %}">3</a>
+                <a href="{% url 'bill_set_number' bill.id 4 %}" class="btn btn-default {% if count == 4 %}alert-success{% endif %}">4</a>
+                <a href="{% url 'bill_set_number' bill.id 5 %}" class="btn btn-default {% if count == 5 %}alert-success{% endif %}">5</a>
+            </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
+            <div class="row">
             <ul class="list-unstyled">
                 {% for category in categories %}
                 <div class="col-sm-6">
@@ -73,10 +70,9 @@
                 <li class="possum-base">{% trans "No category" %}</li>
                 {% endfor %}
             </ul>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
+            </div>
+            <hr>
+            <div class="row">
             <ul class="list-unstyled">
                 {% for category in categories %}
                 <div id="cat_{{category.id}}"
@@ -91,17 +87,8 @@
                 </div>
                 {% endfor %}
             </ul>
+            </div>
         </div>
     </div>
 </div>
-
-<script>
-    function update_number(element, number) {
-        $.get('ajax/number_of_product/' + number);
-        for (i = 1; i < {{max_number}}; i++) {
-            document.getElementById("number_" + i).className="possum-base alert-info";
-        }
-        element.className="possum-base alert-success";
-    }
-</script>
 {% endblock %}

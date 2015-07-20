@@ -169,21 +169,9 @@ def set_number(request, bill_id, count):
     :param count:
     :type count:
     """
+    LOG.debug("[F%s] set number %s" % (bill_id, count))
     request.session['count'] = int(count)
     return redirect('bill_categories', bill_id)
-
-
-def update_session_number_of_product(request, bill_id, count):
-    """ This function update the value for the number of product we want to
-    add in bill/categories.
-
-    :param HttpRequest request:
-    :param int bill_id: Useless parameter in order to use the same URL as the
-    mother page.
-    :param count: The value we want to update.
-    """
-    request.session['count'] = int(count)
-    return HttpResponse('OK')
 
 
 @login_required
@@ -218,11 +206,16 @@ def categories(request, bill_id, category_id=None):
     else:
         # request.session['categories'] is not None
         LOG.debug('Use categories in cache')
+    if category_id is None:
+        try:
+            category_id = Config.objects.get(key="category_default").value
+            LOG.debug("default category_id: %s" % category_id)
+        except Config.DoesNotExist:
+            LOG.debug("no default category_id")
+            category_id = 0
     context = {'menu_bills': True,
                'categories': request.session['categories'],
                'bill': bill,
-               'max_number': settings.MAX_NUMBER + 1,
-               'number_possible_to_add': range(1, settings.MAX_NUMBER + 1),
                'products_sold': bill.reduced_sold_list(bill.produits.all()),
                # By default we add one product only
                'count': request.session.get('count', 1),
@@ -449,6 +442,7 @@ def sold_working(request, bill_id, sold_id):
     :param sold_id:
     :type sold_id:
     """
+    LOG.debug("[F%s] add ProduitVendu(%s)" % (bill_id, sold_id))
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     if sold.produit.est_un_menu():
         category = sold.get_free_categorie()
@@ -466,6 +460,7 @@ def sold_working(request, bill_id, sold_id):
         return redirect('bill_sold_working', bill_id, menu_id)
     # at this point, all is done, so are there others products?
     if request.session.get('product_to_add', False):
+        LOG.debug("product_to_add not empty")
         product_id = request.session['product_to_add']
         try:
             product = Produit.objects.get(id=product_id)

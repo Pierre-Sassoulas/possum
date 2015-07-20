@@ -101,6 +101,11 @@ you do not do takeaway.
                         {% else %}alert-danger">{% trans "Can not cancel the surcharge" %}{% endif %}
                     </li>
                 </a>
+                <a href='{% url "categories_set_default" category.id %}'>
+                    <li class="possum-base well">
+                        {% trans "Set as default category" %}
+                    </li>
+                </a>
                 <a href='{% url "categories_vat_onsite" category.id %}'>
                     <li class="possum-base well">{% trans "VAT on site" %}:
                     {% if category.vat_onsite %}{{category.vat_onsite.name}}
