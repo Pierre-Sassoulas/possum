@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 22:44+0200\n"
+"POT-Creation-Date: 2015-07-20 16:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Sebastien Bonnegent <sebastien.bonnegent@gmail.com>\n"
 "Language-Team: Sebastien Bonnegent <sebastien.bonnegent@gmail.com>\n"
@@ -29,8 +29,10 @@ msgstr "Nouvelle note"
 #: possum/templates/base/carte/product.html:37
 #: possum/templates/base/carte/product.html:39
 #: possum/templates/base/carte/product.html:41
-#: possum/templates/bill/bill.html:76 possum/templates/bill/bill.html:123
-#: possum/templates/bill/bill.html:133 possum/templates/bill/home.html:14
+#: possum/templates/bill/facture_detail.html:76
+#: possum/templates/bill/facture_detail.html:95
+#: possum/templates/bill/facture_detail.html:105
+#: possum/templates/bill/facture_list.html:13
 #: possum/templates/bill/sold.html:56
 #: possum/templates/manager/archives/facture_detail.html:58
 #: possum/templates/manager/archives/facture_detail.html:96
@@ -65,9 +67,9 @@ msgstr "Vous devez indiquer le nombre de couverts"
 msgid "Error in printing (printer ok?)"
 msgstr "Erreur d'impression (imprimante ok?)"
 
-#: possum/base/views/bill.py:107 possum/base/views/carte/categories.py:92
+#: possum/base/views/bill.py:107 possum/base/views/carte/categories.py:89
 #: possum/templates/base/carte/product_select_produits_ok.html:15
-#: possum/templates/bill/categories.html:32
+#: possum/templates/bill/modify.html:32
 #: possum/templates/bill/subproducts.html:15
 #: possum/templates/manager/carte/categorie_detail.html:38
 msgid "No product"
@@ -85,44 +87,44 @@ msgstr "La facture est imprimée"
 msgid "Printing has failed"
 msgstr "L'impression a échouée"
 
-#: possum/base/views/bill.py:619 possum/base/views/kitchen.py:86
+#: possum/base/views/bill.py:617 possum/base/views/kitchen.py:86
 msgid "This invoice has already been ended"
 msgstr "Cette facture a déjà été soldée"
 
-#: possum/base/views/bill.py:635
+#: possum/base/views/bill.py:633
 msgid "The bill contains payments"
 msgstr "La commande contient des paiements"
 
-#: possum/base/views/bill.py:649
+#: possum/base/views/bill.py:647
 msgid "Invoice deleted"
 msgstr "Facture supprimée"
 
-#: possum/base/views/bill.py:711 possum/base/views/bill.py:728
+#: possum/base/views/bill.py:709 possum/base/views/bill.py:726
 msgid "Invalid bill"
 msgstr "Commande invalide"
 
-#: possum/base/views/bill.py:785 possum/base/views/bill.py:825
+#: possum/base/views/bill.py:783 possum/base/views/bill.py:823
 msgid "Invalid number"
 msgstr "Nombre invalide"
 
-#: possum/base/views/bill.py:840 possum/base/views/bill.py:910
+#: possum/base/views/bill.py:838 possum/base/views/bill.py:908
 msgid "Bill is being edited by"
 msgstr "Facture en cours d'édition par"
 
-#: possum/base/views/bill.py:845 possum/base/views/bill.py:848
-#: possum/base/views/bill.py:858 possum/base/views/bill.py:864
+#: possum/base/views/bill.py:843 possum/base/views/bill.py:846
+#: possum/base/views/bill.py:856 possum/base/views/bill.py:862
 msgid "Invalid payment"
 msgstr "Paiement invalide"
 
-#: possum/base/views/bill.py:868
+#: possum/base/views/bill.py:866
 msgid "Payment could not be saved"
 msgstr "Le paiement n'a pu être enregistré"
 
-#: possum/base/views/bill.py:873
+#: possum/base/views/bill.py:871
 msgid "This invoice has been ended"
 msgstr "Cette facture a été soldée"
 
-#: possum/base/views/bill.py:929
+#: possum/base/views/bill.py:927
 msgid "Nothing to pay"
 msgstr "Rien à payer"
 
@@ -137,8 +139,8 @@ msgstr "Vous devez saisir un prix"
 #: possum/base/views/carte/__init__.py:130
 #: possum/base/views/carte/__init__.py:131
 #: possum/base/views/carte/__init__.py:328
-#: possum/base/views/carte/categories.py:404
-#: possum/base/views/carte/categories.py:428
+#: possum/base/views/carte/categories.py:399
+#: possum/base/views/carte/categories.py:423
 #: possum/base/views/manager/printers.py:91
 #: possum/base/views/manager/tables.py:108
 #: possum/base/views/manager/tables.py:131
@@ -147,68 +149,68 @@ msgstr "Vous devez saisir un prix"
 msgid "Changes could not be saved"
 msgstr "Les modifications n'ont pu être enregistrées"
 
-#: possum/base/views/carte/categories.py:48
+#: possum/base/views/carte/categories.py:45
 #: possum/templates/manager/carte/categorie_list.html:26
 #: possum/templates/manager/home.html:19
 msgid "Carte"
 msgstr "Carte"
 
-#: possum/base/views/carte/categories.py:58
+#: possum/base/views/carte/categories.py:55
 msgid "Message could not be sent"
 msgstr "Le message n'a pu être envoyé"
 
-#: possum/base/views/carte/categories.py:61
+#: possum/base/views/carte/categories.py:58
 #, python-format
 msgid "Message was sent to %s"
 msgstr "Message envoyé à %s"
 
-#: possum/base/views/carte/categories.py:65 possum/stats/views.py:113
+#: possum/base/views/carte/categories.py:62 possum/stats/views.py:113
 msgid "You have no email address"
 msgstr "Vous n'avez pas d'adresse mail"
 
-#: possum/base/views/carte/categories.py:82
+#: possum/base/views/carte/categories.py:79
 #, python-format
 msgid "Printing was sent to %s"
 msgstr "Impression envoyée à %s"
 
-#: possum/base/views/carte/categories.py:86
+#: possum/base/views/carte/categories.py:83
 #, python-format
 msgid "Printing has failed on %s"
 msgstr "L'impression a échoué sur %s"
 
-#: possum/base/views/carte/categories.py:90
+#: possum/base/views/carte/categories.py:87
 msgid "No printers 'manager' available"
 msgstr "Aucune imprimante 'gestion' disponible"
 
-#: possum/base/views/carte/categories.py:135
+#: possum/base/views/carte/categories.py:132
 msgid "Category does not exist"
 msgstr "La catégorie n'existe pas"
 
-#: possum/base/views/carte/categories.py:165
+#: possum/base/views/carte/categories.py:161
 msgid "Category contains products, deletion canceled"
 msgstr "La catégorie contient des produits, suppression annulée"
 
-#: possum/base/views/carte/categories.py:220
+#: possum/base/views/carte/categories.py:215
 msgid "New category has not been created"
 msgstr "La nouvelle catégorie n'a pu être créée"
 
-#: possum/base/views/carte/categories.py:223
+#: possum/base/views/carte/categories.py:218
 msgid "You must choose a name for the new category"
 msgstr "Vous devez saisir un nom pour la nouvelle catégorie"
 
-#: possum/base/views/carte/categories.py:319
+#: possum/base/views/carte/categories.py:314
 #: possum/templates/base/carte/product.html:40
-#: possum/templates/manager/carte/categorie_detail.html:111
+#: possum/templates/manager/carte/categorie_detail.html:116
 msgid "VAT take away"
 msgstr "TVA à emporter"
 
-#: possum/base/views/carte/categories.py:334
+#: possum/base/views/carte/categories.py:329
 #: possum/templates/base/carte/product.html:38
-#: possum/templates/manager/carte/categorie_detail.html:105
+#: possum/templates/manager/carte/categorie_detail.html:110
 msgid "VAT on site"
 msgstr "TVA sur place"
 
-#: possum/base/views/carte/categories.py:366
+#: possum/base/views/carte/categories.py:361
 msgid "VAT type not defined"
 msgstr "Type de TVA non défini"
 
@@ -289,15 +291,15 @@ msgstr "Liste de lecture chargée"
 msgid "Error"
 msgstr "Erreur"
 
-#: possum/settings_common.py:114
+#: possum/settings_common.py:112
 msgid "French"
 msgstr "Français"
 
-#: possum/settings_common.py:115
+#: possum/settings_common.py:113
 msgid "English"
 msgstr "Anglais"
 
-#: possum/settings_common.py:116
+#: possum/settings_common.py:114
 msgid "Russian"
 msgstr "Russe"
 
@@ -513,9 +515,9 @@ msgstr "Activer un produit"
 #: possum/templates/base/carte/product_change.html:28
 #: possum/templates/base/carte/product_select_categories_ok.html:26
 #: possum/templates/base/carte/product_select_produits_ok.html:26
-#: possum/templates/bill/bill.html:49 possum/templates/bill/categories.html:44
-#: possum/templates/bill/options.html:35 possum/templates/bill/sold.html:54
-#: possum/templates/kitchen/view.html:44
+#: possum/templates/bill/facture_detail.html:49
+#: possum/templates/bill/modify.html:44 possum/templates/bill/options.html:35
+#: possum/templates/bill/sold.html:54 possum/templates/kitchen/view.html:44
 #: possum/templates/manager/archives/facture_detail.html:40
 #: possum/templates/manager/carte/categorie_detail.html:50
 #: possum/templates/manager/vats/new.html:27
@@ -566,7 +568,7 @@ msgstr "Sélectionner une catégorie pour"
 
 #: possum/templates/base/carte/product_category.html:15
 #: possum/templates/base/carte/product_select_categories_ok.html:15
-#: possum/templates/bill/categories.html:73
+#: possum/templates/bill/modify.html:70
 #: possum/templates/bill/product_select_made_with.html:14
 #: possum/templates/manager/carte/categorie_color.html:20
 msgid "No category"
@@ -719,7 +721,7 @@ msgstr "Annuler"
 
 #: possum/templates/base/manager/zone_remove.html:12
 #: possum/templates/manager/carte/categorie_delete.html:38
-#: possum/templates/manager/carte/categorie_detail.html:124
+#: possum/templates/manager/carte/categorie_detail.html:129
 #: possum/templates/notes/home.html:39
 msgid "Remove"
 msgstr "Supprimer"
@@ -814,79 +816,6 @@ msgstr "chiffres"
 msgid "graphics"
 msgstr "graphiques"
 
-#: possum/templates/bill/bill.html:8
-#: possum/templates/manager/archives/facture_detail.html:8
-msgid "Order"
-msgstr "Commande"
-
-#: possum/templates/bill/bill.html:53
-#: possum/templates/manager/archives/facture_detail.html:41
-msgid "Creation"
-msgstr "Création"
-
-#: possum/templates/bill/bill.html:65 possum/templates/bill/home.html:12
-#: possum/templates/kitchen/home.html:9 possum/templates/kitchen/view.html:4
-#: possum/templates/manager/archives/facture_detail.html:47
-#: possum/templates/manager/archives/facture_list.html:12
-msgid "Table"
-msgstr "Table"
-
-#: possum/templates/bill/bill.html:67 possum/templates/bill/home.html:13
-#: possum/templates/kitchen/home.html:10
-#: possum/templates/manager/archives/facture_detail.html:49
-#: possum/templates/manager/archives/facture_list.html:13
-msgid "Guests"
-msgstr "Couverts"
-
-#: possum/templates/bill/bill.html:70
-#: possum/templates/manager/archives/facture_detail.html:52
-msgid "on site"
-msgstr "sur place"
-
-#: possum/templates/bill/bill.html:70
-#: possum/templates/manager/archives/facture_detail.html:52
-msgid "take away"
-msgstr "à emporter"
-
-#: possum/templates/bill/bill.html:76 possum/templates/bill/sold.html:55
-#: possum/templates/manager/archives/facture_detail.html:58
-msgid "TTC"
-msgstr "TTC"
-
-#: possum/templates/bill/bill.html:92 possum/templates/kitchen/home.html:4
-#: possum/templates/manager/archives/facture_detail.html:74
-#: possum/templates/printers/printer_detail.html:55
-msgid "Kitchen"
-msgstr "Cuisine"
-
-#: possum/templates/bill/bill.html:97
-msgid "Send"
-msgstr "Envoyer"
-
-#: possum/templates/bill/bill.html:111
-#: possum/templates/manager/archives/facture_detail.html:84
-msgid "Nothing"
-msgstr "Rien"
-
-#: possum/templates/bill/bill.html:120
-#: possum/templates/manager/archives/facture_detail.html:93
-#: possum/templates/stats/home.html:93
-msgid "Payments"
-msgstr "Paiements"
-
-#: possum/templates/bill/bill.html:123
-#: possum/templates/manager/archives/facture_detail.html:96
-msgid "Remaining"
-msgstr "Restant"
-
-#: possum/templates/bill/categories.html:7
-msgid "Products on order"
-msgstr "Produits sur la commande"
-
-#: possum/templates/bill/categories.html:35
-msgid "You can delete an item by selecting it"
-msgstr "Vous pouvez supprimer un produit en le sélectionnant"
-
 #: possum/templates/bill/cooking.html:4
 msgid "Choice of cooking for"
 msgstr "Choix de la cuisson pour"
@@ -907,34 +836,95 @@ msgstr "Voules vous supprimer cette commande"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: possum/templates/bill/home.html:4
+#: possum/templates/bill/facture_detail.html:8
+#: possum/templates/manager/archives/facture_detail.html:8
+msgid "Order"
+msgstr "Commande"
+
+#: possum/templates/bill/facture_detail.html:53
+#: possum/templates/manager/archives/facture_detail.html:41
+msgid "Creation"
+msgstr "Création"
+
+#: possum/templates/bill/facture_detail.html:65
+#: possum/templates/kitchen/home.html:9 possum/templates/kitchen/view.html:4
+#: possum/templates/manager/archives/facture_detail.html:47
+#: possum/templates/manager/archives/facture_list.html:12
+msgid "Table"
+msgstr "Table"
+
+#: possum/templates/bill/facture_detail.html:67
+#: possum/templates/kitchen/home.html:10
+#: possum/templates/manager/archives/facture_detail.html:49
+#: possum/templates/manager/archives/facture_list.html:13
+msgid "Guests"
+msgstr "Couverts"
+
+#: possum/templates/bill/facture_detail.html:70
+#: possum/templates/manager/archives/facture_detail.html:52
+msgid "on site"
+msgstr "sur place"
+
+#: possum/templates/bill/facture_detail.html:70
+#: possum/templates/manager/archives/facture_detail.html:52
+msgid "take away"
+msgstr "à emporter"
+
+#: possum/templates/bill/facture_detail.html:76
+#: possum/templates/bill/sold.html:55
+#: possum/templates/manager/archives/facture_detail.html:58
+msgid "TTC"
+msgstr "TTC"
+
+#: possum/templates/bill/facture_detail.html:92
+#: possum/templates/manager/archives/facture_detail.html:93
+#: possum/templates/stats/home.html:93
+msgid "Payments"
+msgstr "Paiements"
+
+#: possum/templates/bill/facture_detail.html:95
+#: possum/templates/manager/archives/facture_detail.html:96
+msgid "Remaining"
+msgstr "Restant"
+
+#: possum/templates/bill/facture_detail.html:118
+#: possum/templates/kitchen/home.html:4
+#: possum/templates/manager/archives/facture_detail.html:74
+#: possum/templates/printers/printer_detail.html:55
+msgid "Kitchen"
+msgstr "Cuisine"
+
+#: possum/templates/bill/facture_detail.html:123
+msgid "Send"
+msgstr "Envoyer"
+
+#: possum/templates/bill/facture_detail.html:137
+#: possum/templates/manager/archives/facture_detail.html:84
+msgid "Nothing"
+msgstr "Rien"
+
+#: possum/templates/bill/facture_list.html:4
 msgid "Bills"
 msgstr "Factures"
 
-#: possum/templates/bill/home.html:14
-#: possum/templates/manager/archives/facture_list.html:14
-#: possum/templates/payments/home.html:29
-#: possum/templates/payments/home.html:43
-msgid "Amount"
-msgstr "Montant"
-
-#: possum/templates/bill/home.html:21
+#: possum/templates/bill/facture_list.html:32
 msgid "Caption"
 msgstr "Légende"
 
-#: possum/templates/bill/home.html:26 possum/templates/bill/home.html.py:28
-#: possum/templates/bill/home.html:30
-msgid "No change since"
-msgstr "Aucun changement depuis"
-
-#: possum/templates/bill/home.html:26 possum/templates/bill/home.html.py:28
-#: possum/templates/bill/home.html:30 possum/templates/bill/home.html.py:32
+#: possum/templates/bill/facture_list.html:37
+#: possum/templates/bill/facture_list.html:39
+#: possum/templates/bill/facture_list.html:41
+#: possum/templates/bill/facture_list.html:43
 msgid "seconds"
 msgstr "secondes"
 
-#: possum/templates/bill/home.html:32
-msgid "Change in"
-msgstr "Changement dans les"
+#: possum/templates/bill/modify.html:7
+msgid "Products on order"
+msgstr "Produits sur la commande"
+
+#: possum/templates/bill/modify.html:35
+msgid "You can delete an item by selecting it"
+msgstr "Vous pouvez supprimer un produit en le sélectionnant"
 
 #: possum/templates/bill/options.html:4
 msgid "Options for"
@@ -1118,6 +1108,12 @@ msgstr "mot de passe"
 msgid "Archive of"
 msgstr "Archive du"
 
+#: possum/templates/manager/archives/facture_list.html:14
+#: possum/templates/payments/home.html:29
+#: possum/templates/payments/home.html:43
+msgid "Amount"
+msgstr "Montant"
+
 #: possum/templates/manager/archives/facture_list.html:17
 msgid "No bill"
 msgstr "Pas de facture"
@@ -1259,11 +1255,15 @@ msgstr "Peux annuler la surtaxe"
 msgid "Can not cancel the surcharge"
 msgstr "Ne peux pas annuler la surtaxe"
 
-#: possum/templates/manager/carte/categorie_detail.html:118
+#: possum/templates/manager/carte/categorie_detail.html:106
+msgid "Set as default category"
+msgstr "Définir en catégorie par défaut"
+
+#: possum/templates/manager/carte/categorie_detail.html:123
 msgid "Is prepared in the kitchen"
 msgstr "Est préparé dans la cuisine"
 
-#: possum/templates/manager/carte/categorie_detail.html:119
+#: possum/templates/manager/carte/categorie_detail.html:124
 msgid "Is not prepared in the kitchen"
 msgstr "N'est pas préparé dans la cuisine"
 
