@@ -381,7 +381,7 @@ class Stat(models.Model):
     def update(self):
         """Update statistics with new bills
         """
-        # TODO: knee knee knee
+        # TODO: knee knee knee .. for what ? I don't remender :(
         if os.path.isfile(settings.LOCK_STATS):
             LOG.info("lock [%s] already here" % settings.LOCK_STATS)
             return False
@@ -413,22 +413,22 @@ class Stat(models.Model):
 
     def get_a_date(self, context):
         """Get Stats for a date
+        This function will not test with context['date'] is a datetime.date()
         :param context: {'date': datetime.date(), 'interval': 'm'}
         :return: context with stats for context['date']
-        This function will not test with context['date'] is a datetime.date()
         """
         if 'date' not in context or 'interval' not in context:
             LOG.warning("No date or no interval in context")
             return context
-        context['date'] = find_right_date(context['date'], context['interval'])
-        stats = Stat.objects.filter(interval=context['interval'],
-                                    date=context['date'])
+        date = find_right_date(context['date'], context['interval'])
+        stats = Stat.objects.filter(interval=context['interval'], date=date)
         for key in STATS:
             try:
                 value = "%.2f" % stats.get(key=key).value
             except:
-                LOG.info("[%s][%s] key (%s) absent" % (context['date'],
-                         context['interval'], key))
+                LOG.info("[%s][%s] key (%s) absent" % (date,
+                                                       context['interval'],
+                                                       key))
                 value = "0.00"
 
         context['products'] = _search_sub_key(stats, "_product_nb", Produit)
@@ -437,5 +437,6 @@ class Stat(models.Model):
         context['vats'] = _search_sub_key(stats, "_vat", VAT)
         context['payments'] = _search_sub_key(stats, "_payment_value",
                                               PaiementType)
+        context['date'] = date.isoformat()
         LOG.debug(context)
         return context

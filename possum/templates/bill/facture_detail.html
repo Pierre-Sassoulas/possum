@@ -91,9 +91,11 @@
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans "Payments" %}
                     <div class="pull-right">
-                        <p class="btn btn-default" role="button">
+                        <a href='{% url "prepare_payment" facture.id %}'>
+                        <p class="btn btn-default alert-warning" role="button">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                             {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
-                        </p>
+                        </p></a>
                     </div>
                 </h3>
             </div>
@@ -103,11 +105,9 @@
     <a href='{% url "bill_payment_view" facture.id payment.id %}'>
     <li class="possum-base well">
     {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li></a>
+    {% empty %}
+        <li class="possum-base well">{% trans "Nothing" %}</li>
     {% endfor %}
-        <a href='{% url "prepare_payment" facture.id %}'>
-    <li class="possum-base alert-success">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-        </li></a>
                 </ul>
             </div>
         </div>

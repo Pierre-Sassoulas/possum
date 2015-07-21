@@ -61,11 +61,11 @@ RAPPORTS = {'1': {'title': _("Total TTC"),
 
 def get_series(rapport, interval, begin, end):
     """Test pour highcharts
-    rapport: id
-    interval: m, d, w, y
-    begin: datetime.date
-    end: datetime.date
-    return: []
+    :param rapport: id
+    :param interval: m, d, w, y
+    :param begin: datetime.date
+    :param end: datetime.date
+    :return: []
     """
     if rapport not in RAPPORTS:
         return {}
@@ -77,7 +77,37 @@ def get_series(rapport, interval, begin, end):
         for stat in Stat.objects.filter(key=key, interval=interval,
                                         date__gte=begin, date__lt=end):
             serie['data'].append([stat.date.isoformat(), int(stat.value)])
+            LOG.debug("serie %s: %s" % (serie['name'], serie['data']))
         series.append(serie)
+    # we need to find series with the most date to complete others correctly
+    count = 0
+    master = None
+    for serie in series:
+        s_count = len(serie['data'])
+        if s_count > count:
+            LOG.debug("new count: %d" % s_count)
+            count = s_count
+            master = serie['data']
+    if master is None:
+        return series
+    LOG.debug("Master: %s" % master)
+    # construct template with all dates
+    template = []
+    for date, value in master:
+        template.append(date)
+    LOG.debug("Template: %s" % template)
+    # last, we need to complete all series and sort them
+    for serie in series:
+        if len(serie['data']) != count:
+            # we need to add some dates
+            list_dates = [date for date, value in serie['data']]
+            LOG.debug("List dates of a serie: %s" % list_dates)
+            for date in template:
+                if date not in list_dates:
+                    LOG.debug("we add %s" % date)
+                    serie['data'].append([date, 0])
+            serie['data'] = sorted(serie['data'])
+            LOG.debug("new serie %s: %s" % (serie['name'], serie['data']))
     return series
 
 
@@ -219,20 +249,6 @@ def check_for_outputs(request, context):
             print_msg(request, msg)
 
 
-def get_a_date():
-    """
-    date: datetime.date
-    interval: day, week, month, year
-    alltime: a, c, b
-    """
-    all_time = Stat.objects.filter(interval="b")
-    last = int(date.year) - 1
-    objects = Stat.objects.filter(interval=interval, date=date)
-    last_year = objects.filter(year=last)
-    current = objects.filter(year=year)
-    #TODO: à finir !
-
-
 @user_passes_test(check_admin)
 def text(request):
     """Show stats
@@ -260,6 +276,8 @@ def text(request):
                 context['title'] = "%s: %s" % (_("Report of the day"),
                                                date.isoformat())
             check_for_outputs(request, context)
+    else:
+        context['date'] = context['last_date']
     return render(request, 'stats/home.html', context)
 
 
