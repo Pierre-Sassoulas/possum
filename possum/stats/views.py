@@ -60,7 +60,7 @@ RAPPORTS = {'1': {'title': _("Total TTC"),
 
 
 def get_series(rapport, interval, begin, end):
-    """Test pour highcharts
+    """Get series to draw graphics
     :param rapport: id
     :param interval: m, d, w, y
     :param begin: datetime.date
@@ -68,46 +68,99 @@ def get_series(rapport, interval, begin, end):
     :return: []
     """
     if rapport not in RAPPORTS:
+        LOG.warning("unknown rapport id: %s" % rapport)
         return {}
-    LOG.warning("INTERVAL: %s" % interval)
+    LOG.debug("rapport[%s] interval[%s] begin[%s]>end[%s]" % (rapport,
+                                                              interval,
+                                                              begin, end))
     series = []
     for key in RAPPORTS[rapport]['keys']:
-        LOG.warning(key)
-        serie = {'name': _(key), 'data': []}
-        for stat in Stat.objects.filter(key=key, interval=interval,
-                                        date__gte=begin, date__lt=end):
-            serie['data'].append([stat.date.isoformat(), int(stat.value)])
-            LOG.debug("serie %s: %s" % (serie['name'], serie['data']))
-        series.append(serie)
-    # we need to find series with the most date to complete others correctly
-    count = 0
-    master = None
-    for serie in series:
-        s_count = len(serie['data'])
-        if s_count > count:
-            LOG.debug("new count: %d" % s_count)
-            count = s_count
-            master = serie['data']
-    if master is None:
-        return series
-    LOG.debug("Master: %s" % master)
+        stats = Stat.objects.filter(interval=interval, date__gte=begin,
+                                    date__lt=end)
+        if key[0] == "_":
+            results = {}
+            for stat in stats.filter(key__endswith=key):
+                if stat.key not in results:
+                    LOG.debug("new key: %s" % stat.key)
+                    results[stat.key] = []
+                results[stat.key].append([stat.date.isoformat(),
+                                          int(stat.value)])
+            # reorder results
+            for subkey in results.keys():
+                serie = {'name': get_name(subkey), 'data': results[subkey]}
+                series.append(serie)
+        else:
+            serie = {'name': _(key), 'data': []}
+            for stat in stats.filter(key=key):
+                serie['data'].append([stat.date.isoformat(), int(stat.value)])
+            series.append(serie)
+    LOG.debug("series: %s" % series)
+    return refill(series)
+
+
+def get_name(key):
+    """From a key, will extract pk and object to get a name
+    All key type available are:
+    _vat > VAT()
+    _payment_nb > PaiementType()
+    _payment_value > PaiementType()
+    _category_value > Categorie()
+    _category_nb > Categorie()
+
+    :param key: str, example: 2_vat or 5_payment_nb
+    :return: str
+    """
+    LOG.debug("key: %s" % key)
+    try:
+        pk = key.split("_")[0]
+    except:
+        return _("unknown")
+    name = _("unknown")
+    if "_vat" in key:
+        try:
+            name = VAT.objects.get(pk=pk).name
+        except:
+            return _("unknown")
+    elif "_payment_" in key:
+        try:
+            name = PaiementType.objects.get(pk=pk).nom
+        except:
+            return _("unknown")
+    elif "_category_" in key:
+        try:
+            name = Categorie.objects.get(pk=pk).nom
+        except:
+            return _("unknown")
+    LOG.debug("return: %s" % name)
+    return name
+
+
+def refill(series):
+    """we need to find serie with the most date to complete others correctly,
+    each series must have same count of dates.
+
+    :param series: [{'name': key, 'data': [("2012-31-03", 3), ("1978-03-03", 2)
+    :return: series refill to get proper graph
+    """
     # construct template with all dates
     template = []
-    for date, value in master:
-        template.append(date)
-    LOG.debug("Template: %s" % template)
+    for serie in series:
+        for date, value in serie['data']:
+            if date not in template:
+                LOG.debug("new date: %s" % date)
+                template.append(date)
+    LOG.debug("template: %s" % template)
     # last, we need to complete all series and sort them
     for serie in series:
-        if len(serie['data']) != count:
-            # we need to add some dates
-            list_dates = [date for date, value in serie['data']]
-            LOG.debug("List dates of a serie: %s" % list_dates)
-            for date in template:
-                if date not in list_dates:
-                    LOG.debug("we add %s" % date)
-                    serie['data'].append([date, 0])
-            serie['data'] = sorted(serie['data'])
-            LOG.debug("new serie %s: %s" % (serie['name'], serie['data']))
+        # we need to add some dates
+        list_dates = [date for date, value in serie['data']]
+        LOG.debug("List dates of a serie: %s" % list_dates)
+        for date in template:
+            if date not in list_dates:
+                LOG.debug("we add %s" % date)
+                serie['data'].append([date, 0])
+        serie['data'] = sorted(serie['data'])
+        LOG.debug("new serie %s: %s" % (serie['name'], serie['data']))
     return series
 
 
@@ -117,10 +170,10 @@ def update(request):
     """
     if Stat().update():
         messages.add_message(request, messages.SUCCESS,
-                             "Les données sont à jour")
+                             _("Data up to date"))
     else:
         messages.add_message(request, messages.ERROR,
-                             "Les données ne peuvent être mis à jour")
+                             _("Error during update"))
     return redirect("sales_home")
 
 
@@ -152,15 +205,14 @@ def print_msg(request, msg):
         printer = printers[0]
         if printer.print_msg(msg):
             messages.add_message(request, messages.SUCCESS,
-                                 u"L'impression a été envoyée sur %s" %
-                                 printer.name)
+                                 _("Printing on %s") % printer.name)
         else:
             messages.add_message(request, messages.ERROR,
-                                 u"L'impression a échouée sur %s" %
+                                 _("Printing failed on %s") %
                                  printer.name)
     else:
         messages.add_message(request, messages.ERROR,
-                             u"Aucune imprimante type 'manager' disponible")
+                             _("No 'manager' printer available"))
 
 
 @user_passes_test(check_admin)
@@ -295,16 +347,15 @@ def get_chart_year_products(year, category):
         datasource = get_datapool_year(year, keys_nb)
     except:
         return False
-    title = u"Nombre de vente pour la catégorie [%s] en %s" % (category.nom,
-                                                               year)
+    title = _("Sales count for category [%s] in %s") % (category.nom,
+                                                                 year)
     charts.append(get_chart(datasource, 'line', keys_nb, title, "Mois"))
     try:
         datasource = get_datapool_year(year, keys_value)
     except:
         return False
-    title = u"Valeur des ventes pour la catégorie [%s] en %s" % (category.nom,
-                                                                 year)
-    charts.append(get_chart(datasource, 'line', keys_value, title, "Mois"))
+    title = _("Sales amount for category [%s] in %s") % (category.nom, year)
+    charts.append(get_chart(datasource, 'line', keys_value, title, _("Month")))
     return charts
 
 
@@ -467,6 +518,7 @@ def dump(request, rapport, interval, date_begin, date_end):
     """Get stats for graphics
     All tests on data are made in Stat()
     """
+    LOG.debug(rapport)
     data = {}
     try:
         begin = datetime.datetime.strptime(date_begin, "%Y-%m-%d").date()
