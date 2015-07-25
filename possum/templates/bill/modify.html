@@ -54,10 +54,7 @@
                 <a href="{% url 'bill_set_number' bill.id 4 %}" class="btn btn-default {% if count == 4 %}alert-success{% endif %}">4</a>
                 <a href="{% url 'bill_set_number' bill.id 5 %}" class="btn btn-default {% if count == 5 %}alert-success{% endif %}">5</a>
             </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
+            <hr>
             <div class="row">
             <ul class="list-unstyled">
                 {% for category in categories %}

@@ -305,8 +305,9 @@ def check_for_outputs(request, context):
 def text(request):
     """Show stats
     """
-    context = {'menu_sales': True, 'date': datetime.date.today().isoformat()}
+    context = {'menu_sales': True}
     context = init_borders(context)
+    context['date'] = context['last_date']
     context['interval'] = get_interval(request)
     if request.method == 'POST':
         try:
@@ -318,143 +319,29 @@ def text(request):
         else:
             context['date'] = date
             context = Stat().get_a_date(context)
+            BETTER = ['total_ttc', 'nb_bills', 'guests_total_ttc', 'guests_nb',
+                      'guests_average', 'bar_total_ttc', 'bar_nb',
+                      'bar_average']
+            for key in BETTER:
+                LOG.debug("[%s] %s > %s ?" % (key, context[key],
+                                              context['avg_%s' % key]))
+                if float(context[key]) > float(context['avg_%s' % key]):
+                    better = '%s_better' % key
+                    context['%s_better' % key] = True
+                    LOG.debug(better)
             if context['interval'] == "m":
                 context['title'] = "%s: %s" % (_("Report of the month"),
-                                               date.isoformat())
+                                               context['date'])
             elif context['interval'] == "w":
                 context['title'] = "%s: %s" % (_("Report of the week"),
-                                               date.isoformat())
+                                               context['date'])
             else:
                 context['title'] = "%s: %s" % (_("Report of the day"),
-                                               date.isoformat())
+                                               context['date'])
             check_for_outputs(request, context)
     else:
         context['date'] = context['last_date']
     return render(request, 'stats/home.html', context)
-
-
-def get_chart_year_products(year, category):
-    charts = []
-    keys_nb = {}
-    keys_value = {}
-    for product in Produit.objects.filter(categorie=category).iterator():
-        name = "%s #%s" % (product.nom, product.id)
-        key = "%s_product_nb" % product.id
-        keys_nb[key] = name
-        key = "%s_product_value" % product.id
-        keys_value[key] = name
-    try:
-        datasource = get_datapool_year(year, keys_nb)
-    except:
-        return False
-    title = _("Sales count for category [%s] in %s") % (category.nom,
-                                                                 year)
-    charts.append(get_chart(datasource, 'line', keys_nb, title, "Mois"))
-    try:
-        datasource = get_datapool_year(year, keys_value)
-    except:
-        return False
-    title = _("Sales amount for category [%s] in %s") % (category.nom, year)
-    charts.append(get_chart(datasource, 'line', keys_value, title, _("Month")))
-    return charts
-
-
-@user_passes_test(check_admin)
-def select_charts(request, context):
-    """Select and construct graphics
-    """
-    charts = []
-    choice = context['choice']
-    year = 2015
-    if choice == 'ttc':
-        title = "Total TTC pour l'année %d" % year
-        chart = {'title': title, }
-        context['title'] = title
-        chart['keys'] = {"total_ttc": 'total ttc',
-                         "guests_total_ttc": 'restauration',
-                         "bar_total_ttc": 'bar'}
-        charts.append(chart)
-    elif choice == 'bar':
-        chart = {'title': "Activité bar pour l'année %d" % year, }
-        chart['keys'] = {"bar_average": 'TM/facture',
-                         "bar_nb": 'nb factures'}
-        charts.append(chart)
-    elif choice == 'guests':
-        chart = {'title': "Activité restaurant pour l'année %d" % year, }
-        chart['keys'] = {"guests_average": 'TM/couvert',
-                         "guests_nb": 'nb couverts'}
-        charts.append(chart)
-    elif choice == 'vats':
-        chart = {'title': "TTC des TVA pour l'année %d" % year, }
-        chart['keys'] = {}
-        for vat in VAT.objects.iterator():
-            key = "%s_vat" % vat.id
-            chart['keys'][key] = "%s" % vat
-        charts.append(chart)
-    elif choice == 'payments':
-        chart1 = {'title': "Nombre de paiements par type pour l'année %d" %
-                  year, }
-        chart1['keys'] = {}
-        chart2 = {'title': "Valeur des paiements par type pour l'année %d" %
-                  year, }
-        chart2['keys'] = {}
-        for payment in PaiementType.objects.iterator():
-            key = "%s_payment_nb" % payment.id
-            chart1['keys'][key] = payment.nom
-            key = "%s_payment_value" % payment.id
-            chart2['keys'][key] = payment.nom
-        charts.append(chart1)
-        charts.append(chart2)
-    elif choice == 'categories':
-        chart1 = {'title': "Nombre de vente par catégorie pour l'année %d" %
-                  year, }
-        chart1['keys'] = {}
-        chart2 = {'title': "Valeur des ventes par catégorie pour l'année %d" %
-                  year, }
-        chart2['keys'] = {}
-        for cat in Categorie.objects.iterator():
-            key = "%s_category_nb" % cat.id
-            chart1['keys'][key] = cat.nom
-            key = "%s_category_value" % cat.id
-            chart2['keys'][key] = cat.nom
-        charts.append(chart1)
-        charts.append(chart2)
-    else:
-        try:
-            category = Categorie.objects.get(pk=choice)
-        except:
-            messages.add_message(request, messages.ERROR,
-                                 "Ce type de graphique n'existe pas.")
-        else:
-            chart1 = {'title': u"Nombre de vente pour la catégorie [%s] en %d"
-                      % (category.nom, year), }
-            chart1['keys'] = {}
-            chart2 = {'title': u"Valeur des ventes pour la catégorie [%s] en "
-                      "%d" % (category.nom, year), }
-            chart2['keys'] = {}
-            for product in Produit.objects.filter(categorie=category):
-                name = "%s #%s" % (product.nom, product.id)
-                key = "%s_product_nb" % product.id
-                chart1['keys'][key] = name
-                key = "%s_product_value" % product.id
-                chart2['keys'][key] = name
-            charts.append(chart1)
-            charts.append(chart2)
-    # if one chart, it is in context['chart1'] = chart
-    # else, if two charts: context['chart2'] = [chart1, chart2]
-    key = 'chart%d' % len(charts)
-    context[key] = []
-    for chart in charts:
-        try:
-            datasource = get_datapool_year(year, chart['keys'])
-        except:
-            LOG.warning("datasource error with %s" % chart['title'])
-        else:
-            context[key].append(get_chart(datasource, 'line',
-                                          chart['keys'],
-                                          chart['title'],
-                                          "Mois"))
-    return context
 
 
 def init_borders(context):
@@ -482,12 +369,16 @@ def get_interval(request):
     if request.method == 'POST':
         rapport = request.POST.get('interval')
         if rapport == "m":
+            LOG.debug("m")
             return "m"
         elif rapport == "w":
+            LOG.debug("w")
             return "w"
         elif rapport == "y":
+            LOG.debug("y")
             return "y"
     # default value
+    LOG.debug("d")
     return "d"
 
 
@@ -509,7 +400,6 @@ def charts(request):
             context['date_end'] = request.POST.get('date_end')
         context['rapport'] = request.POST.get('rapport')
     context['title'] = RAPPORTS[context['rapport']]['title']
-#    context = select_charts(request, context)
     return render(request, 'stats/charts.html', context)
 
 

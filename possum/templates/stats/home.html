@@ -1,8 +1,7 @@
 {% extends "base_with_aside.html" %}
 {% load i18n %}
 {% block content %}
-<h1>{% block title %}{% trans "Report of the day" %}:
-    {{date|date:'Y-m-d'}}{% endblock %}</h1>
+<h1>{{title}}</h1>
 <table class="table table-striped">
 <thead>
     <tr>
@@ -16,56 +15,56 @@
 <tbody>
     <tr>
         <td>{% trans "Total with all taxes" %}</td>
-        <td {% if total_ttc_better %}class="success"{% endif %} align='right'>{{total_ttc}}</td>
+        <td {% if total_ttc_better %}class="alert-success"{% endif %} align='right'>{{total_ttc}}</td>
         <td align='right'>{{last_total_ttc}}</td>
         <td align='right'>{{avg_total_ttc}}</td>
         <td align='right'>{{max_total_ttc}}</td>
     </tr>
     <tr>
         <td>{% trans "Number of invoices" %}</td>
-        <td {% if nb_bills_better %}class="success"{% endif %} align='right'>{{nb_bills}}</td>
+        <td {% if nb_bills_better %}class="alert-success"{% endif %} align='right'>{{nb_bills}}</td>
         <td align='right'>{{last_nb_bills}}</td>
         <td align='right'>{{avg_nb_bills}}</td>
         <td align='right'>{{max_nb_bills}}</td>
     </tr>
     <tr>
         <td>[{% trans "Restaurant" %}] {% trans "Total with all taxes" %}</td>
-        <td {% if guests_total_ttc_better %}class="success"{% endif %} align='right'>{{guests_total_ttc}}</td>
+        <td {% if guests_total_ttc_better %}class="alert-success"{% endif %} align='right'>{{guests_total_ttc}}</td>
         <td align='right'>{{last_guests_total_ttc}}</td>
         <td align='right'>{{avg_guests_total_ttc}}</td>
         <td align='right'>{{max_guests_total_ttc}}</td>
     </tr>
     <tr>
         <td>[{% trans "Restaurant" %}] {% trans "Number of guests" %}</td>
-        <td {% if guests_nb_better %}class="success"{% endif %} align='right'>{{guests_nb}}</td>
+        <td {% if guests_nb_better %}class="alert-success"{% endif %} align='right'>{{guests_nb}}</td>
         <td align='right'>{{last_guests_nb}}</td>
         <td align='right'>{{avg_guests_nb}}</td>
         <td align='right'>{{max_guests_nb}}</td>
     </tr>
     <tr>
         <td>[{% trans "Restaurant" %}] {% trans "Average amount per guest" %}</td>
-        <td {% if guests_average_better %}class="success"{% endif %} align='right'>{{guests_average}}</td>
+        <td {% if guests_average_better %}class="alert-success"{% endif %} align='right'>{{guests_average}}</td>
         <td align='right'>{{last_guests_average}}</td>
         <td align='right'>{{avg_guests_average}}</td>
         <td align='right'>{{max_guests_average}}</td>
     </tr>
     <tr>
         <td>[{% trans "Bar" %}] {% trans "Total with all taxes" %}</td>
-        <td {% if bar_total_ttc_better %}class="success"{% endif %} align='right'>{{bar_total_ttc}}</td>
+        <td {% if bar_total_ttc_better %}class="alert-success"{% endif %} align='right'>{{bar_total_ttc}}</td>
         <td align='right'>{{last_bar_total_ttc}}</td>
         <td align='right'>{{avg_bar_total_ttc}}</td>
         <td align='right'>{{max_bar_total_ttc}}</td>
     </tr>
     <tr>
         <td>[{% trans "Bar" %}] {% trans "Number of invoices" %}</td>
-        <td {% if bar_nb_better %}class="success"{% endif %} align='right'>{{bar_nb}}</td>
+        <td {% if bar_nb_better %}class="alert-success"{% endif %} align='right'>{{bar_nb}}</td>
         <td align='right'>{{last_bar_nb}}</td>
         <td align='right'>{{avg_bar_nb}}</td>
         <td align='right'>{{max_bar_nb}}</td>
     </tr>
     <tr>
         <td>[{% trans "Bar" %}] {% trans "Average amount per invoice" %}</td>
-        <td {% if bar_average_better %}class="success"{% endif %} align='right'>{{bar_average}}</td>
+        <td {% if bar_average_better %}class="alert-success"{% endif %} align='right'>{{bar_average}}</td>
         <td align='right'>{{last_bar_average}}</td>
         <td align='right'>{{avg_bar_average}}</td>
         <td align='right'>{{max_bar_average}}</td>
