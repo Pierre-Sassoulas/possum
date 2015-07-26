@@ -931,7 +931,7 @@ def prepare_payment(request, bill_id):
         request.session.pop('is_left')
     if not set_edition_status(request, bill):
         return redirect('bill_view', bill.id)
-    context = {'menu_bills': True, }
+    context = {'menu_bills': True, 'facture': bill}
     context['bill_id'] = bill_id
     request.session['bill_id'] = bill_id
     context['type_payments'] = PaiementType.objects.all()

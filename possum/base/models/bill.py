@@ -36,7 +36,6 @@ LOG = logging.getLogger(__name__)
 
 
 class Facture(models.Model):
-
     """Main class of POSSUM
 
     :param DateTime date_creation: Creation of bill
@@ -85,10 +84,9 @@ class Facture(models.Model):
         :return: Unicode for a Facture
         '''
         if self.date_creation:
-            # TODO strftime copy pasted =~ 20 time (Date class ?)
             date = self.date_creation.strftime("%d/%m/%Y %H:%M")
         else:
-            date = "--:-- --/--"
+            date = "--/--/---- --:--"
         return u"%s" % date
 
     def __cmp__(self, other):
@@ -100,6 +98,17 @@ class Facture(models.Model):
         :return etype: Boolean
         """
         return cmp(self.date_creation, other.date_creation)
+
+    def get_time(self):
+        """Return creation time (hour:minute)
+
+        :return: string
+        """
+        if self.date_creation:
+            date = self.date_creation.strftime("%H:%M")
+        else:
+            date = "--:--"
+        return u"%s" % date
 
     def used_by(self, user):
         """Mark bill as 'in edition by user', only one
@@ -465,7 +474,7 @@ class Facture(models.Model):
         except:
             return False
         ticket = []
-        ticket.append("Le %s" % self.date_creation.strftime("%d/%m/%Y %H:%M"))
+        ticket.append("Le %s" % str(self))
         if self.table and self.couverts:
             ticket.append("Table: %s (%s couverts)" % (self.table,
                                                        self.couverts))

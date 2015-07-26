@@ -65,7 +65,13 @@
     </div>
     <div class="panel panel-default panel-danger">
         <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Saved payments" %}</h3>
+            <h3 class="panel-title">{% trans "Saved payments" %}
+                <div class="pull-right">
+                    <p class="btn btn-default alert-warning" role="button">
+                        {% trans "Total" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                    </p>
+                </div>
+            </h3>
         </div>
         <div class="panel-body">
             <p>{% trans "You can delete a payment by selecting" %}</p>

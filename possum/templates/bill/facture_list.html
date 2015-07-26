@@ -8,6 +8,7 @@
     <div class="col-sm-2">
     <a href='{% url "bill_view" facture.id %}'>
         <li class="possum-base {{facture.alert}}">
+        <h4>{{facture.get_time}}</h4>
         <h4><b>{% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</b> //
             <b>{{facture.couverts}}</b></h4>
         <h5>{{facture.total_ttc}}{% trans "$" %}</h5></li></a>

@@ -53,10 +53,10 @@ $(document).ready(function() {
     <input type="radio" name="interval" id="rad3" value="m"
         {% if interval == "m" %}checked{% endif %}>{% trans "month" %}
 </label>
-<label class="radio-inline">
+<!--label class="radio-inline">
     <input type="radio" name="interval" id="rad4" value="y"
         {% if interval == "y" %}checked{% endif %}>{% trans "year" %}
-</label>
+</label-->
 <button type="submit" class="btn btn-success pull-right">{% trans "View" %}</button>
 
 <h2>{% trans "Date" %}</h2>
@@ -76,7 +76,6 @@ $(document).ready(function() {
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
 </div>
-
 <div class="radio-group-vertical form-group">
     {% for key, value in rapports.items %}
     <label class="radio">
