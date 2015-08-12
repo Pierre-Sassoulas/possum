@@ -30,7 +30,9 @@ For all:
 For administrators:
 -------------------
     deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
+    dump               :  dump all data in possum.json (use "load" to restore)
     init_mine          :  run possum/utils/init_mine.py in virtualenv
+    load               :  load data in possum.json
     update             :  install/update Possum environnement
 
 For developpers:
@@ -355,6 +357,17 @@ big_clean)
             rm -rf ${FILE}
         fi
     done
+    ;;
+dump)
+    enter_virtualenv
+    ./manage.py dumpdata --format=json --indent=4 --exclude=contenttypes \
+        --exclude=south --exclude=base.cuisson > possum.json
+    ;;
+load)
+    enter_virtualenv
+    ./manage.py reset_db
+    ./manage.py migrate
+    ./manage.py loaddata possum.json
     ;;
 log)
     log
