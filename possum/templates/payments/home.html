@@ -1,7 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<h1>{% trans "New payment" %}</h1>
+<ul class="nav nav-tabs nav-justified">
+    <li><a href='{% url "bill_view" bill_id %}'>{% trans "Order" %} #{{bill_id}}</a></li>
+    <li><a href='{% url "bill_categories" bill_id %}'>{% trans "Modify products" %}</a></li>
+    <li class="active"><a href='{% url "prepare_payment" bill_id %}'>{% trans "Payments" %}</a></li>
+</ul>
+<div class="col-sm-6">
+    <ul class="list-unstyled">
+        <li class="possum-base">
+            <div class="btn-group btn-group-justified" role="group">
+                <p class="btn btn-default" role="button">
+                    {% trans "TTC" %}: <b>{{facture.total_ttc}}</b> {% trans "$" %}</p>
+                <p class="btn btn-default alert-warning" role="button">
+                    {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                </p>
+            </div>
+        </li>
+    </ul>
+    <div class="panel panel-default panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Saved payments" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                {% for payment in payments %}
+                    <a href='{% url "bill_payment_delete" bill_id payment.id %}'>
+                        <li class="possum-base well">{{payment.type.nom}}:
+                        {{payment.montant}}{% trans "$" %}
+                        <span class="glyphicon glyphicon-remove"></span></li>
+                    </a>
+                {% empty %}
+                    <li class="possum-base well">{% trans "No payment" %}</li>
+                {% endfor %}
+            </ul>
+            <p>{% trans "You can delete a payment by selecting" %}</p>
+        </div>
+    </div>
+</div>
 <div class="col-sm-6">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -47,44 +83,6 @@
         <a href="{% url 'save_payment' bill_id %}">
             <li class="possum-base alert-success">{% trans "Save" %}</li>
         </a>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="col-sm-6">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <ul class="list-unstyled">
-                <a href="{% url 'bill_view' bill_id %}">
-                    <li class="possum-base alert-success">
-                        {% trans "Back" %}
-                    </li>
-                </a>
-            </ul>
-        </div>
-    </div>
-    <div class="panel panel-default panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Saved payments" %}
-                <div class="pull-right">
-                    <p class="btn btn-default alert-warning" role="button">
-                        {% trans "Total" %}: {{facture.restant_a_payer}} {% trans "$" %}
-                    </p>
-                </div>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <p>{% trans "You can delete a payment by selecting" %}</p>
-            <ul class="list-unstyled">
-                {% for payment in payments %}
-                    <a href='{% url "bill_payment_delete" bill_id payment.id %}'>
-                        <li class="possum-base well">{{payment.type.nom}}:
-                        {{payment.montant}}{% trans "$" %}
-                        <span class="glyphicon glyphicon-remove"></span></li>
-                    </a>
-                {% empty %}
-                    <li class="possum-base well">{% trans "No payment" %}</li>
-                {% endfor %}
             </ul>
         </div>
     </div>

@@ -3,15 +3,13 @@
 {% load i18n %}
 <h1>{% trans "What is the table ?" %}</h1>
 
-<nav>
-    <ul class="nav nav-tabs nav-justified">
-        {% for z in zones %}
-        <li {% if z.pk == zone.pk %}class="active"{% endif %}><a href="{% url 'table_select' bill_id z.pk %}">{{z.nom}}
-            {% if z.surtaxe %}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
-            {% endif %}</a>
-        </li>
-        {% endfor %}
-    </ul>
+<ul class="nav nav-tabs nav-justified">
+    {% for z in zones %}
+    <li {% if z.pk == zone.pk %}class="active"{% endif %}><a href="{% url 'table_select' bill_id z.pk %}">{{z.nom}}
+        {% if z.surtaxe %}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+        {% endif %}</a>
+    </li>
+    {% endfor %}
 </ul>
 
 {% if zone %}

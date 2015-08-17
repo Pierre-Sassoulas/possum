@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div class="col-sm-6">
+<ul class="nav nav-tabs nav-justified">
+    <li><a href='{% url "bill_view" bill.id %}'>{% trans "Order" %} #{{bill.id}}</a></li>
+    <li class="active"><a href='{% url "bill_categories" bill.id %}'>{% trans "Modify products" %}</a></li>
+    <li><a href='{% url "prepare_payment" bill.id %}'>{% trans "Payments" %}</a></li>
+</ul>
+<div class="col-sm-3">
     <div class="panel panel-default panel-danger">
         <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Products on order" %} #{{bill.id}}</h3>
+            <h3 class="panel-title">{% trans "Products" %}</h3>
         </div>
         <div class="panel-body">
             <ul class="list-unstyled">
@@ -36,29 +41,18 @@
         </div>
     </div>
 </div>
-<div class="col-sm-6">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <ul class="list-unstyled">
-                <a href='{% url "bill_view" bill.id %}'>
-                    <li class="possum-base alert-success">{% trans "Back" %}</li></a>
-            </ul>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+<div class="col-sm-9">
+            <!--div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
                 <a href="{% url 'bill_set_number' bill.id 1 %}" class="btn btn-default {% if count == 1 %}alert-success{% endif %}">1</a>
                 <a href="{% url 'bill_set_number' bill.id 2 %}" class="btn btn-default {% if count == 2 %}alert-success{% endif %}">2</a>
                 <a href="{% url 'bill_set_number' bill.id 3 %}" class="btn btn-default {% if count == 3 %}alert-success{% endif %}">3</a>
                 <a href="{% url 'bill_set_number' bill.id 4 %}" class="btn btn-default {% if count == 4 %}alert-success{% endif %}">4</a>
                 <a href="{% url 'bill_set_number' bill.id 5 %}" class="btn btn-default {% if count == 5 %}alert-success{% endif %}">5</a>
-            </div>
-            <hr>
+            </div-->
             <div class="row">
             <ul class="list-unstyled">
                 {% for category in categories %}
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                 <li class="possum-base cat_{{category.id}}" id="{{category.id}}"
                     href="javascript:void(0)" onclick="javascript:view_category(this.id);">
                     {{category.nom}}
@@ -68,14 +62,13 @@
                 {% endfor %}
             </ul>
             </div>
-            <hr>
             <div class="row">
             <ul class="list-unstyled">
                 {% for category in categories %}
                 <div id="cat_{{category.id}}"
                     {% if current_cat != category.id %}style="display: none"{% endif %}>
                     {% for product in category.products %}
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <a href='{% url "product_add" bill.id product.id %}'>
                         <li class="possum-base cat_{{category.id}}">{{product.nom}}
                         </li></a>
@@ -84,8 +77,6 @@
                 </div>
                 {% endfor %}
             </ul>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}

@@ -592,9 +592,9 @@ def bill_home(request):
             bill.alert = "alert-info"
         else:
             bill.alert = "alert-success"
-    context['critical'] = settings.CRITICAL
-    context['warning'] = settings.WARNING
-    context['info'] = settings.INFO
+    context['critical'] = int(settings.CRITICAL) / 60
+    context['warning'] = int(settings.WARNING) / 60
+    context['info'] = int(settings.INFO) / 60
     context['count'] = len(context['factures'])
     return render(request, 'bill/facture_list.html', context)
 

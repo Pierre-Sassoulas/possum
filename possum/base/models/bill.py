@@ -266,6 +266,7 @@ class Facture(models.Model):
             liste.append(i)
         for i in Facture.objects.filter(produits__isnull=True).iterator():
             liste.append(i)
+        liste.sort()
         return liste
 
     def update(self):

@@ -2,23 +2,22 @@
 {% load i18n %}
 {% block content %}
 <h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1>
-<div class="col-sm-10">
+<div class="col-sm-9">
 <ul class="list-inline">
     {% for facture in factures %}
-    <div class="col-sm-2">
-    <a href='{% url "bill_view" facture.id %}'>
-        <li class="possum-base {{facture.alert}}">
-        <h4>{{facture.get_time}}</h4>
-        <h4><b>{% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</b> //
-            <b>{{facture.couverts}}</b></h4>
-        <h5>{{facture.total_ttc}}{% trans "$" %}</h5></li></a>
+    <div class="col-sm-3 col-md-2">
+        <a href='{% url "bill_view" facture.id %}'>
+            <li class="well-sansbg {{facture.alert}}">
+            <h4>{{facture.get_time}}</h4>
+            <h4><b>{% if facture.table %}{{facture.table}}({{facture.couverts}})
+                    {%else%}{{facture.total_ttc}}{% trans "$" %}{% endif %}</b></h4>
+            </li>
+        </a>
     </div>
     {% endfor %}
 </ul>
 </div>
-<div class="col-sm-2">
-    <div class="panel panel-default">
-        <div class="panel-body">
+<div class="col-sm-3">
             <ul class="list-unstyled">
                 <a href='{% url "bill_new" %}'>
                     <li class="possum-base alert-success">
@@ -26,8 +25,6 @@
                     </li>
                 </a>
             </ul>
-        </div>
-    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">{% trans "Caption" %}</h3>
@@ -35,13 +32,13 @@
         <div class="panel-body">
             <ul class="list-unstyled">
                 <li class="possum-base alert-danger">
-                    > {{critical}} {% trans "seconds" %}</li>
+                    > {{critical}} {% trans "mn" %}</li>
                 <li class="possum-base alert-warning">
-                    > {{warning}} {% trans "seconds" %}</li>
+                    > {{warning}} {% trans "mn" %}</li>
                 <li class="possum-base alert-info">
-                    > {{info}} {% trans "seconds" %}</li>
+                    > {{info}} {% trans "mn" %}</li>
                 <li class="possum-base alert-success">
-                    < {{info}} {% trans "seconds" %}</li>
+                    < {{info}} {% trans "mn" %}</li>
             </ul>
         </div>
     </div>

@@ -1,18 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div class="row">
+<ul class="nav nav-tabs nav-justified">
+    <li class="active"><a href='{% url "bill_view" facture.id %}'>{% trans "Order" %} #{{facture.id}}</a></li>
+    <li><a href='{% url "bill_categories" facture.id %}'>{% trans "Modify products" %}</a></li>
+    <li><a href='{% url "prepare_payment" facture.id %}'>{% trans "Payments" %}</a></li>
+</ul>
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Order" %} #{{facture.id}}
-                    <div class="pull-right">
-                        <a href='{% url "bill_categories" facture.id %}'
-                            class="btn btn-default alert-success" role="button">
-                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                </h3>
+                <h3 class="panel-title">{% trans "Products" %}</h3>
             </div>
             <div class="panel-body">
                <ul class="list-unstyled">
@@ -44,13 +41,9 @@
         <div class="panel panel-default">
         <div class="panel-body">
             <ul class="list-unstyled">
-                <a href="{% url 'bill_home' %}">
-                    <li class="possum-base alert-success">
-                        {% trans "Back" %}</li></a>
                 <li class="possum-base">
                     <div class="btn-group btn-group-justified" role="group">
-                        <p class="btn btn-default" role="button">
-                            {% trans "Creation" %}: {{facture}}</p>
+                        <p class="btn btn-default" role="button">{{facture}}</p>
                         <a class="btn btn-default alert-danger"
                             href="{% url 'bill_delete' facture.id %}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -74,6 +67,13 @@
                     <div class="btn-group btn-group-justified" role="group">
                         <p class="btn btn-default" role="button">
                         {% trans "TTC" %}: <b>{{facture.total_ttc}}</b> {% trans "$" %}</p>
+                        <p class="btn btn-default alert-warning" role="button">
+                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                        </p>
+                    </div>
+                </li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
                         <a href='{% url "bill_print" facture.id %}'
                             class="alert-info btn btn-default" role="button">
                             <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
@@ -86,32 +86,6 @@
         </div>
     </div>
 <!-- Infos end -->
-<!-- Payments begin -->
-<div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Payments" %}
-                    <div class="pull-right">
-                        <a href='{% url "prepare_payment" facture.id %}'>
-                        <p class="btn btn-default alert-warning" role="button">
-                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
-                        </p></a>
-                    </div>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-unstyled">
-    {% for payment in facture.paiements.iterator %}
-    <a href='{% url "bill_payment_view" facture.id payment.id %}'>
-    <li class="possum-base well">
-    {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li></a>
-    {% empty %}
-        <li class="possum-base well">{% trans "Nothing" %}</li>
-    {% endfor %}
-                </ul>
-            </div>
-        </div>
-<!-- Payments end -->
 <!-- Kitchen begin -->
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -140,6 +114,5 @@
             </div>
         </div>
 <!-- Kitchen end -->
-    </div>
-</div>
+   </div>
 {% endblock %}

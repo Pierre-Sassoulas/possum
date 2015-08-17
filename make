@@ -242,6 +242,7 @@ EOF
     fi
     must_succeed ./manage.py migrate
     must_succeed ./manage.py update_css
+    cp possum/static/categories.css possum/base/static/categories.css
     must_succeed ./manage.py update_stats_to_0_6
     update_js
 }

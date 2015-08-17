@@ -87,10 +87,6 @@ li.surtaxe {
     width:250px;
     height:80px;
 }
-/* navbar selected */
-.gris {
-    background-color: #e7e7e7;
-}
 /* Cooking colors */
 .cooking_0 {background:#8CC6D7;}
 .cooking_1 {background:#DB0B32;}
@@ -98,3 +94,8 @@ li.surtaxe {
 .cooking_3 {background:#B78178;}
 /* no blue for link */
 a, a:visited, a:hover { color: black; }
+body{padding-top:45px;}
+.navbar{min-height:20px; height:40px;}
+/* navbar selected */
+.gris {background-color: #e7e7e7; height:40px;}
+/*.container {padding-top:10px;}*/
