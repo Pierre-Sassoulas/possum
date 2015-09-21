@@ -1,0 +1,49 @@
+{% extends "base_with_aside.html" %}
+{% block content %}
+{% load i18n %}
+<h2>{% trans "Sales" %}</h2>
+<p>{% blocktrans %}
+The display of information requires updating statistics with
+recent bills. If there are a lot of new bills, this
+may take time (see more minutes).
+{% endblocktrans %}</p>
+
+{% if working_on_update %}
+<p>{% blocktrans %}
+The update is in progress, you should not turn off the server.
+{% endblocktrans %}</p>
+<p><button type="button" class="btn btn-info"
+    >{% trans "Work in progress ..." %}</button>
+</p>
+{% else %}
+{% if bills_to_update %}
+<p>{% blocktrans %}
+There are currently {{bills_to_update}} bill{{bills_to_update|pluralize}}
+resulted in waiting.
+{% endblocktrans %}</p>
+<p><form action="{% url 'stats_update' %}" method="get">
+<button type="submit" class="btn btn-warning"
+    >{% trans "Update" %}</button></form>
+</p>
+{% else %}
+<p>{% blocktrans %}
+There are no pending bill, the data are up to date.
+{% endblocktrans %}</p>
+<p><button type="button" class="btn btn-success"
+    >{% trans "Data up to date" %}</button>
+</p>
+{% endif %}
+{% endif %}
+{% endblock %}
+{% block side %}
+<ul>
+    <a href="{% url "stats_text" %}">
+        <li>{% trans "statistics" %}</li>
+    </a>
+    <a href="{% url "stats_charts" %}">
+        <li>{% trans "graphics" %}</li>
+    </a>
+</ul>
+
+{% endblock %}
+

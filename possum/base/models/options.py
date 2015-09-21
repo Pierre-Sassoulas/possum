@@ -19,35 +19,23 @@
 
 
 from django.db import models
-from generic import Priorite, NomDouble
 
-
-class Cuisson(NomDouble, Priorite):
-    """Cuisson d'un produit"""
-#    color = models.CharField(max_length=8, default="#ffdd82")
-
-    class Meta:
-        app_label = 'base'
-
-    def __cmp__(self, other):
-        return cmp(self.priorite, other.priorite)
-
-    def __unicode__(self):
-        return self.nom
+from possum.base.models.generic import Priorite, NomDouble
 
 
 class Option(models.Model):
-    """Toutes les options possibles pour un produit.
-    """
+
+    """Toutes les options possibles pour un produit. """
     name = models.CharField(max_length=16, default="")
 
     class Meta:
-        app_label = 'base'
         ordering = ['name']
 
     def __cmp__(self, other):
+        '''
+        :param Option other: An Option to be compared to this one.
+        '''
         return cmp(self.name, other.name)
 
     def __unicode__(self):
         return self.name
-

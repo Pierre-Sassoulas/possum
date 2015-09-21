@@ -17,51 +17,95 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 import datetime
 from decimal import Decimal
-from django.db import models
+import itertools
 import logging
 import os
+
 from django.conf import settings
-import itertools
+from django.db import models
 from django.db.models import Max, Avg
-from possum.base.models import Facture
+from django.utils.translation import ugettext as _
+
 from possum.base.models import Categorie
+from possum.base.models import Facture
 from possum.base.models import PaiementType
 from possum.base.models import Produit
 from possum.base.models import VAT
 
 
-logger = logging.getLogger(__name__)
-COMMON = ["total_ttc", "nb_bills", "guests_total_ttc", "guests_nb",
-          "guests_average", "bar_total_ttc", "bar_nb", "bar_average"]
+LOG = logging.getLogger(__name__)
+# availables stats and keys
+STATS = ["total_ttc", "nb_bills", "guests_total_ttc", "guests_nb",
+         "guests_average", "bar_total_ttc", "bar_nb", "bar_average"]
 
 
-def nb_sorted(a, b):
-    """We sort objects a and b (Categorie(), Produit(), ...)
-    to have, for example, best selling first."""
-    if b.nb < a.nb:
-        return -1
-    elif b.nb > a.nb:
-        return 1
-    else:
-        return 0
-
-
-def get_last_year(date):
-    """Get last year day for a date, this is meanly used to
-    compare 2 stats over time.
-
-    date: datetime
+def get_month(date):
     """
-    try:
-        return date - datetime.timedelta(days=364)
-    except:
+    date: datetime
+    Return datetime.date() for a month
+    """
+    return datetime.date(date.year, date.month, 1)
+
+
+def get_year(date):
+    """
+    date: datetime
+    Return datetime.date() for a year
+    """
+    return datetime.date(date.year, 1, 1)
+
+
+def get_week(date):
+    """
+    date: datetime
+    Return datetime.date() for a week
+    First day of week is monday
+    """
+    if date.weekday() == 0:
+        return date + datetime.timedelta(days=1)
+    elif date.weekday() > 1:
+        nb_days = date.weekday() - 1
+        return date - datetime.timedelta(days=nb_days)
+    else:
         return date
 
 
-def get_data_on(bill, data):
+def find_right_date(date, interval):
+    """Select rhe right date,
+    If interval is month, it is first day of month
+    if intervak is year, it is first day of year
+    if interval is week, it is monday
+    :param date: datetime.date()
+    :param interval: 'm'
+    :return: dateteime.date()
+    """
+    if interval == "m":
+        return get_month(date)
+    elif interval == "y":
+        return get_year(date)
+    elif interval == "w":
+        return get_week(date)
+    else:
+        return date
+
+
+def get_last_year(date, interval):
+    """Get lat year date
+
+    :param date: current date
+    :param interval: which interval (d, m, w or y)
+    :return: datetime.date
+    """
+    if interval == "y" or interval == "m":
+        # year - 1
+        return datetime.date(date.year - 1, date.month, date.day)
+    else:
+        return date - datetime.timedelta(weeks=52)
+
+
+def get_data_from(bill, data):
     """Extract data on a bill to add it to the stats
 
     bill: Facture()
@@ -72,8 +116,8 @@ def get_data_on(bill, data):
             data[key] += Decimal(value)
         else:
             data[key] = Decimal(value)
-        logger.debug("%s = %.2f" % (key, data[key]))
-    logger.debug("[B%s] extract stats" % bill.id)
+        LOG.debug("%s = %.2f" % (key, data[key]))
+    LOG.debug("[B%s] extract stats" % bill.id)
     add_value("nb_bills", 1)
     add_value("total_ttc", bill.total_ttc)
     for sold in bill.produits.iterator():
@@ -114,6 +158,41 @@ def get_data_on(bill, data):
     return data
 
 
+def _nb_sorted(a, b):
+    """We sort objects a and b (Categorie(), Produit(), ...)
+    to have, for example, best selling first."""
+    if b.nb < a.nb:
+        return -1
+    elif b.nb > a.nb:
+        return 1
+    else:
+        return 0
+
+
+def _search_sub_key(stats, key, a_class, integer=False):
+    """
+    :param stats: Stat.object.filter()
+    :param key: string (subkey to search
+    :param a_class: a class of object to find
+    :param integer: output values must be an integer or a float
+    :return: []
+    """
+    tmp = []
+    for stat in stats.filter(key__contains=key):
+        pk = stat.key.split("_")[0]
+        try:
+            elt = a_class.objects.get(pk=pk)
+        except:
+            LOG.critical("[%s] pk=%s not here" % (key, pk))
+        else:
+            if integer:
+                elt.nb = int(stat.value)
+            else:
+                elt.nb = stat.value
+            tmp.append(elt)
+    return sorted(tmp, cmp=_nb_sorted)
+
+
 def compute_avg_max(stats, stat_avg, stat_max):
     """Get and save maximum and average for all stats
     stats: Stat.objects.filter()
@@ -124,32 +203,34 @@ def compute_avg_max(stats, stat_avg, stat_max):
     if avg:
         stat_avg.value = avg
         stat_avg.save()
+        LOG.debug("new average: %.2f" % avg)
     best = stats.aggregate(Max('value'))['value__max']
     if best:
         stat_max.value = best
         stat_max.save()
+        LOG.debug("new best: %.2f" % best)
 
 
 def compute_all_time():
     """Update all time stats (average and max) for main keys
     """
-    logger.debug("update all time stats")
-    for key in COMMON:
-        # for days
+    LOG.debug("update all time stats")
+    for key in STATS:
+        LOG.debug("days(a)")
         stats = Stat.objects.filter(interval="d", key=key)
         avg, created = Stat.objects.get_or_create(interval="a",
                                                   key="avg_%s" % key)
         best, created = Stat.objects.get_or_create(interval="a",
                                                    key="max_%s" % key)
         compute_avg_max(stats, avg, best)
-        # for months
+        LOG.debug("months(b)")
         stats = Stat.objects.filter(interval="m", key=key)
         avg, created = Stat.objects.get_or_create(interval="b",
                                                   key="avg_%s" % key)
         best, created = Stat.objects.get_or_create(interval="b",
                                                    key="max_%s" % key)
         compute_avg_max(stats, avg, best)
-        # for weeks
+        LOG.debug("weeks(c)")
         stats = Stat.objects.filter(interval="w", key=key)
         avg, created = Stat.objects.get_or_create(interval="c",
                                                   key="avg_%s" % key)
@@ -158,37 +239,26 @@ def compute_all_time():
         compute_avg_max(stats, avg, best)
 
 
-def record_day(year, month, week, day, data):
+def record_day(date, data):
     """Record new values from data.
     Also update average, max.
 
-    year: 2014
-    month: 03
-    week: 14
-    day: 31
+    date: datetime
     data: {'key1': value1, 'key2': value2, ...}
     """
-    logger.debug("[%d-%d-%d] update record" % (year, month, day))
+    LOG.debug("[%s] update record" % date.isoformat())
     for key in data.keys():
-        stat, created = Stat.objects.get_or_create(year=year,
-                                                   month=month,
-                                                   day=day,
-                                                   key=key,
+        stat, created = Stat.objects.get_or_create(date=date, key=key,
                                                    interval="d")
         stat.add_value(data[key])
-        stat, created = Stat.objects.get_or_create(year=year,
-                                                   month=month,
-                                                   key=key,
-                                                   interval="m")
+        stat, created = Stat.objects.get_or_create(date=get_month(date),
+                                                   key=key, interval="m")
         stat.add_value(data[key])
-        stat, created = Stat.objects.get_or_create(year=year,
-                                                   week=week,
-                                                   key=key,
-                                                   interval="w")
+        stat, created = Stat.objects.get_or_create(date=get_week(date),
+                                                   key=key, interval="w")
         stat.add_value(data[key])
-        stat, created = Stat.objects.get_or_create(year=year,
-                                                   key=key,
-                                                   interval="y")
+        stat, created = Stat.objects.get_or_create(date=get_year(date),
+                                                   key=key, interval="y")
         stat.add_value(data[key])
 
 
@@ -198,80 +268,71 @@ def compute_avg(subkey, stats, avg):
     stats: Stat.objects.filter()
     avg: Stat()
     """
+    LOG.debug(subkey)
     try:
         total = stats.filter(key="%s_total_ttc" % subkey)[0]
         nb = stats.filter(key="%s_nb" % subkey)[0]
     except IndexError:
-        logger.debug("no data for this date")
+        LOG.debug("no data for this date")
         # if no data here, no need to update month and week
         return False
     if nb.value:
         avg.value = total.value / nb.value
         avg.save()
     else:
-        logger.debug("we don't divide by zero")
+        LOG.debug("we don't divide by zero")
         return False
     return True
 
 
-def update_avg(year, month, week, day):
+def update_avg(date):
     """Update average/max stats for day, week and month
 
     guests_average = guests_total_ttc.value / guests_nb.value
     bar_average = bar_total_ttc.value / bar_nb.value
     """
-    logger.debug("update guests_average and bar_average")
+    LOG.debug("update guests_average and bar_average")
     for key in ["guests", "bar"]:
-        stats = Stat.objects.filter(year=year, month=month, day=day,
-                                    interval="d")
-        avg, created = Stat.objects.get_or_create(year=year, month=month,
-                                                  day=day, interval="d",
+        stats = Stat.objects.filter(date=date, interval="d")
+        avg, created = Stat.objects.get_or_create(date=date, interval="d",
                                                   key="%s_average" % key)
         if compute_avg(key, stats, avg):
-            stats = Stat.objects.filter(year=year, month=month, interval="m")
-            avg, created = Stat.objects.get_or_create(year=year, month=month,
+            month = get_month(date)
+            stats = Stat.objects.filter(date=month, interval="m")
+            avg, created = Stat.objects.get_or_create(date=month,
                                                       key="%s_average" % key,
                                                       interval="m")
             compute_avg(key, stats, avg)
-            stats = Stat.objects.filter(year=year, week=week, interval="w")
-            avg, created = Stat.objects.get_or_create(year=year, week=week,
-                                                      key="%s_average" % key,
-                                                      interval="w")
+            week = get_week(date)
+            stats = Stat.objects.filter(date=week, interval="w")
+            avg, created = Stat.objects.get_or_create(date=week, interval="w",
+                                                      key="%s_average" % key)
             compute_avg(key, stats, avg)
 
 
 def update_day(date):
     """Update stats with all bills availables on a day.
 
-    date: String, "2014-03-31"
+    date: datetime.date
     """
-    try:
-        day_begin = datetime.datetime.strptime(date, "%Y-%m-%d")
-    except ValueError:
-        logger.warning("[%s] day invalid !" % date)
-        return False
-    day_end = day_begin + datetime.timedelta(days=1)
-    bills = Facture.objects.filter(date_creation__gte=day_begin,
-                                   date_creation__lt=day_end)\
+    end = date + datetime.timedelta(days=1)
+    bills = Facture.objects.filter(date_creation__gte=date,
+                                   date_creation__lt=end)\
                            .exclude(saved_in_stats=True)
-    day = day_begin.day
-    month = day_begin.month
-    year = day_begin.year
-    week = day_begin.isocalendar()[1]
     data = {}
     count = 0
-    logger.debug("[%s] %d bills to update" % (date, bills.count()))
+    LOG.debug("[%s] %d bills to update" % (date, bills.count()))
     for bill in bills:
         if bill.est_soldee():
             count += 1
-            data = get_data_on(bill, data)
+            data = get_data_from(bill, data)
             bill.saved_in_stats = True
             bill.save()
     if data:
-        record_day(year, month, week, day, data)
-        update_avg(year, month, week, day)
+        record_day(date, data)
+        update_avg(date)
     else:
-        logger.debug("nothing to do")
+        LOG.debug("nothing to do")
     logging.info("updated record with %d bills" % count)
     return True
 
@@ -313,48 +374,46 @@ class Stat(models.Model):
                 ('m', 'Month'),
                 ('d', 'Day'))
     interval = models.CharField(max_length=1, choices=INTERVAL, default="d")
+    date = models.DateField(default="1978-03-03")
+    # TODO: since version 0.6: year, month, week and day deprecated,
+    # must be removed in version 0.7
     year = models.PositiveIntegerField(default=0)
     month = models.PositiveIntegerField(default=0)
     day = models.PositiveIntegerField(default=0)
     week = models.PositiveIntegerField(default=0)
+    # END TODO
     key = models.CharField(max_length=32)
     value = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
     class Meta:
-        ordering = ['interval', 'year', 'month', 'day', 'key']
+        ordering = ['interval', 'date', 'key']
 
     def __unicode__(self):
-        tmp = "[%s]" % self.interval
-        if self.interval == 'y':
-            tmp += "[%d]" % self.year
-        elif self.interval == 'w':
-            tmp += "[%d-w%d]" % (self.year, self.week)
-        elif self.interval == 'm':
-            tmp += "[%d-%d]" % (self.year, self.month)
-        elif self.interval == 'd':
-            tmp += "[%d-%d-%d]" % (self.year, self.month, self.day)
-        return "%s %s" % (tmp, self.key)
+        """Representing the date in ISO 8601 format, ‘YYYY-MM-DD’
+        """
+        date = self.date.isoformat()
+        return "%s %s" % (self.interval, date)
 
     def update(self):
         """Update statistics with new bills
         """
+        # TODO: knee knee knee .. for what ? I don't remender :(
         if os.path.isfile(settings.LOCK_STATS):
-            logger.info("lock [%s] already here" % settings.LOCK_STATS)
+            LOG.info("lock [%s] already here" % settings.LOCK_STATS)
             return False
         else:
-            logger.debug("create lock for stats")
+            LOG.debug("create lock for stats")
             fd = open(settings.LOCK_STATS, "w")
             fd.close()
             # we prepare list of days with bills to add
             bills = Facture.objects.filter(saved_in_stats=False)
             grouped = itertools.groupby(bills, lambda record:
-                                        record.date_creation\
-                                        .strftime("%Y-%m-%d"))
+                                        record.date_creation.date())
             for day, bills_this_day in grouped:
                 update_day(day)
             if grouped:
                 compute_all_time()
-            logger.debug("release lock for stats")
+            LOG.debug("release lock for stats")
             os.remove(settings.LOCK_STATS)
             return True
 
@@ -365,132 +424,63 @@ class Stat(models.Model):
         try:
             self.value += Decimal(value)
         except:
-            logger.critical("can't convert [%s]" % value)
+            LOG.critical("can't convert [%s]" % value)
         self.save()
 
-    def get_data_for_day(self, context):
-        """Prepare stats for a day
-        context must contains 'date' : Datetime()
+    def get_a_date(self, context):
+        """Get Stats for a date
+        This function will not test with context['date'] is a datetime.date()
+
+        :param context: {'date': datetime.date(), 'interval': 'm'}
+        :return: context with stats for context['date']
         """
-        if 'date' not in context:
-            logger.warning("no date in context")
+        if 'date' not in context or 'interval' not in context:
+            LOG.warning("No date or no interval in context")
             return context
-        date = context['date']
-        all_time = Stat.objects.filter(interval="a")
-        last = get_last_year(context['date'])
-        objects = Stat.objects.filter(interval="d")
-        last_year = objects.filter(year=last.year, month=last.month,
-                                   day=last.day)
-        current = objects.filter(year=date.year, month=date.month,
-                                 day=date.day)
-        return self.get_data(context, all_time, last_year, current)
-
-    def get_data_for_week(self, context):
-        """Prepare stats for a week
-        context must contains 'year' and 'week' : Integer
-        """
-        if 'year' not in context:
-            logger.warning("no year in context")
-            return context
-        if 'week' not in context:
-            logger.warning("no week in context")
-            return context
-        week = context['week']
-        year = context['year']
-        all_time = Stat.objects.filter(interval="c")
-        last = int(year) - 1
-        objects = Stat.objects.filter(interval="w", week=week)
-        last_year = objects.filter(year=last)
-        current = objects.filter(year=year)
-        return self.get_data(context, all_time, last_year, current)
-
-    def get_data_for_month(self, context):
-        """Prepare stats for a month
-        context must contains 'year' and 'month' : Integer
-        """
-        if 'year' not in context:
-            logger.warning("no year in context")
-            return context
-        if 'month' not in context:
-            logger.warning("no month in context")
-            return context
-        month = context['month']
-        year = context['year']
-        all_time = Stat.objects.filter(interval="b")
-        last = int(year) - 1
-        objects = Stat.objects.filter(interval="m", month=month)
-        last_year = objects.filter(year=last)
-        current = objects.filter(year=year)
-        return self.get_data(context, all_time, last_year, current)
-
-    def get_data(self, context, all_time, last_year, current):
-        """Get and construct data from Stat()
-
-        context: {}
-        all_time: [Stat(), ]
-        last_year: [Stat(), ]
-        current: [Stat(), ]
-
-        return context with data
-        """
-        # all time stats
-        for stat in all_time:
-            context[stat.key] = "%.2f" % stat.value
-        # last year stats
-        for stat in last_year:
-            context["last_%s" % stat.key] = "%.2f" % stat.value
-        # current stats
-        tmp = {}
-        for stat in current:
-            if stat.key in COMMON:
-                context[stat.key] = "%.2f" % stat.value
-                # if current better than average, we add a flag
-                key = 'avg_%s' % stat.key
-                if key in context.keys():
-                    if float(stat.value) > float(context[key]):
-                        logger.debug("[%s] better" % stat.key)
-                        context["%s_better" % stat.key] = True
-            else:
-                # for VAT, Produit, Categorie and Payment
-                switch = None
-                pk = stat.key.split("_")[0]
-                if "_product_nb" in stat.key:
-                    switch = "products"
-                    try:
-                        elt = Produit.objects.get(pk=pk)
-                    except Produit.DoesNotExist:
-                        logger.critical("Produit(pk=%s) not here" % pk)
-                        continue
-                    elt.nb = stat.value
-                elif "_category_nb" in stat.key:
-                    switch = "categories"
-                    try:
-                        elt = Categorie.objects.get(pk=pk)
-                    except Categorie.DoesNotExist:
-                        logger.critical("Categorie(pk=%s) not here" % pk)
-                        continue
-                    elt.nb = stat.value
-                elif "_vat" in stat.key:
-                    switch = "vats"
-                    try:
-                        elt = VAT.objects.get(pk=pk)
-                    except VAT.DoesNotExist:
-                        logger.critical("VAT(pk=%s) not here" % pk)
-                        continue
-                    elt.nb = stat.value
-                elif "_payment_value" in stat.key:
-                    switch = "payments"
-                    try:
-                        elt = PaiementType.objects.get(pk=pk)
-                    except PaiementType.DoesNotExist:
-                        logger.critical("PaiementType(pk=%s) not here" % pk)
-                        continue
-                    elt.nb = stat.value
-                if switch not in tmp.keys():
-                    tmp[switch] = []
-                tmp[switch].append(elt)
-        # sort elements in tmp
-        for switch in tmp.keys():
-            context[switch] = sorted(tmp[switch], cmp=nb_sorted)
-        logger.debug(context)
+        date = find_right_date(context['date'], context['interval'])
+        if context['interval'] == "m":
+            alltime_interval = "b"
+        elif context['interval'] == "w":
+            alltime_interval = "c"
+        else:
+            alltime_interval = "a"
+        stats = Stat.objects.filter(interval=context['interval'], date=date)
+        for key in STATS:
+            try:
+                value = "%.2f" % stats.get(key=key).value
+            except:
+                LOG.debug("[%s][%s][%s] missing" % (date, context['interval'],
+                                                   key))
+                value = "0.00"
+            context[key] = value
+            # maximum and average
+            for i in ['max_', 'avg_']:
+                tmp = "%s%s" % (i, key)
+                try:
+                    get = Stat.objects.get
+                    value = "%.2f" % get(interval=alltime_interval,
+                                         key=tmp).value
+                except:
+                    LOG.debug("[%s][%s] missing" % (alltime_interval, tmp))
+                    value = "0.00"
+                context[tmp] = value
+            # last year
+            last = get_last_year(date, context['interval'])
+            try:
+                value = "%.2f" % Stat.objects.get(interval=context['interval'],
+                                                  date=last, key=key).value
+            except:
+                value = "0.00"
+                LOG.debug("[%s][%s][%s] missing" % (last, context['interval'],
+                                                   key))
+            context["last_%s" % key] = value
+        context['products'] = _search_sub_key(stats, "_product_nb", Produit,
+                                              True)
+        context['categories'] = _search_sub_key(stats, "_category_nb",
+                                                Categorie, True)
+        context['vats'] = _search_sub_key(stats, "_vat", VAT)
+        context['payments'] = _search_sub_key(stats, "_payment_value",
+                                              PaiementType)
+        context['date'] = date.isoformat()
+        LOG.debug(context)
         return context

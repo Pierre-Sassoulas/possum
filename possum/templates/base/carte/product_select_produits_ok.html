@@ -2,15 +2,30 @@
 {% block content %}
 {% load i18n %}
 <h1>{% trans "Select a product to enable for" %}: {{product.nom}}</h1>
-
-<ul id="products">
+<div class="col-sm-6">
+    <ul class="list-inline">
     {% for sub in products %}
-    <li onclick="window.location='{% url "products_add_produits_ok" product.id sub.id %}'"
-        class="cat_{{sub.categorie_id}}">{{sub.nom}}</li>
+    <div class="col-sm-3">
+        <a href='{% url "products_add_produits_ok" product.id sub.id %}'>
+            <li class="well-sansbg cat_{{sub.categorie_id}}">{{sub.nom}}</li>
+        </a>
+    </div>
     {% empty %}
-        <li>{% trans "No product" %}</li>
+    <div class="col-sm-3">
+        <li class="well">{% trans "No product" %}</li>
+    </div>
     {% endfor %}
-</ul>
-
+        </ul>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "products_view" product.id %}'>
+                    <li class="possum-base alert-success">
+                        {% trans "Back" %}</li></a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Settings" %}</h1>
+<ul class="list-inline">
+<div class="row">
+    <div class="col-sm-2">
+        <a href="{% url 'credits' %}">
+            <li class="well">{% trans "About" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'archives' %}">
+            <li class="well">{% trans "Archives" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'categories' %}">
+            <li class="well">{% trans "Carte" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'editions_home' %}">
+            <li class="well">{% trans "Bills in use" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'notes_home' %}">
+            <li class="well">{% trans "Notes" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'printer_home' %}">
+            <li class="well">{% trans "Printers" %}</li>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        <a href="{% url 'tables' %}">
+            <li class="well">{% trans "Tables" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'users' %}">
+            <li class="well">{% trans "Users" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'vats' %}">
+            <li class="well">{% trans "VAT" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-2">
+        <a href="{% url 'shutdown' %}">
+            <li class="well">{% trans "Shutdown server" %}</li>
+        </a>
+    </div>
+</div>
+</ul>
+{% endblock %}

@@ -1,14 +1,14 @@
-{% extends "base.html" %}
-{% block menu %}<!-- You have to login -->{% endblock %}
-{% block page %}
+{% extends "panel.html" %}
 {% load staticfiles %}
 {% load i18n %}
-<div id="login">
-    <img src="{% static "images/bandeau-192.png" %}" alt="Possum"/></br>
+{% block panel %}
+<div class="jumbotron">
+    <h1>Erreur 500</h1>
     <p>{% trans "This page is currently unavailable" %}</p>
-<ul>
-    <li onclick='window.location="{% url "home" %}"'>{% trans "Home" %}</li>
-</ul>
+    <p>
+       <a class="btn btn-lg btn-primary" href="{% url "home" %}"
+        >{% trans "Home" %} &raquo;</a>
+    </p>
 </div>
 {% endblock %}
 

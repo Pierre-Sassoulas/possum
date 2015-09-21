@@ -19,16 +19,18 @@
 #
 
 from django.db import models
-from config import Config
-from generic import Nom, Priorite
-from vat import VAT
+
+from possum.base.models.config import Config
+from possum.base.models.generic import Nom, Priorite
+from possum.base.models.vat import VAT
 
 
 class Categorie(Nom, Priorite):
+
     """Category of products
 
     :param Boolean surtaxable: there are a surtaxe on this category
-    :param Boolean disable_surtaxe: 
+    :param Boolean disable_surtaxe:
     :param Boolean made_in_kitchen: must be cooked in kitchen
     :param String color:
     :param VAT vat_onsite:
@@ -40,34 +42,50 @@ class Categorie(Nom, Priorite):
     made_in_kitchen = models.BooleanField(default=False)
     color = models.CharField(max_length=8, default="#ffdd82")
     vat_onsite = models.ForeignKey(VAT, null=True, blank=True,
-                                   related_name="categorie-vat-onsite")
+                                   related_name="categorie_vat_onsite")
     vat_takeaway = models.ForeignKey(VAT, null=True, blank=True,
-                                     related_name="categorie-vat-takeaway")
+                                     related_name="categorie_vat_takeaway")
 
     def __cmp__(self, other):
-        """Classement par priorite_facture (plus la valeur est petite,
-        plus elle est prioritaire), puis par nom_ihm en cas d'égalité. """
+        ''' Classement par priorite_facture (plus la valeur est petite,
+        plus elle est prioritaire), puis par nom_ihm en cas d'égalité.
+
+        :param other:
+        :type other:
+        '''
         if self.priorite == other.priorite:
             return cmp(self.nom, other.nom)
         else:
             return cmp(self.priorite, other.priorite)
 
     def set_vat_takeaway(self, vat):
+        '''
+        TODO
+        :param vat:
+        :type vat:
+        '''
         self.vat_takeaway = vat
         self.save()
         # il faut toujours faire un product.update_vats()
 
     def set_vat_onsite(self, vat):
+        '''
+        TODO
+        :param vat:
+        :type vat:
+        '''
         self.vat_onsite = vat
         self.save()
 
     def save(self, force_insert=False, using=None):
-        """We overload this method to keep last date carte
-        has changed
-        """
+        ''' We overload this method to keep last date carte has changed
+
+        :param Boolean force_insert:
+        :param using: TODO
+        :type using:
+        '''
         Config().set_carte_changed()
         super(Categorie, self).save(force_insert=force_insert, using=using)
 
     class Meta:
-        app_label = 'base'
         ordering = ['priorite', 'nom']

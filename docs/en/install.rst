@@ -55,14 +55,14 @@ Then for installation or updates, we will use **./make**:
 This will install and configure any virtual environment for Possum.
 
 Now we need to initialize the data, why it is recommended to copy the script
-**possum/utils/init_db.py**. For a more complete example, you can inspire 
-**possum/utils/init_demo.py** file: 
+**possum/base/management/commands/init_db.py**. For a more complete example,
+you can inspire **possum/base/management/commands/init_demo.py** file: 
 
 ::
 
-  sudo cp possum/utils/init_db.py possum/utils/init_mine.py
-  # adapt file possum/utils/init_mine.py
-  sudo gedit possum/utils/init_mine.py
+  sudo cp possum/base/management/commands/init_db.py possum/base/management/commands/init_mine.py
+  # adapt file possum/base/management/commands/init_mine.py
+  sudo gedit possum/base/management/commands/init_mine.py
   # and run it:
   sudo ./make init_mine
 
@@ -111,7 +111,8 @@ You can generate documentation in HTML with the following command:
 
 It will be available here: **/opt/possum-software/docs/en/_build/html/**.
 Otherwise it is also available on the official website: 
-`Documentation <http://possum.readthedocs.org>`_.
+`Documentation <http://www.possum-software.org/docs.html>`_.
+
 
 Web server configuration
 ------------------------

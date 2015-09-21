@@ -18,21 +18,28 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.contrib import messages
-from django.contrib.auth.context_processors import PermWrapper
-from django.shortcuts import render, redirect
 import logging
 import os
-from django.contrib.auth.decorators import login_required
-from django.utils.functional import wraps
-from possum.base.models import Config, Facture
+
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 
+from possum.base.models import Config, Facture
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 
+def check_admin(user):
+    """User is an admin ?
+    """
+    return user.is_superuser
+
+
+@login_required
 def cleanup_payment(request):
     """Remove all variables used for a new payment
     """
@@ -43,6 +50,7 @@ def cleanup_payment(request):
             del request.session[key]
 
 
+@login_required
 def remove_edition(request):
     """Remove 'bill_in_use' and update bill if found.
        This is use to reserve access to a bill.
@@ -52,14 +60,16 @@ def remove_edition(request):
         try:
             bill = Facture.objects.get(pk=bill_id)
         except Facture.DoesNotExist:
-            logger("[%s] bill is not here!" % bill_id)
+            LOGGER("[%s] bill is not here!" % bill_id)
         else:
-            bill.used_by()
             if "products_modified" in request.session.keys():
                 # we update bill only once
                 bill.update()
                 bill.update_kitchen()
                 request.session.pop("products_modified")
+            bill.in_use_by = None
+            bill.save()
+            LOGGER.debug("[F%s] edition mode removed" % bill_id)
         request.session.pop("bill_in_use")
     cleanup_payment(request)
     return request
@@ -67,31 +77,15 @@ def remove_edition(request):
 
 @login_required
 def home(request):
-    request = remove_edition(request)
-    context = { 'menu_home': True, }
-    return render(request, 'home.html', context)
+    return redirect('bill_home')
+    # request = remove_edition(request)
+    # context = {'menu_home': True, }
+    # return render(request, 'home.html', context)
 
 
-def permission_required(perm, **kwargs):
-    """This decorator redirect the user to '/'
-    if he hasn't the permission.
-    """
-    def decorator(view_func):
-        def _wrapped_view(request, *args, **kwargs):
-            if request.user.has_perm(perm):
-                return view_func(request, *args, **kwargs)
-            else:
-                messages.add_message(request, messages.ERROR, "%s (%s)" % (
-                                     _("You do not have permission"),
-                                     perm.split('.')[1]))
-                return redirect('home')
-        return wraps(view_func)(_wrapped_view)
-    return decorator
-
-
-@permission_required('base.p3')
+@login_required
 def shutdown(request):
-    context = { 'menu_home': True, }
+    context = {'menu_manager': True, }
     config = Config.objects.filter(key="default_shutdown")
     if config:
         cmd = config[0].value

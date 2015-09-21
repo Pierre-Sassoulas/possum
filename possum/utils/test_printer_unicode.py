@@ -34,7 +34,7 @@ if printer:
     conn = cups.Connection()
     conn.printFile(printer, filename, title="test", options={})
 else:
-    print "Select a printer and modify variable 'printer':"
+    print("Select a printer and modify variable 'printer':")
     printers = conn.getPrinters()
     for printer in printers:
-        print printer
+        print(printer)

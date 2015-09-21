@@ -29,11 +29,7 @@ Soit on utilise la dernière version à jour:
 Soit on télécharge la dernière version
 stable de POSSUM ici: `GitHub <https://github.com/possum-software/possum/releases>`_
 
-::
-
-  tar xzf possum-software-possum-*.tar.gz
-
-Nous allons prendre la première option.
+Nous allons prendre la première option, et c'est l'option recommandée.
 
 Prérequis
 ---------
@@ -60,14 +56,15 @@ Cette opération va installer et configurer tout l'environnement virtuel nécess
 à Possum.
 
 Il nous reste maintenant à initialiser les données, pour cela il est recommandé
-de copier le fichier d'initialisation **possum/utils/init_db.py**. Pour un exemple
-plus complet, vous pouvez vous inspirer du fichier **possum/utils/init_demo.py**:
+de copier le fichier d'initialisation **possum/base/management/commands/init_db.py**.
+Pour un exemple plus complet, vous pouvez vous inspirer du fichier 
+**possum/base/management/commands/init_demo.py**:
 
 ::
 
-  sudo cp possum/utils/init_db.py possum/utils/init_mine.py
-  # adapt file possum/utils/init_mine.py
-  sudo gedit possum/utils/init_mine.py
+  sudo cp possum/base/management/commands/init_db.py possum/base/management/commands/init_mine.py
+  # adapt file possum/base/management/commands/init_mine.py
+  sudo gedit possum/base/management/commands/init_mine.py
   # and run it:
   sudo ./make init_mine
 
@@ -117,7 +114,7 @@ Vous pouvez générer la documentation en html avec la commande suivante:
 Elle sera disponible ici: **/opt/possum-software/docs/fr/_build/html/**.
 
 Sinon elle est également disponible sur le site officiel:
-`Documentation <http://possum.readthedocs.org>`_.
+`Documentation <http://www.possum-software.org/docs.html>`_.
 
 Configuration du serveur Web
 ----------------------------

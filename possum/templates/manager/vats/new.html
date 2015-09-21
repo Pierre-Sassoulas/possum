@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{% trans "New VAT" %}</h1>
+<div class="col-sm-6">
+<form method='post' action='{% url "vat_new" %}'>{% csrf_token %}
+<table>
+<tr>
+    <td><b>{% trans "Name" %}</b></td>
+    <td><input name='name'></td>
+</tr>
+<tr>
+    <td><b>{% trans "Tax" %} ({% trans "example: 20.0" %})</b></td>
+    <td><input name='tax'></td>
+</tr>
+<tr>
+    <td colspan=2><input type='submit' value='{% trans "Save" %}'></td>
+</tr>
+</table>
+</form>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "vats" %}'>
+                    <li class="possum-base alert-success">{% trans "Back" %}</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+<h2>{% trans "Existing VAT" %}</h2>
+<ul class="list-inline">
+    {% for vat in vats %}
+        <div class="col-sm-4">
+            <a href='{% url "vats_change" vat.id %}'>
+                <li class="well">{{vat.name}} ({{vat.tax}})</li>
+            </a>
+        </div>
+    {% empty %}
+        <div class="col-sm-4">
+            <li class="well">{% trans "No VAT" %}</li>
+        </div>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}

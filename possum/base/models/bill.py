@@ -19,18 +19,20 @@
 #
 import datetime
 from decimal import Decimal
-from django.db import models
 import logging
-from category import Categorie
-from config import Config
-from follow import Follow
-from payment import Paiement, PaiementType
-from printer import Printer
-from product_sold import ProduitVendu
+
 from django.contrib.auth.models import User
+from django.db import models
+
+from possum.base.models.category import Categorie
+from possum.base.models.config import Config
+from possum.base.models.follow import Follow
+from possum.base.models.payment import Paiement, PaiementType
+from possum.base.models.printer import Printer
+from possum.base.models.product_sold import ProduitVendu
 
 
-logger = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 class Facture(models.Model):
@@ -55,18 +57,15 @@ class Facture(models.Model):
     table = models.ForeignKey('Table',
                               null=True,
                               blank=True,
-                              related_name="facture-table")
+                              related_name="table_bill")
     couverts = models.PositiveIntegerField("nombre de couverts", default=0)
     produits = models.ManyToManyField(ProduitVendu,
-                                      related_name="les produits vendus")
+                                      related_name="sold_product")
     total_ttc = models.DecimalField(max_digits=9,
                                     decimal_places=2,
                                     default=0)
-    paiements = models.ManyToManyField('Paiement',
-                                       related_name="les paiements")
-    vats = models.ManyToManyField('VATOnBill',
-                                  related_name="vat total for each vat on "
-                                  "a bill")
+    paiements = models.ManyToManyField('Paiement', related_name="payments")
+    vats = models.ManyToManyField('VATOnBill', related_name="total_vat")
     restant_a_payer = models.DecimalField(max_digits=9,
                                           decimal_places=2,
                                           default=0)
@@ -74,49 +73,51 @@ class Facture(models.Model):
     in_use_by = models.ForeignKey(User, null=True, blank=True)
     onsite = models.BooleanField(default=True)
     surcharge = models.BooleanField(default=False)
-    following = models.ManyToManyField('Follow',
-                                       null=True,
-                                       blank=True)
+    following = models.ManyToManyField('Follow', blank=True)
     category_to_follow = models.ForeignKey('Categorie', null=True, blank=True)
 
     class Meta:
         get_latest_by = 'id'
-        app_label = 'base'
-        permissions = (
-            ("p1", "can use manager part"),
-            ("p2", "can use carte part"),
-            ("p3", "can use POS"),
-            ("p4", "can ..."),
-            ("p5", "can ..."),
-            ("p6", "can ..."),
-            ("p7", "can ..."),
-            ("p8", "can ..."),
-            ("p9", "can ..."),
-        )
 
     def __unicode__(self):
+        '''
+        :return: Unicode for a Facture
+        '''
         if self.date_creation:
-            # TODO strftime copy pasted =~ 20 time (Date class ?)
-            date = self.date_creation.strftime("%H:%M %d/%m")
+            date = self.date_creation.strftime("%d/%m/%Y %H:%M")
         else:
-            date = "--:-- --/--"
+            date = "--/--/---- --:--"
         return u"%s" % date
 
     def __cmp__(self, other):
-        """We sort Facture() by date, new Facture first and older after
+        """
+        We sort Facture() by date, new Facture first and older after
 
         :param Facture self:
         :param Facture other:
+        :return etype: Boolean
         """
         return cmp(self.date_creation, other.date_creation)
 
-    def used_by(self, user=None):
+    def get_time(self):
+        """Return creation time (hour:minute)
+
+        :return: string
+        """
+        if self.date_creation:
+            date = self.date_creation.strftime("%H:%M")
+        else:
+            date = "--:--"
+        return u"%s" % date
+
+    def used_by(self, user):
         """Mark bill as 'in edition by user', only one
             person can edit a bill at a time
 
         :param User user: who editing it
         """
         if user != self.in_use_by:
+            LOG.info("[F%s] bill edition by [U%s]" % (self.pk, user.pk))
             self.in_use_by = user
             self.save()
 
@@ -126,7 +127,7 @@ class Facture(models.Model):
         Example: we have appetizer, entree and dessert, we want send first
         appetizer in kitchen.
         """
-        logger.debug("[%s] update kitchen" % self.id)
+        LOG.debug("[%s] update kitchen" % self.id)
         todolist = []
         for product in self.produits.filter(sent=False).iterator():
             if product.est_un_menu():
@@ -170,8 +171,7 @@ class Facture(models.Model):
         output = []
         for product in self.reduced_sold_list(products, full=True):
             tmp = "%dx %s " % (product.count, product.produit.nom)
-            if product.cuisson:
-                tmp += "%s " % product.cuisson
+            tmp += "%s " % product.get_cooking(short=True)
             tmp += ",".join([option.name for option in product.options.all()])
             output.append(tmp)
             for note in product.notes.all():
@@ -266,12 +266,13 @@ class Facture(models.Model):
             liste.append(i)
         for i in Facture.objects.filter(produits__isnull=True).iterator():
             liste.append(i)
+        liste.sort()
         return liste
 
     def update(self):
         """Update prize and kitchen
         """
-        logger.debug("[%s] update bill" % self.id)
+        LOG.debug("[%s] update bill" % self.id)
         self.total_ttc = Decimal("0")
         self.restant_a_payer = Decimal("0")
         for vatonbill in self.vats.iterator():
@@ -283,8 +284,8 @@ class Facture(models.Model):
                 if not sold.produit.price_surcharged:
                     # just in case for backwards comtability
                     # in case Produit has no price_surcharged
-                    logger.info("[%s] product without price_surcharged" %
-                                sold.produit.id)
+                    LOG.info("[%s] product without price_surcharged" %
+                             sold.produit.id)
                     sold.produit.update_vats(keep_clone=False)
                 sold.set_prize(sold.produit.price_surcharged)
                 vat = sold.produit.categorie.vat_onsite
@@ -300,10 +301,10 @@ class Facture(models.Model):
             self.total_ttc += sold.prix
             vatonbill, created = self.vats.get_or_create(vat=vat)
             if created:
-                logger.debug("[%s] new vat_on_bill" % self)
+                LOG.debug("[%s] new vat_on_bill" % self)
             vatonbill.total += value
             vatonbill.save()
-            logger.debug(vatonbill)
+            LOG.debug(vatonbill)
         self.restant_a_payer = self.total_ttc
         for payment in self.paiements.iterator():
             self.restant_a_payer -= payment.montant
@@ -317,12 +318,14 @@ class Facture(models.Model):
         """
         if sold.produit.actif:
             if self.produits.count() == 0:
+                LOG.debug("[F%s] first product, init date_creation" % self.pk)
                 self.date_creation = datetime.datetime.now()
             sold.made_with = sold.produit.categorie
             sold.save()
             self.produits.add(sold)
+            LOG.debug("[F%s] ProduitVendu(%s) added" % (self.pk, sold.pk))
         else:
-            logger.warning("[%s] try to add an inactive Produit()" % self.id)
+            LOG.warning("[F%s] try to add an inactive Produit()" % self.id)
 
     def del_payment(self, payment):
         """Delete a payment
@@ -334,9 +337,8 @@ class Facture(models.Model):
             self.save()
             self.update()
         else:
-            logger.warning("[%s] on essaye de supprimer un paiement "
-                           "qui n'est pas dans la facture: %s"
-                           % (self, payment))
+            LOG.warning("[%s] on essaye de supprimer un paiement "
+                        "qui n'est pas dans la facture: %s" % (self, payment))
 
     def is_valid_payment(self, montant):
         """Check payment amount before to add it
@@ -345,15 +347,14 @@ class Facture(models.Model):
         :return: True if it is ok
         """
         if self.restant_a_payer <= Decimal("0"):
-            logger.info("[%s] nouveau paiement ignore car restant"
-                        " a payer <= 0 (%5.2f)" % (self,
-                                                   self.restant_a_payer))
+            LOG.info("[%s] nouveau paiement ignore car restant"
+                     " a payer <= 0 (%5.2f)" % (self, self.restant_a_payer))
             return False
         if not self.produits:
-            logger.debug("Pas de produit, donc rien a payer")
+            LOG.debug("Pas de produit, donc rien a payer")
             return False
         if float(montant) == 0.0:
-            logger.debug("Le montant n'est pas indique.")
+            LOG.debug("Le montant n'est pas indique.")
             return False
         return True
 
@@ -377,7 +378,7 @@ class Facture(models.Model):
         else:
             paiement.montant = Decimal(montant)
         # On enregistre ce paiement
-        logger.debug("Nouveau paiement : {0}".format(paiement))
+        LOG.debug("Nouveau paiement : {0}".format(paiement))
         paiement.save()
         self.paiements.add(paiement)
         if paiement.montant > self.restant_a_payer:
@@ -427,7 +428,8 @@ class Facture(models.Model):
         return False
 
     def is_empty(self):
-        """:return: True if bill is empty"""
+        """
+        :return: True if bill is empty"""
         if self.restant_a_payer == 0 and self.produits.count() == 0:
             return True
         else:
@@ -441,7 +443,7 @@ class Facture(models.Model):
         if self.onsite:
             if self.produits.filter(produit__categorie__disable_surtaxe=True
                                     ).count() > 0:
-                logger.debug("pas de surtaxe")
+                LOG.debug("pas de surtaxe")
                 return False
             if self.table:
                 return self.table.is_surcharged()
@@ -451,9 +453,12 @@ class Facture(models.Model):
             return False
 
     def get_bills_for(self, date):
-        """Retourne la liste des factures soldees du jour 'date'
+        ''' Retourne la liste des factures soldees du jour 'date'
         date de type datetime
-        """
+
+        :param date:
+        :type date:
+        '''
         date_min = datetime.datetime(date.year, date.month, date.day, 5)
         tmp = date_min + datetime.timedelta(days=1)
         date_max = datetime.datetime(tmp.year, tmp.month, tmp.day, 5)
@@ -470,7 +475,7 @@ class Facture(models.Model):
         except:
             return False
         ticket = []
-        ticket.append("Le %s" % self.date_creation.strftime("%d/%m/%Y %H:%M"))
+        ticket.append("Le %s" % str(self))
         if self.table and self.couverts:
             ticket.append("Table: %s (%s couverts)" % (self.table,
                                                        self.couverts))
@@ -501,7 +506,7 @@ class Facture(models.Model):
                                   with_header=True)
 
     def reduced_sold_list(self, sold_list, full=False):
-        """les élèments ProduitVendu de sold_list
+        ''' les élèments ProduitVendu de sold_list
         sont regroupés par 'élèment identique en fonction soit:
         - du Produit() (full=False)
         - du Produit(), des options et des notes (full=True)
@@ -509,7 +514,12 @@ class Facture(models.Model):
         On ajoute sur chaque élèment:
         - count: le nombre total
         - members: la liste des instances
-        """
+
+        :param sold_list:
+        :type sold_list:
+        :param full:
+        :type full:
+        '''
         sold_dict = {}
         for sold in sold_list:
             if full:
@@ -517,12 +527,30 @@ class Facture(models.Model):
             else:
                 key = "%s" % sold.produit_id
             if key in sold_dict:
-                logger.debug("[%s] increment count for this key" % key)
+                LOG.debug("[%s] increment count for this key" % key)
                 sold_dict[key].count += 1
                 sold_dict[key].members.append(sold)
             else:
-                logger.debug("[%s] new key" % key)
+                LOG.debug("[%s] new key" % key)
                 sold_dict[key] = sold
                 sold_dict[key].count = 1
                 sold_dict[key].members = [sold, ]
         return sorted(sold_dict.values())
+
+    def get_last_change(self):
+        """Used to detect bill with no change since a while
+
+        Last change is:
+        - creation date
+        - last follow
+
+        :return: number of seconds from last change on this bill
+        """
+        try:
+            date = self.following.last().date
+        except AttributeError:
+            date = self.date_creation
+        now = datetime.datetime.now()
+        sec = int((now - date).total_seconds())
+        LOG.debug("[F%s] sec: %d" % (self.id, sec))
+        return sec

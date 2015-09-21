@@ -19,21 +19,22 @@
 #
 
 from django.db import models
-from category import Categorie
-from product_sold import ProduitVendu
+
+from possum.base.models.category import Categorie
+from possum.base.models.product_sold import ProduitVendu
 
 
 class Follow(models.Model):
+
     """Suivi des envois en cuisine:
     category est la categorie envoyée en cuisine"""
     category = models.ForeignKey(Categorie)
     date = models.DateTimeField('depuis le', auto_now_add=True)
     produits = models.ManyToManyField(ProduitVendu,
-                                      related_name="les produits envoyes")
+                                      related_name="sent_product")
     done = models.BooleanField(default=False)
 
     class Meta:
-        app_label = 'base'
         get_latest_by = 'id'
         ordering = ['date']
 

@@ -1,30 +1,41 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% block titre %}{% trans "Bill" %} {{facture.id}}{% endblock %}
 {% block content %}
-<ul id="back">
-    <li onclick="window.location='{% url "bill_sold_working" bill_id sold.id %}'"
-        >{% trans "Back" %}</li>
-</ul>
-
+{% load i18n %}
 <h1>{% trans "Options for" %} {{sold.produit.nom}}</h1>
+<div class="col-sm-9">
 {% if sold.produit.est_un_menu %}
 <p>{% trans "We can not put options on a menu" %}</p>
 {% else %}
+<div class="row">
+<ul class="list-inline">
+    {% for option in options %}
+    <div class="col-sm-3">
+        <a href='{% url "bill_sold_options" bill_id sold.id option.id %}'>
+            <li class=
+            {% if option in sold.options.all %}"well-sansbg alert-success"
+            {% else %}"well"{% endif %}>{{option.name}}</li>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-sm-4">
+    <li class="well">{% trans "No option" %}</li>
+    </div>
+    {% endfor %}
+</ul></div>
 <p>
 {% trans "Green options are selected, you must press it to enable / disable" %}
 </p>
-<ul id="options">
-    {% for option in options %}
-    <li onclick="window.location='{% url "bill_sold_options" bill_id sold.id option.id %}'"
-        {% if option in sold.options.all %}class="enabled"{% endif %}>
-        {{option.name}}
-    </li>
-    {% empty %}
-    <li>{% trans "No option" %}</li>
-    {% endfor %}
-</ul>
-
 {% endif %}
+</div>
+<div class="col-sm-3">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "bill_sold_working" bill_id sold.id %}'>
+                    <li class="possum-base alert-success">
+                        {% trans "Continue" %}</li></a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

@@ -17,20 +17,27 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 from django.db import models
 
 
 class VATOnBill(models.Model):
-    """VAT for a bill
+
     """
-    vat = models.ForeignKey('VAT', related_name="bill-vat")
+    VAT for a bill
+    """
+    vat = models.ForeignKey('VAT', related_name="bill_vat")
     total = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
-    class Meta:
-        app_label = 'base'
-
     def __cmp__(self, other):
+        '''
+        :param VATOnBill other:
+        :return: Boolean
+        '''
         return cmp(self.vat.name, other.vat.name)
 
     def __unicode__(self):
+        '''
+        :return: Unicode
+        '''
         return "%s: %s" % (self.vat.name, self.total)

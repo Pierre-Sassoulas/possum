@@ -2,16 +2,18 @@
 {% block content %}
 {% load i18n %}
 <h1>{% trans "Select a product" %}</h1>
-
-<ul id="products">
+<ul class="list-unstyled">
     {% for product in products %}
-    <li onclick="window.location='{% url "subproduct_add" bill_id sold_id product.id %}'"
-        class="cat_{{product.categorie_id}}">{{product.nom}}
-    </li>
+    <div class="col-sm-6">
+        <a href='{% url "subproduct_add" bill_id sold_id product.id %}'>
+            <li class="possum-base cat_{{product.categorie_id}}">{{product.nom}}
+            </li>
+        </a>
+    </div>
     {% empty %}
-        <li>{% trans "No product" %}</li>
+        <div class="col-sm-6">
+            <li class="possum-base well">{% trans "No product" %}</li>
+        </div>
     {% endfor %}
 </ul>
-
 {% endblock %}
-

@@ -18,20 +18,21 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 from datetime import datetime
+import logging
 import os
 import unicodedata
+
 from django.conf import settings
 from django.db import models
-import logging
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 try:
     import cups
-except:
-    logger.critical("cups can't be loaded, printer doesn't work !")
+except Exception as err:
+    LOGGER.critical("Printer library encountered an error :\n{0}".format(err))
 
 
 def sans_accent(message):
@@ -42,14 +43,15 @@ def sans_accent(message):
 
 class Printer(models.Model):
     """Printer model
-    options: options used with pycups.printFile()
-    header: you can add a text before the text to print (restaurant name)
-    width: width of the ticket
-    footer: same as header but after :)
-    kitchen_lines: number of white lines to heading ticket of kitchen
-    kitchen: used to print in kitchen
-    billing: used to print bills
-    manager: used to print rapport, ...
+    :param options: options used with pycups.printFile()
+    :param header: you can add a text before the text to print (restaurant
+    name)
+    :param width: width of the ticket
+    :param footer: same as header but after :)
+    :param kitchen_lines: number of white lines to heading ticket of kitchen
+    :param kitchen: used to print in kitchen
+    :param billing: used to print bills
+    :param manager: used to print rapport, ...
     """
     name = models.CharField(max_length=40)
     options = models.CharField(max_length=120)
@@ -61,29 +63,25 @@ class Printer(models.Model):
     billing = models.BooleanField(default=False)
     manager = models.BooleanField(default=False)
 
-    class Meta:
-        app_label = 'base'
-
     def __unicode__(self):
         return self.name
 
     def get_resume(self):
-        """Usefull to have a brief resume:
-        K : kitchen
-        B : billing
-        M : manager
         """
-        result = ""
+        Useful to have a brief resume:
+        :return: A character in [K,B,M] K : kitchen, B : billing, M : manager
+        """
         if self.kitchen:
-            result += "K"
+            return "K"
         if self.billing:
-            result += "B"
+            return "B"
         if self.manager:
-            result += "M"
-        return result
+            return "M"
+        return ""
 
     def get_available_printers(self):
-        """Return a string list of availables printers
+        """
+        :return: A string list of available printers
         """
         result = []
         try:
@@ -97,33 +95,46 @@ class Printer(models.Model):
         return result
 
     def print_file(self, filename):
-        try:
-            conn = cups.Connection()
-        except RuntimeError:
-            return False
+        '''
+        TODO Docstring
+        :param filename:
+        :return: Boolean
+        '''
         if not os.path.exists(filename):
             return False
         title = filename.split("/")[-1]
         try:
+            conn = cups.Connection()
             conn.printFile(self.name, filename, title=title, options={})
             return True
         except:
             return False
 
     def print_msg(self, msg):
-        """Try to print a msg, we create a list with msg
-        """
+        ''' Try to print a message, we create a list with message
+
+        :param String msg: A message to print
+        :return: TODO
+        '''
         list_to_print = msg.split("\n")
         return self.print_list(list_to_print, "possum")
 
-    def print_list(self, list_to_print, name, with_header=False, kitchen=False):
-        """Generate a print list from a list which contains informations
-        in string and serveral business objects.
-        """
-        path = "%s/%s-%s.txt" % (settings.PATH_TICKET, self.id, name)
+    def print_list(self, list_to_print, name, with_header=False,
+                   kitchen=False):
+        ''' Generate a print list from a list which contains informations
+        in string and several business objects.
+
+        :param list_to_print: TODO
+        :type list_to_print:
+        :param name: TODO
+        :type name:
+        :param Boolean with_header:
+        :param Boolean kitchen:
+        '''
+        path = "{0}/{1}-{2}.txt".format(settings.PATH_TICKET, self.id, name)
         ticket_to_print = open(path, "w")
         if kitchen and self.kitchen_lines:
-            ticket_to_print.write("\n"*self.kitchen_lines)
+            ticket_to_print.write("\n" * self.kitchen_lines)
         if with_header:
             ticket_to_print.write(self.header)
         for line in list_to_print:
@@ -136,6 +147,9 @@ class Printer(models.Model):
         return result
 
     def print_test(self):
+        '''
+        Test the printer.
+        '''
         list_to_print = []
         list_to_print.append("> POSSUM Printing test !")
         list_to_print.append(datetime.now().strftime("> %H:%M %d/%m/%Y\n"))

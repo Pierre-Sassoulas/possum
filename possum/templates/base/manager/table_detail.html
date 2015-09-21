@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+
+<h1>
+    {% if table.nom %}{% trans "Change name for" %}: {{table.nom}}
+    {% else %}{% trans "New name" %}:{%endif%}
+</h1>
+
+<form method='post' action='{% url "tables_table" table.zone_id table.id %}'>
+    {% csrf_token %}
+    <input name="name" value="{{ table.nom }}">
+    <input class="btn btn-success" type='submit' value='{% trans "Save" %}'>
+</form>
+
+{% endblock %}
+

@@ -17,15 +17,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-from django.db import models
-import logging
 from datetime import datetime
+import logging
+
+from django.db import models
 
 
-logger = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 class Config(models.Model):
+
     """Possum Configuration
     """
     key = models.CharField(max_length=32)
@@ -35,44 +37,52 @@ class Config(models.Model):
         return self.key
 
     def __cmp__(self, other):
+        '''
+        :param Config other: A config to be compared to this one.
+        :return: Boolean
+        '''
         return cmp(self.key, other.key)
 
     class Meta:
-        app_label = 'base'
         ordering = ['key']
 
-    def is_carte_changed(self, date):
-        """Check if carte has changed since 'date' (Str)
+    def carte_changed(self, date):
+        ''' Check if carte has changed since 'date'
 
         True: carte has changed
         False: no change
-        """
+
+        :param date: str with last modification for this carte.
+        :return etype: Boolean
+        '''
+        LOG.debug("will test this date: [%s]" % date)
         record = self.get_carte_changed()
         if date == record.value:
-            logger.debug("[last_carte_changed] no change")
+            LOG.debug("[last_carte_changed] no change")
             return False
         else:
-            logger.debug("[last_carte_changed] has changed")
+            LOG.debug("[last_carte_changed] has changed")
             return True
 
     def set_carte_changed(self):
         """Record now has last changed date for carte
+        :return: Config()
         """
-        logger.debug("[last_carte_changed] set new date")
+        LOG.debug("[last_carte_changed] set new date")
         record = self.get_carte_changed()
         record.value = datetime.now().strftime("%Y%m%d-%H%M")
         record.save()
         return record
 
     def get_carte_changed(self):
-        """Return Config for last date carte has changed
+        """
+        :return: Config for last date carte has changed
         """
         try:
             record = Config.objects.get(key="last_carte_changed")
         except Config.DoesNotExist:
-            logger.debug("[last_carte_changed] created")
+            LOG.debug("[last_carte_changed] created")
             record = Config(key="last_carte_changed")
             record.value = datetime.now().strftime("%Y%m%d-%H%M")
             record.save()
         return record
-

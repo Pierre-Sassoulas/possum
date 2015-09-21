@@ -16,17 +16,21 @@ corresponding below. In this case, the current user can not save these
 changes.
 {% endblocktrans %}</p>
 
-<p>{% blocktrans %}
+<p class="alert-danger">{% blocktrans %}
 Last important note, you should <u>never</u> need use this possibility.
 {% endblocktrans %}</p>
 
-<ul id="editions">
+<ul class="list-inline">
     {% for bill in bills %}
-    <li onclick='window.location="{% url 'editions_view' bill.id %}"'>
-        {{bill}} {% trans "by" %} {{bill.in_use_by}}
-    </li>
+    <div class="col-sm-4">
+    <a href="{% url 'editions_view' bill.id %}">
+        <li class='well'>{{bill}} {% trans "by" %} {{bill.in_use_by}}</li>
+    </a>
+    </div>
     {% empty %}
-    <li>{% trans "No edition" %}</li>
+    <div class="col-sm-4">
+    <li class="well">{% trans "No edition" %}</li>
+    </div>
     {% endfor %}
 </ul>
 

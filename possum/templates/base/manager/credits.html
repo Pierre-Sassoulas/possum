@@ -1,23 +1,25 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "manager/home.html" %}
 {% load staticfiles %}
 {% load i18n %}
-<h1>{% trans "Credits" %}</h1>
+{% block content %}
+<div class="pull-right">
+    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/>
+</div>
+<h1>{% trans "About" %}</h1>
 
-<p><a href="http://www.possum-software.org">
-    <img src="{% static "images/bandeau-128.png" %}" alt="Possum"/></a></br>
-    {% trans "Software under GPLv3 license created by S. Bonnegent." %}
-    {% trans "You are currently using version" %}
-    <b>{{version}}</b>.</p>
+<p>{% trans "Software under GPLv3 license created by S. Bonnegent." %}
+   {% trans "You are currently using version" %} <b>{{version}}</b>.
+   {% trans "You can find homepage of Possum here:" %}
+   <a href="http://www.possum-software.org">www.possum-software.org</a>
+</p>
+<form action="{% url 'check_new_version' %}" method="get">
+    <button type="submit" class="btn btn-success">{% trans "new release" %} ?
+    </button></form>
 
-<h2>{% trans "A big thank you to" %} ...</h2>
+<h2>{% trans "A big thank you to" %}</h2>
 <ul id="credits">
     <li>R. BONNEGENT {% trans "for the original idea and the need" %}</li>
     <li>Y. BENOIST {% trans "acronym for software" %}</li>
     <li>H. ROMON {% trans "for the logo, icons and patience" %} :)</li>
-    <li>YellowIcon {% trans "icon to stop" %}</li>
-    <li>New Mooon {% trans "icon to logout" %}</li>
 <ul>
-
 {% endblock %}
-

@@ -18,29 +18,59 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from django.shortcuts import render
-from possum.base.models import Facture
-from possum.base.views import permission_required
-import os
+import urllib2
+
+from django.contrib import messages
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
+
+from possum.base.views import check_admin
 
 
+@user_passes_test(check_admin)
+def manager_home(request):
+    """
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    """
+    context = {'menu_manager': True}
+    return render(request, 'manager/home.html', context)
 
-@permission_required('base.p1')
+
+@user_passes_test(check_admin)
 def credits(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
     context = {'menu_manager': True, 'version': settings.POSSUM_VERSION}
     return render(request, 'base/manager/credits.html', context)
 
 
-@permission_required('base.p1')
-def manager(request):
-    context = {'menu_manager': True, }
-    if os.path.isfile(settings.LOCK_STATS):
-        context['working_on_update'] = True
+@user_passes_test(check_admin)
+def check_new_version(request):
+    '''
+    :param HttpRequest request:
+    :return rtype: HttpResponse
+    '''
+    try:
+        req = urllib2.Request('http://last.possum-software.org/', headers={
+                              'User-Agent': 'Possum/' + settings.POSSUM_VERSION
+                              })
+        response = urllib2.urlopen(req)
+        version = response.read().split('\n')[0]
+    except:
+        messages.add_message(request, messages.ERROR,
+                             _("Impossible to get an answer"))
     else:
-        bills_to_update = Facture.objects.filter(saved_in_stats=False,
-                                                 restant_a_payer=0)
-        count = bills_to_update.exclude(produits__isnull=True).count()
-        if count:
-            context['bills_to_update'] = count
-    return render(request, 'base/manager/home.html', context)
+        if version != settings.POSSUM_VERSION:
+            messages.add_message(request, messages.WARNING,
+                                 "%s: %s" % (_("New release available"),
+                                             version))
+        else:
+            messages.add_message(request, messages.SUCCESS,
+                                 _("You have last release"))
+
+    return redirect('credits')

@@ -18,30 +18,39 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
-"""Check errors in bills by add all products and compare with montant
+
 """
+    Check errors in bills by adding all products and compare with montant
+"""
+
 from decimal import Decimal
 import os
 import sys
-
-sys.path.append('.')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
 
 from possum.base.models import Facture
 from possum.stats.models import Stat
 
 
+sys.path.append('.')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'possum.settings'
+
+
 for stat in Stat.objects.filter(interval="d", key="total_ttc"):
     total_ttc = stat.value
     vat_ttc = Decimal("0")
-    for vat in Stat.objects.filter(year=stat.year, month=stat.month, day=stat.day, interval="d", key__contains="_vat"):
+    for vat in Stat.objects.filter(year=stat.year,
+                                   month=stat.month,
+                                   day=stat.day,
+                                   interval="d",
+                                   key__contains="_vat"):
         vat_ttc += vat.value
     diff = total_ttc - vat_ttc
     if diff != Decimal("0"):
         date = "%d-%02d-%02d" % (stat.year, stat.month, stat.day)
-        print "[%s] diff of %.2f" % (date, diff)
-        for bill in Facture.objects.filter(date_creation__gte="%s 00:00" % date,
-                                           date_creation__lt="%s 23:59" % date):
+        print("[%s] diff of %.2f" % (date, diff))
+        bills = Facture.objects.filter(date_creation__gte="%s 00:00" % date,
+                                       date_creation__lt="%s 23:59" % date)
+        for bill in bills:
             vat = Decimal("0")
             tmp = ""
             for sold in bill.produits.iterator():
@@ -49,7 +58,6 @@ for stat in Stat.objects.filter(interval="d", key="total_ttc"):
                 vat += sold.prix
             diff = bill.total_ttc - vat
             if diff != Decimal("0"):
-                print "[%s] not correct: %.2f" % (bill.id, diff)
-                print "total: %.2f" % bill.total_ttc
-                print tmp
-
+                print("[%s] not correct: %.2f" % (bill.id, diff))
+                print("total: %.2f" % bill.total_ttc)
+                print(tmp)

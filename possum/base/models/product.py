@@ -17,20 +17,24 @@
 #    You should have received a copy of the GNU General Public License
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
+
 from datetime import datetime
 from decimal import Decimal
-from django.db import models
 import logging
-from category import Categorie
-from generic import Nom
-from options import Option
-from config import Config
+
+from django.db import models
+
+from possum.base.models.category import Categorie
+from possum.base.models.config import Config
+from possum.base.models.generic import Nom
+from possum.base.models.options import Option
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class Produit(Nom):
+
     """Produit qui peut être vendu.
 
     options_ok: liste des options autorisées pour ce produit
@@ -39,9 +43,11 @@ class Produit(Nom):
     categories_ok: les catégories autorisées
     produits_ok: les produits autorisés
     """
-    categorie = models.ForeignKey(Categorie, related_name="produit-categorie")
+    categorie = models.ForeignKey(Categorie, related_name="product_category")
     choix_cuisson = models.BooleanField(default=False)
-    options_ok = models.ManyToManyField(Option, null=True, blank=True)
+    # options_ok = models.ManyToManyField(Option, blank=True, null=True)
+    options_ok = models.ManyToManyField(Option, blank=True)
+    # options_ok = models.ManyToManyField(Option, null=True)
     categories_ok = models.ManyToManyField(Categorie)
     produits_ok = models.ManyToManyField('self')
     actif = models.BooleanField(default=True)
@@ -61,13 +67,18 @@ class Produit(Nom):
                                        default=0)
 
     def __cmp__(self, other):
+        '''
+
+        :param other:
+        :type other:
+        :return: Boolean
+        '''
         if self.categorie == other.categorie:
             return cmp(self.nom, other.nom)
         else:
             return cmp(self.categorie, other.categorie)
 
     class Meta:
-        app_label = 'base'
         ordering = ['categorie', 'nom']
 
     def __unicode__(self):
@@ -94,10 +105,11 @@ class Produit(Nom):
         """
         from possum.stats.models import Stat
         # if not a new product or any product sold
-        if not self.id or \
-                Stat.objects.filter(key="%d_product_nb" % self.id).count()==0:
+        if not self.id or Stat.objects.filter(
+                key="%d_product_nb" %
+                self.id).count() == 0:
             # if not needed, we don't clone the knight
-            logger.info("product doesn't need clone")
+            LOGGER.info("product doesn't need clone")
             return self
         product = Produit()
         product.actif = self.actif
@@ -119,13 +131,16 @@ class Produit(Nom):
         for p in self.produits_ok.distinct():
             product.produits_ok.add(p)
         product.save()
-        logger.debug("[P%s] cloned, new Produit[P%s]" % (self.id, product.id))
+        LOGGER.debug("[P%s] cloned, new Produit[P%s]" % (self.id, product.id))
         return product
 
     def set_prize(self, prize):
-        """With new prize, we have to create a new product to keep statistics
+        ''' With new prize, we have to create a new product to keep statistics
         and historics.
-        """
+
+        :param prize:
+        :type prize:
+        '''
         if Decimal(prize) != Decimal(self.prix):
             product = self._clone_product()
             product.prix = prize
@@ -135,14 +150,18 @@ class Produit(Nom):
             return self
 
     def set_category(self, category):
+        '''
+        :param category: TODO
+        :type category:
+        '''
         self.categorie = category
         self.update_vats()
 
     def update_vats(self, keep_clone=True):
-        """Update vat_onsite and vat_takeaway with price in TTC
+        ''' Update vat_onsite and vat_takeaway with price in TTC
 
-        keep_clone=True : we keep a clean with old values
-        """
+        :param Boolean keep_clone: we keep a clean with old values
+        '''
         price_surcharge, created = Config.objects.get_or_create(key="price_"
                                                                 "surcharge")
         if created:
@@ -166,7 +185,7 @@ class Produit(Nom):
                     self.price_surcharged != price_surcharged or \
                     self.vat_surcharged != vat_surcharged or \
                     self.vat_takeaway != vat_takeaway:
-                logger.debug("[P%s] new values" % self.id)
+                LOGGER.debug("[P%s] new values" % self.id)
                 if keep_clone:
                     product = self._clone_product()
                 else:
@@ -180,9 +199,12 @@ class Produit(Nom):
             else:
                 return self
         else:
-            logger.warning("[%s] categorie without VAT" % self.categorie)
+            LOGGER.warning("[%s] categorie without VAT" % self.categorie)
 
     def get_prize_takeaway(self):
+        '''
+        :return: TODO
+        '''
         if self.categorie:
             if self.categorie.vat_takeaway:
                 ttc = self.prix * self.categorie.vat_takeaway.value
@@ -193,6 +215,9 @@ class Produit(Nom):
             return self.prix
 
     def get_prize_onsite(self):
+        '''
+        :return: TODO
+        '''
         if self.categorie:
             if self.categorie.vat_onsite:
                 ttc = self.prix * self.categorie.vat_onsite.value
@@ -203,6 +228,9 @@ class Produit(Nom):
             return self.prix
 
     def get_list_with_all_products(self):
+        '''
+        :return: TODO
+        '''
         result = []
         result.append(datetime.now().strftime("%d/%m/%Y %H:%M"))
         for category in Categorie.objects.order_by('priorite', 'nom'):
@@ -217,8 +245,12 @@ class Produit(Nom):
         return result
 
     def save(self, force_insert=False, using=None):
-        """We overload this method to keep last date carte
+        ''' We overload this method to keep last date carte
         has changed
-        """
+
+        :param Boolean force_insert:
+        :param using: TODO
+        :type using:
+        '''
         Config().set_carte_changed()
         super(Produit, self).save(force_insert=force_insert, using=using)

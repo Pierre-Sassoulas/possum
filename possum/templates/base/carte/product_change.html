@@ -2,7 +2,7 @@
 {% block content %}
 {% load i18n %}
 <h1>{% trans "Change name for" %}: {{product.nom}}</h1>
-
+<div class="col-sm-6">
 <form method='post' action='{% url "products_change" product.id %}'>{% csrf_token %}
 <table>
     <tr>
@@ -13,10 +13,21 @@
         <td><b>{% trans "Price including tax" %}:</b></td>
         <td><input name="prize" value="{{ product.prix }}"></td>
     <tr>
-        <td colspan="2"><input type='submit' value='{% trans "Change" %}'></td>
+        <td colspan="2" align="right">
+            <button type='submit' class="btn btn-success">{% trans "Change" %}</button></td>
     </tr>
 </table>
 </form>
-
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href='{% url "products_view" product.id %}'>
+                    <li class="possum-base alert-success">
+                        {% trans "Back" %}</li></a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

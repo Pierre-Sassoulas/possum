@@ -29,10 +29,13 @@ class Nom(models.Model):
         return self.nom
 
     def __cmp__(self, other):
+        '''
+        :param Nom other: A Nom to be compared to this one.
+        :return: Boolean
+        '''
         return cmp(self.nom, other.nom)
 
     class Meta:
-        app_label = 'base'
         abstract = True
         ordering = ['nom']
 
@@ -41,24 +44,30 @@ class NomDouble(Nom):
     nom_facture = models.CharField(max_length=35, default="")
 
     class Meta:
-        app_label = 'base'
         abstract = True
 
 
 class Priorite(models.Model):
+
     """Getter / setter: si priorite inferieur à 0 on reste à 0
     """
     priorite = models.PositiveIntegerField(default=0)
 
     class Meta:
-        app_label = 'base'
         abstract = True
         ordering = ['priorite']
 
     def __cmp__(self, other):
+        '''
+        :param Priorite other: A Priorite to be compared to this one.
+        :return: Boolean
+        '''
         return cmp(self.priorite, other.priorite)
 
     def set_less_priority(self, number=1):
+        ''' Set a lower priority
+        :param int number:
+        '''
         tmp = self.priorite - number
         if tmp < 0:
             self.priorite = 0
@@ -67,5 +76,8 @@ class Priorite(models.Model):
         self.save()
 
     def set_more_priority(self, number=1):
+        ''' Set a higher priority
+        :param int number:
+        '''
         self.priorite += number
         self.save()

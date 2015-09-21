@@ -6,6 +6,7 @@ Sommaire
    :maxdepth: 2
 
    about
+   community
    install
    update
    using

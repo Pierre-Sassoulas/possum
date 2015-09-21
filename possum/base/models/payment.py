@@ -18,18 +18,18 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 from django.db import models
-from generic import Nom
-from config import Config
 from django.utils.translation import ugettext as _
+
+from possum.base.models.config import Config
+from possum.base.models.generic import Nom
 
 
 class PaiementType(Nom):
+
     """Type de paiment"""
     fixed_value = models.BooleanField("ticket ?", default=False)
-#    last_value = models.PositiveIntegerField("dernière valeur", default=0)
 
     class Meta:
-        app_label = 'base'
         ordering = ['nom']
 
     def get_default(self):
@@ -51,24 +51,23 @@ class PaiementType(Nom):
 
 
 class Paiement(models.Model):
-    """valeur_unitaire: pour gerer les montants des tickets restos"""
-    # facture = models.ForeignKey('Facture', related_name="paiement-facture")
-    type = models.ForeignKey(PaiementType, related_name="paiement-type")
+
+    """valeur_unitaire: pour gérer les montants des tickets restos"""
+    type = models.ForeignKey(PaiementType, related_name="payment_type")
     montant = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     valeur_unitaire = models.DecimalField(max_digits=9, decimal_places=2,
                                           default=1)
-    date = models.DateTimeField('encaisser le', auto_now_add=True)
+    date = models.DateTimeField('cashed on', auto_now_add=True)
     nb_tickets = models.PositiveIntegerField(default=0)
 
     class Meta:
-        app_label = 'base'
         get_latest_by = 'date'
 
     def __unicode__(self):
         tmp = u"%s %.2f%s" % (self.type, self.montant, _("$"))
         if self.type.fixed_value:
             tmp += u" (%d tic. x %.2f%s)" % (self.nb_tickets,
-                                            self.valeur_unitaire, _("$"))
+                                             self.valeur_unitaire, _("$"))
         return tmp
 
     def __cmp__(self, other):

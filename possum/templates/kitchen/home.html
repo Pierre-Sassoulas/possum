@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<table>
+<h1>{% trans "Kitchen" %}</h1>
+<table class="table table-striped">
+    <thead>
     <tr>
-        <td>{% trans "Time" %}</td>
-        <td>{% trans "Table" %}</td>
-        <td>{% trans "Guests" %}</td>
-        <td>{% trans "Category" %}</td>
-        <td>{% trans "Product" %}</td>
-        <td>{% trans "Options" %}</td>
-        <td>{% trans "Notes" %}</td>
+        <th>{% trans "Time" %}</th>
+        <th>{% trans "Table" %}</th>
+        <th>{% trans "Guests" %}</th>
+        <th>{% trans "Category" %}</th>
+        <th>{% trans "Product" %}</th>
+        <th>{% trans "Options" %}</th>
+        <th>{% trans "Notes" %}</th>
     </tr>
+    </thead>
+    <tbody>
     {% for facture in factures %}
         {% if facture.following %}
     <tr>
         <td width="5em">{{facture.following.latest.time}}</td>
-        <td width="5em">{{facture.table}}</td>
-        <td width="5em">{{facture.couverts}}</td>
+        <td width="5em"><b>{{facture.table}}</b></td>
+        <td width="5em"><b>{{facture.couverts}}</b></td>
         <td class="cat_{{facture.follow.category_id}}">
             {{facture.follow.category}}</td>
             {% for product in facture.todo %}
@@ -32,15 +36,17 @@
                     {% if not forloop.last %} / {% endif %}
                 {% endfor %}</td>
             {% if forloop.first %}
-            <td onclick='window.location="{% url 'follow_done' facture.follow.id %}"'
-                align='center'>{% trans "Done" %} ?</td>
+            <td align="center">
+                <a href="{% url 'follow_done' facture.follow.id %}">
+                    <button type="button" class="btn btn-success">
+                        {% trans "Done" %} ?</button></td>
             {% endif %}
             </tr>
             {% endfor %}
             <!-- There are a category to follow -->
             {% if facture.after %}
             <tr><td colspan="3" align="center">{% trans "To follow" %} ...</td>
-                <td class="cat_id{{facture.category_to_follow_id}}">
+                <td class="category_id{{facture.category_to_follow_id}}">
                     {{facture.category_to_follow}}</td>
                 {% for product in facture.after %}
                 {% if not forloop.first %}
@@ -59,8 +65,7 @@
             {% endif %}
         {% endif %}
     {% endfor %}
+    </tbody>
 </table>
-<p>{% blocktrans %}This page will automatically refresh every
-    {{need_auto_refresh}} seconds{% endblocktrans %}</p>
 {% endblock %}
 

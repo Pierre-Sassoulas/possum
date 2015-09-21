@@ -22,13 +22,15 @@ from django.db import models
 
 
 class Note(models.Model):
+
     """Note on a ProduitVendu"""
     message = models.CharField(max_length=35, default="")
 
     class Meta:
-        app_label = 'base'
         ordering = ['message']
 
     def __cmp__(self, other):
+        '''
+        :param Note other: A Note to be compared to this one.
+        '''
         return cmp(self.message, other.message)
-

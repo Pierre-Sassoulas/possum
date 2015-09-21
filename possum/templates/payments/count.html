@@ -2,15 +2,15 @@
 {% block content %}
 {% load i18n %}
 <h1>{% trans "Number of tickets" %}</h1>
-<ul id="numbers">
+<ul class="list-inline">
     {% for i in range %}
-    <li onclick='window.location="{% url 'payment_count' bill_id i %}"'
-        {% if i == tickets_count %}class=enabled{% endif %}
-        >{{i}}</li>
+    <div class="col-sm-2">
+        <a href="{% url 'payment_count' bill_id i %}">
+            <li class="{% if i == tickets_count %}alert-success well-sansbg{% else %}well{% endif %}">{{i}}</li>
+        </a>
+    </div>
     {% empty %}
-    <li>!</li>
+    <li class="well">{% trans "No data" %}</li>
     {% endfor %}
 </ul>
-
 {% endblock %}
-

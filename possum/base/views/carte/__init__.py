@@ -18,31 +18,43 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import logging
+
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
-import logging
-from django.shortcuts import get_object_or_404
-from possum.base.models import Categorie
-from possum.base.models import Produit
-from possum.base.models import Option
-from possum.base.views import permission_required
-from possum.base.forms import OptionForm
 from django.utils.translation import ugettext as _
+from django.contrib.auth.decorators import user_passes_test
+
+from possum.base.forms import OptionForm
+from possum.base.models import Categorie
+from possum.base.models import Option
+from possum.base.models import Produit
+from possum.base.views import check_admin
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def carte(request):
-    """This is not used.
-    """
+    ''' This is not used.
+    :param HttpRequest request:
+    '''
     context = {'menu_manager': True, }
     return render(request, 'base/carte.html', context)
 
 
 def is_valid_product(request, name, prize):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param name:
+    :type name:
+    :param prize:
+    :type prize:
+    '''
     erreur = False
     if not name:
         erreur = True
@@ -55,8 +67,14 @@ def is_valid_product(request, name, prize):
     return not erreur
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_view(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     context = {'menu_manager': True, }
     context['product'] = get_object_or_404(Produit, pk=product_id)
     if request.method == 'POST':
@@ -69,8 +87,16 @@ def products_view(request, product_id):
     return render(request, 'base/carte/product.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_option(request, product_id, option_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    :param option_id:
+    :type option_id:
+    '''
     product = get_object_or_404(Produit, pk=product_id)
     option = get_object_or_404(Option, pk=option_id)
     if option in product.options_ok.all():
@@ -81,10 +107,16 @@ def products_option(request, product_id, option_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
-def products_new(request, cat_id):
+@user_passes_test(check_admin)
+def products_new(request, category_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param category_id:
+    :type category_id:
+    '''
     context = {'menu_manager': True, }
-    context['category'] = get_object_or_404(Categorie, pk=cat_id)
+    context['category'] = get_object_or_404(Categorie, pk=category_id)
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
         prize = request.POST.get('prize', '').strip()
@@ -96,30 +128,52 @@ def products_new(request, cat_id):
             except Exception as ex:
                 messages.add_message(request, messages.ERROR,
                                      _("Changes could not be saved"))
-                logger.warning(_("Changes could not be saved")+": "+ex)
+                LOGGER.warning(_("Changes could not be saved") + ": " + ex)
             else:
                 return redirect('categories_view', context['category'].id)
     return render(request, 'base/carte/product_new.html', context)
 
 
-@permission_required('base.p2')
-def products_set_category(request, product_id, cat_id):
+@user_passes_test(check_admin)
+def products_set_category(request, product_id, category_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    :param category_id:
+    :type category_id:
+    '''
     product = get_object_or_404(Produit, pk=product_id)
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     product.set_category(category)
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_category(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     context = {'menu_manager': True, }
     context['product'] = get_object_or_404(Produit, pk=product_id)
     context['categories'] = Categorie.objects.order_by('priorite', 'nom')
     return render(request, 'base/carte/product_category.html', context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_del_produits_ok(request, product_id, sub_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    :param sub_id:
+    :type sub_id:
+    '''
     menu = get_object_or_404(Produit, pk=product_id)
     sub = get_object_or_404(Produit, pk=sub_id)
     menu.produits_ok.remove(sub)
@@ -127,8 +181,14 @@ def products_del_produits_ok(request, product_id, sub_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_select_produits_ok(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     context = {'menu_manager': True, }
     context['product'] = get_object_or_404(Produit, pk=product_id)
     context['products'] = []
@@ -140,8 +200,16 @@ def products_select_produits_ok(request, product_id):
                   context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_add_produits_ok(request, product_id, sub_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    :param sub_id:
+    :type sub_id:
+    '''
     menu = get_object_or_404(Produit, pk=product_id)
     product = get_object_or_404(Produit, pk=sub_id)
     menu.produits_ok.add(product)
@@ -149,26 +217,48 @@ def products_add_produits_ok(request, product_id, sub_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
-def products_del_categories_ok(request, product_id, cat_id):
+@user_passes_test(check_admin)
+def products_del_categories_ok(request, product_id, category_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    :param category_id:
+    :type category_id:
+    '''
     product = get_object_or_404(Produit, pk=product_id)
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     product.categories_ok.remove(category)
     product.save()
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
-def products_add_categories_ok(request, product_id, cat_id):
+@user_passes_test(check_admin)
+def products_add_categories_ok(request, product_id, category_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    :param category_id:
+    :type category_id:
+    '''
     product = get_object_or_404(Produit, pk=product_id)
-    category = get_object_or_404(Categorie, pk=cat_id)
+    category = get_object_or_404(Categorie, pk=category_id)
     product.categories_ok.add(category)
     product.save()
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_select_categories_ok(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     context = {'menu_manager': True, }
     context['product'] = get_object_or_404(Produit, pk=product_id)
     context['categories'] = []
@@ -180,8 +270,14 @@ def products_select_categories_ok(request, product_id):
                   context)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_cooking(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     product = get_object_or_404(Produit, pk=product_id)
     new = not product.choix_cuisson
     product.choix_cuisson = new
@@ -189,8 +285,14 @@ def products_cooking(request, product_id):
     return redirect('products_view', product_id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_enable(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     product = get_object_or_404(Produit, pk=product_id)
     new = not product.actif
     product.actif = new
@@ -203,8 +305,14 @@ def products_enable(request, product_id):
     return redirect('products_view', product.id)
 
 
-@permission_required('base.p2')
+@user_passes_test(check_admin)
 def products_change(request, product_id):
+    '''
+    TODO
+    :param HttpRequest request:
+    :param product_id:
+    :type product_id:
+    '''
     context = {'menu_manager': True, }
     product = get_object_or_404(Produit, pk=product_id)
     if request.method == 'POST':
@@ -221,6 +329,6 @@ def products_change(request, product_id):
             else:
                 return redirect('products_view', new_product.id)
         else:
-            logger.debug("[P%s] invalid data" % product.id)
+            LOGGER.debug("[P%s] invalid data" % product.id)
     context['product'] = product
     return render(request, 'base/carte/product_change.html', context)

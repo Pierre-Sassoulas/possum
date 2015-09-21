@@ -3,22 +3,28 @@
 {% load i18n %}
 <h1>{% trans "What is the table ?" %}</h1>
 
-{% for zone in zones %}
-    <h2>{{zone.nom}}</h2>
+<ul class="nav nav-tabs nav-justified">
+    {% for z in zones %}
+    <li {% if z.pk == zone.pk %}class="active"{% endif %}><a href="{% url 'table_select' bill_id z.pk %}">{{z.nom}}
+        {% if z.surtaxe %}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+        {% endif %}</a>
+    </li>
+    {% endfor %}
+</ul>
 
-    <ul id="tables">
-        {% for table in zone.tables %}
-        <li onclick="window.location='{% url "table_set" bill_id table.id %}'"
-            {% if table.zone.surtaxe %}class="surtaxe"{% endif %}>
-            {{table.nom}}
-            </li>
-        {% empty %}
-            <li>{% trans "No tables available" %}</li>
-        {% endfor %}
-    </ul>
-{% empty %}
-<p>{% trans "No room" %}</p>
-{% endfor %}
-
+{% if zone %}
+<ul class="list-inline">
+    {% for table in tables %}
+        <div class="col-sm-2">
+            <a href='{% url "table_set" bill_id table.id %}'>
+                <li class="possum-base well">{{table.nom}}</li>
+            </a>
+        </div>
+    {% empty %}
+        <div class="col-sm-2">
+            <li class="possum-base well">{% trans "No room" %}</li>
+        </div>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
-

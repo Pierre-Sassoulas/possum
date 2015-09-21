@@ -4,7 +4,7 @@ Screenshots
 À partir de la version 0.5, toute l'interface est utilisable directement
 dans un navigateur. Vous pouvez donc tester Possum facilement en utilisant
 le login ''demo'' et le mot de passe ''demo'' sur le 
-`site de démonstration <http://demo.possum-software.org/>`_.
+`site de démonstration <http://demo.0.6.fr.possum-software.org/>`_.
 
 Le site de démonstration est réinitialisé toutes les nuits.
 

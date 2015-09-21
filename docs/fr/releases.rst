@@ -2,5 +2,5 @@ Notes de versions
 =================
 
 Les notes de versions sont disponibles sur la version anglaise de la 
-documentation `Possum <http://possum.readthedocs.org/en/>`_.
+documentation `Possum <http://www.possum-software.org/docs.html>`_.
 
