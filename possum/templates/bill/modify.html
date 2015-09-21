@@ -8,9 +8,6 @@
 </ul>
 <div class="col-sm-3">
     <div class="panel panel-default panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">{% trans "Products" %}</h3>
-        </div>
         <div class="panel-body">
             <ul class="list-unstyled">
                 {% for sold in products_sold %}
@@ -18,44 +15,56 @@
                 <li class="possum-base cat_{{sold.produit.categorie_id}}"
                     id="{{sold.id}}" href="javascript:void(0)"
                     onclick="javascript:myLinkButtonClick(this.id);">
-                    {{sold.count}}x {{sold.produit.nom}}</li>
+                    <small>{{sold.count}}x {{sold.produit.nom}}</small></li>
                 <div id="list_{{sold.id}}" style="display: none">
                         {% for member in sold.members %}
                     <a href='{% url "sold_delete" bill.id member.id %}'>
                         <li class="possum-base cat_{{sold.produit.categorie_id}}">
-                        {{member}} <span class="glyphicon glyphicon-remove"></span>
+                        <small>{{member}} <span class="glyphicon glyphicon-remove"></span></small>
                     </li></a>
                         {% endfor %}
                 </div>
                     {% else %}
                 <a href='{% url "sold_delete" bill.id sold.id %}'>
                     <li class="possum-base cat_{{sold.produit.categorie_id}}">
-                    {{sold}} <span class="glyphicon glyphicon-remove"></span>
+                    <small>{{sold}} <span class="glyphicon glyphicon-remove"></span></small>
                 </li></a>
                     {% endif %}
                 {% empty %}
                 <li class="possum-base well">{% trans "No product" %}</li>
                 {% endfor %}
             </ul>
-            <p>{% trans "You can delete an item by selecting it" %}</p>
+            <p><small>{% trans "You can delete an item by selecting it" %}</small></p>
         </div>
     </div>
 </div>
 <div class="col-sm-9">
-            <!--div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                <a href="{% url 'bill_set_number' bill.id 1 %}" class="btn btn-default {% if count == 1 %}alert-success{% endif %}">1</a>
-                <a href="{% url 'bill_set_number' bill.id 2 %}" class="btn btn-default {% if count == 2 %}alert-success{% endif %}">2</a>
-                <a href="{% url 'bill_set_number' bill.id 3 %}" class="btn btn-default {% if count == 3 %}alert-success{% endif %}">3</a>
-                <a href="{% url 'bill_set_number' bill.id 4 %}" class="btn btn-default {% if count == 4 %}alert-success{% endif %}">4</a>
-                <a href="{% url 'bill_set_number' bill.id 5 %}" class="btn btn-default {% if count == 5 %}alert-success{% endif %}">5</a>
-            </div-->
-            <div class="row">
-            <ul class="list-unstyled">
+    <div class="row">
+        <ul class="list-unstyled">
+            <!--div class="col-sm-4">
+                    <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle possum-base"
+                    data-toggle="dropdown" id="dropdownMenu"
+                    aria-haspopup="true" aria-expanded="false">
+                    {% trans "Count:" %} {{count}}
+                    <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <li><a href="{% url 'bill_set_number' bill.id 1 %}">1</a></li>
+                <li><a href="{% url 'bill_set_number' bill.id 2 %}">2</a></li>
+                <li><a href="{% url 'bill_set_number' bill.id 3 %}">3</a></li>
+                <li><a href="{% url 'bill_set_number' bill.id 4 %}">4</a></li>
+                <li><a href="{% url 'bill_set_number' bill.id 5 %}">5</a></li>
+                <li><a href="{% url 'bill_set_number' bill.id 6 %}">6</a></li>
+                <li><a href="{% url 'bill_set_number' bill.id 7 %}">7</a></li>
+            </ul>
+        </div>
+    </div-->
                 {% for category in categories %}
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                 <li class="possum-base cat_{{category.id}}" id="{{category.id}}"
                     href="javascript:void(0)" onclick="javascript:view_category(this.id);">
-                    {{category.nom}}
+                    <small>{{category.nom}}</small>
                 </li></div>
                 {% empty %}
                 <li class="possum-base">{% trans "No category" %}</li>
@@ -68,9 +77,10 @@
                 <div id="cat_{{category.id}}"
                     {% if current_cat != category.id %}style="display: none"{% endif %}>
                     {% for product in category.products %}
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <a href='{% url "product_add" bill.id product.id %}'>
-                        <li class="possum-base cat_{{category.id}}">{{product.nom}}
+                        <li class="possum-base cat_{{category.id}}">
+                            <small>{{product.nom}}</small>
                         </li></a>
                     </div>
                     {% endfor %}
