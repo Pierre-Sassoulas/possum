@@ -1,66 +1,90 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<ul id="back">
-    <li onclick='window.location="{% url 'bill_view' bill_id %}"'
-        >{% trans "Back" %}</li>
+<ul class="nav nav-tabs nav-justified">
+    <li><a href='{% url "bill_view" bill_id %}'>{% trans "Order" %} #{{bill_id}}</a></li>
+    <li><a href='{% url "bill_categories" bill_id %}'>{% trans "Modify products" %}</a></li>
+    <li class="active"><a href='{% url "prepare_payment" bill_id %}'>{% trans "Payments" %}</a></li>
 </ul>
-
-<h1>{% trans "New payment" %}</h1>
-<h2>1. {% trans "Payment type" %}</h2>
-<ul id="type_payment">
-    {% for type in type_payments %}
-        <li {% if type == type_selected %}class="enabled"{% endif %}
-        onclick='window.location="{% url 'type_payment' bill_id type.id %}"' >
-        {{type.nom}}</li>
-    {% empty %}
-        <li>{% trans "No data" %}</li>
-    {% endfor %}
-</ul>
-
-<h2>2. {% trans "Amount" %}</h2>
-{% if type_selected %}
-    {% if type_selected.fixed_value %}
-    <h3>2.1 {% trans "Number of tickets" %}</h3>
-    <ul id="numbers">
-        {% for i in range %}
-        <li onclick='window.location="{% url 'payment_count' bill_id i %}"'
-            {% if i == tickets_count %}class=enabled{% endif %}
-        >{{i}}</li>
-        {% endfor %}
-        <li onclick='window.location="{% url 'amount_count' %}"'>+</li>
+<div class="col-sm-6">
+    <ul class="list-unstyled">
+        <li class="possum-base">
+            <div class="btn-group btn-group-justified" role="group">
+                <p class="btn btn-default" role="button">
+                    {% trans "TTC" %}: <b>{{facture.total_ttc}}</b> {% trans "$" %}</p>
+                <p class="btn btn-default alert-warning" role="button">
+                    {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                </p>
+            </div>
+        </li>
     </ul>
-    <h3>2.2 {% trans "Total" %}</h3>
-    <ul id="payment_tickets">
-        <li onclick='window.location="{% url 'amount_payment' %}"'>
-            {% trans "Ticket value" %}: {{left}}.{{right}}{% trans "$" %}</li>
-        <li onclick='window.location="{% url 'amount_count' %}"'
-            >{% trans "Number of tickets" %}: {{tickets_count}}</li>
-        <li onclick='window.location="{% url 'save_payment' bill_id %}"'
-            >{% trans "Save" %}</li>
+    <div class="panel panel-default panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Saved payments" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                {% for payment in payments %}
+                    <a href='{% url "bill_payment_delete" bill_id payment.id %}'>
+                        <li class="possum-base well">{{payment.type.nom}}:
+                        {{payment.montant}}{% trans "$" %}
+                        <span class="glyphicon glyphicon-remove"></span></li>
+                    </a>
+                {% empty %}
+                    <li class="possum-base well">{% trans "No payment" %}</li>
+                {% endfor %}
+            </ul>
+            <p>{% trans "You can delete a payment by selecting" %}</p>
+        </div>
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">1. {% trans "Payment type" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+            {% for type in type_payments %}
+                <div class="col-sm-6">
+                    <a href="{% url 'type_payment' bill_id type.id %}">
+                        <li class="possum-base {% if type == type_selected %}alert-success{% else %}alert-info{% endif %}">{{type.nom}}</li>
+                        <!--li class="{% if type == type_selected %}well-sansbg alert-success{% else %}well{% endif %}">{{type.nom}}</li-->
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-sm-6">
+                    <li>{% trans "No data" %}</li>
+                </div>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">2. {% trans "Amount" %}</h3>
+        </div>
+        <div class="panel-body">
+        <ul class="list-unstyled">
+    {% if type_selected.fixed_value %}
+        <a href="{% url 'amount_payment' %}">
+            <li class="possum-base well">{% trans "Ticket value" %}: {{left}}.{{right}}{% trans "$" %}
+            </li>
+        </a>
+        <a href="{% url 'amount_count' %}">
+            <li class="possum-base well">{% trans "Number of tickets" %}: {{tickets_count}}</li>
+        </a>
     {% else %}
-    <ul id="payment_tickets">
-        <li onclick='window.location="{% url 'amount_payment' %}"'
-            >{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
-        <li onclick='window.location="{% url 'save_payment' bill_id %}"'
-            >{% trans "Save" %}</li>
+        <a href="{% url 'amount_payment' %}">
+            <li class="possum-base well">{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}
+            </li>
+        </a>
     {% endif %}
-{% else %}
-<ul id="payment_tickets">
-    <li>{% trans "Amount" %}: {{left}},{{right}}{% trans "$" %}</li>
-    <li>{% trans "Save" %}</li>
-{% endif %}
-</ul>
-
-<h2>{% trans "Saved payments" %}</h2>
-<p>{% trans "You can delete a payment by selecting" %}</p>
-<ul id="paiements">
-    {% for payment in payments %}
-        <li onclick="window.location='{% url "bill_payment_delete" bill_id payment.id %}'">
-        {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li>
-    {% empty %}
-        <li>{% trans "No payment" %}</li>
-    {% endfor %}
-</ul>
-
+        <a href="{% url 'save_payment' bill_id %}">
+            <li class="possum-base alert-success">{% trans "Save" %}</li>
+        </a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

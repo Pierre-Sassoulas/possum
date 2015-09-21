@@ -1,8 +1,7 @@
 {% extends "base_with_aside.html" %}
 {% load i18n %}
 {% block content %}
-<h1>{% block title %}{% trans "Report of the day" %}:
-    {{date|date:'Y-m-d'}}{% endblock %}</h1>
+<h1>{{title}}</h1>
 <table class="table table-striped">
 <thead>
     <tr>
@@ -16,56 +15,56 @@
 <tbody>
     <tr>
         <td>{% trans "Total with all taxes" %}</td>
-        <td {% if total_ttc_better %}class="success"{% endif %} align='right'>{{total_ttc}}</td>
+        <td {% if total_ttc_better %}class="alert-success"{% endif %} align='right'>{{total_ttc}}</td>
         <td align='right'>{{last_total_ttc}}</td>
         <td align='right'>{{avg_total_ttc}}</td>
         <td align='right'>{{max_total_ttc}}</td>
     </tr>
     <tr>
         <td>{% trans "Number of invoices" %}</td>
-        <td {% if nb_bills_better %}class="success"{% endif %} align='right'>{{nb_bills}}</td>
+        <td {% if nb_bills_better %}class="alert-success"{% endif %} align='right'>{{nb_bills}}</td>
         <td align='right'>{{last_nb_bills}}</td>
         <td align='right'>{{avg_nb_bills}}</td>
         <td align='right'>{{max_nb_bills}}</td>
     </tr>
     <tr>
         <td>[{% trans "Restaurant" %}] {% trans "Total with all taxes" %}</td>
-        <td {% if guests_total_ttc_better %}class="success"{% endif %} align='right'>{{guests_total_ttc}}</td>
+        <td {% if guests_total_ttc_better %}class="alert-success"{% endif %} align='right'>{{guests_total_ttc}}</td>
         <td align='right'>{{last_guests_total_ttc}}</td>
         <td align='right'>{{avg_guests_total_ttc}}</td>
         <td align='right'>{{max_guests_total_ttc}}</td>
     </tr>
     <tr>
         <td>[{% trans "Restaurant" %}] {% trans "Number of guests" %}</td>
-        <td {% if guests_nb_better %}class="success"{% endif %} align='right'>{{guests_nb}}</td>
+        <td {% if guests_nb_better %}class="alert-success"{% endif %} align='right'>{{guests_nb}}</td>
         <td align='right'>{{last_guests_nb}}</td>
         <td align='right'>{{avg_guests_nb}}</td>
         <td align='right'>{{max_guests_nb}}</td>
     </tr>
     <tr>
         <td>[{% trans "Restaurant" %}] {% trans "Average amount per guest" %}</td>
-        <td {% if guests_average_better %}class="success"{% endif %} align='right'>{{guests_average}}</td>
+        <td {% if guests_average_better %}class="alert-success"{% endif %} align='right'>{{guests_average}}</td>
         <td align='right'>{{last_guests_average}}</td>
         <td align='right'>{{avg_guests_average}}</td>
         <td align='right'>{{max_guests_average}}</td>
     </tr>
     <tr>
         <td>[{% trans "Bar" %}] {% trans "Total with all taxes" %}</td>
-        <td {% if bar_total_ttc_better %}class="success"{% endif %} align='right'>{{bar_total_ttc}}</td>
+        <td {% if bar_total_ttc_better %}class="alert-success"{% endif %} align='right'>{{bar_total_ttc}}</td>
         <td align='right'>{{last_bar_total_ttc}}</td>
         <td align='right'>{{avg_bar_total_ttc}}</td>
         <td align='right'>{{max_bar_total_ttc}}</td>
     </tr>
     <tr>
         <td>[{% trans "Bar" %}] {% trans "Number of invoices" %}</td>
-        <td {% if bar_nb_better %}class="success"{% endif %} align='right'>{{bar_nb}}</td>
+        <td {% if bar_nb_better %}class="alert-success"{% endif %} align='right'>{{bar_nb}}</td>
         <td align='right'>{{last_bar_nb}}</td>
         <td align='right'>{{avg_bar_nb}}</td>
         <td align='right'>{{max_bar_nb}}</td>
     </tr>
     <tr>
         <td>[{% trans "Bar" %}] {% trans "Average amount per invoice" %}</td>
-        <td {% if bar_average_better %}class="success"{% endif %} align='right'>{{bar_average}}</td>
+        <td {% if bar_average_better %}class="alert-success"{% endif %} align='right'>{{bar_average}}</td>
         <td align='right'>{{last_bar_average}}</td>
         <td align='right'>{{avg_bar_average}}</td>
         <td align='right'>{{max_bar_average}}</td>
@@ -76,41 +75,64 @@
 
 <h2>{% trans "VAT" %}</h2>
 <p>{% trans "VAT amounts are expressed inclusive of all taxes" %}</p>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for vat in vats %}
-    <li class="possum-base possum-bg">{{vat}}: {{vat.nb}}{% trans "$" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{{vat}}: {{vat.nb}}{% trans "$" %}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
+</ul>
+</div>
 
 <h2>{% trans "Payments" %}</h2>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for payment in payments %}
-    <li class="possum-base possum-bg">{{payment}}: {{payment.nb}}{% trans "$" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{{payment}}: {{payment.nb}}{% trans "$" %}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
+</ul>
+</div>
 
 <h2>{% trans "Categories" %}</h2>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for category in categories %}
-    <li class="possum-base cat_{{category.id}}">{{category.nom}} : {{category.nb}}</li>
+    <div class="col-sm-3">
+    <li class="well-sansbg cat_{{category.id}}">{{category.nom}} : {{category.nb}}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
+</ul>
+</div>
 
 <h2>{% trans "Products" %}</h2>
-<p><ul class="list-inline">
+<div class="row">
+<ul class="list-inline">
     {% for product in products %}
-    <li class="possum-base cat_{{product.categorie_id}}">{{product.nom}} : {{product.nb}}</li>
+    <div class="col-sm-3">
+    <li class="well-sansbg cat_{{product.categorie_id}}">{{product.nom}} : {{product.nb}}</li>
+    </div>
     {% empty %}
-    <li class="possum-base possum-bg">{% trans "No data" %}</li>
+    <div class="col-sm-3">
+    <li class="well">{% trans "No data" %}</li>
+    </div>
     {% endfor %}
-</ul></p>
-
+</ul>
+</div>
 {% endblock %}
 {% block side %}
 <h2>{% trans "Date" %}</h2>
@@ -119,7 +141,7 @@
 <div id="datepicker-container">
     <div class="input-group date">
         <input type='text' class="form-control" name="date"
-        value="{{date|date:'Y-m-d'}}"/>
+        value="{{date}}"/>
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
 </div>
@@ -135,11 +157,11 @@
     <input type="radio" name="interval" id="rad3" value="m"
         {% if interval == "m" %}checked{% endif %}>{% trans "month" %}
 </label>
-<label class="radio-inline">
+<!--label class="radio-inline">
     <input type="radio" name="interval" id="rad4" value="y"
         {% if interval == "y" %}checked{% endif %}>{% trans "year" %}
-</label>
-<button type="submit" class="btn btn-primary pull-right">{% trans "View" %}</button>
+</label-->
+<button type="submit" class="btn btn-success pull-right">{% trans "View" %}</button>
 
 <h2>{% trans "Options" %}</h2>
 <div class="form-group">

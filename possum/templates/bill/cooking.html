@@ -1,22 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<ul id="back">
-    <li onclick="window.location='{% url "bill_sold_working" bill_id sold.id %}'"
-        >{% trans "Back" %}</li>
-</ul>
-
 <h1>{% trans "Choice of cooking for" %}: {{sold.produit.nom}}</h1>
-<ul id="cookings">
-    {% for cooking in cookings %}
-    <li onclick="window.location='{% url "sold_cooking" bill_id sold.id cooking.id %}'"
-        class="cooking_{{cooking.id}}">
-        {{cooking}}
-        </li>
+<ul class="list-unstyled">
+    {% for c_id, cooking in sold.TYPE_COOKING %}
+    <div class="col-sm-6">
+    <a href='{% url "sold_cooking" bill_id sold.id c_id %}'>
+    <li class="cooking_{{c_id}} possum-base">
+        {% trans cooking %}
+    </li></a></div>
     {% empty %}
-    <li>{% trans "No cooking" %}</li>
+    <div class="col-sm-6">
+    <li class="possum-base well">{% trans "No cooking" %}</li></div>
     {% endfor %}
 </ul>
-
 {% endblock %}
-

@@ -23,7 +23,7 @@ import logging
 from django.db import models
 
 
-LOGGER = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 
 class Config(models.Model):
@@ -44,7 +44,6 @@ class Config(models.Model):
         return cmp(self.key, other.key)
 
     class Meta:
-        app_label = 'base'
         ordering = ['key']
 
     def carte_changed(self, date):
@@ -53,27 +52,23 @@ class Config(models.Model):
         True: carte has changed
         False: no change
 
-        :param datetime date: The last modification for this carte.
-
+        :param date: str with last modification for this carte.
         :return etype: Boolean
         '''
-        if not isinstance(date, datetime):
-            msg = "Unvalid date (date='{0}')".format(date)
-            LOGGER.error(msg)
-            return False
+        LOG.debug("will test this date: [%s]" % date)
         record = self.get_carte_changed()
         if date == record.value:
-            LOGGER.debug("[last_carte_changed] no change")
+            LOG.debug("[last_carte_changed] no change")
             return False
         else:
-            LOGGER.debug("[last_carte_changed] has changed")
+            LOG.debug("[last_carte_changed] has changed")
             return True
 
     def set_carte_changed(self):
         """Record now has last changed date for carte
-        :return: TODO
+        :return: Config()
         """
-        LOGGER.debug("[last_carte_changed] set new date")
+        LOG.debug("[last_carte_changed] set new date")
         record = self.get_carte_changed()
         record.value = datetime.now().strftime("%Y%m%d-%H%M")
         record.save()
@@ -86,7 +81,7 @@ class Config(models.Model):
         try:
             record = Config.objects.get(key="last_carte_changed")
         except Config.DoesNotExist:
-            LOGGER.debug("[last_carte_changed] created")
+            LOG.debug("[last_carte_changed] created")
             record = Config(key="last_carte_changed")
             record.value = datetime.now().strftime("%Y%m%d-%H%M")
             record.save()

@@ -29,9 +29,6 @@ class VATOnBill(models.Model):
     vat = models.ForeignKey('VAT', related_name="bill_vat")
     total = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
-    class Meta:
-        app_label = 'base'
-
     def __cmp__(self, other):
         '''
         :param VATOnBill other:

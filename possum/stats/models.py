@@ -37,11 +37,8 @@ from possum.base.models import VAT
 
 LOG = logging.getLogger(__name__)
 # availables stats and keys
-STATS = {"total_ttc": _("Total TTC"), "nb_bills": _("Orders count"),
-         "guests_total_ttc": _("Guests total TTC"),
-         "guests_nb": _("Guests count"), "guests_average": _("Avg per guest"),
-         "bar_total_ttc": _("Bar total TTC"), "bar_nb": _("Bar orders count"),
-         "bar_average": _("Avg per order")}
+STATS = ["total_ttc", "nb_bills", "guests_total_ttc", "guests_nb",
+         "guests_average", "bar_total_ttc", "bar_nb", "bar_average"]
 
 
 def get_month(date):
@@ -92,6 +89,20 @@ def find_right_date(date, interval):
         return get_week(date)
     else:
         return date
+
+
+def get_last_year(date, interval):
+    """Get lat year date
+
+    :param date: current date
+    :param interval: which interval (d, m, w or y)
+    :return: datetime.date
+    """
+    if interval == "y" or interval == "m":
+        # year - 1
+        return datetime.date(date.year - 1, date.month, date.day)
+    else:
+        return date - datetime.timedelta(weeks=52)
 
 
 def get_data_from(bill, data):
@@ -158,11 +169,12 @@ def _nb_sorted(a, b):
         return 0
 
 
-def _search_sub_key(stats, key, a_class):
+def _search_sub_key(stats, key, a_class, integer=False):
     """
     :param stats: Stat.object.filter()
     :param key: string (subkey to search
     :param a_class: a class of object to find
+    :param integer: output values must be an integer or a float
     :return: []
     """
     tmp = []
@@ -173,7 +185,10 @@ def _search_sub_key(stats, key, a_class):
         except:
             LOG.critical("[%s] pk=%s not here" % (key, pk))
         else:
-            elt.nb = stat.value
+            if integer:
+                elt.nb = int(stat.value)
+            else:
+                elt.nb = stat.value
             tmp.append(elt)
     return sorted(tmp, cmp=_nb_sorted)
 
@@ -188,32 +203,34 @@ def compute_avg_max(stats, stat_avg, stat_max):
     if avg:
         stat_avg.value = avg
         stat_avg.save()
+        LOG.debug("new average: %.2f" % avg)
     best = stats.aggregate(Max('value'))['value__max']
     if best:
         stat_max.value = best
         stat_max.save()
+        LOG.debug("new best: %.2f" % best)
 
 
 def compute_all_time():
     """Update all time stats (average and max) for main keys
     """
     LOG.debug("update all time stats")
-    for key in STATS.keys():
-        # for days
+    for key in STATS:
+        LOG.debug("days(a)")
         stats = Stat.objects.filter(interval="d", key=key)
         avg, created = Stat.objects.get_or_create(interval="a",
                                                   key="avg_%s" % key)
         best, created = Stat.objects.get_or_create(interval="a",
                                                    key="max_%s" % key)
         compute_avg_max(stats, avg, best)
-        # for months
+        LOG.debug("months(b)")
         stats = Stat.objects.filter(interval="m", key=key)
         avg, created = Stat.objects.get_or_create(interval="b",
                                                   key="avg_%s" % key)
         best, created = Stat.objects.get_or_create(interval="b",
                                                    key="max_%s" % key)
         compute_avg_max(stats, avg, best)
-        # for weeks
+        LOG.debug("weeks(c)")
         stats = Stat.objects.filter(interval="w", key=key)
         avg, created = Stat.objects.get_or_create(interval="c",
                                                   key="avg_%s" % key)
@@ -251,6 +268,7 @@ def compute_avg(subkey, stats, avg):
     stats: Stat.objects.filter()
     avg: Stat()
     """
+    LOG.debug(subkey)
     try:
         total = stats.filter(key="%s_total_ttc" % subkey)[0]
         nb = stats.filter(key="%s_nb" % subkey)[0]
@@ -379,7 +397,7 @@ class Stat(models.Model):
     def update(self):
         """Update statistics with new bills
         """
-        # TODO: knee knee knee
+        # TODO: knee knee knee .. for what ? I don't remender :(
         if os.path.isfile(settings.LOCK_STATS):
             LOG.info("lock [%s] already here" % settings.LOCK_STATS)
             return False
@@ -411,29 +429,58 @@ class Stat(models.Model):
 
     def get_a_date(self, context):
         """Get Stats for a date
+        This function will not test with context['date'] is a datetime.date()
+
         :param context: {'date': datetime.date(), 'interval': 'm'}
         :return: context with stats for context['date']
-        This function will not test with context['date'] is a datetime.date()
         """
         if 'date' not in context or 'interval' not in context:
             LOG.warning("No date or no interval in context")
             return context
-        context['date'] = find_right_date(context['date'], context['interval'])
-        stats = Stat.objects.filter(interval=context['interval'],
-                                    date=context['date'])
-        for key in STATS.keys():
+        date = find_right_date(context['date'], context['interval'])
+        if context['interval'] == "m":
+            alltime_interval = "b"
+        elif context['interval'] == "w":
+            alltime_interval = "c"
+        else:
+            alltime_interval = "a"
+        stats = Stat.objects.filter(interval=context['interval'], date=date)
+        for key in STATS:
             try:
                 value = "%.2f" % stats.get(key=key).value
             except:
-                LOG.info("[%s][%s] key (%s) absent" % (context['date'],
-                         context['interval'], key))
+                LOG.debug("[%s][%s][%s] missing" % (date, context['interval'],
+                                                   key))
                 value = "0.00"
-
-        context['products'] = _search_sub_key(stats, "_product_nb", Produit)
+            context[key] = value
+            # maximum and average
+            for i in ['max_', 'avg_']:
+                tmp = "%s%s" % (i, key)
+                try:
+                    get = Stat.objects.get
+                    value = "%.2f" % get(interval=alltime_interval,
+                                         key=tmp).value
+                except:
+                    LOG.debug("[%s][%s] missing" % (alltime_interval, tmp))
+                    value = "0.00"
+                context[tmp] = value
+            # last year
+            last = get_last_year(date, context['interval'])
+            try:
+                value = "%.2f" % Stat.objects.get(interval=context['interval'],
+                                                  date=last, key=key).value
+            except:
+                value = "0.00"
+                LOG.debug("[%s][%s][%s] missing" % (last, context['interval'],
+                                                   key))
+            context["last_%s" % key] = value
+        context['products'] = _search_sub_key(stats, "_product_nb", Produit,
+                                              True)
         context['categories'] = _search_sub_key(stats, "_category_nb",
-                                                Categorie)
+                                                Categorie, True)
         context['vats'] = _search_sub_key(stats, "_vat", VAT)
         context['payments'] = _search_sub_key(stats, "_payment_value",
                                               PaiementType)
+        context['date'] = date.isoformat()
         LOG.debug(context)
         return context

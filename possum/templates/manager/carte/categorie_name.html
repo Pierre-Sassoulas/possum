@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{% trans "Change name for" %}: {{category.nom}}</h1>
+
+<form method='post' action='{% url "categories_set_name" category.id %}'>
+    {% csrf_token %}
+    <input name="name" value="{{ category.nom }}">
+    <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
+</form>
+{% endblock %}

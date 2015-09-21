@@ -228,7 +228,6 @@ class TestsUrls(TestCase):
         urls = [
             reverse('vat_new'),
             reverse('vats'),
-            reverse('vats_view', args=('1',)),
             reverse('vats_change', args=('1',)),
         ]
         self.assert_http_status(urls, 302)

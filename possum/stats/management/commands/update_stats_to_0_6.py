@@ -23,6 +23,17 @@ from possum.stats.models import Stat, get_month, get_year, get_week
 import datetime
 
 
+def get_date(year, month, day):
+    int_year = int(year)
+    int_month = int(month)
+    int_day = int(day)
+    if int_day < 1 or int_day > 31:
+        int_day = 1
+    if int_month < 1 or int_day > 12:
+        int_month = 1
+    return datetime.date(int_year, int_month, int_day)
+
+
 class Command(BaseCommand):
     args = ""
     help = "Update Stats from version 0.5 to 0.6"
@@ -42,18 +53,18 @@ class Command(BaseCommand):
             self.stdout.write("Old stats to update: %d" % old_stats.count())
             self.stdout.write("Please wait ...")
             for stat in old_stats.filter(interval="y"):
-                date = datetime.date(stat.year, stat.month, stat.year)
+                date = get_date(stat.year, stat.month, stat.day)
                 stat.date = get_year(date)
                 stat.save()
             for stat in old_stats.filter(interval="m"):
-                date = datetime.date(stat.year, stat.month, stat.day)
+                date = get_date(stat.year, stat.month, stat.day)
                 stat.date = get_month(date)
                 stat.save()
             for stat in old_stats.filter(interval="d"):
-                stat.date = datetime.date(stat.year, stat.month, stat.day)
+                stat.date = get_date(stat.year, stat.month, stat.day)
                 stat.save()
             for stat in old_stats.filter(interval="w"):
-                date = datetime.date(stat.year, 1, 1)
+                date = get_date(stat.year, 1, 1)
                 if stat.week > 0:
                     date = date + datetime.timedelta(days=(stat.week-1)*7)
                 stat.date = get_week(date)

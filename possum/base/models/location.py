@@ -34,9 +34,6 @@ class Zone(Nom):
     """
     surtaxe = models.BooleanField("zone surtaxée ?", default=False)
 
-    class Meta:
-        app_label = 'base'
-
     def is_surcharged(self):
         '''
         :return: TODO
@@ -54,9 +51,6 @@ class Table(Nom):
     """ A table must be linked to a Zone """
 
     zone = models.ForeignKey(Zone, related_name="table_area")
-
-    class Meta:
-        app_label = 'base'
 
     def is_surcharged(self):
         ''' By default there is no surcharge.

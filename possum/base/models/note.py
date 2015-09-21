@@ -27,7 +27,6 @@ class Note(models.Model):
     message = models.CharField(max_length=35, default="")
 
     class Meta:
-        app_label = 'base'
         ordering = ['message']
 
     def __cmp__(self, other):

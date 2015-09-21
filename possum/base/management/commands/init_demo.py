@@ -24,8 +24,9 @@ from django.contrib.auth.models import User
 import datetime
 import random
 
-from possum.base.models import Categorie, Zone, VAT, Config, Table
-from possum.base.models import Facture, PaiementType, Produit, ProduitVendu
+from possum.base.models import (Categorie, Zone, VAT, Config, Table, Facture,
+                                PaiementType, Produit, ProduitVendu, Option,
+                                Note)
 from possum.stats.models import Stat
 
 
@@ -92,6 +93,17 @@ class Command(BaseCommand):
         vat_takeaway = VAT(name=u"à emporter")
         vat_takeaway.set_tax("7")
         vat_takeaway.save()
+
+        # Options
+        Option(name="A_Frites").save()
+        Option(name="A_Salade").save()
+        Option(name="S_Creme").save()
+        Option(name="A_Haricots").save()
+        Option(name="S_Mayo").save()
+
+        # Notes
+        Note(message="Pas de sel").save()
+        Note(message="Sans champignon").save()
 
         #
         # Data example

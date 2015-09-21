@@ -4,36 +4,85 @@
 {% get_static_prefix as STATIC_PREFIX %}
 {% load i18n %}
 <h1>{% trans "Select an amount" %}</h1>
-<ul id="lcd">
+<ul class="list-inline">
+    <div class="col-sm-9">
+        <li class="well">
+        <div class="btn-group" role="group">
     {% for i in left %}
-    <li><img src="{{ STATIC_PREFIX }}images/numbers/orange/digit_{{ i }}.png"></li>
+    <img src="{{ STATIC_PREFIX }}images/numbers/orange/digit_{{ i }}.png">
     {% endfor %}
-    <li><img src="{{ STATIC_PREFIX }}images/numbers/orange/dot.png"></li>
+    <img src="{{ STATIC_PREFIX }}images/numbers/orange/dot.png">
     {% for i in right %}
-    <li><img src="{{ STATIC_PREFIX }}images/numbers/orange/digit_{{ i }}.png"></li>
+    <img src="{{ STATIC_PREFIX }}images/numbers/orange/digit_{{ i }}.png">
     {% endfor %}
-</ul>
-<ul id="lcd_save">
-    <li onclick='window.location="{% url 'prepare_payment' bill_id %}"'
-        >{% trans "Save" %}</li>
-</ul>
-</br></br>
-<ul id="calc">
-    <li onclick='window.location="{% url 'amount_payment_add' 7 %}"'>7</li>
-    <li onclick='window.location="{% url 'amount_payment_add' 8 %}"'>8</li>
-    <li onclick='window.location="{% url 'amount_payment_add' 9 %}"'>9</li>
-    </br></br></br></br>
-    <li onclick='window.location="{% url 'amount_payment_add' 4 %}"'>4</li>
-    <li onclick='window.location="{% url 'amount_payment_add' 5 %}"'>5</li>
-    <li onclick='window.location="{% url 'amount_payment_add' 6 %}"'>6</li>
-    </br></br></br></br>
-    <li onclick='window.location="{% url 'amount_payment_add' 1 %}"'>1</li>
-    <li onclick='window.location="{% url 'amount_payment_add' 2 %}"'>2</li>
-    <li onclick='window.location="{% url 'amount_payment_add' 3 %}"'>3</li>
-    </br></br></br></br>
-    <li onclick='window.location="{% url 'amount_payment_add' 0 %}"'>0</li>
-    <li onclick='window.location="{% url 'amount_payment_right' %}"'>.</li>
-    <li onclick='window.location="{% url 'amount_payment_del' %}"'>DEL</li>
+</div>
+        </li>
+    </div>
+    <div class="col-sm-3">
+        <a href="{% url 'prepare_payment' bill_id %}">
+            <li class="well-sansbg alert-success">{% trans "Save" %}</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 7 %}">
+            <li class="well">7</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 8 %}">
+            <li class="well">8</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 9 %}">
+            <li class="well">9</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 4 %}">
+            <li class="well">4</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 5 %}">
+            <li class="well">5</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 6 %}">
+            <li class="well">6</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 1 %}">
+            <li class="well">1</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 2 %}">
+            <li class="well">2</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 3 %}">
+            <li class="well">3</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_add' 0 %}">
+            <li class="well">0</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_right' %}">
+            <li class="well">.</li>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'amount_payment_del' %}">
+            <li class="alert-danger well-sansbg">DEL</li>
+        </a>
+    </div>
 </ul>
 
 {% endblock %}

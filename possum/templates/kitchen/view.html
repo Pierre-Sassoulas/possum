@@ -1,24 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<ul id="back">
-    <li onclick='window.location="{% url 'kitchen' %}"'
-        >{% trans "Back kitchen" %}</li>
-    <li onclick='window.location="{% url 'bill_view' facture.id %}"'
-        >{% trans "Back bill" %}</li>
-</ul>
-
 <h1>{% trans "Table" %} {{facture.table}} / {{facture.couverts}}
     {% trans "guests" %} ({{facture}})</h1>
-
-<table>
-    <tr>
-        <td>{% trans "Time" %}</td>
-        <td>{% trans "Category" %}</td>
-        <td>{% trans "Product" %}</td>
-        <td>{% trans "Options" %}</td>
-        <td>{% trans "Notes" %}</td>
-    </tr>
+<div class="col-sm-9">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>{% trans "Time" %}</td>
+                <td>{% trans "Category" %}</td>
+                <td>{% trans "Product" %}</td>
+                <td>{% trans "Options" %}</td>
+                <td>{% trans "Notes" %}</td>
+            </tr>
+        </thead>
+        <tbody>
 {% for follow in facture.following.iterator %}
     <tr>
         <td width="5em">{{follow.time}}</td>
@@ -39,7 +35,24 @@
             </tr>
         {% endfor %}
 {% endfor %}
-</table>
-
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-3">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Back" %}</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href="{% url 'kitchen' %}">
+                    <li class="possum-base alert-success">{% trans "Back kitchen" %}
+                    </li></a>
+                <a href="{% url 'bill_view' facture.id %}">
+                    <li class="possum-base alert-info">{% trans "Back bill" %}
+                    </li></a>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

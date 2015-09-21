@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{% trans "Change color for" %}: {{category.nom}}</h2>
+
+<form method='post' action='{% url "categories_set_color" category.id %}'>
+    {% csrf_token %}
+    <input name="color" value="{{ category.color }}">
+    <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
+</form>
+
+<h2>{% trans "Colors used" %}</h2>
+<ul class="list-inline">
+    {% for category in categories %}
+    <div class="col-sm-3">
+        <li class="well-sansbg cat_{{category.id}}">{{category.nom}}</li>
+    </div>
+    {% empty %}
+    <div class="col-sm-3">
+        <li class="well">{% trans "No category" %}</li>
+    </div>
+    {% endfor %}
+</ul>
+
+{% endblock %}

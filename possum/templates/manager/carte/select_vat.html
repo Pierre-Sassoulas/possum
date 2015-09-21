@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{{type_vat}}: {{category.nom}}</h1>
+<ul class="list-inline">
+    {% for vat in vats %}
+    <div class="col-sm-3">
+        <a href='{% url "categories_set_vat" category.id vat.id %}'>
+            <li class="well">{{vat.name}} ({{vat.tax}})</li>
+        </a>
+    </div>
+    {% endfor %}
+    <div class="col-sm-3">
+        <a href='{% url "vat_new" %}'>
+            <li class="well-sansbg alert-success">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </li>
+        </a>
+    </div>
+</ul>
+{% endblock %}

@@ -21,7 +21,6 @@
 from django.conf import settings
 from django.conf.urls import patterns, url, include
 
-NB_PRODUCT = r"ajax/number_of_product/(?P<count>\d+)"
 CAT_RGX = r'categorie/(?P<category_id>\d+)/'
 VAT_RGX = r'vat/(?P<vat_id>\d+)/'
 PRD_RGX = r'product/(?P<product_id>\d+)/'
@@ -111,6 +110,9 @@ urlpatterns += patterns('possum.base.views.carte.categories',
                         url(r'^carte/' + CAT_RGX + 'kitchen/$',
                             'categories_set_kitchen',
                             name='categories_set_kitchen'),
+                        url(r'^carte/' + CAT_RGX + 'set_default/$',
+                            'categories_set_default',
+                            name='categories_set_default'),
                         )
 
 urlpatterns += patterns('possum.base.views.carte',
@@ -158,6 +160,9 @@ urlpatterns += patterns('possum.base.views.bill',
                         url(r'^' + BIL_RGX + 'table/select/$',
                             'table_select',
                             name='table_select'),
+                        url(r'^' + BIL_RGX + 'table/select/(?P<zone_pk>\d+)/$',
+                            'table_select',
+                            name='table_select'),
                         url(r'^' + BIL_RGX + 'set/' + TAB_RGX + '$', 'table_set',
                             name='table_set'),
                         url(r'^' + BIL_RGX + 'couverts/select/$',
@@ -168,10 +173,6 @@ urlpatterns += patterns('possum.base.views.bill',
                         url(r'^' + BIL_RGX + 'categories/$',
                             'categories',
                             name='bill_categories'),
-                        url(r'^' + BIL_RGX + 'categories/' + NB_PRODUCT + '$',
-                            'update_session_number_of_product',
-                            name='ajax_nb_product'),
-
                         url(r'^' + BIL_RGX + CAT_RGX + '$',
                             'categories',
                             name='bill_categories'),
@@ -180,8 +181,6 @@ urlpatterns += patterns('possum.base.views.bill',
                             name='bill_set_number'),
                         url(r'^' + BIL_RGX + 'product/add/' + PRD_RGX + '$',
                             'product_add', name='product_add'),
-                        url(r'^' + BIL_RGX + 'product/' + CAT_RGX + 'select/$',
-                            'product_select', name='product_select'),
                         url(r'^' + BIL_RGX + 'product/' + PRD_RGX + 'made_with/$',
                             'product_select_made_with',
                             name='product_select_made_with'),
@@ -260,6 +259,8 @@ urlpatterns += patterns('possum.base.views.kitchen',
                         )
 
 urlpatterns += patterns('possum.base.views.manager',
+                        url(r'^manager/$', 'manager_home',
+                            name='manager_home'),
                         url(r'^manager/credits/$', 'credits', name='credits'),
                         url(r'^manager/check/$', 'check_new_version',
                             name='check_new_version'),
@@ -322,10 +323,10 @@ urlpatterns += patterns('possum.base.views.manager.user',
                             'users_passwd', name='users_passwd'),
                         url(r'^manager/' + USR_RGX + 'active/$',
                             'users_active', name='users_active'),
+                        url(r'^manager/' + USR_RGX + 'manager/$',
+                            'users_manager', name='users_manager'),
                         url(r'^manager/' + USR_RGX + 'change/$',
                             'users_change', name='users_change'),
-                        url(r'^manager/' + USR_RGX + 'perm/(?P<codename>p\d+)/$',
-                            'users_change_perm', name='users_change_perm'),
                         )
 
 urlpatterns += patterns('',
@@ -340,8 +341,6 @@ urlpatterns += patterns('',
 urlpatterns += patterns('possum.base.views.manager.vats',
                         url(r'^manager/vats/new/$', 'vat_new', name='vat_new'),
                         url(r'^manager/vats/$', 'vats', name='vats'),
-                        url(r'^manager/' + VAT_RGX + '$',
-                            'vats_view', name='vats_view'),
                         url(r'^manager/' + VAT_RGX + 'change/$',
                             'vats_change', name='vats_change'),
                         )
@@ -379,7 +378,8 @@ if settings.DEBUG:
                                 name="django_serve"),
                             )
 
-urlpatterns += patterns('', url(r'^jukebox/', include('possum.jukebox.urls')),)
+urlpatterns += patterns('', url(r'^jukebox/', include('possum.jukebox.urls',
+                                                      namespace="jukebox")), )
 
 #    import debug_toolbar
 #    urlpatterns += patterns('',

@@ -1,0 +1,49 @@
+{% extends "base_with_aside.html" %}
+{% block content %}
+{% load i18n %}
+<h1>{% trans "Archive of" %} {{date|date:'Y-m-d'}} <span class="badge">{{ factures.count }}</span></h1>
+
+<ul class="list-inline">
+    {% for facture in factures %}
+    <div class="col-sm-3">
+    <a href='{% url "archives_bill" facture.id %}'>
+        <li class="possum-base alert-info">
+        {{facture}}</br>
+        {% trans "Table" %}: {% if facture.table %}{{facture.table}}{%else%}T--{% endif %}</br>
+        {% trans "Guests" %}: {{facture.couverts}}</br>
+        {% trans "Amount" %}: {{facture.total_ttc}}{% trans "$" %}</br></li></a></div>
+    {% empty %}
+        <div class="col-sm-3">
+            <li class="well">{% trans "No bill" %}</li>
+        </div>
+    {% endfor %}
+</ul>
+{% endblock %}
+{% block side %}
+<h2>{% trans "Date" %}</h2>
+<form method='post' action='{% url "archives" %}' name='archives'>
+{% csrf_token %}
+<div id="datepicker-container">
+    <div class="input-group date">
+        <input type='text' class="form-control" name="date"
+        value="{{date|date:'Y-m-d'}}"/>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+    </div>
+    <button type="submit" class="btn btn-success pull-right">{% trans "View" %}</button>
+</div>
+</form>
+<script type="text/javascript">
+    // When the document is ready
+    $(document).ready(function () {
+        $('#datepicker-container .input-group.date').datepicker({
+            format: "yyyy-mm-dd",
+            startDate: "{{first_date}}",
+            endDate: "{{last_date}}",
+            keyboardNavigation: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
+{% endblock %}

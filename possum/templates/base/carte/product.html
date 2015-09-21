@@ -1,53 +1,107 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-<ul id="back">
-<li onclick='window.location="{% url 'categories_view' product.categorie.id %}"'
-        >{% trans "Back" %}</li>
-</ul>
-
 <h1>{% trans "Product" %}: {{product.nom}}</h2>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
 <p>{% blocktrans %}Based printers, it is recommended to limit
 the use of accents and long names{% endblocktrans %}</p>
-<ul id="product_info">
-    <li onclick='window.location="{% url 'products_view' product.id %}"'>
-        {% trans "Name" %}:</br>
-        {{product.nom}}</li>
-        <li onclick='window.location="{% url 'products_category' product.id %}"'
-            class="cat_{{product.categorie_id}}">
-        {% trans "Category" %}:</br>{{product.categorie}}</li>
-        <li onclick='window.location="{% url 'products_enable' product.id %}"'
-        {% if product.actif %}
-            class="enabled"> {% trans "Is active" %}
-        {% else %}
-            class="disabled"> {% trans "Is not active" %}
+            <ul class="list-unstyled">
+                <a href="{% url 'products_view' product.id %}">
+                    <li class="possum-base well">{% trans "Name" %}: {{product.nom}}</li>
+                </a>
+                <a href="{% url 'products_category' product.id %}">
+                    <li class="possum-base cat_{{product.categorie_id}}">
+                        {% trans "Category" %}: {{product.categorie}}</li>
+                </a>
+                <a href="{% url 'products_enable' product.id %}">
+                    <li class="possum-base
+                        {% if product.actif %}alert-success">{% trans "Is active" %}
+                        {% else %}alert-danger">{% trans "Is not active" %}
+                        {% endif %}</li>
+                </a>
+                <a href="{% url 'products_cooking' product.id %}">
+                    <li class="possum-base
+                        {% if product.choix_cuisson %}alert-success">{% trans "Can choose cooking" %}
+                        {% else %}alert-danger">{% trans "Can not choose cooking" %}
+                        {% endif %}</li>
+                </a>
+                <a href="{% url 'products_change' product.id %}">
+                    <li class="possum-base well">{% trans "Price including tax" %}:
+                        {{product.prix}}{% trans "$" %}</li>
+                </a>
+                <li class="possum-base well">{% trans "Price with surcharge" %}:
+                    {{product.price_surcharged}}{% trans "$" %}</li>
+                <li class="possum-base well">{% trans "VAT with surcharge" %}:
+                    {{product.vat_surcharged}}{% trans "$" %}</li>
+                <li class="possum-base well">{% trans "VAT on site" %}:
+                    {{product.vat_onsite}}{% trans "$" %}</li>
+                <li class="possum-base well">{% trans "VAT take away" %}:
+                    {{product.vat_takeaway}}{% trans "$" %}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Active categories" %}</h3>
+        </div>
+        <div class="panel-body">
+<p>{% blocktrans %}
+If this product is a menu that can contain other products
+(appetizers, entrees, ...), you must first enable product categories here
+before activating products below.{% endblocktrans %}</p>
+            <ul class="list-unstyled">
+    {% for category in product.categories_ok.iterator %}
+                <a href="{% url 'products_del_categories_ok' product.id category.id %}">
+                    <li class="possum-base cat_{{category.id}}">{{category.nom}}
+                        <span class="glyphicon glyphicon-remove"></span></li>
+                </a>
+    {% endfor %}
+                <a href="{% url 'products_select_categories_ok' product.id %}">
+                    <li class="possum-base alert-success">{% trans "Activate a category" %}</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Active products" %}</h3>
+        </div>
+        <div class="panel-body">
+<p>{% blocktrans %}Clicking on a product, you take it off the list.{% endblocktrans %}
+</p>
+            <ul class="list-unstyled">
+    {% for sub in product.produits_ok.iterator %}
+        {% if sub.actif %}
+            <a href="{% url 'products_del_produits_ok' product.id sub.id %}">
+                <li class="possum-base cat_{{sub.categorie_id}}">{{sub.nom}}
+                    <span class="glyphicon glyphicon-remove"></span></li>
+            </a>
         {% endif %}
-    </li>
-    <li onclick='window.location="{% url 'products_cooking' product.id %}"'
-        {% if product.choix_cuisson %}
-            class="enabled">{% trans "Can choose cooking" %}
-        {% else %}
-            class="disabled">{% trans "Can not choose cooking" %}
-        {% endif %}
-    </li>
-    <li onclick='window.location="{% url 'products_change' product.id %}"'>
-        {% trans "Price including tax" %}:</br>
-        {{product.prix}}{% trans "$" %}</li>
-    <li>
-        {% trans "Price with surcharge" %}:</br>
-        {{product.price_surcharged}}{% trans "$" %}</li>
-    <li>
-        {% trans "VAT with surcharge" %}:</br>
-        {{product.vat_surcharged}}{% trans "$" %}</li>
-    <li>
-        {% trans "VAT on site" %}:</br>
-        {{product.vat_onsite}}{% trans "$" %}</li>
-    <li>
-        {% trans "VAT take away" %}:</br>
-        {{product.vat_takeaway}}{% trans "$" %}</li>
-</ul>
-
-<h2>{% trans "Options" %}</h2>
+    {% endfor %}
+                <a href="{% url 'products_select_produits_ok' product.id %}">
+                    <li class="possum-base alert-success">{% trans "Activate a product" %}</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href="{% url 'categories_view' product.categorie.id %}">
+                    <li class="possum-base alert-success">
+                        {% trans "Back" %}</li></a>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Options" %}</h3>
+        </div>
+        <div class="panel-body">
 <p>{% blocktrans %}Green options are the options used for this product.
 The options are alphabetical order, so it is recommended to prefix the
 accompaniments by <em>A_</em> and sauces <em>S_</em>.
@@ -55,60 +109,34 @@ accompaniments by <em>A_</em> and sauces <em>S_</em>.
 <p>
 {% blocktrans %}Example: A_Chips, A_Gratin, S_Poivre, S_Ketchup{% endblocktrans %}
 </p>
-<ul id="options">
+<div class="row">
+            <ul class="list-inline">
     {% for option in options %}
-        <li
-        onclick='window.location="{% url 'products_option' product.id option.id %}"'
-            {% if option in product.options_ok.all %}
-            class="enabled"{% endif %}>{{option.name}}
-        </li>
+            <div class="col-sm-3">
+                <a href="{% url 'products_option' product.id option.id %}">
+                    <li class="
+                        {% if option in product.options_ok.all %}well-sansbg alert-success
+                        {% else %}well{% endif %}">{{option.name}}</li>
+                </a>
+            </div>
     {% empty %}
-        <li>{% trans "No option" %}</li>
+            <div class="col-sm-3">
+                <li class="well">{% trans "No option" %}</li>
+            </div>
     {% endfor %}
-</ul>
+            </ul>
+</div>
 
-<h3>{% trans "Create an option" %}</h3>
+<h4>{% trans "Create an option" %}</h4>
 <form action="{% url 'products_view' product.id %}" method="post">
     {{ option.non_field_errors }}
     {% csrf_token %}
-    <table>
-        {{option.as_table}}
-        <tr><td colspan="2">
-                <input type="submit" value="{% trans "Create" %}" />
-        </td></tr>
-    </table>
+    <ul class="list-inline">
+        {{option.as_ul}}
+        <li><button type="submit" class="btn btn-success">{% trans "Create" %}</button></li>
+    </ul>
 </form>
-
-<h2>{% trans "Active categories" %}</h2>
-<p>{% blocktrans %}
-If this product is a menu that can contain other products
-(appetizers, entrees, ...), you must first enable product categories here
-before activating products below.{% endblocktrans %}</p>
-<ul id="categories">
-    <li onclick='window.location="{% url 'products_select_categories_ok' product.id %}"'>
-        {% trans "Activate a category" %}</li>
-    {% for category in product.categories_ok.iterator %}
-    <li onclick='window.location="{% url 'products_del_categories_ok' product.id category.id %}"'
-        class="cat_{{category.id}}">
-        {{category.nom}}
-        </li>
-    {% endfor %}
-</ul>
-
-<h2>{% trans "Active products" %}</h2>
-<p>{% blocktrans %}Clicking on a product, you take it off the list.{% endblocktrans %}
-</p>
-<ul id="products">
-    <li onclick='window.location="{% url 'products_select_produits_ok' product.id %}"'>
-        {% trans "Activate a product" %}</li>
-    {% for sub in product.produits_ok.iterator %}
-        {% if sub.actif %}
-    <li
-        onclick='window.location="{% url 'products_del_produits_ok' product.id sub.id %}"'
-        class="cat_{{sub.categorie_id}}">{{sub.nom}}
-    </li>
-        {% endif %}
-    {% endfor %}
-</ul>
-
+        </div>
+    </div>
+</div>
 {% endblock %}

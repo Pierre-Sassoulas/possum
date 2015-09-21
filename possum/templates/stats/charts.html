@@ -12,8 +12,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
-    // Glucose Average by Day chart
      var avgByDayOptions = {
         chart: {
             renderTo: 'chart_panel',
@@ -24,8 +22,6 @@ $(document).ready(function() {
     {% if date_begin and date_end %}
         subtitle: {text: '{{date_begin}} > {{date_end}}'},
     {% endif %}
-//        xAxis: {title: {text: null}, labels: {rotation: -45}},
-        xAxis: {type: 'datetime', },
         yAxis: {title: {text: null}},
         series: [{}],
         credits: {enabled: false},
@@ -35,17 +31,6 @@ $(document).ready(function() {
     $.getJSON(chartDataUrl,
         function(data) {
         avgByDayOptions.series = data['chart_data'];
-//        avgByDayOptions.series = [{name: 'Avg Glucose (mg/dL)',
-//                                   data: [
-//                            [Date.UTC(2010, 0, 1), 29.9],
-//                            [Date.UTC(2010, 2, 1), 71.5],
-//                            [Date.UTC(2010, 3, 1), 106.4]]},
-//                            {name: "test",
-//                            data: [
-//                            [Date.UTC(2010, 0, 2), 39.9],
-//                                            [Date.UTC(2010, 2, 2), 41.5],
-//                                                            [Date.UTC(2010, 3, 3), 106.4]
-//                            ]}];
             var chart = new Highcharts.Chart(avgByDayOptions);
     });
     {% endif %}
@@ -68,11 +53,11 @@ $(document).ready(function() {
     <input type="radio" name="interval" id="rad3" value="m"
         {% if interval == "m" %}checked{% endif %}>{% trans "month" %}
 </label>
-<label class="radio-inline">
+<!--label class="radio-inline">
     <input type="radio" name="interval" id="rad4" value="y"
         {% if interval == "y" %}checked{% endif %}>{% trans "year" %}
-</label>
-<button type="submit" class="btn btn-primary pull-right">{% trans "View" %}</button>
+</label-->
+<button type="submit" class="btn btn-success pull-right">{% trans "View" %}</button>
 
 <h2>{% trans "Date" %}</h2>
 {% trans "From" %}
@@ -91,7 +76,6 @@ $(document).ready(function() {
         <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     </div>
 </div>
-
 <div class="radio-group-vertical form-group">
     {% for key, value in rapports.items %}
     <label class="radio">
@@ -116,4 +100,3 @@ $(document).ready(function() {
     });
 </script>
 {% endblock %}
-

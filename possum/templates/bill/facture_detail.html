@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<ul class="nav nav-tabs nav-justified">
+    <li class="active"><a href='{% url "bill_view" facture.id %}'>{% trans "Order" %} #{{facture.id}}</a></li>
+    <li><a href='{% url "bill_categories" facture.id %}'>{% trans "Modify products" %}</a></li>
+    <li><a href='{% url "prepare_payment" facture.id %}'>{% trans "Payments" %}</a></li>
+</ul>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Products" %}</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="list-unstyled">
+    {% for sold in products_sold %}
+        {% if sold.count > 1 %}
+    <li class="cat_{{sold.produit.categorie_id}} possum-base"
+        id="{{sold.id}}" href="javascript:void(0)"
+        onclick="javascript:myLinkButtonClick(this.id);">
+        {{sold.count}}x {{sold.produit.nom}}</li>
+    <div id="list_{{sold.id}}" style="display: none">
+    {% for member in sold.members %}
+    <a href='{% url "sold_view" facture.id member.id %}'>
+        <li class="cat_{{sold.produit.categorie_id}} possum-base">
+        {{member}}</li></a>
+    {% endfor %}
+    </div>
+    {% else %}
+    <a href='{% url "sold_view" facture.id sold.id %}'>
+        <li class="cat_{{sold.produit.categorie_id}} possum-base">
+        {{sold}}</li></a>
+    {% endif %}
+    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+<!-- Infos begin -->
+        <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <p class="btn btn-default" role="button">{{facture}}</p>
+                        <a class="btn btn-default alert-danger"
+                            href="{% url 'bill_delete' facture.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Justified button group">
+                        <a href="{% url 'table_select' facture.id %}"
+                            class="btn btn-default {% if facture.surcharge %}alert-warning{% endif %}"
+                            role="button">{% trans "Table" %}: <b>{{facture.table.nom}}</b></a>
+                        <a href="{% url 'couverts_select' facture.id %}"
+                            class="btn btn-default" role="button">{% trans "Guests" %}: <b>{{facture.couverts}}</b></a>
+                        <a href="{% url 'bill_onsite' facture.id %}"
+                            class="btn btn-default {% if facture.onsite %}alert-success{% else %}alert-danger{% endif %}"
+                            role="button">{% if facture.onsite %}{% trans "on site" %}{% else %}{% trans "take away" %}{% endif %}</a>
+                    </div>
+                </li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <p class="btn btn-default" role="button">
+                        {% trans "TTC" %}: <b>{{facture.total_ttc}}</b> {% trans "$" %}</p>
+                        <p class="btn btn-default alert-warning" role="button">
+                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                        </p>
+                    </div>
+                </li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <a href='{% url "bill_print" facture.id %}'
+                            class="alert-info btn btn-default" role="button">
+                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="input-group">
+            </div>
+        </div>
+    </div>
+<!-- Infos end -->
+<!-- Kitchen begin -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Kitchen" %}
+                    {% if facture.category_to_follow %}
+                    <div class="pull-right">
+                        <a href="{% url 'bill_send_kitchen' facture.id %}"
+                            class="btn btn-default cat_{{facture.category_to_follow_id}}" role="button">
+                                {% trans "Send" %} {{facture.category_to_follow.nom}} ?
+                        </a>
+                    </div>
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    {% for follow in facture.following.iterator %}
+                        <a href='{% url "kitchen_for_bill" facture.id %}'>
+                    <li class="possum-base cat_{{follow.category_id}}">
+                        {{follow}}
+                    </li></a>
+                    {% empty %}
+                    <li class="possum-base well">{% trans "Nothing" %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+<!-- Kitchen end -->
+   </div>
+{% endblock %}

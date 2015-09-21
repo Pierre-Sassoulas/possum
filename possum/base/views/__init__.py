@@ -62,12 +62,14 @@ def remove_edition(request):
         except Facture.DoesNotExist:
             LOGGER("[%s] bill is not here!" % bill_id)
         else:
-            bill.used_by()
             if "products_modified" in request.session.keys():
                 # we update bill only once
                 bill.update()
                 bill.update_kitchen()
                 request.session.pop("products_modified")
+            bill.in_use_by = None
+            bill.save()
+            LOGGER.debug("[F%s] edition mode removed" % bill_id)
         request.session.pop("bill_in_use")
     cleanup_payment(request)
     return request
@@ -83,7 +85,7 @@ def home(request):
 
 @login_required
 def shutdown(request):
-    context = {'menu_home': True, }
+    context = {'menu_manager': True, }
     config = Config.objects.filter(key="default_shutdown")
     if config:
         cmd = config[0].value

@@ -24,12 +24,15 @@ Usage: ./make [a command]
 For all:
 --------
     doc                :  make the documentation in html
+    log                :  display logs (Ctrl+C to exit)
     help               :  this help
 
 For administrators:
 -------------------
     deb_install_nginx  :  install nginx on Debian/Ubuntu (*)
+    dump               :  dump all data in possum.json (use "load" to restore)
     init_mine          :  run possum/utils/init_mine.py in virtualenv
+    load               :  load data in possum.json
     update             :  install/update Possum environnement
 
 For developpers:
@@ -170,7 +173,7 @@ function update_js {
         popd >/dev/null
     fi
     # BootStrap Date-Picker
-    if [ ! -e ${STATIC}${DATEPICKER} ]
+    if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
         must_succeed wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
@@ -206,7 +209,7 @@ function update {
         echo "You must read documentation :)"
         echo
         # For the moment, we stay with python2.
-        virtualenv --python=python2 env
+        virtualenv --no-site-packages --python=python2 env
     fi
     enter_virtualenv
     # before all, we must have last release of Django
@@ -239,6 +242,7 @@ EOF
     fi
     must_succeed ./manage.py migrate
     must_succeed ./manage.py update_css
+    cp possum/static/categories.css possum/base/static/categories.css
     must_succeed ./manage.py update_stats_to_0_6
     update_js
 }
@@ -270,6 +274,18 @@ function clear_db {
     ./manage.py reset_db
     must_succeed ./manage.py migrate --noinput
 #    ./manage.py flush --noinput
+}
+
+function log {
+    # use multitail to display log when available
+    # else, we use tail
+    TAIL=$(which multitail 2>/dev/null)
+    if [ $? -eq 0 ]
+    then
+        $TAIL ./possum.log
+    else
+        tail -f ./possum.log
+    fi
 }
 
 if [ ! $# -eq 1 ]
@@ -342,6 +358,20 @@ big_clean)
             rm -rf ${FILE}
         fi
     done
+    ;;
+dump)
+    enter_virtualenv
+    ./manage.py dumpdata --format=json --indent=4 --exclude=contenttypes \
+        --exclude=south --exclude=base.cuisson > possum.json
+    ;;
+load)
+    enter_virtualenv
+    ./manage.py reset_db
+    ./manage.py migrate
+    ./manage.py loaddata possum.json
+    ;;
+log)
+    log
     ;;
 tests)
     tests

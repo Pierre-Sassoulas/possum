@@ -35,7 +35,6 @@ class Follow(models.Model):
     done = models.BooleanField(default=False)
 
     class Meta:
-        app_label = 'base'
         get_latest_by = 'id'
         ordering = ['date']
 

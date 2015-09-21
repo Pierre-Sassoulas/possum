@@ -45,7 +45,7 @@ class Printer(models.Model):
     """Printer model
     :param options: options used with pycups.printFile()
     :param header: you can add a text before the text to print (restaurant
-                   name)
+    name)
     :param width: width of the ticket
     :param footer: same as header but after :)
     :param kitchen_lines: number of white lines to heading ticket of kitchen
@@ -62,9 +62,6 @@ class Printer(models.Model):
     kitchen = models.BooleanField(default=False)
     billing = models.BooleanField(default=False)
     manager = models.BooleanField(default=False)
-
-    class Meta:
-        app_label = 'base'
 
     def __unicode__(self):
         return self.name

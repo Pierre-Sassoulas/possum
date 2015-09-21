@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+{% load i18n %}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Order" %} #{{facture.id}}</h3>
+            </div>
+            <div class="panel-body">
+               <ul class="list-unstyled">
+    {% for sold in products_sold %}
+        {% if sold.count > 1 %}
+    <li class="cat_{{sold.produit.categorie_id}} possum-base"
+        id="{{sold.id}}" href="javascript:void(0)"
+        onclick="javascript:myLinkButtonClick(this.id);">
+        {{sold.count}}x {{sold.produit.nom}}</li>
+    <div id="list_{{sold.id}}" style="display: none">
+    {% for member in sold.members %}
+        <li class="cat_{{sold.produit.categorie_id}} possum-base">
+        {{member}}</li>
+    {% endfor %}
+    </div>
+    {% else %}
+        <li class="cat_{{sold.produit.categorie_id}} possum-base">
+        {{sold}}</li>
+    {% endif %}
+    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+<!-- Infos begin -->
+        <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <a href="{% url 'archives' %}">
+                    <li class="possum-base alert-success">
+                        {% trans "Back" %}</li></a>
+                <li class="possum-base well">{% trans "Creation" %}: {{facture}}</li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Justified button group">
+                        <a href="#"
+                            class="btn btn-default {% if facture.surcharge %}alert-warning{% endif %}"
+                            role="button">{% trans "Table" %}: {{facture.table.nom}}</a>
+                        <a href="#"
+                            class="btn btn-default" role="button">{% trans "Guests" %}: {{facture.couverts}}</a>
+                        <a href="#"
+                            class="btn btn-default {% if facture.onsite %}alert-success{% else %}alert-danger{% endif %}"
+                            role="button">{% if facture.onsite %}{% trans "on site" %}{% else %}{% trans "take away" %}{% endif %}</a>
+                    </div>
+                </li>
+                <li class="possum-base">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <p class="btn btn-default" role="button">
+                        {% trans "TTC" %}: {{facture.total_ttc}} {% trans "$" %}</p>
+                        <a href='{% url "bill_print" facture.id %}'
+                            class="alert-info btn btn-default" role="button">
+                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="input-group">
+            </div>
+        </div>
+    </div>
+<!-- Infos end -->
+<!-- Kitchen begin -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Kitchen" %}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    {% for follow in facture.following.iterator %}
+                        <a href='{% url "kitchen_for_bill" facture.id %}'>
+                    <li class="possum-base cat_{{follow.category_id}}">
+                        {{follow}}
+                    </li></a>
+                    {% empty %}
+                    <li class="possum-base well">{% trans "Nothing" %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+<!-- Kitchen end -->
+<!-- Payments begin -->
+<div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% trans "Payments" %}
+                    <div class="pull-right">
+                        <p class="btn btn-default" role="button">
+                            {% trans "Remaining" %}: {{facture.restant_a_payer}} {% trans "$" %}
+                        </p>
+                    </div>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+    {% for payment in facture.paiements.iterator %}
+    <li class="possum-base well">
+    {{payment.type.nom}}: {{payment.montant}}{% trans "$" %}</li>
+    {% endfor %}
+                </ul>
+            </div>
+        </div>
+<!-- Payments end -->
+    </div>
+</div>
+{% endblock %}

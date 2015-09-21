@@ -38,8 +38,8 @@ class Command(BaseCommand):
             self.stdout.write(
                 "[%s] change status for bills" %
                 datetime.datetime.now().strftime("%H:%M"))
-            begin = "%d-01-01 00:00:00" % year
-            end = "%d-12-31 23:59:59" % year
+            begin = "%s-01-01 00:00:00" % year
+            end = "%s-12-31 23:59:59" % year
             bills = Facture.objects.filter(date_creation__gte=begin,
                                            date_creation__lt=end)
             for bill in bills.iterator():
@@ -62,5 +62,5 @@ class Command(BaseCommand):
                 mn = diff.seconds / 60
                 sec = diff.seconds % 60
                 time = "%dm %ds" % (mn, sec)
-            self.stdout.write("[%d] updated %d bills in %s" % (year,
+            self.stdout.write("[%s] updated %d bills in %s" % (year,
                               bills.count(), time))

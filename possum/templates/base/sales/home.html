@@ -1,7 +1,7 @@
 {% extends "base_with_aside.html" %}
 {% block content %}
 {% load i18n %}
-<h1>{% trans "Sales" %}</h1> 
+<h2>{% trans "Sales" %}</h2>
 <p>{% blocktrans %}
 The display of information requires updating statistics with
 recent bills. If there are a lot of new bills, this
@@ -36,10 +36,13 @@ There are no pending bill, the data are up to date.
 {% endif %}
 {% endblock %}
 {% block side %}
-<h2>{% trans "Rapports" %}</h2>
 <ul>
-    <li><a href="{% url "stats_text" %}">{% trans "textes" %}</a></li>
-    <li><a href="{% url "stats_charts" %}">{% trans "graphiques" %}</a></li>
+    <a href="{% url "stats_text" %}">
+        <li>{% trans "statistics" %}</li>
+    </a>
+    <a href="{% url "stats_charts" %}">
+        <li>{% trans "graphics" %}</li>
+    </a>
 </ul>
 
 {% endblock %}
