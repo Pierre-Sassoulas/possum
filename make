@@ -113,7 +113,7 @@ function must_succeed {
 
 function tests {
     enter_virtualenv
-    must_succeed ./manage.py validate_templates --settings=possum.settings_tests
+    # must_succeed ./manage.py validate_templates --settings=possum.settings_tests
     flake8 --exclude=migrations,static --max-complexity 12 possum \
         > reports/flake8.report
     sloccount --details possum > reports/soccount.sc
