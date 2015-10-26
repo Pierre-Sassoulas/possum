@@ -111,8 +111,8 @@ def categories_delete(request, category_id):
     '''
     context = {'menu_manager': True, }
     context['current_cat'] = get_object_or_404(Categorie, pk=category_id)
-    context['categories'] = Categorie.objects.order_by('priorite',
-                                                       'nom').exclude(id=category_id)
+    categories = Categorie.objects.exclude(id=category_id)
+    context['categories'] = categories.order_by('priorite', 'nom')
     cat_report_id = request.POST.get('cat_report', '').strip()
     action = request.POST.get('valide', '').strip()
     if action == "remove":
@@ -142,7 +142,7 @@ def categories_delete(request, category_id):
                                                               month=s.month,
                                                               week=s.week,
                                                               day=s.day,
-                                                              interval=s.interval)
+                                                           interval=s.interval)
                     new.add_value(s.value)
                     s.delete()
             LOG.info("copy products %s" % report_info)
