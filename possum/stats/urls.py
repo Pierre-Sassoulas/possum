@@ -25,5 +25,8 @@ urlpatterns = patterns('possum.stats.views',
                        url(r'^update/$', 'update', name='stats_update'),
                        url(r'^text/$', 'text', name='stats_text'),
                        url(r'^charts/$', 'charts', name='stats_charts'),
-                       url(r'^dump/(?P<rapport>\d+)/(?P<interval>[a,y,m,w,d])/(?P<date_begin>\d{4}-\d{1,2}-\d{1,2})/(?P<date_end>\d{4}-\d{1,2}-\d{1,2})/$', 'dump', name='stats_dump'),
+                       url(r'^dump/(?P<rapport>\d+)/(?P<interval>[a,y,m,w,d])/'
+                            '(?P<date_begin>\d{4}-\d{1,2}-\d{1,2})/'
+                            '(?P<date_end>\d{4}-\d{1,2}-\d{1,2})/$', 'dump',
+                            name='stats_dump'),
                        )
