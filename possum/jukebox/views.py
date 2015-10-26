@@ -19,7 +19,6 @@
 #
 import logging
 from mpd import MPDClient
-import json
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
