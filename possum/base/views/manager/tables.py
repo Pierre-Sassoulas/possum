@@ -54,7 +54,8 @@ def tables_zone_delete(request, zone_id):
                 LOG.info("delete zone: %d" % zone.id)
                 Table.objects.filter(zone=zone).delete()
                 zone.delete()
-                messages.add_message(request, messages.SUCCESS, _("Zone removed"))
+                messages.add_message(request, messages.SUCCESS,
+                                     _("Zone removed"))
             return redirect('tables')
     # first request
     context['zone'] = zone
@@ -144,7 +145,7 @@ def tables(request, zone_pk=0):
     context['zones'] = Zone.objects.all()
 
     if zone_pk == 0:
-        if len(context['zones']) > 0 :
+        if len(context['zones']) > 0:
             context['zone'] = context['zones'][0]
             zone_pk = context['zone'].pk
     else:

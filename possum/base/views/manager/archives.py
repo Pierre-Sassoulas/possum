@@ -26,7 +26,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.translation import ugettext as _
 
-from possum.base.forms import DateForm
 from possum.base.models import Facture
 from possum.base.views import check_admin
 from possum.stats.views import init_borders

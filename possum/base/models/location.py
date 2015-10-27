@@ -23,7 +23,6 @@ from possum.base.models.generic import Nom
 
 
 class Zone(Nom):
-
     """Un zone peut avoir une surtaxe par exemple dans le cas d'une majoration
     pour le service en terrasse. Dans ce cas, prix_surtaxe est ajouté au
     prix HT de tous les produits dans les categories 'surtaxable'.
@@ -35,9 +34,9 @@ class Zone(Nom):
     surtaxe = models.BooleanField("zone surtaxée ?", default=False)
 
     def is_surcharged(self):
-        '''
-        :return: TODO
-        '''
+        """
+        :return: Boolean
+        """
         return self.surtaxe
 
     def tables(self):
@@ -47,14 +46,12 @@ class Zone(Nom):
 
 
 class Table(Nom):
-
-    """ A table must be linked to a Zone """
-
+    """A table must be linked to a Zone """
     zone = models.ForeignKey(Zone, related_name="table_area")
 
     def is_surcharged(self):
-        ''' By default there is no surcharge.
-        :return: Boolean '''
+        """By default there is no surcharge.
+        :return: Boolean"""
         if self.zone:
             return self.zone.is_surcharged()
         else:

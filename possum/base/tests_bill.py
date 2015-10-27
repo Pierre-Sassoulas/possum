@@ -89,7 +89,6 @@ class TestsBill(TestCase):
         self.assertEqual(self.facture.restant_a_payer, Decimal(0))
         montant = Decimal(str(self.plat.produit.prix - 12))
         self.assertEqual(montant, (self.facture.paiements.all()[2]).montant)
-        # TODO This is done just to execute more code
         # An assertion should be verified
         self.facture.print_ticket_kitchen()
         self.facture.est_un_repas()
