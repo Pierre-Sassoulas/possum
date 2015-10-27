@@ -29,7 +29,7 @@ from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import user_passes_test
 
-from possum.base.models import Categorie, VAT, PaiementType, Produit, Facture
+from possum.base.models import Categorie, VAT, PaiementType, Facture
 from possum.base.models import Printer
 from possum.base.views import check_admin
 from .models import Stat

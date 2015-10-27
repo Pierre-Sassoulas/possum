@@ -26,7 +26,6 @@ import os
 from django.conf import settings
 from django.db import models
 from django.db.models import Max, Avg
-from django.utils.translation import ugettext as _
 
 from possum.base.models import Categorie
 from possum.base.models import Facture
@@ -450,7 +449,7 @@ class Stat(models.Model):
                 value = "%.2f" % stats.get(key=key).value
             except:
                 LOG.debug("[%s][%s][%s] missing" % (date, context['interval'],
-                                                   key))
+                                                    key))
                 value = "0.00"
             context[key] = value
             # maximum and average
@@ -472,7 +471,7 @@ class Stat(models.Model):
             except:
                 value = "0.00"
                 LOG.debug("[%s][%s][%s] missing" % (last, context['interval'],
-                                                   key))
+                                                    key))
             context["last_%s" % key] = value
         context['products'] = _search_sub_key(stats, "_product_nb", Produit,
                                               True)

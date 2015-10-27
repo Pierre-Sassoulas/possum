@@ -30,58 +30,67 @@ from possum.base.models import (Categorie, Zone, VAT, Config, Table, Facture,
 from possum.stats.models import Stat
 
 
+def create_users():
+    # managers
+    for username in ['demo', 'demo1', 'demo2']:
+        user = User(username=username, first_name=username,
+                    email="%s@possum-software.org" % username)
+        user.set_password(username)
+        user.is_superuser = True
+        user.save()
+
+    # staff members
+    for username in ['staff', 'staff1', 'staff2']:
+        user = User(username=username, first_name=username,
+                    email="%s@possum-software.org" % username)
+        user.set_password(username)
+        user.save()
+
+def create_payment():
+    # Type de paiements
+    PaiementType(nom='AMEX', fixed_value=False).save()
+    PaiementType(nom='ANCV', fixed_value=True).save()
+    PaiementType(nom='CB', fixed_value=False).save()
+    PaiementType(nom='Cheque', fixed_value=False).save()
+    PaiementType(nom='Espece', fixed_value=False).save()
+    PaiementType(nom='Tic. Resto.', fixed_value=True).save()
+
+    # Type de paiements par défaut pour les remboursements lorsque
+    # le paiement dépasse le montant de la facture
+    id_type_paiement = PaiementType.objects.get(nom="Espece").id
+    Config(key="payment_for_refunds", value=id_type_paiement).save()
+
+    # Default PaymentType to select by default on the payment page
+    id_type_paiement = PaiementType.objects.get(nom="Espece").id
+    Config(key="default_type_payment", value=id_type_paiement).save()
+
+def create_tables():
+    # Tables
+    z = Zone(nom='Bar', surtaxe=False)
+    z.save()
+    Table(nom="T--", zone=z).save()
+    z = Zone(nom='Rez de chaussee', surtaxe=False)
+    z.save()
+    for i in xrange(1, 15):
+        Table(nom="T%02d" % i, zone=z).save()
+    z = Zone(nom='Terrasse', surtaxe=True)
+    z.save()
+    for i in xrange(15, 26):
+        Table(nom="T%02d" % i, zone=z).save()
+
+
 class Command(BaseCommand):
     args = ""
     help = "Initialize a demo database"
 
     def handle(self, *args, **options):
-        # managers
-        for username in ['demo', 'demo1', 'demo2']:
-            user = User(username=username, first_name=username,
-                        email="%s@possum-software.org" % username)
-            user.set_password(username)
-            user.is_superuser = True
-            user.save()
-
-        # staff members
-        for username in ['staff', 'staff1', 'staff2']:
-            user = User(username=username, first_name=username,
-                        email="%s@possum-software.org" % username)
-            user.set_password(username)
-            user.save()
-
-        # Type de paiements
-        PaiementType(nom='AMEX', fixed_value=False).save()
-        PaiementType(nom='ANCV', fixed_value=True).save()
-        PaiementType(nom='CB', fixed_value=False).save()
-        PaiementType(nom='Cheque', fixed_value=False).save()
-        PaiementType(nom='Espece', fixed_value=False).save()
-        PaiementType(nom='Tic. Resto.', fixed_value=True).save()
-
-        # Type de paiements par défaut pour les remboursements lorsque
-        # le paiement dépasse le montant de la facture
-        id_type_paiement = PaiementType.objects.get(nom="Espece").id
-        Config(key="payment_for_refunds", value=id_type_paiement).save()
-
-        # Default PaymentType to select by default on the payment page
-        id_type_paiement = PaiementType.objects.get(nom="Espece").id
-        Config(key="default_type_payment", value=id_type_paiement).save()
+        create_users()
+        create_payment()
 
         # Montant de la surtaxe
         Config(key="price_surcharge", value="0.20").save()
 
-        # Tables
-        z = Zone(nom='Bar', surtaxe=False)
-        z.save()
-        Table(nom="T--", zone=z).save()
-        z = Zone(nom='Rez de chaussee', surtaxe=False)
-        z.save()
-        for i in xrange(1, 15):
-            Table(nom="T%02d" % i, zone=z).save()
-        z = Zone(nom='Terrasse', surtaxe=True)
-        z.save()
-        for i in xrange(15, 26):
-            Table(nom="T%02d" % i, zone=z).save()
+        create_tables()
 
         # TVA
         vat_alcool = VAT(name="alcool")

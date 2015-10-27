@@ -22,7 +22,6 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.http.response import HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
@@ -43,7 +42,6 @@ def bill_new(request):
     """ Create a new bill.
     :param HttpRequest request:
     """
-    context = {'menu_bills': True, }
     bill = Facture()
     bill.save()
     return redirect("bill_view", bill.id)
@@ -132,7 +130,7 @@ def table_select(request, bill_id, zone_pk=0):
     context['bill_id'] = bill_id
 
     if zone_pk == 0:
-        if len(context['zones']) > 0 :
+        if len(context['zones']) > 0:
             context['zone'] = context['zones'][0]
             zone_pk = context['zone'].pk
     else:
@@ -151,7 +149,6 @@ def table_set(request, bill_id, table_id):
     :param table_id:
     :type table_id:
     """
-    context = {'menu_bills': True, }
     bill = get_object_or_404(Facture, pk=bill_id)
     table = get_object_or_404(Table, pk=table_id)
     bill.set_table(table)
@@ -204,7 +201,7 @@ def categories(request, bill_id, category_id=None):
         LOG.debug("Updating session categories : '{0}'".format(categories))
         request.session['categories'] = categories
     else:
-        # request.session['categories'] is not None
+        # request.session['categories'] is not None
         LOG.debug('Use categories in cache')
     if category_id is None:
         try:
@@ -406,14 +403,10 @@ def sold_options(request, bill_id, sold_id, option_id=None):
     On aura accès à la liste complète des options
     en allant dans 'sold_view'
 
-    TODO
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param sold_id:
-    :type sold_id:
+    :param bill_id: ID of a Bill
+    :param sold_id: ID of a ProduitVendu
     :param option_id:
-    :type option_id:
     """
     sold = get_object_or_404(ProduitVendu, pk=sold_id)
     context = {'menu_bills': True, }
@@ -511,15 +504,11 @@ def product_add(request, bill_id, product_id):
 
 @login_required
 def sold_cooking(request, bill_id, sold_id, cooking_id=None):
-    """
-    TODO
+    """Cooking choice.
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param sold_id:
-    :type sold_id:
-    :param cooking_id:
-    :type cooking_id:
+    :param bill_id: PK of a Bill
+    :param sold_id: PK of a ProduitVendu
+    :param cooking_id: PK of a Cooking
     """
     context = {'menu_bills': True, }
     context['sold'] = get_object_or_404(ProduitVendu, pk=sold_id)
@@ -541,11 +530,9 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
 
 @login_required
 def couverts_select(request, bill_id):
-    """
-    TODO
+    """Choice a number of guests
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
+    :param bill_id: PK of a Bill
     """
     """List of couverts for a bill"""
     context = {'menu_bills': True, }
@@ -557,14 +544,10 @@ def couverts_select(request, bill_id):
 @login_required
 def couverts_set(request, bill_id, number):
     """ Set couverts of a bill
-    TODO
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param number:
-    :type number:
+    :param bill_id: PK of a Bill
+    :param number: number of guests
     """
-    context = {'menu_bills': True, }
     bill = get_object_or_404(Facture, pk=bill_id)
     bill.set_couverts(number)
     bill.save()
@@ -602,10 +585,8 @@ def bill_home(request):
 @login_required
 def bill_view(request, bill_id):
     """ Get a bill.
-    TODO
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
+    :param bill_id: PK of a Bill
     """
     request = remove_edition(request)
     context = {'menu_bills': True, }
@@ -653,8 +634,7 @@ def bill_delete(request, bill_id):
 
 @login_required
 def bill_onsite(request, bill_id):
-    """
-    TODO
+    """Bill is on site or away.
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
@@ -667,8 +647,7 @@ def bill_onsite(request, bill_id):
 
 @login_required
 def bill_payment_delete(request, bill_id, payment_id):
-    """
-    TODO
+    """Delete a payment.
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
@@ -683,8 +662,7 @@ def bill_payment_delete(request, bill_id, payment_id):
 
 @login_required
 def bill_payment_view(request, bill_id, payment_id):
-    """
-    TODO
+    """View a payment
     :param HttpRequest request:
     :param bill_id:
     :type bill_id:
@@ -764,7 +742,7 @@ def amount_payment_right(request):
 def amount_payment_add(request, number):
     """Permet d'ajouter un chiffre au montant
     :param HttpRequest request:
-    :param number:TODO
+    :param number: number
     """
     if request.session.get('init_montant', False):
         # if add a number with init_montant,
@@ -794,13 +772,10 @@ def amount_payment_add(request, number):
 
 @login_required
 def type_payment(request, bill_id, type_id):
-    """
-    TODO
+    """Type of payment
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param type_id:
-    :type type_id:
+    :param bill_id: PK of a bill
+    :param type_id: PK of a PaiementType
     """
     type_payment = get_object_or_404(PaiementType, pk=type_id)
     request.session['type_selected'] = type_payment
@@ -809,13 +784,12 @@ def type_payment(request, bill_id, type_id):
 
 @login_required
 def payment_count(request, bill_id, number):
-    """
-    TODO
+    """Tickets number.
     :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param number:
-    :type number:
+    :param bill_id: PK of a Bill
+    :type bill_id: integer
+    :param number: number of tickets
+    :type number: integer
     """
     try:
         request.session['tickets_count'] = int(number)
@@ -881,7 +855,7 @@ def save_payment(request, bill_id):
 def init_montant(request, montant):
     """Init left/right with a montant in str
     :param HttpRequest request:
-    :param montant: TODO
+    :param montant: string with a "."
     """
     (left, right) = montant.split(".")
     request.session['left'] = "%04d" % int(left)
