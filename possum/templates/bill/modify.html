@@ -61,7 +61,7 @@
         </div>
     </div-->
                 {% for category in categories %}
-                <div class="col-sm-3">
+                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
                 <li class="possum-base cat_{{category.id}}" id="{{category.id}}"
                     href="javascript:void(0)" onclick="javascript:view_category(this.id);">
                     <small>{{category.nom}}</small>
@@ -77,7 +77,7 @@
                 <div id="cat_{{category.id}}"
                     {% if current_cat != category.id %}style="display: none"{% endif %}>
                     {% for product in category.products %}
-                    <div class="col-sm-3">
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
                         <a href='{% url "product_add" bill.id product.id %}'>
                         <li class="possum-base cat_{{category.id}}">
                             <small>{{product.nom}}</small>
