@@ -85,7 +85,7 @@ def home(request):
 
 @login_required
 def shutdown(request):
-    context = {'menu_manager': True, }
+    context = {'menu_shutdown': True, }
     config = Config.objects.filter(key="default_shutdown")
     if config:
         cmd = config[0].value
