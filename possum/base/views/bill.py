@@ -306,15 +306,10 @@ def sold_view(request, bill_id, sold_id):
 
 @login_required
 def sold_option(request, bill_id, sold_id, option_id):
-    """
-    TODO
-    :param HttpRequest request:
-    :param bill_id:
-    :type bill_id:
-    :param sold_id:
-    :type sold_id:
-    :param option_id:
-    :type option_id:
+    """Define an option for a ProduitVendu
+    :param bill_id: a Facture id
+    :param sold_id: a ProduitVendu id
+    :param option_id: a Option id
     """
     set_option(sold_id, option_id)
     return redirect('sold_view', bill_id, sold_id)
@@ -415,7 +410,8 @@ def sold_options(request, bill_id, sold_id, option_id=None):
     context['options'] = sold.produit.options_ok.all()
     if option_id:
         set_option(sold_id, option_id)
-        return redirect('sold_view', bill_id, sold_id)
+        # return redirect('sold_view', bill_id, sold_id)
+        return redirect('bill_sold_options', bill_id, sold_id)
     return render(request, 'bill/options.html', context)
 
 
