@@ -67,3 +67,41 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'default': {
+            'format': '[%(asctime)s %(module)s:%(lineno)d %(funcName)s] '
+                      '%(levelname)-8s %(message)s',
+        },
+        'syslog': {
+            'format': 'possum %(levelname)s '
+                      '[%(module)s:%(lineno)d %(funcName)s] %(message)s'
+        },
+    },
+    'handlers': {
+        'syslog': {
+            'level': 'INFO',
+            'class': 'logging.handlers.SysLogHandler',
+            'address': '/dev/log',
+            'formatter': 'syslog',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        '*': {
+            'handlers': ['mail_admins', 'syslog'],
+            'level': 'INFO',
+        }
+    }
+}
