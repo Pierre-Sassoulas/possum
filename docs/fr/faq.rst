@@ -53,6 +53,9 @@ au lancement de votre gestionnaire de fenêtre (par exemple: ''Fluxbox'').
 
 Pour activer le mode kiosque, je vous conseille l'extension ''R-kiosk''.
 
+Sinon, vous pouvez aussi utiliser Midori::
+
+  /usr/bin/midori -a https://127.0.0.1/ -e Fullscreen &
 
 Comment avoir un clavier virtuel ?
 ----------------------------------
