@@ -2,10 +2,10 @@
 {% load i18n %}
 {% block content %}
 <h1>{% trans "Bills" %} <span class="badge">{{ count }}</span></h1>
-<div class="col-sm-9">
+<div class="col-xs-12 col-sm-9">
 <ul class="list-inline">
     {% for facture in factures %}
-    <div class="col-sm-3 col-md-2">
+    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
         <a href='{% url "bill_view" facture.id %}'>
             <li class="well-sansbg {{facture.alert}}">
             <h4>{{facture.get_time}}</h4>
@@ -17,7 +17,7 @@
     {% endfor %}
 </ul>
 </div>
-<div class="col-sm-3">
+<div class="col-xs-12 col-sm-3">
             <ul class="list-unstyled">
                 <a href='{% url "bill_new" %}'>
                     <li class="possum-base alert-success">
