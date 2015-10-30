@@ -245,6 +245,7 @@ EOF
     cp possum/static/categories.css possum/base/static/categories.css
     must_succeed ./manage.py update_stats_to_0_6
     update_js
+    # must_succeed ./manage.py compress
 }
 
 function deb_install_nginx {
