@@ -22,7 +22,6 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
@@ -44,7 +43,7 @@ def bill_new(request):
     """
     bill = Facture()
     bill.save()
-    return redirect("bill_view", bill.id)
+    return bill_view(request, bill.id)
 
 
 def set_option(sold_id, option_id):
@@ -89,7 +88,7 @@ def bill_send_kitchen(request, bill_id):
                              _("Error in printing (printer ok?)"))
     if not erreur:
         LOG.info("[F%s] sent" % bill.id)
-    return redirect('bill_view', bill.id)
+    return bill_view(request, bill.id)
 
 
 @login_required
@@ -115,7 +114,7 @@ def bill_print(request, bill_id):
             else:
                 messages.add_message(request, messages.ERROR,
                                      _("Printing has failed"))
-    return redirect('bill_view', bill.id)
+    return bill_view(request, bill.id)
 
 
 @login_required
@@ -153,7 +152,7 @@ def table_set(request, bill_id, table_id):
     table = get_object_or_404(Table, pk=table_id)
     bill.set_table(table)
     bill.save()
-    return redirect("bill_view", bill.id)
+    return bill_view(request, bill.id)
 
 
 @login_required
@@ -168,7 +167,7 @@ def set_number(request, bill_id, count):
     """
     LOG.debug("[F%s] set number %s" % (bill_id, count))
     request.session['count'] = int(count)
-    return redirect('bill_categories', bill_id)
+    return categories(request, bill_id)
 
 
 @login_required
@@ -184,7 +183,7 @@ def categories(request, bill_id, category_id=None):
     """
     bill = get_object_or_404(Facture, pk=bill_id)
     if not set_edition_status(request, bill):
-        return redirect('bill_view', bill.id)
+        return bill_view(request, bill.id)
     lcc = request.session.get('last_carte_changed')
     if lcc is None or Config().carte_changed(lcc):
         # If they are no categorie or if the carte changed
@@ -256,7 +255,7 @@ def product_set_made_with(request, bill_id, product_id, category_id):
     product.save()
     bill = get_object_or_404(Facture, pk=bill_id)
     bill.update_kitchen()
-    return redirect('sold_view', bill_id, product.id)
+    return sold_view(request, bill_id, product.id)
 
 
 @login_required
@@ -312,7 +311,7 @@ def sold_option(request, bill_id, sold_id, option_id):
     :param option_id: a Option id
     """
     set_option(sold_id, option_id)
-    return redirect('sold_view', bill_id, sold_id)
+    return sold_view(request, bill_id, sold_id)
 
 
 @login_required
@@ -334,7 +333,7 @@ def sold_note(request, bill_id, sold_id, note_id):
     else:
         sold.notes.add(note)
     sold.save()
-    return redirect('sold_view', bill_id, sold_id)
+    return sold_view(request, bill_id, sold_id)
 
 
 @login_required
@@ -363,8 +362,8 @@ def sold_delete(request, bill_id, sold_id):
             menu.contient.remove(sold)
             menu.save()
             sold.delete()
-            return redirect("bill_sold_working", bill_id, menu.id)
-    return redirect('bill_categories', bill_id)
+            return sold_working(request, bill_id, menu.id)
+    return categories(request, bill_id)
 
 
 @login_required
@@ -387,7 +386,7 @@ def subproduct_add(request, bill_id, sold_id, product_id):
     menu = get_object_or_404(ProduitVendu, pk=sold_id)
     menu.contient.add(sold)
     request.session['menu_id'] = menu.id
-    return redirect('bill_sold_working', bill_id, sold.id)
+    return sold_working(request, bill_id, sold.id)
 
 
 @login_required
@@ -410,8 +409,7 @@ def sold_options(request, bill_id, sold_id, option_id=None):
     context['options'] = sold.produit.options_ok.all()
     if option_id:
         set_option(sold_id, option_id)
-        # return redirect('sold_view', bill_id, sold_id)
-        return redirect('bill_sold_options', bill_id, sold_id)
+        return sold_options(request, bill_id, sold_id)
     return render(request, 'bill/options.html', context)
 
 
@@ -436,17 +434,16 @@ def sold_working(request, bill_id, sold_id):
     if sold.produit.est_un_menu():
         category = sold.get_free_categorie()
         if category:
-            return redirect('subproduct_select', bill_id, sold.id,
-                            category.id)
+            return subproduct_select(request, bill_id, sold.id, category.id)
     if not sold.is_cooking_set():
-        return redirect('sold_cooking', bill_id, sold.id)
+        return sold_cooking(request, bill_id, sold.id)
     if sold.produit.options_ok.count() and not sold.options.count():
-        return redirect('bill_sold_options', bill_id, sold.id)
+        return sold_options(request, bill_id, sold.id)
     menu_id = request.session.get('menu_id', False)
     if menu_id:
         # il y a un menu en attente, est-il complet ?
         request.session.pop('menu_id')
-        return redirect('bill_sold_working', bill_id, menu_id)
+        return sold_working(request, bill_id, menu_id)
     # at this point, all is done, so are there others products?
     if request.session.get('product_to_add', False):
         LOG.debug("product_to_add not empty")
@@ -463,8 +460,8 @@ def sold_working(request, bill_id, sold_id):
                 else:
                     request.session.pop('product_to_add')
                     request.session.pop('product_count')
-            return redirect('product_add', bill_id, product_id)
-    return redirect('bill_categories', bill_id, sold.produit.categorie.id)
+            return product_add(request, bill_id, product_id)
+    return categories(request, bill_id, sold.produit.categorie.id)
 
 
 @login_required
@@ -479,7 +476,7 @@ def product_add(request, bill_id, product_id):
     bill = get_object_or_404(Facture, pk=bill_id)
     if not set_edition_status(request, bill):
         LOG.debug("[F%s] bill is already in edition mode" % bill_id)
-        return redirect('bill_view', bill.id)
+        return bill_view(request, bill.id)
     product = get_object_or_404(Produit, pk=product_id)
 
     # how many products to add
@@ -495,7 +492,7 @@ def product_add(request, bill_id, product_id):
     LOG.debug("[F%s] ProduitVendu(%s) created" % (bill_id, product))
     bill.add_product(sold)
     request.session["products_modified"] = bill_id
-    return redirect('bill_sold_working', bill_id, sold.id)
+    return sold_working(request, bill_id, sold.id)
 
 
 @login_required
@@ -517,10 +514,10 @@ def sold_cooking(request, bill_id, sold_id, cooking_id=None):
             LOG.debug("[%s] no cooking present" % bill_id)
             # certainement un nouveau produit donc on veut retourner
             # sur le panneau de saisie des produits
-            return redirect('bill_sold_working', bill_id, context['sold'].id)
+            return sold_working(request, bill_id, context['sold'].id)
         else:
             LOG.debug("[%s] cooking replacement" % bill_id)
-            return redirect('bill_view', bill_id)
+            return bill_view(request, bill_id)
     return render(request, 'bill/cooking.html', context)
 
 
@@ -547,7 +544,7 @@ def couverts_set(request, bill_id, number):
     bill = get_object_or_404(Facture, pk=bill_id)
     bill.set_couverts(number)
     bill.save()
-    return redirect("bill_view", bill_id)
+    return bill_view(request, bill_id)
 
 
 @login_required
@@ -592,7 +589,7 @@ def bill_view(request, bill_id):
     if context['facture'].est_soldee():
         messages.add_message(request, messages.ERROR,
                              _("This invoice has already been ended"))
-        return redirect('bill_home')
+        return bill_home(request)
     return render(request, 'bill/facture_detail.html', context)
 
 
@@ -608,7 +605,7 @@ def bill_delete(request, bill_id):
     if order.paiements.count() > 0:
         messages.add_message(request, messages.ERROR,
                              _("The bill contains payments"))
-        return redirect('bill_view', bill_id)
+        return bill_view(request, bill_id)
     else:
         try:
             choice = request.POST['choice']
@@ -622,10 +619,10 @@ def bill_delete(request, bill_id):
                 order.delete()
                 messages.add_message(request, messages.SUCCESS,
                                      _("Invoice deleted"))
-                return redirect('bill_home')
+                return bill_home(request)
             else:
-                return redirect('bill_view', bill_id)
-        return redirect('bill_home')
+                return bill_view(request, bill_id)
+        return bill_home(request)
 
 
 @login_required
@@ -638,7 +635,7 @@ def bill_onsite(request, bill_id):
     order = get_object_or_404(Facture, pk=bill_id)
     order.set_onsite(not order.onsite)
     order.save()
-    return redirect('bill_view', bill_id)
+    return bill_view(request, bill_id)
 
 
 @login_required
@@ -653,7 +650,7 @@ def bill_payment_delete(request, bill_id, payment_id):
     payment = get_object_or_404(Paiement, pk=payment_id)
     bill = get_object_or_404(Facture, pk=bill_id)
     bill.del_payment(payment)
-    return redirect('prepare_payment', bill_id)
+    return prepare_payment(request, bill_id)
 
 
 @login_required
@@ -681,7 +678,7 @@ def amount_payment(request):
     bill_id = request.session.get('bill_id', False)
     if not bill_id:
         messages.add_message(request, messages.ERROR, _("Invalid bill"))
-        return redirect('bill_home')
+        return bill_home(request)
 
     context = {'menu_bills': True, }
     context['bill_id'] = bill_id
@@ -698,7 +695,7 @@ def amount_count(request):
     bill_id = request.session.get('bill_id', False)
     if not bill_id:
         messages.add_message(request, messages.ERROR, _("Invalid bill"))
-        return redirect('bill_home')
+        return bill_home(request)
 
     context = {'menu_bills': True, }
     context['bill_id'] = bill_id
@@ -722,7 +719,7 @@ def amount_payment_del(request):
     :param HttpRequest request:
     """
     amount_payment_zero(request)
-    return redirect("amount_payment")
+    return amount_payment(request)
 
 
 @login_required
@@ -731,7 +728,7 @@ def amount_payment_right(request):
     :param HttpRequest request:
     """
     request.session['is_left'] = False
-    return redirect("amount_payment")
+    return amount_payment(request)
 
 
 @login_required
@@ -763,7 +760,7 @@ def amount_payment_add(request, number):
             request.session['left'] = tmp[-4:]
         else:
             request.session['right'] = tmp[-2:]
-    return redirect("amount_payment")
+    return amount_payment(request)
 
 
 @login_required
@@ -775,7 +772,7 @@ def type_payment(request, bill_id, type_id):
     """
     type_payment = get_object_or_404(PaiementType, pk=type_id)
     request.session['type_selected'] = type_payment
-    return redirect('prepare_payment', bill_id)
+    return prepare_payment(request, bill_id)
 
 
 @login_required
@@ -791,9 +788,7 @@ def payment_count(request, bill_id, number):
         request.session['tickets_count'] = int(number)
     except:
         messages.add_message(request, messages.ERROR, _("Invalid number"))
-        return redirect('prepare_payment', bill_id)
-    else:
-        return redirect('prepare_payment', bill_id)
+    return prepare_payment(request, bill_id)
 
 
 @login_required
@@ -806,15 +801,15 @@ def save_payment(request, bill_id):
     if bill.in_use_by != request.user:
         messages.add_message(request, messages.ERROR, "%s %s" % (
                              _("Bill is being edited by"), request.user))
-        return redirect('bill_view', bill.id)
+        return bill_view(request, bill.id)
     if request.session.get('type_selected', False):
         type_payment = request.session['type_selected']
     else:
         messages.add_message(request, messages.ERROR, _("Invalid payment"))
-        return redirect('prepare_payment', bill_id)
+        return prepare_payment(request, bill_id)
     if not isinstance(type_payment, type(PaiementType())):
         messages.add_message(request, messages.ERROR, _("Invalid payment"))
-        return redirect('prepare_payment', bill_id)
+        return prepare_payment(request, bill_id)
     left = request.session.get('left', "0")
     right = request.session.get('right', "0")
     montant = "%s.%s" % (left, right)
@@ -824,17 +819,17 @@ def save_payment(request, bill_id):
             result = bill.add_payment(type_payment, count, montant)
         except:
             messages.add_message(request, messages.ERROR, _("Invalid payment"))
-            return redirect('prepare_payment', bill_id)
+            return prepare_payment(request, bill_id)
     else:
         try:
             result = bill.add_payment(type_payment, montant)
         except:
             messages.add_message(request, messages.ERROR, _("Invalid payment"))
-            return redirect('prepare_payment', bill_id)
+            return prepare_payment(request, bill_id)
     if not result:
         messages.add_message(request, messages.ERROR,
                              _("Payment could not be saved"))
-        return redirect('prepare_payment', bill_id)
+        return prepare_payment(request, bill_id)
     cleanup_payment(request)
     if bill.est_soldee():
         messages.add_message(request, messages.SUCCESS,
@@ -843,9 +838,9 @@ def save_payment(request, bill_id):
 #        if "bill_in_use" in request.session.keys():
 #            request.session.pop("bill_in_use")
         remove_edition(request)
-        return redirect('bill_home')
+        return bill_home(request)
     else:
-        return redirect('prepare_payment', bill_id)
+        return prepare_payment(request, bill_id)
 
 
 def init_montant(request, montant):
@@ -895,12 +890,12 @@ def prepare_payment(request, bill_id):
     bill = get_object_or_404(Facture, pk=bill_id)
     if bill.est_soldee():
         messages.add_message(request, messages.ERROR, _("Nothing to pay"))
-        return redirect('bill_view', bill.id)
+        return bill_view(request, bill.id)
     # on nettoie la variable
     if 'is_left' in request.session.keys():
         request.session.pop('is_left')
     if not set_edition_status(request, bill):
-        return redirect('bill_view', bill.id)
+        return bill_view(request, bill.id)
     context = {'menu_bills': True, 'facture': bill}
     context['bill_id'] = bill_id
     request.session['bill_id'] = bill_id
