@@ -22,7 +22,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 
@@ -595,10 +595,9 @@ def bill_view(request, bill_id):
 
 @login_required
 def bill_delete(request, bill_id):
-    """
+    """Delete a bill.
     :param HttpRequest request:
-    :param bill_id: a bill
-    :type bill_id: Facture
+    :param bill_id: a Facture()
     """
     order = get_object_or_404(Facture, pk=bill_id)
     context = {'menu_bills': True, 'facture': order}
@@ -619,10 +618,9 @@ def bill_delete(request, bill_id):
                 order.delete()
                 messages.add_message(request, messages.SUCCESS,
                                      _("Invoice deleted"))
-                return bill_home(request)
+                return redirect("bill_home")
             else:
                 return bill_view(request, bill_id)
-        return bill_home(request)
 
 
 @login_required
