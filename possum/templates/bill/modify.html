@@ -41,25 +41,36 @@
 <div class="col-sm-9">
     <div class="row">
         <ul class="list-unstyled">
-            <!--div class="col-sm-4">
-                    <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle possum-base"
-                    data-toggle="dropdown" id="dropdownMenu"
-                    aria-haspopup="true" aria-expanded="false">
-                    {% trans "Count:" %} {{count}}
-                    <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                <li><a href="{% url 'bill_set_number' bill.id 1 %}">1</a></li>
-                <li><a href="{% url 'bill_set_number' bill.id 2 %}">2</a></li>
-                <li><a href="{% url 'bill_set_number' bill.id 3 %}">3</a></li>
-                <li><a href="{% url 'bill_set_number' bill.id 4 %}">4</a></li>
-                <li><a href="{% url 'bill_set_number' bill.id 5 %}">5</a></li>
-                <li><a href="{% url 'bill_set_number' bill.id 6 %}">6</a></li>
-                <li><a href="{% url 'bill_set_number' bill.id 7 %}">7</a></li>
-            </ul>
-        </div>
-    </div-->
+            <div class="col-xs-2">
+                <a href="{% url 'bill_set_number' bill.id 1 %}">
+                    <li class="possum-base {% if count == 1 %}alert-success{% endif %}">
+                    1</li></a>
+            </div>
+            <div class="col-xs-2">
+                <a href="{% url 'bill_set_number' bill.id 2 %}">
+                    <li class="possum-base {% if count == 2 %}alert-success{% endif %}">
+                    2</li></a>
+            </div>
+            <div class="col-xs-2">
+                <a href="{% url 'bill_set_number' bill.id 3 %}">
+                    <li class="possum-base {% if count == 3 %}alert-success{% endif %}">
+                    3</li></a>
+            </div>
+            <div class="col-xs-2">
+                <a href="{% url 'bill_set_number' bill.id 4 %}">
+                    <li class="possum-base {% if count == 4 %}alert-success{% endif %}">
+                    4</li></a>
+            </div>
+            <div class="col-xs-2">
+                <a href="{% url 'bill_set_number' bill.id 5 %}">
+                    <li class="possum-base {% if count == 5 %}alert-success{% endif %}">
+                    5</li></a>
+            </div>
+            <div class="col-xs-2">
+                <a href="{% url 'bill_set_number' bill.id 6 %}">
+                    <li class="possum-base {% if count == 6 %}alert-success{% endif %}">
+                    6</li></a>
+            </div>
                 {% for category in categories %}
                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
                 <li class="possum-base cat_{{category.id}}" id="{{category.id}}"
