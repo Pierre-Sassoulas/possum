@@ -5,6 +5,6 @@
 
 <form action="{% url 'shutdown' %}" method="post">
     {% csrf_token %}
-    <button type="button" class="btn btn-danger pull-right">{% trans "Shutdown" %}</button>
+    <button type="submit" class="btn btn-danger pull-right">{% trans "Shutdown" %}</button>
 </form>
 {% endblock %}
