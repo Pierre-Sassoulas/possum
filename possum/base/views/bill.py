@@ -832,11 +832,8 @@ def save_payment(request, bill_id):
     if bill.est_soldee():
         messages.add_message(request, messages.SUCCESS,
                              _("This invoice has been ended"))
-#        bill.used_by()
-#        if "bill_in_use" in request.session.keys():
-#            request.session.pop("bill_in_use")
         remove_edition(request)
-        return bill_home(request)
+        return redirect("bill_home")
     else:
         return prepare_payment(request, bill_id)
 
