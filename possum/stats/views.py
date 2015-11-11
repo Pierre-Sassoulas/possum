@@ -215,7 +215,6 @@ def print_msg(request, msg):
                              _("No 'manager' printer available"))
 
 
-@user_passes_test(check_admin)
 def get_value(context, key):
     """Get value or give a default one
     """
@@ -225,7 +224,6 @@ def get_value(context, key):
         return "0.00\n"
 
 
-@user_passes_test(check_admin)
 def prepare_full_output(context):
     """Prepare full output
     """
@@ -266,7 +264,6 @@ Nb factures: """
     return msg
 
 
-@user_passes_test(check_admin)
 def prepare_vats_output(context):
     """Prepare VATS output
     """
