@@ -57,7 +57,6 @@ $(document).ready(function() {
     <input type="radio" name="interval" id="rad4" value="y"
         {% if interval == "y" %}checked{% endif %}>{% trans "year" %}
 </label-->
-<button type="submit" class="btn btn-success pull-right">{% trans "View" %}</button>
 
 <h2>{% trans "Date" %}</h2>
 {% trans "From" %}
@@ -84,6 +83,7 @@ $(document).ready(function() {
     </label>
     {% endfor %}
 </div>
+<button type="submit" class="btn btn-success pull-right">{% trans "View" %}</button>
 </form>
 
 <script type="text/javascript">
