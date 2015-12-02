@@ -66,7 +66,7 @@ class Command(BaseCommand):
             for stat in old_stats.filter(interval="w"):
                 date = get_date(stat.year, 1, 1)
                 if stat.week > 0:
-                    date = date + datetime.timedelta(days=(stat.week-1)*7)
+                    date = date + datetime.timedelta(days=(stat.week - 1) * 7)
                 stat.date = get_week(date)
                 stat.save()
             self.stdout.write("Update 0.5 to 0.6 is done")

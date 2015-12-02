@@ -12,19 +12,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name='facture',
-            options={'get_latest_by': 'id'},
-        ),
-        migrations.RemoveField(
-            model_name='produitvendu',
-            name='cuisson',
-        ),
-        migrations.AddField(
-            model_name='produitvendu',
-            name='cooking',
-            field=models.SmallIntegerField(default=1, choices=[(0, b'Bleu'), (1, b'Saignant'), (2, b'A point'), (3, b'Bien cuit')]),
-        ),
-        migrations.DeleteModel(
-            name='Cuisson',
-        ),
-    ]
+            name='facture', options={
+                'get_latest_by': 'id'}, ), migrations.RemoveField(
+            model_name='produitvendu', name='cuisson', ), migrations.AddField(
+                    model_name='produitvendu', name='cooking', field=models.SmallIntegerField(
+                        default=1, choices=[
+                            (0, b'Bleu'), (1, b'Saignant'), (2, b'A point'), (3, b'Bien cuit')]), ), migrations.DeleteModel(
+            name='Cuisson', ), ]

@@ -317,7 +317,7 @@ def update_day(date):
     end = date + datetime.timedelta(days=1)
     bills = Facture.objects.filter(date_creation__gte=date,
                                    date_creation__lt=end)\
-                           .exclude(saved_in_stats=True)
+        .exclude(saved_in_stats=True)
     data = {}
     count = 0
     LOG.debug("[%s] %d bills to update" % (date, bills.count()))

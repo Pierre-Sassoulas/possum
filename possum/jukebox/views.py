@@ -74,7 +74,7 @@ def home(request):
         try:
             context["volume"] = status["volume"]
             elapsed, time = status['time'].split(":")
-            context["pourcent"] = int(int(elapsed)*100 / int(time))
+            context["pourcent"] = int(int(elapsed) * 100 / int(time))
             infos = settings.MPD_CLIENT.currentsong()
             context["title"] = infos['title']
             context["artist"] = infos['artist']
