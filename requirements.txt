@@ -16,7 +16,7 @@ pyflakes==0.8.1
 Pygments==2.0.1
 pygraphviz==1.3rc2
 pylint==1.3.1
-python-memcached==1.53
+python-memcached==1.57
 python-mpd2==0.5.3
 pytz==2014.9
 PyYAML==3.11
@@ -27,3 +27,4 @@ sphinx-bootstrap-theme==0.4.3
 Sphinx==1.3b1
 sqlparse==0.1.13
 Werkzeug==0.9.6
+django-compressor==1.5

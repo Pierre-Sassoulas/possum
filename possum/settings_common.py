@@ -159,6 +159,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -207,10 +208,7 @@ INSTALLED_APPS = (
     'possum.stats',
     'possum.jukebox',
     'django_extensions',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'compressor',
 )
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"

@@ -43,7 +43,9 @@
             <ul class="list-unstyled">
                 <li class="possum-base">
                     <div class="btn-group btn-group-justified" role="group">
-                        <p class="btn btn-default" role="button">{{facture}}</p>
+                        <a class="btn btn-default" 
+                            href="{% url 'table_set' facture.id 42 %}">
+                                {{facture}}</a>
                         <a class="btn btn-default alert-danger"
                             href="{% url 'bill_delete' facture.id %}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
