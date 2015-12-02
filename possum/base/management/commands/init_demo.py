@@ -46,6 +46,7 @@ def create_users():
         user.set_password(username)
         user.save()
 
+
 def create_payment():
     # Type de paiements
     PaiementType(nom='AMEX', fixed_value=False).save()
@@ -63,6 +64,7 @@ def create_payment():
     # Default PaymentType to select by default on the payment page
     id_type_paiement = PaiementType.objects.get(nom="Espece").id
     Config(key="default_type_payment", value=id_type_paiement).save()
+
 
 def create_tables():
     # Tables

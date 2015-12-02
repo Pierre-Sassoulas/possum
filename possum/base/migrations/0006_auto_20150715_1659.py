@@ -12,8 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='produitvendu',
-            name='cooking',
-            field=models.SmallIntegerField(default=42, choices=[(0, b'Bleu'), (1, b'Saignant'), (2, b'A point'), (3, b'Bien cuit')]),
-        ),
-    ]
+            model_name='produitvendu', name='cooking', field=models.SmallIntegerField(
+                default=42, choices=[
+                    (0, b'Bleu'), (1, b'Saignant'), (2, b'A point'), (3, b'Bien cuit')]), ), ]

@@ -62,5 +62,6 @@ class Command(BaseCommand):
                 mn = diff.seconds / 60
                 sec = diff.seconds % 60
                 time = "%dm %ds" % (mn, sec)
-            self.stdout.write("[%s] updated %d bills in %s" % (year,
-                              bills.count(), time))
+            self.stdout.write(
+                "[%s] updated %d bills in %s" %
+                (year, bills.count(), time))
