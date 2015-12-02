@@ -142,7 +142,7 @@ def categories_delete(request, category_id):
                                                               month=s.month,
                                                               week=s.week,
                                                               day=s.day,
-                                                           interval=s.interval)
+                                                              interval=s.interval)
                     new.add_value(s.value)
                     s.delete()
             LOG.info("copy products %s" % report_info)
@@ -153,8 +153,8 @@ def categories_delete(request, category_id):
                 new.save()
         if products_list.count() == 0:
             context['current_cat'].delete()
-            LOG.info("[%s] category [%s] deleted" % (request.user.username,
-                     context['current_cat'].nom))
+            LOG.info("[%s] category [%s] deleted" %
+                     (request.user.username, context['current_cat'].nom))
             return redirect('categories')
         else:
             messages.add_message(request, messages.ERROR,
@@ -414,7 +414,7 @@ def categories_set_name(request, category_id):
     cat = get_object_or_404(Categorie, pk=category_id)
     if name != cat.nom:
         LOG.info("[%s] new categorie name: [%s] > [%s]" % (
-                    request.user.username, cat.nom, name))
+            request.user.username, cat.nom, name))
         cat.nom = name
     try:
         cat.save()
@@ -422,7 +422,7 @@ def categories_set_name(request, category_id):
         messages.add_message(request, messages.ERROR,
                              _("Changes could not be saved"))
         LOG.warning("[%s] save failed for [%s]" % (
-                       request.user.username, cat.nom))
+            request.user.username, cat.nom))
     return redirect('categories_view', category_id)
 
 

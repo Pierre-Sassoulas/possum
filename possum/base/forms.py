@@ -65,8 +65,8 @@ class NoteForm(forms.ModelForm):
         model = Note
         fields = "__all__"
         widgets = {'message': forms.TextInput(attrs={
-                                                'placeholder': _('New note'),
-                                                'class': "form-control"})}
+            'placeholder': _('New note'),
+            'class': "form-control"})}
 
 
 class OptionForm(forms.ModelForm):

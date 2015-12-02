@@ -74,6 +74,7 @@ CRITICAL = 1800
 WARNING = 1200
 INFO = 600
 
+
 def create_secret_key():
     ''' Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then
     generate a random SECRET_KEY and save it into our SECRET_FILE for future
@@ -242,7 +243,7 @@ LOGGING = {
             'filters': ['require_debug_true'],
         },
         'file': {
-#            'level': 'DEBUG',
+            #            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': normpath(join(DJANGO_ROOT, 'possum.log')),
             'formatter': 'default',
@@ -274,7 +275,7 @@ LOGGING = {
             'propagate': False,
         },
         'possum': {
-#            'handlers': ['mail_admins', 'file', 'mail_bugwatch', 'console'],
+            #            'handlers': ['mail_admins', 'file', 'mail_bugwatch', 'console'],
             'handlers': ['mail_admins', 'file', 'mail_bugwatch'],
             'level': 'DEBUG',
         }
