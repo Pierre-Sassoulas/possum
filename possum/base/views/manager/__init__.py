@@ -18,8 +18,6 @@
 #    along with POSSUM.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import urllib2
-
 from django.contrib import messages
 from django.conf import settings
 from django.shortcuts import render, redirect
@@ -55,6 +53,10 @@ def check_new_version(request):
     :param HttpRequest request:
     :return rtype: HttpResponse
     '''
+    try:
+        import urllib.request as urllib2
+    except ImportError:
+        import urllib2
     try:
         req = urllib2.Request('http://last.possum-software.org/', headers={
                               'User-Agent': 'Possum/' + settings.POSSUM_VERSION
