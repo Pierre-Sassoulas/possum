@@ -11,7 +11,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">{% trans "Products" %}</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="height:340px;overflow-y:scroll">
                <ul class="list-unstyled">
     {% for sold in products_sold %}
         {% if sold.count > 1 %}
@@ -43,7 +43,7 @@
             <ul class="list-unstyled">
                 <li class="possum-base">
                     <div class="btn-group btn-group-justified" role="group">
-                        <a class="btn btn-default" 
+                        <a class="btn btn-default"
                             href="{% url 'table_set' facture.id 42 %}">
                                 {{facture}}</a>
                         <a class="btn btn-default alert-danger"
