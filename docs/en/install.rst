@@ -111,7 +111,7 @@ You can generate documentation in HTML with the following command:
 
 It will be available here: **/opt/possum-software/docs/en/_build/html/**.
 Otherwise it is also available on the official website: 
-`Documentation <http://www.possum-software.org/docs.html>`_.
+`Documentation <http://www.possum-software.org/>`_.
 
 
 Web server configuration
