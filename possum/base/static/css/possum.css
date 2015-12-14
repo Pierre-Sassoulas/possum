@@ -1,0 +1,101 @@
+ul.possum {
+    list-style:none; /* inutile pour safari et firefox, mais pas pour IE */
+}
+li.possum {
+    float:left; /* c'est cette balise qui fait l'effet tableau*/
+    width:200px;
+    height:40px;
+    background:#afbbcc;
+    margin:5px;
+    overflow:hidden; /* permet de limiter l'affichage du contenu au dimension du contenant */
+    padding:5px;
+    text-align:center;
+    border-radius: 10px; /* bord arrondi */
+}
+li.possum-base {
+    margin:5px;
+    padding:5px;
+    text-align:center;
+    border-radius: 10px; /* bord arrondi */
+}
+li.possum-bg {
+    background:#afbbcc;
+}
+li.critical {
+    background-color: #FF0000;
+}
+li.disabled {
+    background-color: #FF0000;
+}
+li.enabled {
+    background-color: #00FF00;
+}
+li.warning {
+    background-color: #f8bd30;
+}
+li.selected {
+//    background-color: #00FF00;
+    border: 1px solid #000;
+    padding: 4px;
+}
+#lcd_save li {
+    width:220px;
+    height:40px;
+    margin:0px;
+    padding:0px;
+}
+#lcd li {
+    width:30px;
+    height:40px;
+    background:#000;
+    margin:0px;
+    padding:0px;
+}
+#calc li {
+    width:120px;
+    height:40px;
+}
+#numbers li {
+    width:40px;
+    height:40px;
+}
+/* well component without background, to use alert-danger, ... */
+.well-sansbg {
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    margin-bottom: 20px;
+    min-height: 20px;
+    padding: 19px;
+}
+li.surtaxe {
+    background-color: #f8bd30;
+}
+#printer_width li {
+    width:30px;
+    height:30px;
+}
+#couverts li {
+    width:30px;
+    height:30px;
+}
+#numbers li {
+    width:30px;
+    height:20px;
+}
+#perms li {
+    width:250px;
+    height:80px;
+}
+/* Cooking colors */
+.cooking_0 {background:#8CC6D7;}
+.cooking_1 {background:#DB0B32;}
+.cooking_2 {background:#C44C51;}
+.cooking_3 {background:#B78178;}
+/* no blue for link */
+a, a:visited, a:hover { color: black; }
+body{padding-top:45px;}
+.navbar{min-height:20px; height:40px;}
+/* navbar selected */
+.gris {background-color: #e7e7e7; height:40px;}
+/*.container {padding-top:10px;}*/
