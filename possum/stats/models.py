@@ -387,7 +387,7 @@ class Stat(models.Model):
     class Meta:
         ordering = ['interval', 'date', 'key']
 
-    def __unicode__(self):
+    def __str__(self):
         """Representing the date in ISO 8601 format, ‘YYYY-MM-DD’
         """
         date = self.date.isoformat()

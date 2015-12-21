@@ -58,7 +58,7 @@ class ProduitVendu(models.Model):
     class Meta:
         ordering = ['produit', ]
 
-    def __unicode__(self):
+    def __str__(self):
         """ Different display if we have a menu or not
         """
         if self.notes.count():

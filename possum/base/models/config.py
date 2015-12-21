@@ -33,7 +33,7 @@ class Config(models.Model):
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=64, default="")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.key
 
     def __cmp__(self, other):

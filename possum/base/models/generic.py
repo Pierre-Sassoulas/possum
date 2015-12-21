@@ -25,7 +25,7 @@ from django.db import models
 class Nom(models.Model):
     nom = models.CharField(max_length=60)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nom
 
     def __cmp__(self, other):

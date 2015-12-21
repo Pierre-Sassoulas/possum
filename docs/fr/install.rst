@@ -34,7 +34,8 @@ Nous allons prendre la première option, et c'est l'option recommandée.
 Prérequis
 ---------
 
-Possum nécessite l'installation de quelques paquets.
+Possum nécessite l'installation de quelques paquets. Le prérequis de départ
+est Python 3.4.
 
 Pour un système Debian/Ubuntu:
 

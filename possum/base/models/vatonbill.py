@@ -36,8 +36,5 @@ class VATOnBill(models.Model):
         '''
         return cmp(self.vat.name, other.vat.name)
 
-    def __unicode__(self):
-        '''
-        :return: Unicode
-        '''
+    def __str__(self):
         return "%s: %s" % (self.vat.name, self.total)

@@ -81,8 +81,8 @@ class Produit(Nom):
     class Meta:
         ordering = ['categorie', 'nom']
 
-    def __unicode__(self):
-        return u"%s" % self.nom
+    def __str__(self):
+        return "%s" % self.nom
 
     def est_un_menu(self):
         """

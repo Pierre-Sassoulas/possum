@@ -287,7 +287,8 @@ function graph_models {
     enter_virtualenv
     for app in $APPS
     do
-        ./manage.py graph_models --output=docs/images/models-${app}.png -g ${app}
+        ./manage.py graph_models -g ${app} > docs/images/models-${app}.dot
+        dot -Tpng docs/images/models-${app}.dot > docs/images/models-${app}.png
         echo "[docs/images/models-${app}.png] updated"
     done
 }

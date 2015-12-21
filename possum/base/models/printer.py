@@ -63,7 +63,7 @@ class Printer(models.Model):
     billing = models.BooleanField(default=False)
     manager = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_resume(self):

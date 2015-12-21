@@ -37,5 +37,5 @@ class Option(models.Model):
         '''
         return cmp(self.name, other.name)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

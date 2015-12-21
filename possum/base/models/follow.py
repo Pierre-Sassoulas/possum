@@ -41,5 +41,5 @@ class Follow(models.Model):
     def time(self):
         return self.date.strftime("%H:%M")
 
-    def __unicode__(self):
+    def __str__(self):
         return "[%s] %s" % (self.date.strftime("%H:%M"), self.category.nom)
