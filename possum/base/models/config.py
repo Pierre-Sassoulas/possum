@@ -36,13 +36,6 @@ class Config(models.Model):
     def __str__(self):
         return self.key
 
-    def __cmp__(self, other):
-        '''
-        :param Config other: A config to be compared to this one.
-        :return: Boolean
-        '''
-        return cmp(self.key, other.key)
-
     class Meta:
         ordering = ['key']
 

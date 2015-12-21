@@ -87,16 +87,6 @@ class Facture(models.Model):
             date = "--/--/---- --:--"
         return "%s" % date
 
-#    def __cmp__(self, other):
-#        """
-#        We sort Facture() by date, new Facture first and older after
-#
-#        :param Facture self:
-#        :param Facture other:
-#        :return etype: Boolean
-#        """
-#        return cmp(self.date_creation, other.date_creation)
-
     def get_time(self):
         """Return creation time (hour:minute)
 

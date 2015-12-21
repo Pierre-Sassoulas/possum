@@ -31,11 +31,5 @@ class Option(models.Model):
     class Meta:
         ordering = ['name']
 
-    def __cmp__(self, other):
-        '''
-        :param Option other: An Option to be compared to this one.
-        '''
-        return cmp(self.name, other.name)
-
     def __str__(self):
         return self.name

@@ -66,18 +66,6 @@ class Produit(Nom):
                                        decimal_places=2,
                                        default=0)
 
-    def __cmp__(self, other):
-        '''
-
-        :param other:
-        :type other:
-        :return: Boolean
-        '''
-        if self.categorie == other.categorie:
-            return cmp(self.nom, other.nom)
-        else:
-            return cmp(self.categorie, other.categorie)
-
     class Meta:
         ordering = ['categorie', 'nom']
 

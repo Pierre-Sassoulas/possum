@@ -147,16 +147,6 @@ class ProduitVendu(models.Model):
             LOG.debug("product is not full")
             return False
 
-    def __cmp__(self, other):
-        '''
-        :param ProduitVendu other:
-        :return: boolean
-        '''
-        if self.produit.categorie == other.produit.categorie:
-            return cmp(self.produit.nom, other.produit.nom)
-        else:
-            return cmp(self.produit.categorie, other.produit.categorie)
-
     def est_un_menu(self):
         '''
         On a un menu si on a plus d'un produit.

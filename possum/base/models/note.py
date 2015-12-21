@@ -28,9 +28,3 @@ class Note(models.Model):
 
     class Meta:
         ordering = ['message']
-
-    def __cmp__(self, other):
-        '''
-        :param Note other: A Note to be compared to this one.
-        '''
-        return cmp(self.message, other.message)

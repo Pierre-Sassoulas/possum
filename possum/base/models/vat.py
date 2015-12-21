@@ -36,9 +36,6 @@ class VAT(models.Model):
     def __str__(self):
         return "TVA % 2.2f%%" % self.tax
 
-    def __cmp__(self, other):
-        return cmp(self.name, other.name)
-
     class Meta:
         ordering = ['name']
 

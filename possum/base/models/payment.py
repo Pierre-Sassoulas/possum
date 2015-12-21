@@ -69,6 +69,3 @@ class Paiement(models.Model):
             tmp += " (%d tic. x %.2f%s)" % (self.nb_tickets,
                                              self.valeur_unitaire, _("$"))
         return tmp
-
-    def __cmp__(self, other):
-        return cmp(self.date.date, other.date.date)
