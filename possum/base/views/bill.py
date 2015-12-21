@@ -905,7 +905,7 @@ def prepare_payment(request, bill_id):
     context['left'] = request.session.get('left', "0000")
     context['right'] = request.session.get('right', "00")
     if context['left'] == "0000" and context['right'] == "00":
-        init_montant(request, u"%.2f" % bill.restant_a_payer)
+        init_montant(request, "%.2f" % bill.restant_a_payer)
         context['left'] = request.session.get('left')
         context['right'] = request.session.get('right')
     context['tickets_count'] = request.session.get('tickets_count', 1)

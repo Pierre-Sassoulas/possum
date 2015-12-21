@@ -96,7 +96,7 @@ class Facture(models.Model):
             date = self.date_creation.strftime("%H:%M")
         else:
             date = "--:--"
-        return u"%s" % date
+        return "%s" % date
 
     def used_by(self, user):
         """Mark bill as 'in edition by user', only one

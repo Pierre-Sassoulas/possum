@@ -101,7 +101,7 @@ class Command(BaseCommand):
         vat_onsite = VAT(name="sur place")
         vat_onsite.set_tax("10")
         vat_onsite.save()
-        vat_takeaway = VAT(name=u"à emporter")
+        vat_takeaway = VAT(name="à emporter")
         vat_takeaway.set_tax("7")
         vat_takeaway.save()
 
@@ -205,7 +205,7 @@ class Command(BaseCommand):
                          vat_onsite=vat_onsite,
                          vat_takeaway=vat_takeaway)
         menu.save()
-        entree_plat = Produit(nom=u"Menu Entree/Plat",
+        entree_plat = Produit(nom="Menu Entree/Plat",
                               prix="13.40",
                               choix_cuisson=False,
                               categorie=menu)
