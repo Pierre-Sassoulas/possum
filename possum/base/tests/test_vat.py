@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -22,7 +20,6 @@ from django.test import TestCase
 
 
 class TestsVAT(TestCase):
-
     """name is a symbolic name
     tax is for example '19.6' for 19.6%
     value: is used to minimize operations (example: 0.196

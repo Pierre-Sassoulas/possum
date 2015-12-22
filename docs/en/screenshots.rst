@@ -9,6 +9,14 @@ The demo site is reset every night.
 
 Catch different parts for older versions.
 
+version 0.6
+-----------
+
+.. image:: ../images/screenshots/possum-0_6-accueil.png
+    :scale: 50
+    :alt: page principale
+
+
 version 0.4
 -----------
 

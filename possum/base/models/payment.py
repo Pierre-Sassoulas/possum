@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -46,7 +44,7 @@ class PaiementType(Nom):
         else:
             return None
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nom
 
 
@@ -63,12 +61,9 @@ class Paiement(models.Model):
     class Meta:
         get_latest_by = 'date'
 
-    def __unicode__(self):
-        tmp = u"%s %.2f%s" % (self.type, self.montant, _("$"))
+    def __str__(self):
+        tmp = "%s %.2f%s" % (self.type, self.montant, _("$"))
         if self.type.fixed_value:
-            tmp += u" (%d tic. x %.2f%s)" % (self.nb_tickets,
+            tmp += " (%d tic. x %.2f%s)" % (self.nb_tickets,
                                              self.valeur_unitaire, _("$"))
         return tmp
-
-    def __cmp__(self, other):
-        return cmp(self.date.date, other.date.date)

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -25,15 +23,8 @@ from django.db import models
 class Nom(models.Model):
     nom = models.CharField(max_length=60)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.nom
-
-    def __cmp__(self, other):
-        '''
-        :param Nom other: A Nom to be compared to this one.
-        :return: Boolean
-        '''
-        return cmp(self.nom, other.nom)
 
     class Meta:
         abstract = True
@@ -56,13 +47,6 @@ class Priorite(models.Model):
     class Meta:
         abstract = True
         ordering = ['priorite']
-
-    def __cmp__(self, other):
-        '''
-        :param Priorite other: A Priorite to be compared to this one.
-        :return: Boolean
-        '''
-        return cmp(self.priorite, other.priorite)
 
     def set_less_priority(self, number=1):
         ''' Set a lower priority

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -78,26 +76,14 @@ class Facture(models.Model):
 
     class Meta:
         get_latest_by = 'id'
+        ordering = ["date_creation", "table"]
 
-    def __unicode__(self):
-        '''
-        :return: Unicode for a Facture
-        '''
+    def __str__(self):
         if self.date_creation:
             date = self.date_creation.strftime("%d/%m/%Y %H:%M")
         else:
             date = "--/--/---- --:--"
-        return u"%s" % date
-
-    def __cmp__(self, other):
-        """
-        We sort Facture() by date, new Facture first and older after
-
-        :param Facture self:
-        :param Facture other:
-        :return etype: Boolean
-        """
-        return cmp(self.date_creation, other.date_creation)
+        return "%s" % date
 
     def get_time(self):
         """Return creation time (hour:minute)
@@ -108,7 +94,7 @@ class Facture(models.Model):
             date = self.date_creation.strftime("%H:%M")
         else:
             date = "--:--"
-        return u"%s" % date
+        return "%s" % date
 
     def used_by(self, user):
         """Mark bill as 'in edition by user', only one
@@ -262,11 +248,11 @@ class Facture(models.Model):
         :return: A list of unpaid Facture
         """
         liste = []
-        for i in Facture.objects.exclude(restant_a_payer=0).iterator():
+        for i in Facture.objects.exclude(restant_a_payer=0):
             liste.append(i)
-        for i in Facture.objects.filter(produits__isnull=True).iterator():
+        for i in Facture.objects.filter(produits__isnull=True):
             liste.append(i)
-        liste.sort()
+        # liste.sort()
         return liste
 
     def update(self):
@@ -314,7 +300,7 @@ class Facture(models.Model):
         """Add a product to the bill. If it is the first product, we update
         creation date.
 
-        :param ProduitVendu sold: product to add
+        :param sold: product to add (ProduitVendu)
         """
         if sold.produit.actif:
             if self.produits.count() == 0:

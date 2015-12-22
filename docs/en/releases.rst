@@ -1,6 +1,14 @@
 Release notes
 =============
 
+v0.6.1
+------
+
+Release date: 24/12/2015
+
+* support for Python > 3.2 only
+* tests enhanced
+
 v0.6.0
 ------
 

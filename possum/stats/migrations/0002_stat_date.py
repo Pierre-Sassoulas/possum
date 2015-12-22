@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='stat',
             name='date',
-            field=models.DateField(default=b'1978-03-03'),
+            field=models.DateField(default='1978-03-03'),
             preserve_default=True,
         ),
     ]

@@ -35,7 +35,7 @@ We will use the git version.
 Prerequisites
 -------------
 
-Possum requires the installation of some packages.
+Possum requires the installation of some packages and need at least Python 3.4.
 
 For Debian/Ubuntu:
 

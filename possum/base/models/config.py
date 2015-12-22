@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -33,15 +31,8 @@ class Config(models.Model):
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=64, default="")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.key
-
-    def __cmp__(self, other):
-        '''
-        :param Config other: A config to be compared to this one.
-        :return: Boolean
-        '''
-        return cmp(self.key, other.key)
 
     class Meta:
         ordering = ['key']

@@ -21,7 +21,7 @@ python-mpd2==0.5.3
 pytz==2014.9
 PyYAML==3.11
 simplejson==3.6.5
-six==1.8.0
+six==1.10.0
 snowballstemmer==1.2.0
 sphinx-bootstrap-theme==0.4.3
 Sphinx==1.3b1

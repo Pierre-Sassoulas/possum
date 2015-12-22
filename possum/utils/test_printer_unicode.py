@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
@@ -26,8 +25,8 @@ printer = ""
 filename = "/tmp/test-printer"
 
 fd = open(filename, 'w')
-fd.write(u"test unicode :\n")
-fd.write(u"éàè€ùœç\n")
+fd.write("test unicode :\n")
+fd.write("éàè€ùœç\n")
 fd.close()
 
 if printer:
