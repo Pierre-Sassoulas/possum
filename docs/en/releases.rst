@@ -8,6 +8,7 @@ Release date: 24/12/2015
 
 * support for Python > 3.2 only
 * tests enhanced
+* include JS/CSS
 
 v0.6.0
 ------
