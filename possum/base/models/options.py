@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -31,11 +29,5 @@ class Option(models.Model):
     class Meta:
         ordering = ['name']
 
-    def __cmp__(self, other):
-        '''
-        :param Option other: An Option to be compared to this one.
-        '''
-        return cmp(self.name, other.name)
-
-    def __unicode__(self):
+    def __str__(self):
         return self.name

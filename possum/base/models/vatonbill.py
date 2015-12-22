@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -36,8 +34,5 @@ class VATOnBill(models.Model):
         '''
         return cmp(self.vat.name, other.vat.name)
 
-    def __unicode__(self):
-        '''
-        :return: Unicode
-        '''
+    def __str__(self):
         return "%s: %s" % (self.vat.name, self.total)

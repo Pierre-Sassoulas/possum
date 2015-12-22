@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -46,18 +44,6 @@ class Categorie(Nom, Priorite):
     vat_takeaway = models.ForeignKey(VAT, null=True, blank=True,
                                      related_name="categorie_vat_takeaway")
 
-    def __cmp__(self, other):
-        ''' Classement par priorite_facture (plus la valeur est petite,
-        plus elle est prioritaire), puis par nom_ihm en cas d'égalité.
-
-        :param other:
-        :type other:
-        '''
-        if self.priorite == other.priorite:
-            return cmp(self.nom, other.nom)
-        else:
-            return cmp(self.priorite, other.priorite)
-
     def set_vat_takeaway(self, vat):
         '''
         TODO
@@ -86,6 +72,12 @@ class Categorie(Nom, Priorite):
         '''
         Config().set_carte_changed()
         super(Categorie, self).save(force_insert=force_insert, using=using)
+
+    def __lt__(self, other):
+        if self.priorite == other.priorite:
+            return (self.nom < other.nom)
+        else:
+            return (self.priorite < other.priorite)
 
     class Meta:
         ordering = ['priorite', 'nom']

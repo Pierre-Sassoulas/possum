@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -66,23 +64,11 @@ class Produit(Nom):
                                        decimal_places=2,
                                        default=0)
 
-    def __cmp__(self, other):
-        '''
-
-        :param other:
-        :type other:
-        :return: Boolean
-        '''
-        if self.categorie == other.categorie:
-            return cmp(self.nom, other.nom)
-        else:
-            return cmp(self.categorie, other.categorie)
-
     class Meta:
         ordering = ['categorie', 'nom']
 
-    def __unicode__(self):
-        return u"%s" % self.nom
+    def __str__(self):
+        return "%s" % self.nom
 
     def est_un_menu(self):
         """

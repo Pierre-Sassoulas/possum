@@ -1,13 +1,4 @@
 #!/bin/bash
-JQUERY="jquery-2.1.3.min.js"
-HIGHCHARTS="Highcharts-3.0.6.zip"
-HIGHDIR=${HIGHCHARTS/.zip/}
-BOOTSTRAP_VERSION="3.3.4"
-BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
-BOOTDIR=${BOOTSTRAP/.zip/}
-DATEPICKER_VERSION="1.3.1"
-DATEPICKER_DIR=bootstrap-datepicker-${DATEPICKER_VERSION}
-DATEPICKER=${DATEPICKER_DIR}.zip
 STATIC="possum/base/static/"
 APPS="base stats"
 
@@ -44,6 +35,7 @@ For developpers:
                           file settings.py
     sh                 :  run ./manage.py shell_plus in virtualenv
     tests              :  execute all tests
+    update_js          :  update all js/css stuff (jquery, bootstrap, ...)
     utests             :  execute only unit tests and coverage
 
     In case of change in models, execute these three operations in the order:
@@ -132,6 +124,15 @@ function utests {
 
 function update_js {
     # update javascript part
+    JQUERY="jquery-2.1.4.min.js"
+    HIGHCHARTS="Highcharts-3.0.6.zip"
+    HIGHDIR=${HIGHCHARTS/.zip/}
+    BOOTSTRAP_VERSION="3.3.6"
+    BOOTSTRAP="bootstrap-${BOOTSTRAP_VERSION}-dist.zip"
+    BOOTDIR=${BOOTSTRAP/.zip/}
+    DATEPICKER_VERSION="1.3.1"
+    DATEPICKER_DIR=bootstrap-datepicker-${DATEPICKER_VERSION}
+    DATEPICKER=${DATEPICKER_DIR}.zip
     # JQuery
     if [ ! -e ${STATIC}${JQUERY} ]
     then
@@ -184,18 +185,16 @@ function update_js {
         echo "Unzip BootStrap Date-Picker..."
         pushd $STATIC >/dev/null
         unzip ${DATEPICKER}
-#        for dir in js css
-#        do
-#            if [ -e ${dir} ]
-#            then
-#                # old version
-#                rm -rf ${dir}
-#            fi
-#            cp -a bootstrap-datepicker-${DATEPICKER_VERSION}/${dir} ${dir}
-#        done
         popd >/dev/null
     fi
-    enter_virtualenv
+    pushd $STATIC
+    cp jquery-2.1.4.min.js js/jquery.min.js
+    cp bootstrap-3.3.6-dist/css/bootstrap.min.css css/
+    cp bootstrap-datepicker-1.3.1/css/datepicker3.css css/
+    cp bootstrap-3.3.6-dist/js/bootstrap.min.js js/
+    cp bootstrap-datepicker-1.3.1/js/bootstrap-datepicker.js js/
+    cp bootstrap-datepicker-1.3.1/js/locales/bootstrap-datepicker.fr.js js/
+    popd
     must_succeed ./manage.py collectstatic --noinput --no-post-process
 }
 
@@ -208,8 +207,31 @@ function update {
         echo "And you must have some packages installed:"
         echo "You must read documentation :)"
         echo
-        # For the moment, we stay with python2.
-        virtualenv --no-site-packages --python=python2 env
+        if [ -e "/usr/bin/pyvenv-3.4" ]
+        then
+            PYENV="/usr/bin/pyvenv-3.4"
+        else
+            if [ -e "/usr/bin/pyvenv-3.3" ]
+            then
+                PYENV="/usr/bin/pyvenv-3.3"
+            else
+                if [ -e "/usr/bin/pyvenv" ]
+                then
+                    PYENV="/usr/bin/pyvenv"
+                else
+                    # we stay with python2, no python3 available
+                    # virtualenv --no-site-packages --python=python2 env
+                    echo "Update to python 3, it is available since 03/12/2008 !"
+                    exit
+                fi
+            fi
+        fi
+        #$PYENV --without-pip env
+        if [ ! -z "$PYENV" ]
+        then
+            echo "python3 found, great!"
+            $PYENV env
+        fi
     fi
     enter_virtualenv
     # before all, we must have last release of Django
@@ -244,7 +266,7 @@ EOF
     must_succeed ./manage.py update_css
     cp possum/static/categories.css possum/base/static/categories.css
     must_succeed ./manage.py update_stats_to_0_6
-    update_js
+    must_succeed ./manage.py collectstatic --noinput --no-post-process
     # must_succeed ./manage.py compress
 }
 
@@ -265,7 +287,8 @@ function graph_models {
     enter_virtualenv
     for app in $APPS
     do
-        ./manage.py graph_models --output=docs/images/models-${app}.png -g ${app}
+        ./manage.py graph_models -g ${app} > docs/images/models-${app}.dot
+        dot -Tpng docs/images/models-${app}.dot > docs/images/models-${app}.png
         echo "[docs/images/models-${app}.png] updated"
     done
 }
@@ -389,6 +412,9 @@ translation)
     enter_virtualenv
     must_succeed ./manage.py makemessages -i env --no-obsolete -l fr -l en -l ru
     must_succeed ./manage.py compilemessages
+    ;;
+update_js)
+    update_js
     ;;
 *)
     my_help

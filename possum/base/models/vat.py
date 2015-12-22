@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -33,11 +31,8 @@ class VAT(models.Model):
     tax = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     value = models.DecimalField(max_digits=6, decimal_places=4, default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return "TVA % 2.2f%%" % self.tax
-
-    def __cmp__(self, other):
-        return cmp(self.name, other.name)
 
     class Meta:
         ordering = ['name']

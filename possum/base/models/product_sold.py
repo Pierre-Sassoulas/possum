@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -58,7 +56,7 @@ class ProduitVendu(models.Model):
     class Meta:
         ordering = ['produit', ]
 
-    def __unicode__(self):
+    def __str__(self):
         """ Different display if we have a menu or not
         """
         if self.notes.count():
@@ -81,6 +79,12 @@ class ProduitVendu(models.Model):
             # cas d'un Produit simple
             tmp += " %s" % self.get_cooking()
         return tmp
+
+    def __lt__(self, other):
+        if self.produit.categorie == other.produit.categorie:
+            return (self.produit.nom < other.produit.nom)
+        else:
+            return (self.produit.categorie < other.produit.categorie)
 
     def is_cooking_set(self):
         """
@@ -146,16 +150,6 @@ class ProduitVendu(models.Model):
         else:
             LOG.debug("product is not full")
             return False
-
-    def __cmp__(self, other):
-        '''
-        :param ProduitVendu other:
-        :return: boolean
-        '''
-        if self.produit.categorie == other.produit.categorie:
-            return cmp(self.produit.nom, other.produit.nom)
-        else:
-            return cmp(self.produit.categorie, other.produit.categorie)
 
     def est_un_menu(self):
         '''

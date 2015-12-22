@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
@@ -73,11 +72,11 @@ def create_tables():
     Table(nom="T--", zone=z).save()
     z = Zone(nom='Rez de chaussee', surtaxe=False)
     z.save()
-    for i in xrange(1, 15):
+    for i in range(1, 15):
         Table(nom="T%02d" % i, zone=z).save()
     z = Zone(nom='Terrasse', surtaxe=True)
     z.save()
-    for i in xrange(15, 26):
+    for i in range(15, 26):
         Table(nom="T%02d" % i, zone=z).save()
 
 
@@ -101,7 +100,7 @@ class Command(BaseCommand):
         vat_onsite = VAT(name="sur place")
         vat_onsite.set_tax("10")
         vat_onsite.save()
-        vat_takeaway = VAT(name=u"à emporter")
+        vat_takeaway = VAT(name="à emporter")
         vat_takeaway.set_tax("7")
         vat_takeaway.save()
 
@@ -205,7 +204,7 @@ class Command(BaseCommand):
                          vat_onsite=vat_onsite,
                          vat_takeaway=vat_takeaway)
         menu.save()
-        entree_plat = Produit(nom=u"Menu Entree/Plat",
+        entree_plat = Produit(nom="Menu Entree/Plat",
                               prix="13.40",
                               choix_cuisson=False,
                               categorie=menu)
@@ -237,7 +236,7 @@ class Command(BaseCommand):
             else:
                 produits = produits_bar
             nb_produits = random.randint(1, 6)
-            for i in xrange(nb_produits):
+            for i in range(nb_produits):
                 # random number of products
                 nb_max = len(produits) - 1
                 produit = produits[random.randint(0, nb_max)]
@@ -262,15 +261,15 @@ class Command(BaseCommand):
         # on ajoute des données pour avoir des jolies graphiques de
         # démonstrations
         now = datetime.datetime.now()
-        for month in xrange(1, 13):
-            for i in xrange(20):
+        for month in range(1, 13):
+            for i in range(20):
                 day = random.randint(1, 28)
                 bill = create_bill()
                 bill.date_creation = datetime.datetime(now.year, month, day)
                 bill.save()
 
         # Création d'une dizaine de facture
-        for i in xrange(15):
+        for i in range(15):
             bill = create_bill(finish=False)
             if i % 2:
                 bill.update_kitchen()

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -63,7 +61,7 @@ class Printer(models.Model):
     billing = models.BooleanField(default=False)
     manager = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_resume(self):

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -28,9 +26,3 @@ class Note(models.Model):
 
     class Meta:
         ordering = ['message']
-
-    def __cmp__(self, other):
-        '''
-        :param Note other: A Note to be compared to this one.
-        '''
-        return cmp(self.message, other.message)

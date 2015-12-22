@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -28,8 +26,7 @@ from django.contrib.auth.decorators import login_required
 
 from possum.base.forms import NoteForm
 from possum.base.models import (Categorie, Config, Facture, Note, Option,
-                                PaiementType, Paiement, Printer, Produit,
-                                ProduitVendu, Zone, Table)
+    PaiementType, Paiement, Printer, Produit, ProduitVendu, Zone, Table)
 from possum.base.views import remove_edition, cleanup_payment
 
 
@@ -905,7 +902,7 @@ def prepare_payment(request, bill_id):
     context['left'] = request.session.get('left', "0000")
     context['right'] = request.session.get('right', "00")
     if context['left'] == "0000" and context['right'] == "00":
-        init_montant(request, u"%.2f" % bill.restant_a_payer)
+        init_montant(request, "%.2f" % bill.restant_a_payer)
         context['left'] = request.session.get('left')
         context['right'] = request.session.get('right')
     context['tickets_count'] = request.session.get('tickets_count', 1)

@@ -10,6 +10,14 @@ Le site de démonstration est réinitialisé toutes les nuits.
 
 Des captures des différentes parties pour les anciennes versions.
 
+version 0.6
+-----------
+
+.. image:: ../images/screenshots/possum-0_6-accueil.png
+    :scale: 50
+    :alt: page principale
+
+
 version 0.4
 -----------
 

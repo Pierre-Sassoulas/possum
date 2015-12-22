@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 #    Copyright 2009-2014 Sébastien Bonnegent
 #
 #    This file is part of POSSUM.
@@ -387,7 +385,7 @@ class Stat(models.Model):
     class Meta:
         ordering = ['interval', 'date', 'key']
 
-    def __unicode__(self):
+    def __str__(self):
         """Representing the date in ISO 8601 format, ‘YYYY-MM-DD’
         """
         date = self.date.isoformat()
