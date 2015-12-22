@@ -8,7 +8,8 @@
 </ul>
 <div class="col-sm-3">
     <div class="panel panel-default panel-danger">
-        <div class="panel-body" style="height:340px;overflow-y:scroll">
+        <div class="panel-body">
+            <div class="row" style="height:600px;overflow-y:scroll">
             <ul class="list-unstyled">
                 {% for sold in products_sold %}
                     {% if sold.count > 1 %}
@@ -34,6 +35,7 @@
                 <li class="possum-base well">{% trans "No product" %}</li>
                 {% endfor %}
             </ul>
+            </div>
             <p><small>{% trans "You can delete an item by selecting it" %}</small></p>
         </div>
     </div>
