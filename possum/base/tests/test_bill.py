@@ -54,10 +54,11 @@ class TestsBill(TestCase):
         entree = ProduitVendu()
         entree.produit = Produit.objects.get(nom="salade normande")
         facture.add_product(entree)
-        resultat = [str(p.produit) for p in
-            facture.reduced_sold_list(facture.produits.all())]
+        liste_triee = facture.reduced_sold_list(facture.produits.all())
+        resultat = [str(p.produit) for p in liste_triee]
         attendu = ['buffet', 'salade normande', 'entrecote']
         self.assertEqual(resultat, attendu)
+        self.assertEqual([p.count for p in liste_triee], [1, 2, 1])
 
     def test_add_product(self):
         self.assertTrue(self.facture.is_empty())
