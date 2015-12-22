@@ -300,7 +300,7 @@ class Facture(models.Model):
         """Add a product to the bill. If it is the first product, we update
         creation date.
 
-        :param ProduitVendu sold: product to add
+        :param sold: product to add (ProduitVendu)
         """
         if sold.produit.actif:
             if self.produits.count() == 0:
@@ -521,7 +521,7 @@ class Facture(models.Model):
                 sold_dict[key] = sold
                 sold_dict[key].count = 1
                 sold_dict[key].members = [sold, ]
-        return sold_dict.values()
+        return sorted(sold_dict.values())
 
     def get_last_change(self):
         """Used to detect bill with no change since a while

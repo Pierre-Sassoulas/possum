@@ -80,6 +80,12 @@ class ProduitVendu(models.Model):
             tmp += " %s" % self.get_cooking()
         return tmp
 
+    def __lt__(self, other):
+        if self.produit.categorie == other.produit.categorie:
+            return (self.produit.nom < other.produit.nom)
+        else:
+            return (self.produit.categorie < other.produit.categorie)
+
     def is_cooking_set(self):
         """
         :return: Boolean

@@ -26,8 +26,7 @@ from django.contrib.auth.decorators import login_required
 
 from possum.base.forms import NoteForm
 from possum.base.models import (Categorie, Config, Facture, Note, Option,
-                                PaiementType, Paiement, Printer, Produit,
-                                ProduitVendu, Zone, Table)
+    PaiementType, Paiement, Printer, Produit, ProduitVendu, Zone, Table)
 from possum.base.views import remove_edition, cleanup_payment
 
 

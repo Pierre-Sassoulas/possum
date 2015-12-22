@@ -73,5 +73,11 @@ class Categorie(Nom, Priorite):
         Config().set_carte_changed()
         super(Categorie, self).save(force_insert=force_insert, using=using)
 
+    def __lt__(self, other):
+        if self.priorite == other.priorite:
+            return (self.nom < other.nom)
+        else:
+            return (self.priorite < other.priorite)
+
     class Meta:
         ordering = ['priorite', 'nom']

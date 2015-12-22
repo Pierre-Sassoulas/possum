@@ -39,11 +39,32 @@ class TestsBill(TestCase):
         self.facture.add_product(self.plat)
         self.assertFalse(self.facture.is_empty())
 
+    def test_product_sold_order(self):
+        facture = Facture()
+        facture.save()
+        entree = ProduitVendu()
+        entree.produit = Produit.objects.get(nom="salade normande")
+        facture.add_product(entree)
+        plat = ProduitVendu()
+        plat.produit = Produit.objects.get(nom="entrecote")
+        facture.add_product(plat)
+        entree = ProduitVendu()
+        entree.produit = Produit.objects.get(nom="buffet")
+        facture.add_product(entree)
+        entree = ProduitVendu()
+        entree.produit = Produit.objects.get(nom="salade normande")
+        facture.add_product(entree)
+        resultat = [str(p.produit) for p in
+            facture.reduced_sold_list(facture.produits.all())]
+        attendu = ['buffet', 'salade normande', 'entrecote']
+        self.assertEqual(resultat, attendu)
+
     def test_add_product(self):
         self.assertTrue(self.facture.is_empty())
         self.facture.add_product(self.plat)
         self.facture.update()
         self.assertTrue(self.plat in self.facture.produits.iterator())
+        self.assertTrue(self.facture.est_un_repas())
         self.assertEqual(self.plat.produit.prix, self.facture.total_ttc)
         self.assertEqual(self.plat.produit.prix, self.facture.restant_a_payer)
 
@@ -89,5 +110,4 @@ class TestsBill(TestCase):
         self.assertEqual(montant, (self.facture.paiements.all()[2]).montant)
         # An assertion should be verified
         self.facture.print_ticket_kitchen()
-        self.facture.est_un_repas()
         self.facture.print_ticket()
