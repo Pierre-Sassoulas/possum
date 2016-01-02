@@ -35,7 +35,7 @@ except Exception as err:
 
 def sans_accent(message):
     """Removes accents that may pose printing problem"""
-    normalize = unicodedata.normalize("NFKD", unicode(message))
+    normalize = unicodedata.normalize("NFKD", message)
     return normalize.encode("ascii", "ignore")
 
 
