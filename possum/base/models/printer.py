@@ -18,7 +18,6 @@
 from datetime import datetime
 import logging
 import os
-import unicodedata
 
 from django.conf import settings
 from django.db import models
@@ -31,12 +30,6 @@ try:
     import cups
 except Exception as err:
     LOGGER.critical("Printer library encountered an error :\n{0}".format(err))
-
-
-def sans_accent(message):
-    """Removes accents that may pose printing problem"""
-    normalize = unicodedata.normalize("NFKD", message)
-    return normalize.encode("ascii", "ignore")
 
 
 class Printer(models.Model):
@@ -136,7 +129,7 @@ class Printer(models.Model):
         if with_header:
             ticket_to_print.write(self.header)
         for line in list_to_print:
-            ticket_to_print.write("{0}\n".format(sans_accent(line)))
+            ticket_to_print.write("{0}\n".format(line))
         if with_header:
             ticket_to_print.write(self.footer)
         ticket_to_print.close()
