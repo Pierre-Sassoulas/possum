@@ -137,13 +137,13 @@ function update_js {
     if [ ! -e ${STATIC}${JQUERY} ]
     then
         echo "Download and install JQuery..."
-        must_succeed curl http://code.jquery.com/${JQUERY} -o ${STATIC}${JQUERY}
+        must_succeed wget http://code.jquery.com/${JQUERY} -O ${STATIC}${JQUERY}
     fi
     # Highcharts
     if [ ! -e ${STATIC}${HIGHCHARTS} ]
     then
         echo "Download HighCharts..."
-        must_succeed curl http://code.highcharts.com/zips/${HIGHCHARTS} -o \
+        must_succeed wget http://code.highcharts.com/zips/${HIGHCHARTS} -O \
             ${STATIC}${HIGHCHARTS}
     fi
     if [ ! -e ${STATIC}${HIGHDIR} ]
@@ -158,7 +158,7 @@ function update_js {
     if [ ! -e ${STATIC}${BOOTSTRAP} ]
     then
         echo "Download BootStrap..."
-        must_succeed curl https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} -o ${STATIC}${BOOTSTRAP}
+        must_succeed wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} -O ${STATIC}${BOOTSTRAP}
     fi
     if [ ! -e ${STATIC}${BOOTDIR} ]
     then
@@ -176,7 +176,7 @@ function update_js {
     if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
-        must_succeed curl https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip -o ${STATIC}${DATEPICKER}
+        must_succeed wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip -O ${STATIC}${DATEPICKER}
     fi
     if [ ! -e ${STATIC}${DATEPICKER_DIR} ]
     then
