@@ -137,13 +137,13 @@ function update_js {
     if [ ! -e ${STATIC}${JQUERY} ]
     then
         echo "Download and install JQuery..."
-        must_succeed wget http://code.jquery.com/${JQUERY} -O ${STATIC}${JQUERY}
+        must_succeed curl http://code.jquery.com/${JQUERY} -o ${STATIC}${JQUERY}
     fi
     # Highcharts
     if [ ! -e ${STATIC}${HIGHCHARTS} ]
     then
         echo "Download HighCharts..."
-        must_succeed wget http://code.highcharts.com/zips/${HIGHCHARTS} -O \
+        must_succeed curl http://code.highcharts.com/zips/${HIGHCHARTS} -o \
             ${STATIC}${HIGHCHARTS}
     fi
     if [ ! -e ${STATIC}${HIGHDIR} ]
@@ -158,8 +158,7 @@ function update_js {
     if [ ! -e ${STATIC}${BOOTSTRAP} ]
     then
         echo "Download BootStrap..."
-        must_succeed wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
-            -O ${STATIC}${BOOTSTRAP}
+        must_succeed curl https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} -o ${STATIC}${BOOTSTRAP}
     fi
     if [ ! -e ${STATIC}${BOOTDIR} ]
     then
@@ -177,8 +176,7 @@ function update_js {
     if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
-        must_succeed wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
-            -O ${STATIC}${DATEPICKER}
+        must_succeed curl https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip -o ${STATIC}${DATEPICKER}
     fi
     if [ ! -e ${STATIC}${DATEPICKER_DIR} ]
     then
@@ -188,13 +186,14 @@ function update_js {
         popd >/dev/null
     fi
     pushd $STATIC
-    cp jquery-2.1.4.min.js js/jquery.min.js
-    cp bootstrap-3.3.6-dist/css/bootstrap.min.css css/
-    cp bootstrap-datepicker-1.3.1/css/datepicker3.css css/
-    cp bootstrap-3.3.6-dist/js/bootstrap.min.js js/
-    cp bootstrap-datepicker-1.3.1/js/bootstrap-datepicker.js js/
-    cp bootstrap-datepicker-1.3.1/js/locales/bootstrap-datepicker.fr.js js/
+    cp $JQUERY js/jquery.min.js
+    cp bootstrap-${BOOTSTRAP_VERSION}-dist/css/bootstrap.min.css css/
+    cp bootstrap-${BOOTSTRAP_VERSION}-dist/js/bootstrap.min.js js/
+    cp $DATEPICKER_DIR/css/datepicker3.css css/
+    cp $DATEPICKER_DIR/js/bootstrap-datepicker.js js/
+    cp $DATEPICKER_DIR/js/locales/bootstrap-datepicker.fr.js js/
     popd
+    enter_virtualenv
     must_succeed ./manage.py collectstatic --noinput --no-post-process
 }
 
