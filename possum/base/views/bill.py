@@ -105,10 +105,7 @@ def bill_print(request, bill_id):
             messages.add_message(request, messages.ERROR,
                                  _("No printer configured"))
         else:
-            if bill.print_ticket():
-                messages.add_message(request, messages.SUCCESS,
-                                     _("The bill is printed"))
-            else:
+            if not bill.print_ticket():
                 messages.add_message(request, messages.ERROR,
                                      _("Printing has failed"))
     return bill_view(request, bill.id)
