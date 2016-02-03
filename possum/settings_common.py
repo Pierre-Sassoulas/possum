@@ -205,7 +205,6 @@ INSTALLED_APPS = (
     'possum.base',
     'possum.stats',
     'possum.jukebox',
-    'django_extensions',
     'compressor',
 )
 

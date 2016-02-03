@@ -33,7 +33,7 @@ For developpers:
     load_demo          :  load database with data of demonstration
     run                :  run ./manage.py runserver in virtualenv with the
                           file settings.py
-    sh                 :  run ./manage.py shell_plus in virtualenv
+    sh                 :  run ./manage.py shell in virtualenv
     tests              :  execute all tests
     update_js          :  update all js/css stuff (jquery, bootstrap, ...)
     utests             :  execute only unit tests and coverage
@@ -105,7 +105,6 @@ function must_succeed {
 
 function tests {
     enter_virtualenv
-    # must_succeed ./manage.py validate_templates --settings=possum.settings_tests
     flake8 --exclude=migrations,static --max-complexity 12 possum \
         > reports/flake8.report
     sloccount --details possum > reports/soccount.sc
@@ -401,7 +400,7 @@ tests)
     ;;
 sh)
     enter_virtualenv
-    ./manage.py shell_plus
+    ./manage.py shell
     ;;
 run)
     enter_virtualenv
