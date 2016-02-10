@@ -7,11 +7,11 @@ env
 .settings
 possum/settings.py
 possum/secret_key
-possum.db
+possum.db*
 possum/base/static/highcharts/
 possum/base/static/jquery.min.js
 docs/en/_build/
 docs/fr/_build/
 possum/static/
-
+possum.json
 

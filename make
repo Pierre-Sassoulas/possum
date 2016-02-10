@@ -50,10 +50,6 @@ For traductors:
 ---------------
     translation        :  create/update translations
 
-If you need to define a proxy, set $http_proxy
-Example:
-    export http_proxy="http://proxy.possum-software.org:8080/"
-    export https_proxy="https://proxy.possum-software.org:8080/"
 
 Note: (*) must be root to do it
 
@@ -62,9 +58,44 @@ EOF
 }
 
 function enter_virtualenv {
+    # if NOENV="yes" we don't use virtualenv
+    if [ "$NOENV" == "yes" ]
+    then
+        echo "No virtualenv"
+        return
+    fi
     if [ ! -d env ]
     then
-        update
+        echo
+        echo "Host must be connected to Internet for this step."
+        echo "And you must have some packages installed:"
+        echo "You must read documentation :)"
+        echo
+        if [ -e "/usr/bin/pyvenv-3.4" ]
+        then
+            PYENV="/usr/bin/pyvenv-3.4"
+        else
+            if [ -e "/usr/bin/pyvenv-3.3" ]
+            then
+                PYENV="/usr/bin/pyvenv-3.3"
+            else
+                if [ -e "/usr/bin/pyvenv" ]
+                then
+                    PYENV="/usr/bin/pyvenv"
+                else
+                    # we stay with python2, no python3 available
+                    # virtualenv --no-site-packages --python=python2 env
+                    echo "Update to python 3, it is available since 03/12/2008 !"
+                    exit
+                fi
+            fi
+        fi
+        #$PYENV --without-pip env
+        if [ ! -z "$PYENV" ]
+        then
+            echo "python3 found, great!"
+            $PYENV env
+        fi
     fi
     source env/bin/activate 2>/dev/null
     if [ ! $? -eq 0 ]
@@ -99,6 +130,7 @@ function must_succeed {
     $*
     if [ ! $? == 0 ]
     then
+        echo "[error] $*"
         exit 2
     fi
 }
@@ -198,43 +230,10 @@ function update_js {
 
 function update {
 #    chmod 755 possum/static/
-    if [ ! -d env ]
-    then
-        echo
-        echo "Host must be connected to Internet for this step."
-        echo "And you must have some packages installed:"
-        echo "You must read documentation :)"
-        echo
-        if [ -e "/usr/bin/pyvenv-3.4" ]
-        then
-            PYENV="/usr/bin/pyvenv-3.4"
-        else
-            if [ -e "/usr/bin/pyvenv-3.3" ]
-            then
-                PYENV="/usr/bin/pyvenv-3.3"
-            else
-                if [ -e "/usr/bin/pyvenv" ]
-                then
-                    PYENV="/usr/bin/pyvenv"
-                else
-                    # we stay with python2, no python3 available
-                    # virtualenv --no-site-packages --python=python2 env
-                    echo "Update to python 3, it is available since 03/12/2008 !"
-                    exit
-                fi
-            fi
-        fi
-        #$PYENV --without-pip env
-        if [ ! -z "$PYENV" ]
-        then
-            echo "python3 found, great!"
-            $PYENV env
-        fi
-    fi
     enter_virtualenv
     # before all, we must have last release of Django
-    must_succeed pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
-    must_succeed pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    must_succeed pip install --upgrade $(grep -i django requirements.txt)
+    must_succeed pip install --requirement requirements.txt --upgrade
     if [ $? != 0 ]
     then
         echo "ERROR: pip failed !"
@@ -293,7 +292,12 @@ function graph_models {
 
 function clear_db {
     enter_virtualenv
-    ./manage.py reset_db
+    if [ -e possum.db ]
+    then
+        mv possum.db possum.db.$(date +%Y%m%d%H%M)
+    else
+        echo "If not already done, you have to purge your database"
+    fi
     must_succeed ./manage.py migrate --noinput
 #    ./manage.py flush --noinput
 }
@@ -388,7 +392,7 @@ dump)
     ;;
 load)
     enter_virtualenv
-    ./manage.py reset_db
+    clear_db
     ./manage.py migrate
     ./manage.py loaddata possum.json
     ;;
