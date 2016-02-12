@@ -28,12 +28,14 @@ For administrators:
 
 For developpers:
 ----------------
+    atom               :  start IDE Atom in virtualenv
     big_clean          :  !! WARNING !! erase possum.db, virtualenv,
                           settings.py and all downloaded librairies
     load_demo          :  load database with data of demonstration
     run                :  run ./manage.py runserver in virtualenv with the
                           file settings.py
     sh                 :  run ./manage.py shell in virtualenv
+    smtp               :  start a false SMTP server
     tests              :  execute all tests
     update_js          :  update all js/css stuff (jquery, bootstrap, ...)
     utests             :  execute only unit tests and coverage
@@ -417,6 +419,20 @@ translation)
     ;;
 update_js)
     update_js
+    ;;
+atom)
+    enter_virtualenv
+    atom &
+    ;;
+smtp)
+    enter_virtualenv
+    separateur
+    echo "Your configuration must contains this 2 lines (possum/settings.py):"
+    echo "EMAIL_HOST = \"localhost\""
+    echo "EMAIL_PORT = 1025" 
+    separateur
+    echo "SMTP debug server waiting messages..."
+    python3 -m smtpd -n -c DebuggingServer localhost:1025
     ;;
 *)
     my_help
