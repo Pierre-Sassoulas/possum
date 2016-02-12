@@ -340,7 +340,8 @@ def text(request):
 
 
 def init_borders(context):
-    """Get date of first and last order to limit datepicker choice.
+    """
+    Get date of first and last order to limit datepicker choice.
     """
     first_order = Facture.objects.first()
     if first_order:
@@ -352,7 +353,7 @@ def init_borders(context):
         context['last_date'] = last_order.date_creation.date().isoformat()
     else:
         context['last_date'] = context['first_date']
-    LOG.warning("interval: %s > %s" % (context['first_date'],
+    LOG.debug("interval: %s --> %s" % (context['first_date'],
                                        context['last_date']))
     return context
 
