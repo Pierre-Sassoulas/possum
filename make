@@ -28,12 +28,14 @@ For administrators:
 
 For developpers:
 ----------------
+    atom               :  start IDE Atom in virtualenv
     big_clean          :  !! WARNING !! erase possum.db, virtualenv,
                           settings.py and all downloaded librairies
     load_demo          :  load database with data of demonstration
     run                :  run ./manage.py runserver in virtualenv with the
                           file settings.py
-    sh                 :  run ./manage.py shell_plus in virtualenv
+    sh                 :  run ./manage.py shell in virtualenv
+    smtp               :  start a false SMTP server
     tests              :  execute all tests
     update_js          :  update all js/css stuff (jquery, bootstrap, ...)
     utests             :  execute only unit tests and coverage
@@ -50,10 +52,6 @@ For traductors:
 ---------------
     translation        :  create/update translations
 
-If you need to define a proxy, set $http_proxy
-Example:
-    export http_proxy="http://proxy.possum-software.org:8080/"
-    export https_proxy="https://proxy.possum-software.org:8080/"
 
 Note: (*) must be root to do it
 
@@ -62,9 +60,44 @@ EOF
 }
 
 function enter_virtualenv {
+    # if NOENV="yes" we don't use virtualenv
+    if [ "$NOENV" == "yes" ]
+    then
+        echo "No virtualenv"
+        return
+    fi
     if [ ! -d env ]
     then
-        update
+        echo
+        echo "Host must be connected to Internet for this step."
+        echo "And you must have some packages installed:"
+        echo "You must read documentation :)"
+        echo
+        if [ -e "/usr/bin/pyvenv-3.4" ]
+        then
+            PYENV="/usr/bin/pyvenv-3.4"
+        else
+            if [ -e "/usr/bin/pyvenv-3.3" ]
+            then
+                PYENV="/usr/bin/pyvenv-3.3"
+            else
+                if [ -e "/usr/bin/pyvenv" ]
+                then
+                    PYENV="/usr/bin/pyvenv"
+                else
+                    # we stay with python2, no python3 available
+                    # virtualenv --no-site-packages --python=python2 env
+                    echo "Update to python 3, it is available since 03/12/2008 !"
+                    exit
+                fi
+            fi
+        fi
+        #$PYENV --without-pip env
+        if [ ! -z "$PYENV" ]
+        then
+            echo "python3 found, great!"
+            $PYENV env
+        fi
     fi
     source env/bin/activate 2>/dev/null
     if [ ! $? -eq 0 ]
@@ -99,13 +132,13 @@ function must_succeed {
     $*
     if [ ! $? == 0 ]
     then
+        echo "[error] $*"
         exit 2
     fi
 }
 
 function tests {
     enter_virtualenv
-    # must_succeed ./manage.py validate_templates --settings=possum.settings_tests
     flake8 --exclude=migrations,static --max-complexity 12 possum \
         > reports/flake8.report
     sloccount --details possum > reports/soccount.sc
@@ -158,8 +191,7 @@ function update_js {
     if [ ! -e ${STATIC}${BOOTSTRAP} ]
     then
         echo "Download BootStrap..."
-        must_succeed wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} \
-            -O ${STATIC}${BOOTSTRAP}
+        must_succeed wget https://github.com/twbs/bootstrap/releases/download/v${BOOTSTRAP_VERSION}/${BOOTSTRAP} -O ${STATIC}${BOOTSTRAP}
     fi
     if [ ! -e ${STATIC}${BOOTDIR} ]
     then
@@ -177,8 +209,7 @@ function update_js {
     if [ ! -e ${STATIC}bootstrap-datepicker-${DATEPICKER_VERSION}.zip ]
     then
         echo "Download BootStrap Date-Picker..."
-        must_succeed wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip \
-            -O ${STATIC}${DATEPICKER}
+        must_succeed wget https://github.com/eternicode/bootstrap-datepicker/archive/${DATEPICKER_VERSION}.zip -O ${STATIC}${DATEPICKER}
     fi
     if [ ! -e ${STATIC}${DATEPICKER_DIR} ]
     then
@@ -188,55 +219,23 @@ function update_js {
         popd >/dev/null
     fi
     pushd $STATIC
-    cp jquery-2.1.4.min.js js/jquery.min.js
-    cp bootstrap-3.3.6-dist/css/bootstrap.min.css css/
-    cp bootstrap-datepicker-1.3.1/css/datepicker3.css css/
-    cp bootstrap-3.3.6-dist/js/bootstrap.min.js js/
-    cp bootstrap-datepicker-1.3.1/js/bootstrap-datepicker.js js/
-    cp bootstrap-datepicker-1.3.1/js/locales/bootstrap-datepicker.fr.js js/
+    cp $JQUERY js/jquery.min.js
+    cp bootstrap-${BOOTSTRAP_VERSION}-dist/css/bootstrap.min.css css/
+    cp bootstrap-${BOOTSTRAP_VERSION}-dist/js/bootstrap.min.js js/
+    cp $DATEPICKER_DIR/css/datepicker3.css css/
+    cp $DATEPICKER_DIR/js/bootstrap-datepicker.js js/
+    cp $DATEPICKER_DIR/js/locales/bootstrap-datepicker.fr.js js/
     popd
+    enter_virtualenv
     must_succeed ./manage.py collectstatic --noinput --no-post-process
 }
 
 function update {
 #    chmod 755 possum/static/
-    if [ ! -d env ]
-    then
-        echo
-        echo "Host must be connected to Internet for this step."
-        echo "And you must have some packages installed:"
-        echo "You must read documentation :)"
-        echo
-        if [ -e "/usr/bin/pyvenv-3.4" ]
-        then
-            PYENV="/usr/bin/pyvenv-3.4"
-        else
-            if [ -e "/usr/bin/pyvenv-3.3" ]
-            then
-                PYENV="/usr/bin/pyvenv-3.3"
-            else
-                if [ -e "/usr/bin/pyvenv" ]
-                then
-                    PYENV="/usr/bin/pyvenv"
-                else
-                    # we stay with python2, no python3 available
-                    # virtualenv --no-site-packages --python=python2 env
-                    echo "Update to python 3, it is available since 03/12/2008 !"
-                    exit
-                fi
-            fi
-        fi
-        #$PYENV --without-pip env
-        if [ ! -z "$PYENV" ]
-        then
-            echo "python3 found, great!"
-            $PYENV env
-        fi
-    fi
     enter_virtualenv
     # before all, we must have last release of Django
-    must_succeed pip install --upgrade --proxy=${http_proxy} $(grep -i django requirements.txt)
-    must_succeed pip install --proxy=${http_proxy} --requirement requirements.txt --upgrade
+    must_succeed pip install --upgrade $(grep -i django requirements.txt)
+    must_succeed pip install --requirement requirements.txt --upgrade
     if [ $? != 0 ]
     then
         echo "ERROR: pip failed !"
@@ -295,7 +294,12 @@ function graph_models {
 
 function clear_db {
     enter_virtualenv
-    ./manage.py reset_db
+    if [ -e possum.db ]
+    then
+        mv possum.db possum.db.$(date +%Y%m%d%H%M)
+    else
+        echo "If not already done, you have to purge your database"
+    fi
     must_succeed ./manage.py migrate --noinput
 #    ./manage.py flush --noinput
 }
@@ -390,7 +394,7 @@ dump)
     ;;
 load)
     enter_virtualenv
-    ./manage.py reset_db
+    clear_db
     ./manage.py migrate
     ./manage.py loaddata possum.json
     ;;
@@ -402,7 +406,7 @@ tests)
     ;;
 sh)
     enter_virtualenv
-    ./manage.py shell_plus
+    ./manage.py shell
     ;;
 run)
     enter_virtualenv
@@ -415,6 +419,20 @@ translation)
     ;;
 update_js)
     update_js
+    ;;
+atom)
+    enter_virtualenv
+    atom &
+    ;;
+smtp)
+    enter_virtualenv
+    separateur
+    echo "Your configuration must contains this 2 lines (possum/settings.py):"
+    echo "EMAIL_HOST = \"localhost\""
+    echo "EMAIL_PORT = 1025" 
+    separateur
+    echo "SMTP debug server waiting messages..."
+    python3 -m smtpd -n -c DebuggingServer localhost:1025
     ;;
 *)
     my_help
