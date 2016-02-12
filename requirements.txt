@@ -25,4 +25,3 @@ sphinx-bootstrap-theme==0.4.3
 Sphinx==1.3b1
 sqlparse==0.1.13
 django-compressor==1.5
-django-extensions==1.6.1
