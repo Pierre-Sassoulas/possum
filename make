@@ -198,7 +198,18 @@ function update_js {
     must_succeed ./manage.py collectstatic --noinput --no-post-process
 }
 
+function ping_default_gateway { 
+    ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && return 0 || return 1
+}
+
 function update {
+    # No internet connnection
+    if ! ping_default_gateway
+    then
+        echo
+        echo "Host must be connected to Internet for this step."
+        exit
+    fi
     # Check for python-venv version
     if [ ! -d env ]
     then
@@ -214,7 +225,6 @@ function update {
                 then
                     PYENV="/usr/bin/pyvenv"
                 else
-                    echo "Host must be connected to Internet for this step."
                     echo "Virtualenv cannot be set. You need some packages to get started."
                     echo "If you are on Fedora :"
                     tail docs/common/install_fedora.rst -n +3
