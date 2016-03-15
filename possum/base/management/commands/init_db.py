@@ -51,7 +51,7 @@ class Command(BaseCommand):
         user = User(username="demo",
                     first_name="first name",
                     last_name="last name",
-                    email="demo@possum-software.org")
+                    email="demo@bonnegent.fr")
         user.set_password("demo")
         self.stdout.write("Setup permissions for manager")
         user.is_superuser = True
