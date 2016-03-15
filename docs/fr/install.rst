@@ -115,7 +115,7 @@ Vous pouvez générer la documentation en html avec la commande suivante:
 Elle sera disponible ici: **/opt/possum-software/docs/fr/_build/html/**.
 
 Sinon elle est également disponible sur le site officiel:
-`Documentation <http://www.possum-software.org/>`_.
+`Documentation <http://possum.bonnegent.fr/>`_.
 
 Configuration du serveur Web
 ----------------------------
@@ -230,7 +230,7 @@ Il est conseillé de définir un alias pour l'utilisateur root dans le fichier
 
 ::
 
-  root: votre_adresse@possum-software.org
+  root: votre_adresse@bonnegent.fr
 
 Cet alias vous permettra de recevoir les éventuelles alertes du système d'exploitation.
 Après chaque modification de ce fichier, il faut lancer la commande:
