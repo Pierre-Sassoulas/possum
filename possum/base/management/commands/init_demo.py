@@ -33,7 +33,7 @@ def create_users():
     # managers
     for username in ['demo', 'demo1', 'demo2']:
         user = User(username=username, first_name=username,
-                    email="%s@possum-software.org" % username)
+                    email="%s@bonnegent.fr" % username)
         user.set_password(username)
         user.is_superuser = True
         user.save()
@@ -41,7 +41,7 @@ def create_users():
     # staff members
     for username in ['staff', 'staff1', 'staff2']:
         user = User(username=username, first_name=username,
-                    email="%s@possum-software.org" % username)
+                    email="%s@bonnegent.fr" % username)
         user.set_password(username)
         user.save()
 

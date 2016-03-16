@@ -56,7 +56,7 @@ def check_new_version(request):
     except ImportError:
         import urllib2
     try:
-        req = urllib2.Request('http://last.possum-software.org/', headers={
+        req = urllib2.Request('http://possum.bonnegent.fr/last/', headers={
                               'User-Agent': 'Possum/' + settings.POSSUM_VERSION
                               })
         response = urllib2.urlopen(req)
