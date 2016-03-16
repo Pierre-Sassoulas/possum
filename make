@@ -36,9 +36,8 @@ For developpers:
                           file settings.py
     sh                 :  run ./manage.py shell in virtualenv
     smtp               :  start a false SMTP server
-    tests              :  execute all tests
+    tests              :  execute all tests and coverage
     update_js          :  update all js/css stuff (jquery, bootstrap, ...)
-    utests             :  execute only unit tests and coverage
 
     In case of change in models, execute these three operations in the order:
     -------------------------------------------------------------------------
@@ -141,18 +140,13 @@ function tests {
     enter_virtualenv
     flake8 --exclude=migrations,static --max-complexity 12 possum \
         > reports/flake8.report
-    sloccount --details possum > reports/soccount.sc
+    echo "[reports/flake8.report] flake8 report created"
+    # sloccount --details possum > reports/soccount.sc
     must_succeed coverage run --source='possum' ./manage.py test \
         --settings=possum.settings_tests
-    must_succeed coverage xml -o reports/coverage.xml
-}
-
-function utests {
-    enter_virtualenv
-    coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
-    coverage html -d reports/coverage/
-    echo "--------------------------------------------------------------------"
-    echo "Coverage report created in $(pwd)/reports/coverage/index.html"
+    # must_succeed coverage xml -o reports/coverage.xml
+    must_succeed coverage html -d reports/coverage/
+    echo "[reports/coverage/index.html] coverage report created"
 }
 
 function update_js {
@@ -361,9 +355,6 @@ migrations)
     done
     must_succeed ./manage.py migrate
     graph_models
-    ;;
-utests)
-    utests
     ;;
 big_clean)
     echo "Erase virtualenv"
