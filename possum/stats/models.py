@@ -155,21 +155,10 @@ def get_data_from(bill, data):
     return data
 
 
-def _nb_sorted(a, b):
-    """We sort objects a and b (Categorie(), Produit(), ...)
-    to have, for example, best selling first."""
-    if b.nb < a.nb:
-        return -1
-    elif b.nb > a.nb:
-        return 1
-    else:
-        return 0
-
-
 def _search_sub_key(stats, key, a_class, integer=False):
     """
     :param stats: Stat.object.filter()
-    :param key: string (subkey to search
+    :param key: string, subkey to search
     :param a_class: a class of object to find
     :param integer: output values must be an integer or a float
     :return: []
@@ -187,7 +176,8 @@ def _search_sub_key(stats, key, a_class, integer=False):
             else:
                 elt.nb = stat.value
             tmp.append(elt)
-    return sorted(tmp, cmp=_nb_sorted)
+    LOG.debug(tmp)
+    return sorted(tmp, key=lambda stat: stat.nb, reverse=True)
 
 
 def compute_avg_max(stats, stat_avg, stat_max):

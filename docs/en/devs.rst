@@ -7,10 +7,6 @@ the `project <https://github.com/possum-software/possum/>`_ on **GitHub**
 and consult
 tasks list: `Issues <https://github.com/possum-software/possum/issues>`_.
 
-There are also some usefull tools to audit code:
-
-* `Jenkins <http://jenkins.possum-software.org/>`_
-* `Sonar <http://sonar.possum-software.org/>`_
 
 Version number
 ==============
@@ -26,15 +22,27 @@ An example for version 1.0:
 * 1.0: stable version
 * 1.0.1: only bug fixes on stable version
 
+What to do to prepare a new version ?
+-------------------------------------
+
+First of all, we have to keep in mind to update bootstrap and jquery.
+
+After, modify this files:
+
+* docs/en/releases.rst
+* version.py
+
+When ready, we have to update http://possum.bonnegent.fr/last/ and
+http://possum.bonnegent.fr/rss.xml. For a major release, we must update 
+documentation too.
+
+Last, don't forget community and annonce release on G+ and twitter.
+
 Coding convention
 =================
 
 The coding convention used for the project following the
 `Style Guide for Python Code (PEP 8) <http://www.python.org/dev/peps/pep-0008/>`_.
-
-Compliance with agreements is verified by Jenkins,
-the results are available here:
-`Jenkins <http://jenkins.possum-software.org/>`_.
 
 In short:
 
@@ -93,9 +101,9 @@ Preparing your pull request
 Your changes are clean in your fork, now you can create a pull request directly on Github.
 All pull requests must be sync with Possum development branch (dev).
 
-After that, you must check state of your request on
-`Jenkins (pull_requests) <http://jenkins.possum-software.org/job/pull_requests/violations/>`_.
-if the number of violations is up, your request will not be accepted.
+After that, you must check your code with::
+
+  $ ./make tests
 
 You can fetch any new changes from the original repository and resync your fork with::
 

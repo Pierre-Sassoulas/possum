@@ -1,0 +1,8 @@
+Dockerfile
+.git
+possum.db*
+possum.log
+possum.json
+*.pyc
+__pycache__
+env/

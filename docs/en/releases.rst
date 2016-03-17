@@ -1,6 +1,14 @@
 Release notes
 =============
 
+v0.6.2
+------
+
+Release date: 31/03/2016
+
+* first Dockerfile
+* migration from possum-software.org to bonnegent.fr
+
 v0.6.1
 ------
 
@@ -38,7 +46,7 @@ v0.5.0
 
 Release date: 31/03/2014
 
-* automatic tests with `Jenkins <http://jenkins.possum-software.org/>`_
+* automatic tests with jenkins
 * thick client abandoned in favor of a web interface
 * making remote controls
 * managing multiple printers

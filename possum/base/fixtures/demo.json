@@ -11,7 +11,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$s0urHM7gvWa3$QLOGU3XhC3ZZNaJ9d/yeCZigRoL5UVEMGaUtZRGM10g=",
-        "email": "demo@possum-software.org",
+        "email": "demo@bonnegent.fr",
         "date_joined": "2015-10-25T21:12:47.601"
     },
     "model": "auth.user",
@@ -29,7 +29,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$Ww2jWCDrOtdB$WCq8Uj9FQ7NSThcZTq4lDVhrzrqNqUosLk8Ad+sa1jg=",
-        "email": "demo1@possum-software.org",
+        "email": "demo1@bonnegent.fr",
         "date_joined": "2015-10-25T21:12:47.651"
     },
     "model": "auth.user",
@@ -47,7 +47,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$5VNtqlq0heTp$FcqDwauwhLkx/eeE607pPq9iuDcczq4EIBpZ/AEB9Ew=",
-        "email": "demo2@possum-software.org",
+        "email": "demo2@bonnegent.fr",
         "date_joined": "2015-10-25T21:12:47.699"
     },
     "model": "auth.user",
@@ -65,7 +65,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$HLRzB050vG4A$chrGvAjMDn0eO30tNeMabOl0kRDrRtQ9QyyCfGzJYCA=",
-        "email": "staff@possum-software.org",
+        "email": "staff@bonnegent.fr",
         "date_joined": "2015-10-25T21:12:47.744"
     },
     "model": "auth.user",
@@ -83,7 +83,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$Q4gzTtzreyrG$FOd596za49MdXY8e3Z6gywjO8+nk1sJnvPSexOkfTT4=",
-        "email": "staff1@possum-software.org",
+        "email": "staff1@bonnegent.fr",
         "date_joined": "2015-10-25T21:12:47.793"
     },
     "model": "auth.user",
@@ -101,7 +101,7 @@
         "groups": [],
         "user_permissions": [],
         "password": "pbkdf2_sha256$15000$WIhKWLnxZjvT$ubZFcSaxTanmy3l/e5a9DqEzgVkvzNGOtXXT3BTNFAY=",
-        "email": "staff2@possum-software.org",
+        "email": "staff2@bonnegent.fr",
         "date_joined": "2015-10-25T21:12:47.837"
     },
     "model": "auth.user",
