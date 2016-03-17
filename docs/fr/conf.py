@@ -26,7 +26,7 @@ source_suffix = '.rst'
 source_encoding = 'utf-8'
 master_doc = 'index'
 project = u'Possum'
-copyright = u'2008-%d, Possum Software' % datetime.now().year
+copyright = u'2008-%d, S.Bonnegent' % datetime.now().year
 
 version = POSSUM_VERSION
 release = version
@@ -57,7 +57,7 @@ html_static_path = [os.path.join('..', '_static')]
 html_theme_options = {
     'navbar_site_name': "Sommaire",
     'navbar_links': [
-        ("Home", "http://www.possum-software.org", True),
+        ("Home", "http://possum.bonnegent.fr", True),
     ],
     'navbar_sidebarrel': True,
     'navbar_pagenav': False,

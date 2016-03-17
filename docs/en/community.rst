@@ -16,10 +16,5 @@ Stay informed
 -------------
 
 * `Google+ <https://plus.google.com/113982636103042531268/posts>`_
-* `RSS releases <http://www.possum-software.org/rss.xml>`_
-
-You use Possum and want to tell the world
------------------------------------------
-
-* `Openhub <https://www.openhub.net/p/possum-software>`_
+* `RSS releases <http://possum.bonnegent.fr/rss.xml>`_
 

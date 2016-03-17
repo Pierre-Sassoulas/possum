@@ -36,9 +36,8 @@ For developpers:
                           file settings.py
     sh                 :  run ./manage.py shell in virtualenv
     smtp               :  start a false SMTP server
-    tests              :  execute all tests
+    tests              :  execute all tests and coverage
     update_js          :  update all js/css stuff (jquery, bootstrap, ...)
-    utests             :  execute only unit tests and coverage
 
     In case of change in models, execute these three operations in the order:
     -------------------------------------------------------------------------
@@ -85,9 +84,12 @@ function enter_virtualenv {
                 then
                     PYENV="/usr/bin/pyvenv"
                 else
-                    # we stay with python2, no python3 available
-                    # virtualenv --no-site-packages --python=python2 env
-                    echo "Update to python 3, it is available since 03/12/2008 !"
+                    echo "Virtualenv cannot be set. You need some packages to get started."
+                    echo "If you are on Fedora :"
+                    tail docs/common/install_fedora.rst -n +3
+                    echo "If you are on Ubuntu/Debian :"
+                    tail docs/common/install_deb.rst -n +3
+                    echo "Then you should be able to generate and read the documentation."
                     exit
                 fi
             fi
@@ -95,7 +97,7 @@ function enter_virtualenv {
         #$PYENV --without-pip env
         if [ ! -z "$PYENV" ]
         then
-            echo "python3 found, great!"
+            echo "Virtualenv can be set. Be patient now =)"
             $PYENV env
         fi
     fi
@@ -141,18 +143,13 @@ function tests {
     enter_virtualenv
     flake8 --exclude=migrations,static --max-complexity 12 possum \
         > reports/flake8.report
-    sloccount --details possum > reports/soccount.sc
+    echo "[reports/flake8.report] flake8 report created"
+    # sloccount --details possum > reports/soccount.sc
     must_succeed coverage run --source='possum' ./manage.py test \
         --settings=possum.settings_tests
-    must_succeed coverage xml -o reports/coverage.xml
-}
-
-function utests {
-    enter_virtualenv
-    coverage run --source='possum' ./manage.py test --settings=possum.settings_tests
-    coverage html -d reports/coverage/
-    echo "--------------------------------------------------------------------"
-    echo "Coverage report created in $(pwd)/reports/coverage/index.html"
+    # must_succeed coverage xml -o reports/coverage.xml
+    must_succeed coverage html -d reports/coverage/
+    echo "[reports/coverage/index.html] coverage report created"
 }
 
 function update_js {
@@ -230,8 +227,18 @@ function update_js {
     must_succeed ./manage.py collectstatic --noinput --no-post-process
 }
 
+function ping_default_gateway { 
+    ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && return 0 || return 1
+}
+
 function update {
-#    chmod 755 possum/static/
+    # No internet connnection
+    if ! ping_default_gateway
+    then
+        echo
+        echo "Host must be connected to Internet for this step."
+        exit
+    fi
     enter_virtualenv
     # before all, we must have last release of Django
     must_succeed pip install --upgrade $(grep -i django requirements.txt)
@@ -362,11 +369,8 @@ migrations)
     must_succeed ./manage.py migrate
     graph_models
     ;;
-utests)
-    utests
-    ;;
 big_clean)
-    echo "Erase virtualenv"
+    echo "Erasing virtualenv"
     rm -rf env
     for FILE in possum/settings.py possum.db
     do

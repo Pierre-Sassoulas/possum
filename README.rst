@@ -21,5 +21,5 @@ developed with Python / Django.
 
 The key word: try to keep it simple for the final user.
 
-`www.possum-software.org <http://www.possum-software.org/>`_
+`possum.bonnegent.fr <http://possum.bonnegent.fr/>`_
 

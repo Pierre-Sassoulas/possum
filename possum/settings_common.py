@@ -101,7 +101,7 @@ except IOError as exc:
 # It gives no access to your data. If you don't want, you can
 # remove it or add your address.
 ADMINS = (
-    ('Bug Watch', 'bugwatch@possum-software.org'),
+    ('Bug Watch', 'bugwatch@bonnegent.fr'),
 )
 MANAGERS = ADMINS
 SITE_ID = 1
@@ -209,7 +209,7 @@ INSTALLED_APPS = (
 )
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
-SERVER_EMAIL = "bugwatch@possum-software.org"
+SERVER_EMAIL = "bugwatch@bonnegent.fr"
 
 LOGGING = {
     'version': 1,
@@ -229,10 +229,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'django.utils.log.NullHandler',
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -255,17 +251,12 @@ LOGGING = {
             'class': 'logging.handlers.SMTPHandler',
             'filters': ['require_debug_false'],
             'mailhost': 'localhost',
-            'fromaddr': 'bugwatch@possum-software.org',
-            'toaddrs': ['bugwatch@possum-software.org'],
+            'fromaddr': 'bugwatch@bonnegent.fr',
+            'toaddrs': ['bugwatch@bonnegent.fr'],
             'subject': '[BUG] Houston, we have a problem.',
         }
     },
     'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'propagate': True,
-            'level': 'INFO',
-        },
         'django.request': {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
