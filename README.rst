@@ -23,3 +23,8 @@ The key word: try to keep it simple for the final user.
 
 `possum.bonnegent.fr <http://possum.bonnegent.fr/>`_
 
+Nota Bene
+=========
+
+This is a snapshot of the last working Possum still on Github. The master repository moved to Framasoft GitLab :
+    https://git.framasoft.org/possum-software/possum
