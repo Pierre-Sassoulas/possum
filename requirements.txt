@@ -1,7 +1,7 @@
 astroid==1.2.1
 Babel==2.9.1
 coverage==3.7.1
-Django==3.2.24
+Django==3.2.25
 docutils==0.12
 flake8-todo==0.3
 flake8==2.2.5
