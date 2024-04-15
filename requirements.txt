@@ -23,5 +23,5 @@ six==1.10.0
 snowballstemmer==1.2.0
 sphinx-bootstrap-theme==0.4.3
 Sphinx==1.3b1
-sqlparse==0.1.13
+sqlparse==0.5.0
 django-compressor==1.5
